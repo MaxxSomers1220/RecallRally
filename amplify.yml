@@ -3,6 +3,7 @@ frontend:
   phases:
     build:
       commands:
+        - node tests/librarian.test.cjs
         - mkdir -p dist/librarian
         - cp index.html dist/index.html
         - cp librarian/librarian.css librarian/librarian.js dist/librarian/
