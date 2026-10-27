@@ -3,9 +3,9 @@
 A self-contained academic-team practice game with Quick Recall, Written warm-up,
 the Rescue Rigby adventure, customizable heroes, and a local learning journal.
 
-This package uses the supplied version 28 game. It includes 1,500 built-in
-questions across 64 curriculum areas: 1,387 eligible for Quick Recall and 113
-written-only questions. Adventure can use all 1,500.
+This package uses the version 29 Ten Worlds game. It includes 1,550 built-in
+questions across 64 curriculum areas: 1,436 eligible for Quick Recall and 114
+written-only questions. Adventure can use all 1,550.
 
 ## Upload to GitHub — no terminal required
 
@@ -86,3 +86,30 @@ The package was checked for JavaScript syntax, question counts and IDs,
 unchanged question-bank content, self-contained assets, ZIP integrity, and the
 Amplify build's output. Live GitHub upload, AWS deployment, and physical iPad
 testing were not performed while preparing this package.
+
+## Ten Worlds adventure (version 29 draft)
+
+The five original lands lead to five new worlds: Crystal Caverns, Clockwork City,
+Sunken Library, Skygarden Isles, and Moonstone Citadel. Each world has one guardian,
+one seal, distinctive arena scenery and an evolving response to correct answers.
+The map has two selectable chapters of five worlds each. The second chapter can be
+previewed early, but its guardian encounters remain locked until reached.
+
+The new worlds mix related subjects. The final citadel includes all five subjects
+in every seven-question deck. The final rescue happens after ten seals, never at
+the old five-seal endpoint. New adventures start at level zero and preserve hero
+preferences and question exposure history. The 50 new questions remain included.
+
+`src/world-expansion.js` documents the new artwork and world definitions. The same
+code is embedded in `index.html` to preserve offline play; keep the two in sync when
+editing. The new question rows are also provided in `data/adventure-v29-questions.json`.
+
+Self-contained validation commands:
+
+- `node tests/bank-v29.test.cjs`
+- `node tests/worlds.test.cjs`
+- `node tests/adventure-effects.test.cjs`
+
+Nine automated suites passed during development. Actual SVG game artwork was
+rendered for visual inspection. Browser layout and physical iPad checks remain
+outstanding. This draft replaces the rejected repeated-trail-duel proposal.
