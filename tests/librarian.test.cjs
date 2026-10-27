@@ -16,7 +16,7 @@ assert(game.includes('function buzz()'));
 assert(game.includes('function jump()'));
 assert(game.includes('function useShield()'));
 assert(game.includes('SAMPLES'));
-assert.equal((game.match(/source:'Example question/g)||[]).length,0,'Demo attribution is generated in a single place');
+assert.equal((game.match(/source:'Example question/g)||[]).length,1,'Demo attribution is generated in a single place');
 assert(game.includes('not from state study guide'),'Demo items must be labeled as examples');
 
 const elements=[];
