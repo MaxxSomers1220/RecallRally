@@ -3,8 +3,10 @@ frontend:
   phases:
     build:
       commands:
-        - mkdir -p dist
+        - mkdir -p dist/librarian
         - cp index.html dist/index.html
+        - cp librarian/librarian.css librarian/librarian.js dist/librarian/
+        - node scripts/inject-librarian.cjs dist/index.html
   artifacts:
     baseDirectory: dist
     files:
