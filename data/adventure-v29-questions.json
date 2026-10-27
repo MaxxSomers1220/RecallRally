@@ -1,0 +1,1301 @@
+[
+  {
+    "id": "sample-v29-math-01",
+    "subject": "math",
+    "prompt": "A trail has 96 stepping stones. Three fourths are dry. How many stones are dry?",
+    "answer": "72",
+    "options": [
+      "72",
+      "24",
+      "64",
+      "84"
+    ],
+    "explanation": "Divide 96 by 4 to get 24, then multiply by 3 to get 72.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-04",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-02",
+    "subject": "math",
+    "prompt": "A ranger pours 2 1/2 liters from a 4-liter jug. How many liters remain?",
+    "answer": "1 1/2",
+    "options": [
+      "1 1/2",
+      "2 1/2",
+      "1 3/4",
+      "2"
+    ],
+    "explanation": "Four minus two and one half is one and one half.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-04",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-03",
+    "subject": "math",
+    "prompt": "A lantern costs $24 before a 25% discount. What is its discounted price?",
+    "answer": "$18",
+    "options": [
+      "$18",
+      "$6",
+      "$20",
+      "$21"
+    ],
+    "explanation": "A quarter of $24 is $6. Subtract the $6 discount from $24.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-05",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-04",
+    "subject": "math",
+    "prompt": "A rope is 3 meters 25 centimeters long. How many centimeters long is it?",
+    "answer": "325",
+    "options": [
+      "325",
+      "35",
+      "3025",
+      "300"
+    ],
+    "explanation": "Three meters is 300 centimeters; add 25 centimeters.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-06",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-05",
+    "subject": "math",
+    "prompt": "A rectangular garden is 9 meters long and 6 meters wide. What is its perimeter?",
+    "answer": "30 meters",
+    "options": [
+      "30 meters",
+      "54 meters",
+      "15 meters",
+      "24 meters"
+    ],
+    "explanation": "The perimeter is 9 + 6 + 9 + 6 = 30 meters.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-09",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-06",
+    "subject": "math",
+    "prompt": "A treasure code is 6 + 3 × 4. What value unlocks the chest?",
+    "answer": "18",
+    "options": [
+      "18",
+      "36",
+      "24",
+      "15"
+    ],
+    "explanation": "Multiply 3 by 4 before adding 6.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-12",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-07",
+    "subject": "math",
+    "prompt": "A balanced scale holds five identical gems on one side and 35 grams on the other. What does each gem weigh?",
+    "answer": "7 grams",
+    "options": [
+      "7 grams",
+      "5 grams",
+      "30 grams",
+      "175 grams"
+    ],
+    "explanation": "Divide 35 grams equally among five gems.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-13",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-08",
+    "subject": "math",
+    "prompt": "A pouch holds 3 red gems and 5 blue gems. What is the probability of drawing a red gem at random?",
+    "answer": "3/8",
+    "options": [
+      "3/8",
+      "3/5",
+      "5/8",
+      "1/3"
+    ],
+    "explanation": "There are three favorable gems out of eight total gems.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-11",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-09",
+    "subject": "math",
+    "prompt": "A triangular pennant has angles of 40 degrees and 65 degrees. What is its third angle?",
+    "answer": "75 degrees",
+    "options": [
+      "75 degrees",
+      "105 degrees",
+      "85 degrees",
+      "115 degrees"
+    ],
+    "explanation": "The three interior angles sum to 180 degrees; subtract 105 degrees.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-08",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-math-10",
+    "subject": "math",
+    "prompt": "A trail marker shows 4.08. What number is one tenth greater?",
+    "answer": "4.18",
+    "options": [
+      "4.18",
+      "4.09",
+      "4.80",
+      "5.08"
+    ],
+    "explanation": "One tenth is 0.10, and 4.08 + 0.10 = 4.18.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "math-01",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-01",
+    "subject": "science",
+    "prompt": "A metal key sinks in water, but a cork floats. Which property most directly explains this difference?",
+    "answer": "Density",
+    "options": [
+      "Density",
+      "Color",
+      "Temperature alone",
+      "Magnetism"
+    ],
+    "explanation": "Objects denser than water tend to sink; less dense objects tend to float.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-01",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-02",
+    "subject": "science",
+    "prompt": "A rolling cart slows on a rough trail even after the push stops. Which force opposes its motion?",
+    "answer": "Friction",
+    "options": [
+      "Friction",
+      "Photosynthesis",
+      "Evaporation",
+      "Electric current"
+    ],
+    "explanation": "Friction between surfaces opposes relative motion.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-02",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-03",
+    "subject": "science",
+    "prompt": "A lantern circuit has a gap in its wire. Why does the bulb stop glowing?",
+    "answer": "The path for electric current is broken",
+    "options": [
+      "The path for electric current is broken",
+      "The battery becomes heavier",
+      "The wire turns into an insulator",
+      "The bulb has no gravity"
+    ],
+    "explanation": "A simple circuit needs a complete conducting path for current.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-03",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-04",
+    "subject": "science",
+    "prompt": "Water droplets form on the outside of a cold canteen. Which change of state produces them?",
+    "answer": "Condensation",
+    "options": [
+      "Condensation",
+      "Melting",
+      "Freezing",
+      "Sublimation"
+    ],
+    "explanation": "Water vapor in the air cools and changes into liquid on the cold surface.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-05",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-05",
+    "subject": "science",
+    "prompt": "A seedling leans toward a sunny window. What stimulus is it responding to?",
+    "answer": "Light",
+    "options": [
+      "Light",
+      "Sound",
+      "Salt",
+      "Magnetism"
+    ],
+    "explanation": "The shoot grows toward light, a response called positive phototropism.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-08",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-06",
+    "subject": "science",
+    "prompt": "In a meadow food chain, a rabbit eats grass and a fox eats the rabbit. Which organism is the producer?",
+    "answer": "Grass",
+    "options": [
+      "Grass",
+      "Rabbit",
+      "Fox",
+      "Both animals"
+    ],
+    "explanation": "Grass makes its own food using sunlight and supplies energy to consumers.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-07",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-07",
+    "subject": "science",
+    "prompt": "An explorer finds an animal with six legs and three main body sections. Which group does it belong to?",
+    "answer": "Insects",
+    "options": [
+      "Insects",
+      "Arachnids",
+      "Mammals",
+      "Fish"
+    ],
+    "explanation": "Insects have a head, thorax, abdomen, and six legs.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-09",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-08",
+    "subject": "science",
+    "prompt": "A hiker breathes faster while climbing a hill. Which two systems work together to deliver more oxygen to muscles?",
+    "answer": "Respiratory and circulatory",
+    "options": [
+      "Respiratory and circulatory",
+      "Digestive and skeletal",
+      "Integumentary and digestive",
+      "Nervous and reproductive"
+    ],
+    "explanation": "The lungs exchange gases, and the blood transports oxygen to tissues.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-11",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-09",
+    "subject": "science",
+    "prompt": "Two groups of seedlings receive equal water and soil but different amounts of light. What variable is deliberately changed?",
+    "answer": "Amount of light",
+    "options": [
+      "Amount of light",
+      "Type of soil",
+      "Amount of water",
+      "Kind of container"
+    ],
+    "explanation": "The independent variable is the factor the investigator deliberately changes.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-12",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-science-10",
+    "subject": "science",
+    "prompt": "A shell impression appears in a rock layer. What kind of evidence is this?",
+    "answer": "A fossil",
+    "options": [
+      "A fossil",
+      "A weather forecast",
+      "A magnetic pole",
+      "An electric circuit"
+    ],
+    "explanation": "Fossils preserve evidence of organisms that lived in the past.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "science-04",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-01",
+    "subject": "social",
+    "prompt": "A map uses 1 centimeter to represent 5 kilometers. Two camps are 4 centimeters apart on the map. How far apart are they?",
+    "answer": "20 kilometers",
+    "options": [
+      "20 kilometers",
+      "9 kilometers",
+      "1.25 kilometers",
+      "45 kilometers"
+    ],
+    "explanation": "Multiply the map distance of 4 centimeters by 5 kilometers per centimeter.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-03",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-02",
+    "subject": "social",
+    "prompt": "A navigator faces north and turns right one quarter-turn. Which direction is the navigator facing?",
+    "answer": "East",
+    "options": [
+      "East",
+      "West",
+      "South",
+      "Northwest"
+    ],
+    "explanation": "A right quarter-turn from north points east.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-03",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-03",
+    "subject": "social",
+    "prompt": "A traveler spends their only $10 on a map instead of lunch. What is the opportunity cost of buying the map?",
+    "answer": "The lunch they gave up",
+    "options": [
+      "The lunch they gave up",
+      "The map itself",
+      "Every meal they will ever eat",
+      "The change from $10"
+    ],
+    "explanation": "Opportunity cost is the next-best alternative forgone.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-11",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-04",
+    "subject": "social",
+    "prompt": "A village trades three baskets of berries for a blanket without using money. What is this exchange called?",
+    "answer": "Barter",
+    "options": [
+      "Barter",
+      "Taxation",
+      "Saving",
+      "Borrowing"
+    ],
+    "explanation": "Barter exchanges goods or services directly without money.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-11",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-05",
+    "subject": "social",
+    "prompt": "A proposed national law has passed Congress. Who can sign it into law?",
+    "answer": "The president",
+    "options": [
+      "The president",
+      "A mayor",
+      "A state governor",
+      "A city council"
+    ],
+    "explanation": "The president can sign a bill passed by Congress into federal law.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-09",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-06",
+    "subject": "social",
+    "prompt": "Citizens gather peacefully to ask their government to repair a dangerous bridge. Which First Amendment right supports their written request?",
+    "answer": "The right to petition",
+    "options": [
+      "The right to petition",
+      "The right to a jury trial",
+      "Protection from double jeopardy",
+      "The right to bear arms"
+    ],
+    "explanation": "The First Amendment protects petitioning the government for redress of grievances.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-10",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-07",
+    "subject": "social",
+    "prompt": "An old journal describes a journey in the words of someone who made it. What kind of historical source is the journal?",
+    "answer": "Primary source",
+    "options": [
+      "Primary source",
+      "Secondary source",
+      "Opinion poll",
+      "Modern encyclopedia"
+    ],
+    "explanation": "A firsthand account from a participant is a primary source.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-12",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-08",
+    "subject": "social",
+    "prompt": "A town builds levees beside a river. What problem are the levees primarily intended to reduce?",
+    "answer": "Flooding",
+    "options": [
+      "Flooding",
+      "Earthquakes",
+      "Solar eclipses",
+      "Ocean tides everywhere"
+    ],
+    "explanation": "Levees are barriers designed to help keep high river water away from protected land.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-04",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-09",
+    "subject": "social",
+    "prompt": "Contour lines on a trail map are very close together. What does this usually show?",
+    "answer": "A steep slope",
+    "options": [
+      "A steep slope",
+      "A perfectly flat plain",
+      "A political border",
+      "A deep ocean current"
+    ],
+    "explanation": "Close contour lines show a large elevation change over a short horizontal distance.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-03",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-social-10",
+    "subject": "social",
+    "prompt": "Only one lantern remains, but several travelers want to buy it. If supply stays low and demand rises, what usually happens to its price?",
+    "answer": "It rises",
+    "options": [
+      "It rises",
+      "It must become zero",
+      "It always stays fixed",
+      "It disappears from every market"
+    ],
+    "explanation": "Other things equal, higher demand with limited supply tends to raise prices.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "social-11",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-01",
+    "subject": "language",
+    "prompt": "A story says, “The lantern winked at the traveler.” Which literary device gives the lantern a human action?",
+    "answer": "Personification",
+    "options": [
+      "Personification",
+      "Alliteration",
+      "Onomatopoeia",
+      "Understatement"
+    ],
+    "explanation": "Personification gives human qualities or actions to something nonhuman.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-06",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-02",
+    "subject": "language",
+    "prompt": "A tale begins with a hero finding a broken compass that becomes important much later. If it hints at later events, what technique is being used?",
+    "answer": "Foreshadowing",
+    "options": [
+      "Foreshadowing",
+      "A bibliography",
+      "A glossary",
+      "An index"
+    ],
+    "explanation": "Foreshadowing offers clues about events that occur later.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-06",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-03",
+    "subject": "language",
+    "prompt": "In the word reusable, what does the prefix re- mean?",
+    "answer": "Again",
+    "options": [
+      "Again",
+      "Before",
+      "Against",
+      "Without"
+    ],
+    "explanation": "Reusable describes something that can be used again.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-09",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-04",
+    "subject": "language",
+    "prompt": "In “The owl carried a lantern,” which word is the direct object?",
+    "answer": "Lantern",
+    "options": [
+      "Lantern",
+      "Owl",
+      "Carried",
+      "The"
+    ],
+    "explanation": "The lantern receives the action of carrying.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-11",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-05",
+    "subject": "language",
+    "prompt": "In “The fox moved quietly,” what part of speech is quietly?",
+    "answer": "Adverb",
+    "options": [
+      "Adverb",
+      "Noun",
+      "Pronoun",
+      "Preposition"
+    ],
+    "explanation": "Quietly describes how the fox moved and modifies the verb.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-11",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-06",
+    "subject": "language",
+    "prompt": "What type of sentence is “Please close the castle gate”?",
+    "answer": "Imperative",
+    "options": [
+      "Imperative",
+      "Interrogative",
+      "Declarative",
+      "Exclamatory"
+    ],
+    "explanation": "An imperative sentence gives a command or makes a request.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-12",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-07",
+    "subject": "language",
+    "prompt": "Which word correctly completes “The traveler put ___ map in a pouch”?",
+    "answer": "Their",
+    "options": [
+      "Their",
+      "There",
+      "They’re",
+      "Thare"
+    ],
+    "explanation": "Their is the possessive form; there refers to a place, and they’re means they are.",
+    "aliases": [],
+    "modes": [
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-13",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-08",
+    "subject": "language",
+    "prompt": "A guardian describes a path as treacherous because the rocks are slippery and loose. What does treacherous mean here?",
+    "answer": "Dangerous",
+    "options": [
+      "Dangerous",
+      "Comfortable",
+      "Familiar",
+      "Straight"
+    ],
+    "explanation": "The slippery, unstable rocks provide context clues that the path is dangerous.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-09",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-09",
+    "subject": "language",
+    "prompt": "A storyteller uses “I” to describe events they experienced. Which point of view is this?",
+    "answer": "First person",
+    "options": [
+      "First person",
+      "Second person",
+      "Third-person omniscient",
+      "Third-person limited"
+    ],
+    "explanation": "First-person narration presents a narrator’s own perspective using I or we.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-06",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-language-10",
+    "subject": "language",
+    "prompt": "In a poem, the words light and night appear at the ends of two lines. What feature do they demonstrate?",
+    "answer": "End rhyme",
+    "options": [
+      "End rhyme",
+      "An acrostic",
+      "A stage direction",
+      "A footnote"
+    ],
+    "explanation": "End rhyme occurs when words at the ends of lines have matching sounds.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "language-04",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-01",
+    "subject": "arts",
+    "prompt": "A score asks a flutist to play gradually louder as the hero approaches the castle. Which musical instruction describes this?",
+    "answer": "Crescendo",
+    "options": [
+      "Crescendo",
+      "Decrescendo",
+      "Rest",
+      "Staccato"
+    ],
+    "explanation": "Crescendo means gradually increasing loudness.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-01",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-02",
+    "subject": "arts",
+    "prompt": "A guardian taps a steady pulse while a singer changes notes above it. What is the regular underlying pulse called?",
+    "answer": "Beat",
+    "options": [
+      "Beat",
+      "Timbre",
+      "Pitch",
+      "Harmony"
+    ],
+    "explanation": "The beat is the steady pulse around which rhythms are organized.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-01",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-03",
+    "subject": "arts",
+    "prompt": "A musician produces sound by buzzing their lips into the mouthpiece of a trumpet. Which instrument family includes it?",
+    "answer": "Brass",
+    "options": [
+      "Brass",
+      "Woodwind",
+      "String",
+      "Keyboard"
+    ],
+    "explanation": "Trumpets belong to the brass family and use the player’s vibrating lips.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-03",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-04",
+    "subject": "arts",
+    "prompt": "A player draws a bow across a cello. Which instrument family includes the cello?",
+    "answer": "String",
+    "options": [
+      "String",
+      "Brass",
+      "Woodwind",
+      "Electronic"
+    ],
+    "explanation": "A cello produces sound through vibrating strings.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-03",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-05",
+    "subject": "arts",
+    "prompt": "A castle play needs someone to design the scenery and arrange the stage environment. Which role is responsible for that design?",
+    "answer": "Set designer",
+    "options": [
+      "Set designer",
+      "Playwright",
+      "Usher",
+      "Audience member"
+    ],
+    "explanation": "The set designer creates the visual environment in which the play takes place.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-07",
+    "difficultyEstimate": 2,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-06",
+    "subject": "arts",
+    "prompt": "An actor speaks directly to the audience while the other characters are understood not to hear. What is this called?",
+    "answer": "An aside",
+    "options": [
+      "An aside",
+      "An overture",
+      "A costume fitting",
+      "A scene change"
+    ],
+    "explanation": "An aside is a remark directed to the audience or another character under that convention.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-07",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-07",
+    "subject": "arts",
+    "prompt": "An artist makes a lantern appear round by drawing one side lighter and the other darker. Which element of art is being varied?",
+    "answer": "Value",
+    "options": [
+      "Value",
+      "Tempo",
+      "Meter",
+      "Dialogue"
+    ],
+    "explanation": "Value describes how light or dark a color or area is.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-08",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-08",
+    "subject": "arts",
+    "prompt": "A mapmaker places a red marker against a green background to create strong color contrast. How are red and green related on a traditional artist’s color wheel?",
+    "answer": "Complementary colors",
+    "options": [
+      "Complementary colors",
+      "Identical colors",
+      "Two primary colors",
+      "Two neutral colors"
+    ],
+    "explanation": "Red and green are opposite each other on the traditional red-yellow-blue color wheel.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-08",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-09",
+    "subject": "arts",
+    "prompt": "A traveler creates a picture by gluing paper scraps and cloth onto a surface. What technique is this?",
+    "answer": "Collage",
+    "options": [
+      "Collage",
+      "Fresco",
+      "Engraving",
+      "Casting"
+    ],
+    "explanation": "Collage combines attached materials on a supporting surface.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-08",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  },
+  {
+    "id": "sample-v29-arts-10",
+    "subject": "arts",
+    "prompt": "Dancers repeat a sequence of steps together at the same time. Which word describes their timing?",
+    "answer": "Unison",
+    "options": [
+      "Unison",
+      "Solo",
+      "Silence",
+      "Improvisation only"
+    ],
+    "explanation": "Moving in unison means performing the same movement together at the same time.",
+    "aliases": [],
+    "modes": [
+      "quick",
+      "written"
+    ],
+    "topic": "Adventure trail scenarios",
+    "source": "Original Recall Rally adventure practice · version 29",
+    "kind": "sample",
+    "curriculumTopicId": "arts-05",
+    "difficultyEstimate": 3,
+    "difficultyRationale": "Editorial estimate: applies a familiar concept to a short adventure scenario.",
+    "difficultyStatus": "editorial_estimate",
+    "contentVersion": 1
+  }
+]
