@@ -27,15 +27,16 @@ function keep(question,correct,speed){
  try{var o=JSON.parse(localStorage.getItem(KEY)||'{}');if(!o||typeof o!=='object')o={};
  var id=String(question.id||question.prompt),v=o[id]||{asked:0,correct:0};v.asked++;if(correct){v.correct++;v.best=Math.min(v.best||99,speed);}o[id]=v;localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
 }
-var launch=document.createElement('button');launch.id='lib-launch';launch.type='button';launch.textContent='📚 Enter The Librarian';
-launch.setAttribute('aria-label','Open The Librarian literature game');
+var launch=document.createElement('button');launch.id='lib-launch';launch.type='button';launch.textContent='Take a rest in our nice peaceful library';
+launch.setAttribute('aria-label','Take a rest in our nice peaceful library');
 document.body.appendChild(launch);
 var root=null,c=null,ctx=null,frame=0,last=0,t=0,prior=null;
 var phase='intro',deck=[],question=null,round=0,correct=0,missed=0,points=0,lives=4,seconds=12,speed=0;
-var hero={x:150,jump:0,vy:0,inv:0,vx:0,facing:1},held={left:false,right:false},books=[],storm=0,spawn=0,shield=0,shieldReady=true;
+var hero={x:150,jump:0,vy:0,inv:0,vx:0,facing:1,pose:'ready',poseTime:0},held={left:false,right:false,duck:false},books=[],storm=0,spawn=0,shield=0,shieldReady=true;
 var warnings=[],dashCooldown=0,dashTime=0,stormHits=0,shakeTime=0,freezeOnHide=false,bookSprite=new Image();
 bookSprite.src='librarian/enchanted-book.svg';
-var heroNode=null,guardianNode=null;
+var heroNode=null,guardianNode=null,throwCount=0,defeatPending=false;
+var reducedMotion=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function el(id){return root?root.querySelector('#'+id):null;}
 function show(id,yes){var e=el(id);if(e)e.hidden=!yes;}
 function note(s){el('lib-feedback').textContent=s;}
@@ -50,16 +51,18 @@ function sync(){
  var bar=el('lib-attack-info');
  if(bar)bar.textContent=phase==='storm'
   ?('BOOK STORM · '+Math.max(0,Math.ceil(storm))+'s  |  '+(warnings.length?'⚠ Incoming: '+warnings[warnings.length-1].name:'Read the glowing lanes'))
-  :phase==='review'?'The Librarian reveals the answer':phase==='question'?'BUZZ before the clock ends':'Watch the shelves';
+  :phase==='defeated'?'Defeated · Next Question to recover':phase==='defeat-hit'?'A final blow!':phase==='review'?'The Librarian reveals the answer':phase==='question'?'BUZZ before the clock ends':'Watch the shelves';
 }
+function clearHeld(){held.left=false;held.right=false;held.duck=false;if(root){['lib-left','lib-right','lib-duck'].forEach(function(id){var n=el(id);if(n)n.dataset.held='false';});}}
 function reset(){
- hero={x:150,jump:0,vy:0,inv:0,vx:0,facing:1};held.left=false;held.right=false;
+ hero={x:150,jump:0,vy:0,inv:0,vx:0,facing:1,pose:'ready',poseTime:0};clearHeld();
  books=[];warnings=[];storm=0;spawn=0;shield=0;shieldReady=true;
- dashTime=0;dashCooldown=0;stormHits=0;shakeTime=0;
+ dashTime=0;dashCooldown=0;stormHits=0;shakeTime=0;throwCount=0;defeatPending=false;sparks=[];
 }
 function start(){deck=shuffle(pool()).slice(0,COUNT);round=0;correct=0;missed=0;points=0;lives=4;reset();next();}
 function next(){
- if(round>=COUNT){end(true);return;}
+ if(phase==='defeated')lives=4; // A new question revives the hero; no attack can leak across rounds.
+ if(round>=COUNT){end(lives>0);return;}
  question=deck[round++];phase='question';seconds=12;speed=0;reset();
  el('lib-question').textContent=question.prompt;
  el('lib-source').textContent=question.source||'Recall Rally · literature question';
@@ -83,19 +86,45 @@ function pass(){
  keep(question,false,speed);show('lib-form',false);show('lib-buzz',false);attack();
 }
 function attack(){
- missed++;phase='storm';storm=7.3;spawn=.15;warnings=[];books=[];stormHits=0;
- note('Missed! Watch the glowing attack lane. Jump, sidestep or dash; shield blocks one book.');
+ missed++;phase='storm';storm=8;spawn=.12;warnings=[];books=[];stormHits=0;throwCount=0;
+ hero.pose='ready';hero.poseTime=0;defeatPending=false;clearHeld();
+ note('Missed! HIGH books: hold DUCK. LOW books: jump, move, or shield.');
  var jumpButton=el('lib-jump');if(jumpButton)jumpButton.focus();
  sync();
 }
-function jump(){if(phase==='storm'&&hero.jump===0&&hero.vy===0){hero.vy=540;spawnBurst(hero.x,FLOOR-6,'#f6d6a0',6);}}
+function jump(){
+ if(phase!=='storm'||held.duck||hero.pose==='ducking'||hero.pose==='hit'||hero.pose==='recovering'||hero.jump>0||hero.vy!==0)return;
+ hero.vy=545;hero.pose='jumping';spawnBurst(hero.x,FLOOR-6,'#f6d6a0',6);
+}
 function dash(){
- if(phase!=='storm'||dashCooldown>0)return;
+ if(phase!=='storm'||dashCooldown>0||held.duck||hero.pose==='hit'||hero.pose==='recovering')return;
  hero.facing=(held.left&&!held.right)?-1:(held.right&&!held.left)?1:hero.facing;
- dashTime=.23;dashCooldown=2.2;hero.inv=Math.max(hero.inv,.24);
+ dashTime=.21;dashCooldown=2.2;hero.inv=Math.max(hero.inv,.25);
  spawnBurst(hero.x,FLOOR-hero.jump-43,'#91def2',10);sync();
 }
 function useShield(){if(phase==='storm'&&shieldReady){shieldReady=false;shield=1.3;sync();}}
+function hitBook(b){
+ if(phase!=='storm'||b.hit)return;
+ b.hit=true;
+ if(shield>0){shield=0;points+=20;spawnBurst(b.x,b.y,'#8fedff',16);note('Shield spell! The book dissolves into sparks.');return;}
+ if(hero.inv>0||defeatPending)return;
+ lives=Math.max(0,lives-1);stormHits++;hero.inv=1.0;hero.pose='hit';hero.poseTime=.30;
+ shakeTime=reducedMotion?0:.12;spawnBurst(b.x,b.y,'#f8b7aa',14);
+ if(lives===0){
+  defeatPending=true;phase='defeat-hit';books=[];warnings=[];clearHeld();
+  note('The Librarian wins this round! Correct answer: '+question.answer+'. '+(question.explanation||''));
+ }else note('A book struck your hero. Recover and keep moving! '+lives+' hearts remain.');
+}
+function resolveDefeat(){
+ if(phase!=='defeat-hit')return;
+ phase='defeated';hero.pose='defeated';hero.poseTime=0;hero.vy=0;hero.jump=0;hero.vx=0;
+ books=[];warnings=[];clearHeld();dashTime=0;shield=0;
+ show('lib-next',round<COUNT);show('lib-start',true);el('lib-start').textContent='Restart adventure';
+ el('lib-question').textContent='The Librarian has defeated your hero!';
+ el('lib-source').textContent='You learned: '+question.answer+'. '+(question.explanation||'');
+ note('Your hero is resting. '+(round<COUNT?'Select Next Question to recover with four hearts, or restart.':'Restart to challenge the library again.'));
+ sync();
+}
 function end(win){
  phase='done';books=[];warnings=[];show('lib-form',false);show('lib-buzz',false);show('lib-next',false);show('lib-start',true);
  el('lib-start').textContent='Play again';
@@ -105,57 +134,79 @@ function end(win){
 }
 var sparks=[];
 function spawnBurst(x,y,color,count){
+ if(reducedMotion)count=Math.min(3,count);
  for(var i=0;i<count;i++)sparks.push({x:x,y:y,vx:(Math.random()-.5)*170,vy:-Math.random()*140-30,life:.5+Math.random()*.35,color:color});
  if(sparks.length>80)sparks=sparks.slice(-80);
 }
 function bookWarning(){
- var kinds=[
-  {y:FLOOR-17,name:'LOW · JUMP',color:'#ffbf82'},
-  {y:FLOOR-55,name:'MID · MOVE',color:'#dca1ff'},
-  {y:FLOOR-111,name:'HIGH · STAY LOW',color:'#93dafa'}
- ];
- var type=kinds[Math.floor(Math.random()*kinds.length)];
- warnings.push({y:type.y,name:type.name,color:type.color,time:.7,max:.7,speed:250+Math.random()*45});
+ // Two deterministic, readable lanes: duck the high throw; jump or leave the low throw's path.
+ var high=(throwCount++%2)===0;
+ var type=high
+  ?{kind:'high',y:FLOOR-93,name:'HIGH · DUCK',color:'#9fe8fa'}
+  :{kind:'low',y:FLOOR-22,name:'LOW · JUMP / MOVE',color:'#ffbc81'};
+ warnings.push({kind:type.kind,y:type.y,name:type.name,color:type.color,time:.62,max:.62,speed:350});
 }
 function tick(dt){
  t+=dt;
  if(phase==='question'){seconds-=dt;if(seconds<=0){seconds=0;pass();}}
+ if(phase==='defeat-hit'){
+  hero.poseTime=Math.max(0,hero.poseTime-dt);
+  if(hero.poseTime===0)resolveDefeat();
+ }
  if(phase==='storm'){
+  var hitLocked=hero.pose==='hit'||hero.pose==='recovering';
+  if(hitLocked){
+   hero.poseTime=Math.max(0,hero.poseTime-dt);
+   if(hero.poseTime===0){
+    if(hero.pose==='hit'){hero.pose='recovering';hero.poseTime=.24;}
+    else hero.pose='ready';
+   }
+  }
+  var ducking=held.duck&&hero.jump===0&&dashTime===0&&!hitLocked;
   var dx=(held.right?1:0)-(held.left?1:0);
-  hero.vx+=(dx*390-hero.vx)*Math.min(1,dt*14);
+  var desired=hitLocked?0:dx*(ducking?155:390);
+  hero.vx+=(desired-hero.vx)*Math.min(1,dt*(hitLocked?18:14));
   if(dx)hero.facing=dx;
-  hero.x=Math.max(33,Math.min(W-33,hero.x+(dashTime>0?hero.facing*780:hero.vx)*dt));
-  if(dashTime>0)dashTime=Math.max(0,dashTime-dt);
+  if(!hitLocked)hero.x=Math.max(33,Math.min(W-33,hero.x+(dashTime>0?hero.facing*780:hero.vx)*dt));
+  dashTime=Math.max(0,dashTime-dt);
   dashCooldown=Math.max(0,dashCooldown-dt);
+  var previousJump=hero.jump;
   hero.jump=Math.max(0,hero.jump+hero.vy*dt);
   if(hero.vy!==0||hero.jump>0){
    hero.vy-=1300*dt;
-   if(hero.jump===0){hero.vy=0;spawnBurst(hero.x,FLOOR-2,'#cbbca5',5);}
+   if(hero.jump===0){hero.vy=0;if(previousJump>0)spawnBurst(hero.x,FLOOR-2,'#cbbca5',5);}
   }
-  hero.inv=Math.max(0,hero.inv-dt);shield=Math.max(0,shield-dt);
+  hero.inv=Math.max(0,hero.inv-dt);
+  shield=Math.max(0,shield-dt);
   shakeTime=Math.max(0,shakeTime-dt);
+  if(!hitLocked)hero.pose=ducking?'ducking':dashTime>0?'dashing':hero.jump>0?'jumping':dx?'moving':'ready';
   storm-=dt;spawn-=dt;
-  if(spawn<=0&&storm>1.0){bookWarning();spawn=.82+Math.random()*.22;}
+  if(spawn<=0&&storm>1.1){bookWarning();spawn=.92;}
   warnings.forEach(function(w){w.time-=dt;});
   warnings.filter(function(w){return w.time<=0;}).forEach(function(w){
-   books.push({x:W+40,y:w.y,speed:w.speed,angle:0,phase:Math.random()*6,color:w.color});
+   books.push({x:W+22,y:w.y,kind:w.kind,speed:w.speed,angle:0,phase:Math.random()*6,color:w.color,hit:false,dodged:false});
   });
   warnings=warnings.filter(function(w){return w.time>0;});
   books.forEach(function(b){
+   var before=b.x;
    b.x-=b.speed*dt;
-   var bodyY=FLOOR-hero.jump-54;
-   var collides=Math.abs(b.x-hero.x)<29&&Math.abs(b.y-bodyY)<39;
-   if(!b.hit&&collides){
-    b.hit=true;
-    if(shield>0){shield=0;points+=20;spawnBurst(b.x,b.y,'#8fedff',16);note('Shield spell! The enchanted book shatters into sparks.');}
-    else if(hero.inv<=0){lives--;stormHits++;hero.inv=1.05;shakeTime=.18;spawnBurst(b.x,b.y,'#f8b7aa',17);note('A book hit your hero! Keep dodging · '+lives+' hearts remain.');}
+   // Physics hitbox follows the *actual* body height, not the decorative cloak/hair.
+   var bodyTop=FLOOR-hero.jump-(hero.pose==='ducking'?48:116);
+   var bodyBottom=FLOOR-hero.jump-6;
+   var overlaps=b.x+23>hero.x-20&&b.x-23<hero.x+20&&b.y+15>bodyTop&&b.y-15<bodyBottom;
+   if(!b.hit&&overlaps&&hero.inv<=0)hitBook(b);
+   // Credit a legible, tactical duck or jump after the hazard passes the hero's x-position.
+   if(!b.hit&&!b.dodged&&before>=hero.x&&b.x<hero.x){
+    b.dodged=true;
+    if(b.kind==='high'&&hero.pose==='ducking'){points+=25;spawnBurst(hero.x,FLOOR-52,'#9fe8fa',8);note('Perfect duck! +25 points.');}
+    else if(b.kind==='low'&&hero.jump>43){points+=25;spawnBurst(hero.x,FLOOR-hero.jump,'#ffe0a5',8);note('Great leap! +25 points.');}
    }
   });
-  books=books.filter(function(b){return b.x>-62&&!b.hit;});
-  if(lives<=0)end(false);
-  else if(storm<=0){
-   phase='review';books=[];warnings=[];show('lib-next',true);
-   note('You survived the storm'+(stormHits===0?' without a hit!':'!')+' Correct answer: '+question.answer+'. '+(question.explanation||''));
+  books=books.filter(function(b){return b.x>-65&&!b.hit;});
+  if(phase==='storm'&&storm<=0){
+   phase='review';books=[];warnings=[];hero.pose='ready';hero.poseTime=0;clearHeld();hero.inv=0;
+   show('lib-next',true);
+   note('You survived'+(stormHits===0?' without a hit!':'!')+' Correct answer: '+question.answer+'. '+(question.explanation||''));
   }
  }
  sparks.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=190*dt;p.life-=dt;});
@@ -172,7 +223,7 @@ function scenery(){
  // This canvas contains only interactive hazards, telegraphs, particles, and light.
  ctx.clearRect(0,0,W,H);
  ctx.save();
- for(var i=0;i<12;i++){
+ for(var i=0;i<(reducedMotion?0:12);i++){
   var x=(i*137+32+t*(4+i%3))%W,y=(i*51+t*6)%350;
   ctx.fillStyle=i%2?'#d1aeeb77':'#ffe8ba66';
   ctx.beginPath();ctx.arc(x,y,1.3,0,Math.PI*2);ctx.fill();
@@ -180,14 +231,15 @@ function scenery(){
  ctx.restore();
 }
 function actor(){
- // Use the real saved customizable hero as a live SVG overlay.
- // A small silhouette fallback is drawn if older game versions lack the renderer.
+ // The saved customizable hero is the primary sprite. Use a pose-aware fallback only if absent.
  if(heroNode)return;
  ctx.save();ctx.translate(hero.x,FLOOR-hero.jump);
- ctx.fillStyle='#182a56';ctx.beginPath();ctx.ellipse(0,-52,21,45,0,0,Math.PI*2);ctx.fill();
- ctx.fillStyle='#e9b99e';ctx.beginPath();ctx.arc(0,-102,18,0,Math.PI*2);ctx.fill();
- ctx.strokeStyle='#a5dfff';ctx.lineWidth=4;
- if(shield>0){ctx.beginPath();ctx.ellipse(0,-57,36,62,0,0,Math.PI*2);ctx.stroke();}
+ if(hero.pose==='defeated'){ctx.translate(0,-10);ctx.rotate(-1.15);}
+ var ducking=hero.pose==='ducking';
+ ctx.fillStyle='#182a56';
+ ctx.beginPath();ctx.ellipse(0,ducking?-26:-52,ducking?26:21,ducking?22:45,0,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#e9b99e';ctx.beginPath();ctx.arc(ducking?10:0,ducking?-49:-102,ducking?14:18,0,Math.PI*2);ctx.fill();
+ if(shield>0){ctx.strokeStyle='#a5dfff';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(0,ducking?-37:-57,36,ducking?32:62,0,0,Math.PI*2);ctx.stroke();}
  ctx.restore();
 }
 function draw(){
@@ -195,7 +247,7 @@ function draw(){
  scenery();
  if(phase==='storm'){
   warnings.forEach(function(w){
-   var a=.25+.45*Math.sin(t*24),y=w.y;
+   var a=reducedMotion?.7:.25+.45*Math.sin(t*24),y=w.y;
    ctx.save();ctx.strokeStyle=w.color;ctx.globalAlpha=a;
    ctx.setLineDash([18,11]);ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(25,y);ctx.lineTo(W-20,y);ctx.stroke();
    ctx.setLineDash([]);ctx.fillStyle=w.color;ctx.beginPath();
@@ -235,19 +287,15 @@ function draw(){
 }
 function syncActors(){
  if(!root)return;
- var dx=(held.right?1:0)-(held.left?1:0);
  if(heroNode){
   heroNode.style.left=(hero.x/W*100)+'%';
   heroNode.style.bottom=((H-FLOOR+hero.jump)/H*100)+'%';
   heroNode.style.transform='translateX(-50%) scaleX('+hero.facing+')';
-  heroNode.className='lib-hero-sprite'+(phase==='storm'&&dx?' lib-running':'')+
-    (hero.jump>0?' lib-jumping':'')+(hero.inv>0?' lib-stagger':'')+
-    (dashTime>0?' lib-dashing':'');
-  heroNode.style.opacity=hero.inv>0&&Math.floor(t*12)%2?'.62':'1';
+  // Exactly one pose class: never combine looping run, hit and defeat animations.
+  heroNode.className='lib-hero-sprite lib-pose-'+hero.pose;
+  heroNode.style.opacity='1'; // No damage-timer flicker; injury is one finite animation.
  }
- if(guardianNode){
-  guardianNode.className='lib-guardian-sprite'+(phase==='storm'?' lib-casting':'');
- }
+ if(guardianNode)guardianNode.className='lib-guardian-sprite'+(phase==='storm'||phase==='defeat-hit'?' lib-casting':'');
 }
 function mountActors(){
  heroNode=document.createElement('div');heroNode.id='lib-hero-sprite';heroNode.className='lib-hero-sprite';
@@ -269,17 +317,36 @@ function animate(now){if(!root)return;var dt=Math.min(.033,Math.max(0,(now-last)
 function down(e){
  if(!root)return;
  if(e.key==='Escape'){close();return;}
- if(e.target===el('lib-answer'))return;
+ // Never capture keyboard gameplay actions while the student types an answer.
+ if(e.target===el('lib-answer')||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
  if(phase==='question'&&(e.code==='Space'||e.key==='Enter')){e.preventDefault();buzz();return;}
  if(phase!=='storm')return;
- if(['ArrowLeft','ArrowRight','ArrowUp','Space','KeyA','KeyD','KeyW','KeyS','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();
+ if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space','KeyA','KeyD','KeyW','KeyS','KeyQ','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();
  if(e.code==='ArrowLeft'||e.code==='KeyA')held.left=true;
  if(e.code==='ArrowRight'||e.code==='KeyD')held.right=true;
- if(e.code==='ArrowUp'||e.code==='Space'||e.code==='KeyW')jump();
- if(e.code==='KeyS')useShield();if(e.code==='ShiftLeft'||e.code==='ShiftRight')dash();
+ if(e.code==='ArrowDown'||e.code==='KeyS')held.duck=true;
+ if((e.code==='ArrowUp'||e.code==='Space'||e.code==='KeyW')&&!e.repeat)jump();
+ if(e.code==='KeyQ'&&!e.repeat)useShield();
+ if((e.code==='ShiftLeft'||e.code==='ShiftRight')&&!e.repeat)dash();
 }
-function up(e){if(e.code==='ArrowLeft'||e.code==='KeyA')held.left=false;if(e.code==='ArrowRight'||e.code==='KeyD')held.right=false;}
-function touch(id,key){var b=el(id);b.addEventListener('pointerdown',function(e){e.preventDefault();held[key]=true;b.dataset.held='true';try{b.setPointerCapture(e.pointerId);}catch(x){};});['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){b.addEventListener(ev,function(){held[key]=false;b.dataset.held='false';});});}
+function up(e){
+ if(e.code==='ArrowLeft'||e.code==='KeyA')held.left=false;
+ if(e.code==='ArrowRight'||e.code==='KeyD')held.right=false;
+ if(e.code==='ArrowDown'||e.code==='KeyS')held.duck=false;
+}
+function touch(id,key){
+ var b=el(id);
+ b.addEventListener('pointerdown',function(e){
+  if(phase!=='storm')return;
+  e.preventDefault();held[key]=true;b.dataset.held='true';
+  try{b.setPointerCapture(e.pointerId);}catch(x){}
+ });
+ ['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){
+  b.addEventListener(ev,function(){held[key]=false;b.dataset.held='false';});
+ });
+}
+function lostFocus(){clearHeld();last=performance.now();}
+
 function open(){
  if(root)return;freezeOnHide=false;prior=document.activeElement;
  root=document.createElement('div');root.id='lib-overlay';root.className='lib-game';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','The Librarian game');
@@ -291,8 +358,8 @@ function open(){
  '<div class="lib-actions"><button type="button" class="lib-btn primary" id="lib-start">ENTER THE ARCHIVES</button><button type="button" class="lib-btn primary" id="lib-buzz" hidden>⚡ BUZZ!</button>',
  '<form id="lib-form" class="lib-answer" hidden><label class="lib-small" for="lib-answer">Your answer:</label><input id="lib-answer" autocomplete="off" maxlength="100" aria-label="Your answer"><button type="submit" class="lib-btn secondary">Submit</button><button type="button" id="lib-pass" class="lib-btn">I missed it</button></form>',
  '<button type="button" id="lib-next" class="lib-btn secondary" hidden>Next question →</button></div>',
- '<div class="lib-controls"><button type="button" id="lib-left" class="lib-touch" aria-label="Move left">◀</button><button type="button" id="lib-right" class="lib-touch" aria-label="Move right">▶</button><button type="button" id="lib-jump" class="lib-touch" aria-label="Jump">↑ JUMP</button><button type="button" id="lib-dash" class="lib-touch" aria-label="Dash forward">✦ DASH</button><button type="button" id="lib-shield" class="lib-touch" aria-label="Shield">🛡 SHIELD</button></div>',
- '<div class="lib-instructions">During the storm: move ◀ ▶, jump ↑, dash ✦, shield 🛡. Keyboard: A/D or arrows, Space to jump, Shift to dash, S to shield. Space buzzes questions.</div></div></div>'
+ '<div class="lib-controls"><button type="button" id="lib-left" class="lib-touch" aria-label="Move left">◀</button><button type="button" id="lib-right" class="lib-touch" aria-label="Move right">▶</button><button type="button" id="lib-duck" class="lib-touch lib-duck-btn" aria-label="Duck - press and hold">↓ DUCK</button><button type="button" id="lib-jump" class="lib-touch" aria-label="Jump">↑ JUMP</button><button type="button" id="lib-dash" class="lib-touch" aria-label="Dash forward">✦ DASH</button><button type="button" id="lib-shield" class="lib-touch" aria-label="Shield">🛡 SHIELD</button></div>',
+ '<div class="lib-instructions">During the storm: move ◀ ▶, jump ↑, dash ✦, shield 🛡. Keyboard: A/D or Left/Right to move, S/Down to DUCK, Space/Up to jump, Shift to dash, Q to shield. Space buzzes questions.</div></div></div>'
  ].join('');
  document.body.appendChild(root);c=el('lib-canvas');ctx=c.getContext('2d');mountActors();
  el('lib-close').addEventListener('click',close);
@@ -306,19 +373,19 @@ function open(){
  el('lib-shield').addEventListener('click',useShield);el('lib-dash').addEventListener('click',dash);
  el('lib-dash').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')dash();});
  el('lib-shield').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')useShield();});
- touch('lib-left','left');touch('lib-right','right');
- document.addEventListener('keydown',down);document.addEventListener('keyup',up);
+ touch('lib-left','left');touch('lib-right','right');touch('lib-duck','duck');
+ document.addEventListener('keydown',down);document.addEventListener('keyup',up);window.addEventListener('blur',lostFocus);
  reset();phase='intro';t=0;last=performance.now();sync();syncActors();document.addEventListener('visibilitychange',visibilityChanged);frame=requestAnimationFrame(animate);el('lib-start').focus();
 }
 function visibilityChanged(){
  if(!root)return;
  freezeOnHide=document.hidden;
- if(freezeOnHide){held.left=false;held.right=false;}
+ if(freezeOnHide)clearHeld();
  last=performance.now();
 }
 function close(){
  if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',down);document.removeEventListener('keyup',up);
- document.removeEventListener('visibilitychange',visibilityChanged);root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;held.left=false;held.right=false;if(prior&&prior.focus)prior.focus();
+ document.removeEventListener('visibilitychange',visibilityChanged);window.removeEventListener('blur',lostFocus);clearHeld();root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;if(prior&&prior.focus)prior.focus();
 }
 launch.addEventListener('click',open);
 })();
