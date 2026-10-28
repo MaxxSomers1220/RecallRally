@@ -2296,7 +2296,7 @@ $('startup-warning').hidden=true;
 $('runtime-status').hidden=false;
 </script>
 
-<!-- The Librarian v3: all assets embedded for standalone offline play -->
+<!-- Fully self-contained Librarian duck and defeat update -->
 <style id="librarian-duck-styles">
 
 /* The Librarian — an optional arcade encounter for Recall Rally.
@@ -2623,7 +2623,7 @@ function bookWarning(){
  var type=high
   ?{kind:'high',y:FLOOR-93,name:'HIGH · DUCK',color:'#9fe8fa'}
   :{kind:'low',y:FLOOR-22,name:'LOW · JUMP / MOVE',color:'#ffbc81'};
- warnings.push({kind:type.kind,y:type.y,name:type.name,color:type.color,time:.62,max:.62,speed:350});
+ warnings.push({kind:type.kind,y:type.y,name:type.name,color:type.color,time:.55,max:.55,speed:350});
 }
 function tick(dt){
  t+=dt;
@@ -2853,7 +2853,7 @@ function open(){
  el('lib-dash').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')dash();});
  el('lib-shield').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')useShield();});
  touch('lib-left','left');touch('lib-right','right');touch('lib-duck','duck');
- document.addEventListener('keydown',down);document.addEventListener('keyup',up);window.addEventListener('blur',lostFocus);
+ document.addEventListener('keydown',down);document.addEventListener('keyup',up);if(window.addEventListener)window.addEventListener('blur',lostFocus);
  reset();phase='intro';t=0;last=performance.now();sync();syncActors();document.addEventListener('visibilitychange',visibilityChanged);frame=requestAnimationFrame(animate);el('lib-start').focus();
 }
 function visibilityChanged(){
@@ -2864,7 +2864,7 @@ function visibilityChanged(){
 }
 function close(){
  if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',down);document.removeEventListener('keyup',up);
- document.removeEventListener('visibilitychange',visibilityChanged);window.removeEventListener('blur',lostFocus);clearHeld();root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;if(prior&&prior.focus)prior.focus();
+ document.removeEventListener('visibilitychange',visibilityChanged);if(window.removeEventListener)window.removeEventListener('blur',lostFocus);clearHeld();root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;if(prior&&prior.focus)prior.focus();
 }
 launch.addEventListener('click',open);
 })();
