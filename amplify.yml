@@ -4,6 +4,7 @@ frontend:
     build:
       commands:
         - node tests/librarian.test.cjs
+        - node tests/librarian-dodge-v2.test.cjs
         - mkdir -p dist/librarian
         - cp index.html dist/index.html
         - cp librarian/librarian.css librarian/librarian.js librarian/library-backdrop.svg librarian/librarian-guardian.svg librarian/enchanted-book.svg dist/librarian/
