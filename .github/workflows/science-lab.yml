@@ -9,6 +9,8 @@ on:
       - 'assets/science-lab/**'
       - 'scripts/**'
       - 'tests/science-lab*'
+      - 'tests/home-launcher*'
+      - 'librarian/**'
       - 'Ellery_Recall_Rally_Librarian_v4.html'
       - 'amplify.yml'
       - '.github/workflows/science-lab.yml'
@@ -24,6 +26,7 @@ jobs:
           node-version: '22'
       - name: Shared bank, save, main-quest and Librarian regression checks
         run: |
+          node tests/home-launcher.test.cjs
           node tests/science-lab.test.cjs
           node tests/adventure-save.test.cjs
           node tests/bank-v29.test.cjs
@@ -38,6 +41,7 @@ jobs:
         run: |
           export NODE_PATH="$RUNNER_TEMP/fizzwick-browser/node_modules"
           export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          node tests/home-launcher-browser.test.cjs
           node tests/science-lab-browser.test.cjs
           node tests/science-lab-review.test.cjs
           node tests/science-lab-static.test.cjs
