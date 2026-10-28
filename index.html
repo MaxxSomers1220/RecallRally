@@ -584,6 +584,7 @@
 #home-view .home-welcome .intro{font-size:14px;line-height:1.5;margin:7px 0 0;max-width:750px}
 #home-view .panther-home-card{margin:0 0 15px;padding:11px 14px!important;gap:11px!important}
 #home-view .home-activities{margin-bottom:15px}
+#home-view.adventure-active .home-activities{display:none!important}
 #home-view .home-games-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:10px}
 #home-view .home-games-heading h2{font-size:23px;letter-spacing:-.5px;margin:4px 0 0}
 #home-view .home-games-heading .eyebrow{font-size:10px;letter-spacing:1.2px}
@@ -685,7 +686,7 @@
  <section class="home-activities" aria-labelledby="home-games-title"><div class="home-games-heading"><div><span class="eyebrow">CHOOSE YOUR NEXT CHALLENGE</span><h2 id="home-games-title">Pick a game</h2></div><span class="hint">Five ways to practice and explore</span></div><div class="home-activity-grid" role="group" aria-label="Choose a game"><button type="button" class="mode-tab home-choice home-choice-quick" id="mode-quick" aria-pressed="false" aria-controls="setup-panel"><span class="home-choice-icon" aria-hidden="true">ϟ</span><strong>Quick Recall</strong><small>Buzz first. Say your answer.</small><span class="home-choice-cta">Practice →</span></button>
    <button type="button" class="mode-tab home-choice home-choice-written" id="mode-written" aria-pressed="false" aria-controls="setup-panel"><span class="home-choice-icon" aria-hidden="true">▤</span><strong>Written Practice</strong><small>Four choices. Think it through.</small><span class="home-choice-cta">Practice →</span></button>
    <button type="button" class="mode-tab home-choice home-choice-adventure" id="mode-adventure" aria-pressed="false" aria-controls="adventure-panel"><span class="home-choice-icon" aria-hidden="true">✦</span><strong>Rescue Rigby</strong><small>Explore ten magical worlds.</small><span class="home-choice-cta">Adventure →</span></button>
-   <button type="button" class="home-choice home-choice-library" id="lib-launch" ><span class="home-choice-icon" aria-hidden="true">▦</span><strong>The Librarian</strong><small>A not-so-restful library.</small><span class="home-choice-cta">Enter library →</span></button>
+   <button type="button" class="home-choice home-choice-library" id="lib-launch" disabled title="The Librarian loads in the hosted or complete offline game"><span class="home-choice-icon" aria-hidden="true">▦</span><strong>The Librarian</strong><small>A not-so-restful library.</small><span class="home-choice-cta">Enter library →</span></button>
    <button type="button" class="home-choice home-choice-science" id="open-science-lab" ><span class="home-choice-icon" aria-hidden="true">⚗</span><strong>Science Lab</strong><small>Explore with Professor Fizzwick.</small><span class="home-choice-cta">Explore lab →</span></button></div></section>
  <section class="quest-backup-card" id="quest-home-card" aria-labelledby="quest-home-title">
   <h2 id="quest-home-title">The Quest for Rigby</h2>
@@ -1764,7 +1765,7 @@ function finish(){
  const actions=$('summary-actions');if(missed.length)actions.append(button('Rally the missed questions ↗','primary',()=>startRound(missed.map(x=>x.q))));actions.append(button('Choose a new round','secondary',goHome));
  showView('summary');window.scrollTo({top:0,behavior:'instant'});$('summary-title').focus({preventScroll:true});
 }
-function goHome(){stopTimers();game=null;showView('home');setup();window.scrollTo({top:0,behavior:'instant'})}
+function goHome(){stopTimers();game=null;$('home-view').classList.remove('home-choice-open');for(const m of ['quick','written','adventure'])$(`mode-${m}`).setAttribute('aria-pressed','false');showView('home');setup();window.scrollTo({top:0,behavior:'instant'})}
 function showDialog(id){if(questWalking)cancelQuestTravel();if(duel&&!duel.paused)pauseQuest();if(game&&!game.paused&&!['result','summary'].includes(game.phase))togglePause();if(id==='pack-dialog'){renderPack();$('pack-status').textContent=''}$(id).showModal()}
 function packStatus(text,error=false){$('pack-status').textContent=text;$('pack-status').classList.toggle('error',error)}
 function renderPack(){const root=$('pack-list');root.replaceChildren();const h=document.createElement('h3');h.textContent=`My questions (${customPack.length} / 1000)`;root.append(h);if(!customPack.length){const p=document.createElement('p');p.className='empty';p.textContent='Your pack is empty. Start with one good question.';root.append(p)}for(const q of customPack){const row=document.createElement('div');row.className='pack-row';const text=document.createElement('div');text.textContent=q.prompt;const small=document.createElement('small');small.textContent=[subjectName(q.subject),q.topic,(q.modes||[]).length===1?((q.modes[0]==='written'?'Written only':'Quick Recall only')):'Both modes'].filter(Boolean).join(' · ');text.append(small);row.append(text,button('Remove','textbtn',()=>{customPack=customPack.filter(x=>x.id!==q.id);savePack();renderPack();setup();packStatus('Question removed.')}));root.append(row)}setup();$('export-pack').disabled=!customPack.length}
