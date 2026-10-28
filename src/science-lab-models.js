@@ -1,0 +1,22 @@
+// Optional, ungraded models. Scientific explanations are existing bank records.
+const ScienceLabModels=(()=>{
+ const specs={
+  potion:{source:'elementary-science-02',title:'Water can change state',control:'Change only the temperature',settings:['Keep water liquid','Cool it until it freezes'],predictions:['Liquid water','Solid ice'],ask:'What state will the water be in?',scope:'The same water stays in the cup. Changes are shown in steps, not real time.'},
+  circuit:{source:'elementary-science-05',title:'Find the gap',control:'Change only the switch',settings:['Open the switch','Close the switch'],predictions:['Lamp off','Lamp on'],ask:'What will the lamp do?',scope:'A battery, conducting wires and a working lamp. Keep all parts the same except the switch.'},
+  creature:{source:'sample-science-6',title:'A leaf needs light',control:'Change only the light',settings:['Block the light','Let light reach the leaf'],predictions:['No photosynthesis shown','Photosynthesis shown'],ask:'Will this model show photosynthesis?',scope:'Water and carbon dioxide are supplied. This model tracks photosynthesis, not all plant processes. It does not grow the fantasy creature.'},
+  weather:{source:'sample-v29-science-04',title:'Where do drops come from?',control:'Change only the cooling',settings:['Leave the water vapor alone','Cool the vapor to form drops'],predictions:['Water vapor','Liquid drops'],ask:'What will we observe?',scope:'The model cools moist air enough for condensation. Dots are symbols; water vapor is invisible. This is not magic rain.'},
+  observatory:{source:'elementary-science-14',title:'Does the Moon make light?',control:'Change only the screen',settings:['Block the lamp','Remove the screen'],predictions:['The ball stays dark','The ball reflects lamp light'],ask:'What will the ball do?',scope:'A lamp stands for the Sun; a ball stands for the Moon. The lamp stays on. Keep the ball in the same place.'}
+ };
+ function get(id){const s=specs[id],q=s&&SAMPLES.find(q=>q.id===s.source&&q.subject==='science');return q?{...s,record:q}:null}
+ function outcome(id,setting){if(!get(id)||![0,1].includes(setting))throw Error('Invalid model condition');return setting}
+ function diagram(id,setting,observed){
+  const active=observed&&setting===1;let art='';
+  if(id==='potion')art='<path d="M105 35H295L278 195H122Z" fill="#a9dfde22" stroke="#d7e8d4" stroke-width="5"/>'+(active?'<path d="M132 95H268V181H132Z" fill="#b8d8ee" stroke="#f2f8e7" stroke-width="3"/><path d="m132 95 68 86 68-86M132 138H268" stroke="#fff4d7" stroke-width="2"/>':'<path d="M122 110Q200 96 278 110L269 185H131Z" fill="#80cfc7"/>');
+  if(id==='circuit')art='<path d="M105 150V75H170M230 75H300V150H105" fill="none" stroke="'+(active?'#f6d585':'#9bb6b2')+'" stroke-width="8"/><path d="M170 75 '+(active?'230 75':'221 40')+'" stroke="#edd7a4" stroke-width="6"/><path d="M91 131H119V170H91Z" fill="#c1c9a0"/><circle cx="300" cy="105" r="29" fill="'+(active?'#ffe5a0':'#526d80')+'" stroke="#e3c295" stroke-width="4"/>';
+  if(id==='creature')art='<path d="M200 188V83M200 131Q121 65 126 138Q155 169 200 147M200 112Q271 49 276 119Q245 154 200 129" fill="#8fbb94" stroke="#dae3a6" stroke-width="4"/><circle cx="86" cy="49" r="27" fill="#ffe4a1"/>'+(setting===0?'<path d="M121 15V200" stroke="#8a95a5" stroke-width="13"/>':'<path d="m116 57 47 21m-52-4 37 38" stroke="#f4d183" stroke-width="4"/>')+(active?'<g fill="#d6f1ed"><circle cx="232" cy="64" r="8"/><circle cx="255" cy="36" r="6"/><circle cx="224" cy="17" r="4"/></g>':'');
+  if(id==='weather')art='<path d="M83 186H317M94 65H306" stroke="#d4d3bd" stroke-width="4"/>'+Array.from({length:9},(_,i)=>'<circle cx="'+(active?135+i%3*66:100+i*27)+'" cy="'+(active?100+Math.floor(i/3)*30:95+i%3*22)+'" r="'+(active?10:4)+'" fill="'+(active?'#9adce5':'#e4efde')+'"/>').join('');
+  if(id==='observatory')art=(setting===1?'<path d="m71 86 225-32v127L71 112Z" fill="#ffdf8a" opacity=".13"/>':'<path d="m71 86 86-12v58l-86-20Z" fill="#ffdf8a" opacity=".13"/>')+'<path d="M48 77H80V119H48Z" fill="#e8c78d"/><circle cx="295" cy="112" r="62" fill="'+(active?'#cce0d1':'#3d526c')+'" stroke="#d3d3b5" stroke-width="3"/><circle cx="310" cy="92" r="14" fill="#819c9d" opacity=".35"/>'+(setting===0?'<path d="M157 22V200" stroke="#9aa4b1" stroke-width="14"/>':'');
+  return '<svg viewBox="0 0 400 220" role="img" aria-label="'+esc(get(id).title)+': '+(observed?esc(get(id).predictions[outcome(id,setting)]):'condition ready; make a prediction')+'">'+art+'</svg>';
+ }
+ return{get,outcome,diagram};
+})();

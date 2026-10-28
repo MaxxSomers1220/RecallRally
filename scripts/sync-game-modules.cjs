@@ -9,7 +9,7 @@ const a=html.indexOf('/* QUEST_SAVES_START'),b=html.indexOf('/* QUEST_SAVES_END 
 if(a<0||b<a)throw Error('Adventure save embed markers not found');
 html=html.slice(0,a)+quest+html.slice(b);
 const art={room:'data:image/svg+xml;base64,'+Buffer.from(read('assets/science-lab/laboratory.svg')).toString('base64'),professor:read('assets/science-lab/professor-fizzwick.svg')};
-const script='/* SCIENCE_LAB_START */\nconst SCIENCE_LAB_ART='+JSON.stringify(art).replace(/</g,'\\u003c')+';\n'+read('src/science-lab.js')+'\n/* SCIENCE_LAB_END */';
+const script='/* SCIENCE_LAB_START */\nconst SCIENCE_LAB_ART='+JSON.stringify(art).replace(/</g,'\\u003c')+';\n'+read('src/science-lab-models.js')+'\n'+read('src/science-lab.js')+'\n/* SCIENCE_LAB_END */';
 if(html.includes('/* SCIENCE_LAB_START */'))html=html.replace(/\/\* SCIENCE_LAB_START \*\/[\s\S]*?\/\* SCIENCE_LAB_END \*\//,script);
 else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n\n'+script);
 const css='<style id="science-lab-styles">\n'+read('src/science-lab.css')+'\n</style>';

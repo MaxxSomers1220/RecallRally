@@ -9,6 +9,7 @@ const ScienceLab=(()=>{
   {id:'weather',name:'Weather Machine',badge:'Weather Keeper',color:'#91d6f2',topics:['science-04','science-05'],keywords:/weather|climate|atmosphere|water cycle|earth|rock|soil|mineral|fossil/i,goal:'Repair five weather controls.',win:'The tiny magical sky is balanced!',mishap:'A tiny imaginary cloud is raining teacups. Fizzwick has brought an umbrella.',repair:'Apply the explanation to repair the next weather control.'},
   {id:'observatory',name:'Star Observatory',badge:'Starlight Explorer',color:'#e8bcf2',topics:['science-06'],keywords:/solar|planet|astronom|space|sun|moon|star|orbit/i,goal:'Align five telescope markers.',win:'Fizzwick’s fictional Teapot constellation shines!',mishap:'The telescope has located Fizzwick’s left slipper instead of the sky.',repair:'Apply the explanation to realign the telescope.'}
  ];
+ let bench=null;
  let initialized=false,data=empty(),run=null,storageMessage='',invalidSave=false,notice='';
  const stationById=id=>STATIONS.find(s=>s.id===id);
  function empty(){return{version:1,completed:[],seen:{},records:{},includeCustom:false}}
@@ -29,7 +30,7 @@ const ScienceLab=(()=>{
  }
  function refreshSaveNote(){const el=$('sl-save-status');if(el){el.textContent=storageMessage||'Laboratory discoveries save in this browser on this device.';el.classList.toggle('sl-storage-warning',invalidSave||!!storageMessage&&!storageMessage.startsWith('✓'))}}
  function loadProfile(){
-  if($('science-lab')?.open)$('science-lab').close();run=null;notice='';
+  if($('science-lab')?.open)$('science-lab').close();run=null;bench=null;notice='';
   const result=QuestSaves.readSideQuest(ID,validate);data=result.data||empty();
   if(!result.data)data.includeCustom=selectedQuestionSources().includes('custom');
   invalidSave=result.invalid;storageMessage=result.error||(result.data?'✓ Laboratory discoveries saved on this device':'');
@@ -61,7 +62,7 @@ const ScienceLab=(()=>{
   if(!initialized)return;
   if(questWalking)cancelQuestTravel();if(duel?.phase==='open'&&!duel.paused)pauseQuest();
   if(game&&!game.paused&&!['summary','result'].includes(game.phase))togglePause();
-  run=null;notice='';renderHub();showDialog('science-lab');$('sl-title').focus({preventScroll:true});
+  run=null;bench=null;notice='';renderHub();showDialog('science-lab');$('sl-title').focus({preventScroll:true});
  }
  function close(){if($('science-lab').open)$('science-lab').close()}
  function professor(mood='calm'){return SCIENCE_LAB_ART.professor.replace('class="sl-fizzwick"','class="sl-fizzwick '+(mood==='mishap'?'is-surprised':'')+'"')}
@@ -70,12 +71,12 @@ const ScienceLab=(()=>{
  function header(subtitle){return '<header class="sl-header"><div><span class="sl-eyebrow">RECALL RALLY · SCIENCE SIDE QUEST</span><h2 id="sl-title" tabindex="-1">The Alchemist’s Science Lab</h2><p>'+esc(subtitle)+'</p></div><div class="sl-header-actions"><button class="sl-quiet" id="sl-sound" aria-pressed="'+soundOn+'">Sound '+(soundOn?'on':'off')+'</button><button class="sl-quiet" id="sl-close" aria-label="Leave the Science Lab">Return to adventure ×</button></div></header>'}
  function footer(){return '<footer class="sl-footer"><span>Magical effects are make-believe. Learn real science from your existing question bank.</span><span id="sl-save-status" role="status"></span></footer>'}
  function bindCommon(){
-  $('sl-close').onclick=close;$('sl-sound').onclick=()=>{setSoundPreference(!soundOn);$('sl-sound').textContent='Sound '+(soundOn?'on':'off');$('sl-sound').setAttribute('aria-pressed',String(soundOn))};refreshSaveNote();
+  $('sl-close').onclick=close;if($('sl-open-model'))$('sl-open-model').onclick=()=>openModel(run.station.id);$('sl-sound').onclick=()=>{setSoundPreference(!soundOn);$('sl-sound').textContent='Sound '+(soundOn?'on':'off');$('sl-sound').setAttribute('aria-pressed',String(soundOn))};refreshSaveNote();
  }
  function renderHub(){
   const earned=data.completed.length,custom=sourceQuestions('custom').filter(eligible).length;
-  $('science-lab').innerHTML=header('Five experiments. One wonderfully wonky laboratory.')+'<div class="sl-body sl-hub"><section class="sl-mission"><div class="sl-hub-professor">'+professor()+'</div><div><span class="sl-eyebrow">A MESSAGE FROM PROFESSOR FIZZWICK</span><h3>“A little help, my brilliant apprentice?”</h3><p>My experiments have gone delightfully sideways! Choose a station, answer five real science questions, and help me put things right.</p></div><div class="sl-hub-hero">'+heroArt()+'<span>'+esc(heroName)+'</span></div></section>'+
-   '<div class="sl-room" style="background-image:url('+SCIENCE_LAB_ART.room+')"><div class="sl-room-sign">FIZZ • WICK • WORKSHOP<span>Choose any station to investigate</span></div><div class="sl-stations">'+STATIONS.map(s=>'<button class="sl-station '+(data.completed.includes(s.id)?'is-discovered':'')+'" data-sl-station="'+s.id+'" style="--station-color:'+s.color+'" aria-label="'+s.name+(data.completed.includes(s.id)?', discovery badge earned, replay experiment':', start a five-question experiment')+'">'+equipment(s,data.completed.includes(s.id)?5:0,'hub')+'<strong>'+s.name+'</strong><span>'+(data.completed.includes(s.id)?'✓ '+s.badge:'5 questions · explore →')+'</span></button>').join('')+'</div></div>'+
+  $('science-lab').innerHTML=header('Five experiments. One wonderfully wonky laboratory.')+'<div class="sl-body sl-hub"><section class="sl-mission"><div class="sl-hub-professor">'+professor()+'</div><div><span class="sl-eyebrow">A MESSAGE FROM PROFESSOR FIZZWICK</span><h3>“A little help, my brilliant apprentice?”</h3><p>Pick a station. Try its science model, then answer five questions. Read each explanation to fix a step and keep a badge.</p></div><div class="sl-hub-hero">'+heroArt()+'<span>'+esc(heroName)+'</span></div></section>'+
+   '<p class="sl-route">1 · Choose a station <span>→</span> 2 · Predict &amp; observe (optional) <span>→</span> 3 · Answer five questions <span>→</span> 4 · Keep your badge</p><div class="sl-room" style="background-image:url('+SCIENCE_LAB_ART.room+')"><div class="sl-room-sign">FIZZ • WICK • WORKSHOP<span>Choose any station to investigate</span></div><div class="sl-stations">'+STATIONS.map(s=>'<button class="sl-station '+(data.completed.includes(s.id)?'is-discovered':'')+'" data-sl-station="'+s.id+'" style="--station-color:'+s.color+'" aria-label="'+s.name+(data.completed.includes(s.id)?', discovery badge earned, replay experiment':', start a five-question experiment')+'">'+equipment(s,data.completed.includes(s.id)?5:0,'hub')+'<strong>'+s.name+'</strong><span>'+(data.completed.includes(s.id)?'✓ '+s.badge:'5 questions · explore →')+'</span></button>').join('')+'</div></div>'+
    '<section class="sl-discovery-shelf" aria-label="Laboratory discoveries"><span class="sl-prism-token">'+prismIcon()+'</span><div><strong>'+(earned===5?'The Alchemist’s Prism is yours!':earned+' / 5 discovery badges')+'</strong><p>'+(earned===5?'Your artifact is displayed on the adventure map. It is cosmetic and never answers or skips questions.':'Finish all five stations to earn The Alchemist’s Prism. Mistakes never remove badges or Rigby’s seals.')+'</p></div><div class="sl-badges">'+STATIONS.map(s=>'<span class="sl-badge '+(data.completed.includes(s.id)?'earned':'')+'" title="'+s.badge+'" aria-label="'+s.badge+': '+(data.completed.includes(s.id)?'earned':'not yet earned')+'">'+(data.completed.includes(s.id)?'✓':'◇')+'</span>').join('')+'</div></section>'+
    '<div class="sl-hub-tools">'+(custom?'<label><input type="checkbox" id="sl-custom" '+(data.includeCustom?'checked':'')+'> Include my science study pack ('+custom+')</label>':'<span>Uses Recall Rally’s built-in science bank.</span>')+'<span>Unfinished experiments restart; completed badges are kept.</span><button class="sl-quiet" id="sl-export">Export lab backup</button><label class="sl-import">Import lab backup<input id="sl-import" type="file" accept="application/json,.json"></label>'+(invalidSave?'<button class="sl-quiet" id="sl-repair-save">Replace damaged lab save</button>':'')+'</div><p id="sl-notice" role="status">'+esc(notice)+'</p></div>'+footer();
   bindCommon();$('science-lab').querySelectorAll('[data-sl-station]').forEach(b=>b.onclick=()=>start(b.dataset.slStation));
@@ -93,14 +94,14 @@ const ScienceLab=(()=>{
   noteSeen(q);RallyLearning.present(run,q,'science-lab');renderExperiment();$('sl-prompt').focus({preventScroll:true});
  }
  function choose(index){
-  if(!run||run.phase!=='question'||run.paused||run.profileId!==RallyLearning.activeProfile().id||!Number.isInteger(index)||index<0||index>3)return;
+  if(bench||!run||run.phase!=='question'||run.paused||run.profileId!==RallyLearning.activeProfile().id||!Number.isInteger(index)||index<0||index>3)return;
   const q=run.deck[run.index];run.phase='feedback';run.selected=index;run.correct=run.choices[index]===q.answer;
   if(run.correct){run.correctCount++;run.steps++}
   RallyLearning.record(run,q,run.correct?'correct':'incorrect','choice',true);
   tone(run.correct?'correct':'miss');renderExperiment();$('sl-next').focus({preventScroll:true});
  }
  function next(){
-  if(!run||run.phase!=='feedback')return;
+  if(bench||!run||run.phase!=='feedback')return;
   // Applying the existing explanation repairs a mishap, never changes its grade.
   if(!run.correct)run.steps++;
   if(run.index===COUNT-1){finishExperiment();return}
@@ -114,7 +115,7 @@ const ScienceLab=(()=>{
  }
  function machinePanel(){
   const s=run.station,mishap=run.phase==='feedback'&&!run.correct;
-  return '<aside class="sl-experiment '+(mishap?'sl-mishap':run.correct?'sl-success':'')+'" aria-label="Interactive '+s.name+'"><div class="sl-experiment-heading"><span>'+esc(s.goal)+'</span><strong>'+run.steps+' / 5 repaired</strong></div><div class="sl-stage" style="background-image:url('+SCIENCE_LAB_ART.room+');--station-color:'+s.color+'" data-sl-progress="'+run.steps+'" data-sl-machine="'+s.id+'">'+equipment(s,run.steps,'experiment')+'<div class="sl-hero">'+heroArt(run.correct?'cast':'idle')+'</div><div class="sl-professor">'+professor(mishap?'mishap':'calm')+'</div><div class="sl-poof" aria-hidden="true">✦ · ✧</div></div><div class="sl-fizzwick-line"><strong>Professor Fizzwick</strong><p>'+esc(mishap?s.mishap:run.correct?'“Brilliant thinking! Another piece of our experiment is working.”':'“Take your time. A discovery begins with a question.”')+'</p></div><div class="sl-step-track" aria-label="'+run.steps+' of 5 experiment steps repaired">'+Array.from({length:COUNT},(_,i)=>'<span class="'+(i<run.steps?'repaired':'')+'">'+(i<run.steps?'✓':i+1)+'</span>').join('')+'</div></aside>';
+  return '<aside class="sl-experiment '+(mishap?'sl-mishap':run.correct?'sl-success':'')+'" aria-label="Interactive '+s.name+'"><div class="sl-experiment-heading"><span>'+esc(s.goal)+'</span><strong>'+run.steps+' / 5 repaired</strong></div><button class="sl-quiet sl-model-link" id="sl-open-model">Try a science model: predict → observe</button><div class="sl-stage" style="background-image:url('+SCIENCE_LAB_ART.room+');--station-color:'+s.color+'" data-sl-progress="'+run.steps+'" data-sl-machine="'+s.id+'">'+equipment(s,run.steps,'experiment')+'<div class="sl-hero">'+heroArt(run.correct?'cast':'idle')+'</div><div class="sl-professor">'+professor(mishap?'mishap':'calm')+'</div><div class="sl-poof" aria-hidden="true">✦ · ✧</div></div><div class="sl-fizzwick-line"><strong>Professor Fizzwick</strong><p>'+esc(mishap?s.mishap:run.correct?'“Brilliant thinking! Another piece of our experiment is working.”':'“Take your time. A discovery begins with a question.”')+'</p></div><div class="sl-step-track" aria-label="'+run.steps+' of 5 experiment steps repaired">'+Array.from({length:COUNT},(_,i)=>'<span class="'+(i<run.steps?'repaired':'')+'">'+(i<run.steps?'✓':i+1)+'</span>').join('')+'</div></aside>';
  }
  function renderExperiment(){
   const q=run.deck[run.index],s=run.station,answered=run.phase==='feedback',topic=CURRICULUM_TOPICS.find(t=>t.id===q.curriculumTopicId)?.title||q.topic||'Science practice';
@@ -136,15 +137,31 @@ const ScienceLab=(()=>{
    const result=QuestSaves.saveSideQuest(ID,incoming,validate);if(!result.ok)throw Error(result.error);data=incoming;invalidSave=false;storageMessage='✓ Laboratory discoveries saved on this device';notice='Lab backup imported.';renderHub();
   }catch(e){notice='Lab import did not finish: '+e.message;const el=$('sl-notice');if(el)el.textContent=notice}finally{input.value=''}
  }
+ function openModel(id){
+  if(!ScienceLabModels.get(id))return;
+  if(run&&run.phase==='question'){run.paused=true;RallyLearning.syncPause(run)}
+  bench={id,setting:0,prediction:null,observed:false,checked:0};renderModel();
+ }
+ function renderModel(){
+  const m=ScienceLabModels.get(bench.id),result=bench.observed?ScienceLabModels.outcome(bench.id,bench.setting):null;
+  $('science-lab').innerHTML=header('Predict → change one thing → observe → compare')+'<div class="sl-body sl-model"><section><span class="sl-eyebrow">OPTIONAL SCIENCE MODEL · NO GRADE</span><h3>'+esc(m.title)+'</h3><p>'+esc(m.scope)+'</p><fieldset><legend>'+esc(m.control)+'</legend>'+m.settings.map((text,i)=>'<button class="sl-quiet" data-sl-condition="'+i+'" aria-pressed="'+(bench.setting===i)+'">'+esc(text)+'</button>').join('')+'</fieldset><fieldset><legend>'+esc(m.ask)+'</legend>'+m.predictions.map((text,i)=>'<button class="sl-quiet" data-sl-predict="'+i+'" aria-pressed="'+(bench.prediction===i)+'">'+(i+1)+' · '+esc(text)+'</button>').join('')+'</fieldset><button class="sl-next" id="sl-observe" '+(bench.prediction===null?'disabled':'')+'>Test this condition</button><button class="sl-quiet" id="sl-model-back">Back to my experiment</button></section><section class="sl-model-observation">'+ScienceLabModels.diagram(bench.id,bench.setting,bench.observed)+'<div id="sl-model-result" role="status">'+(bench.observed?'<strong>Observed: '+esc(m.predictions[result])+'</strong><p>'+(bench.prediction===result?'Your prediction matched.':'The result was different. That gives us a clue!')+'</p><p>'+esc(m.record.explanation)+'</p><p>Now change one thing and compare.</p>':'<strong>What do you notice?</strong><p>Choose a condition and make a prediction. Then test it.</p>')+'</div><details class="sl-source"><summary>Science source</summary><p>'+esc(m.record.prompt)+'</p><p>'+esc(m.record.explanation)+'</p>'+sourceLink(m.record)+'<small>Question ID: '+esc(m.record.id)+'</small></details><p class="sl-model-note">Simplified model, not a measured experiment. Your five question answers stay in My learning; these guesses are not graded.</p></section></div>'+footer();
+  bindCommon();
+  $('science-lab').querySelectorAll('[data-sl-condition]').forEach(b=>b.onclick=()=>{bench.setting=Number(b.dataset.slCondition);bench.prediction=null;bench.observed=false;renderModel()});
+  $('science-lab').querySelectorAll('[data-sl-predict]').forEach(b=>b.onclick=()=>predict(Number(b.dataset.slPredict)));
+  $('sl-observe').onclick=observe;$('sl-model-back').onclick=()=>{bench=null;if(run&&!bench){run.paused=document.hidden;RallyLearning.syncPause(run);renderExperiment();$('sl-prompt').focus({preventScroll:true})}else renderHub()};
+ }
+ function predict(index){if(!bench||![0,1].includes(index))return;bench.prediction=index;bench.observed=false;renderModel();$('sl-observe').focus({preventScroll:true})}
+ function observe(){if(!bench||bench.prediction===null)return;bench.observed=true;bench.checked|=1<<bench.setting;renderModel();$('sl-model-result').setAttribute('tabindex','-1');$('sl-model-result').focus({preventScroll:true})}
  function keydown(e){
   if(!$('science-lab').open||e.repeat||e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(e.target.tagName)||e.target.isContentEditable)return;
+  if(bench){if(/^[12]$/.test(e.key)){e.preventDefault();predict(Number(e.key)-1)}return}
   if(/^[1-4]$/.test(e.key)&&run?.phase==='question'){e.preventDefault();choose(Number(e.key)-1)}
   else if(e.key==='Enter'&&run?.phase==='feedback'&&e.target.tagName!=='BUTTON'){e.preventDefault();next()}
  }
  function init(){
   initialized=true;loadProfile();$('open-science-lab').onclick=open;
-  $('science-lab').addEventListener('close',()=>{if(run){run.paused=true;RallyLearning.syncPause(run)}run=null;if(mode==='adventure')renderAdventure()});
-  document.addEventListener('keydown',keydown);document.addEventListener('visibilitychange',()=>{if(run){run.paused=document.hidden;RallyLearning.syncPause(run)}});
+  $('science-lab').addEventListener('close',()=>{if(run){run.paused=true;RallyLearning.syncPause(run)}run=null;bench=null;if(mode==='adventure')renderAdventure()});
+  document.addEventListener('keydown',keydown);document.addEventListener('visibilitychange',()=>{if(run&&!bench){run.paused=document.hidden;RallyLearning.syncPause(run)}});
  }
  // Hand-authored, state-driven equipment. The art is fictional; question records
  // and explanations are never changed to fit a visual effect.
