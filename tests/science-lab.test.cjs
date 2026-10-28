@@ -20,6 +20,9 @@ for(const [id,topics] of Object.entries(expected)){
  attempts=deck.map(q=>({questionId:q.id,answeredAt:new Date().toISOString()}));const next=ScienceLab.pickDeck(id).deck;assert(next.every(q=>!deck.includes(q)),'recent questions are deprioritized');attempts=[];
 }
 console.log('PASS all five station mappings, shared science records, exact choices and explanations, and recent-history selection');
+const missed=ScienceLab.pickDeck('potion').deck[0];attempts=[{questionId:missed.id,outcome:'incorrect',answeredAt:new Date().toISOString()}];assert(ScienceLab.pickDeck('potion','review').deck.includes(missed),'Review revisits a missed idea despite its recency');assert(!ScienceLab.pickDeck('potion','explore').deck.includes(missed),'Explore still prioritizes unseen records');attempts=[];
+assert(ScienceLab.pickDeck('potion','stretch').deck.some(q=>(q.difficultyEstimate||2)>=3),'Stretch includes harder eligible science');
+console.log('PASS Explore, Review and Stretch rank shared records without changing grades or content');
 const original=[...SAMPLES];SAMPLES.splice(0,SAMPLES.length,...SAMPLES.filter(q=>q.curriculumTopicId!=='science-06'));const fallback=ScienceLab.pickDeck('observatory');assert.equal(fallback.fallback,true);assert.equal(fallback.deck.length,5);SAMPLES.splice(0,SAMPLES.length,...original);
 const base=science[0];customPack=[{...base,id:'custom-science-unit',prompt:'Custom study pack: '+base.prompt,topic:'Weather and climate',curriculumTopicId:undefined}];assert(ScienceLab.pool(true).includes(customPack[0]));assert(!ScienceLab.pool(false).includes(customPack[0]));customPack[0].modes=['quick'];assert(!ScienceLab.pool(true).includes(customPack[0]));
 console.log('PASS incomplete topic coverage falls back to science, eligible custom records are optional, quick-only questions stay out');

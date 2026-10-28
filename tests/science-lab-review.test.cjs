@@ -25,4 +25,12 @@ const journal=()=>page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>
   await page.locator('#sl-hub').click();
  }
  assert.deepEqual(errors,[]);console.log('PASS five bank-backed models: both conditions, matched/different predictions, no academic credit, same pending question');
+ await page.locator('#sl-approach').selectOption('review');await page.locator('[data-sl-station="potion"]').click();
+ const current=await page.locator('.sl-question').getAttribute('data-question-id');const correct=await page.evaluate(id=>SAMPLES.find(q=>q.id===id).answer,current);
+ const options=await page.locator('[data-sl-choice]>span').allTextContents();await page.keyboard.press(String(options.findIndex(v=>v!==correct)+1));
+ assert(await page.locator('[data-sl-step="needs-repair"]').isVisible());assert.match(await page.locator('.sl-experiment-heading').innerText(),/1 answered · 0 \/ 5 repaired/);
+ assert.equal((await journal()).length,1);assert.equal((await journal())[0].outcome,'incorrect');
+ if(screens)await page.screenshot({path:path.join(screens,'repair-feedback.png')});
+ await page.locator('#sl-next').click();assert.equal((await journal()).length,1);assert.equal(await page.locator('.sl-stage').getAttribute('data-sl-progress'),'1');
+ await page.locator('#sl-hub').click();console.log('PASS a visible repair step, honest first grade, and immediate progress after applying the explanation');
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});
