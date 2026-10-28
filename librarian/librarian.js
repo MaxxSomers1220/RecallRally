@@ -374,7 +374,7 @@ function open(){
  el('lib-dash').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')dash();});
  el('lib-shield').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')useShield();});
  touch('lib-left','left');touch('lib-right','right');touch('lib-duck','duck');
- document.addEventListener('keydown',down);document.addEventListener('keyup',up);window.addEventListener('blur',lostFocus);
+ document.addEventListener('keydown',down);document.addEventListener('keyup',up);if(window.addEventListener)window.addEventListener('blur',lostFocus);
  reset();phase='intro';t=0;last=performance.now();sync();syncActors();document.addEventListener('visibilitychange',visibilityChanged);frame=requestAnimationFrame(animate);el('lib-start').focus();
 }
 function visibilityChanged(){
@@ -385,7 +385,7 @@ function visibilityChanged(){
 }
 function close(){
  if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',down);document.removeEventListener('keyup',up);
- document.removeEventListener('visibilitychange',visibilityChanged);window.removeEventListener('blur',lostFocus);clearHeld();root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;if(prior&&prior.focus)prior.focus();
+ document.removeEventListener('visibilitychange',visibilityChanged);if(window.removeEventListener)window.removeEventListener('blur',lostFocus);clearHeld();root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;if(prior&&prior.focus)prior.focus();
 }
 launch.addEventListener('click',open);
 })();
