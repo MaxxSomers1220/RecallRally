@@ -3,6 +3,10 @@ frontend:
   phases:
     build:
       commands:
+        - node tests/adventure-save.test.cjs
+        - node tests/bank-v29.test.cjs
+        - node tests/worlds.test.cjs
+        - node tests/adventure-effects.test.cjs
         - node tests/librarian-v4-smoke.test.cjs
         - mkdir -p dist/librarian
         - cp index.html dist/index.html
