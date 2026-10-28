@@ -3,6 +3,74 @@
 A self-contained academic-team practice game with Quick Recall, Written warm-up,
 the Rescue Rigby adventure, customizable heroes, and a local learning journal.
 
+## Quest for Rigby: automatic save and resume
+
+Adventures now save automatically for the active **learning profile**, using its
+stable profile ID. Return to the home screen and choose **Continue the Quest for
+Rigby** to restore your map, earned seals, defeated guardians, unlocked worlds,
+next objective, hero and run record. No travel animation replays when resuming.
+Switch players in **My learning** to load another child's independent adventure
+and hero appearance. A hero nickname is never used as a save identifier.
+
+If a duel was interrupted, the map offers **Restart encounter**. That encounter
+starts at question one with fresh duel health, charge and temporary protections;
+previously earned seals and their assistance remain available. Questions already
+answered stay in the learning journal and run statistics. A victory is saved
+before the seal/rescue cutaway, so closing during that animation keeps the seal.
+
+**Start a New Adventure** asks for confirmation before replacing an existing
+quest. It clears only adventure progress and run statistics, keeping the player's
+hero, question exposure history, learning records, study packs and preferences.
+The map reports whether saving succeeded. If storage is blocked or full, export
+an adventure backup before closing; an unsaved run may last only for that visit.
+
+On the home screen, open **Adventure backup & device storage** for **Export
+Adventure Save** and **Import Adventure Save**. Import validates the file before
+asking permission to replace a quest. It associates the imported adventure with
+the selected learning profile and restores the backup's hero. Import learning
+history separately with the existing **My learning** backup controls; adventure
+backups do not replace learning records or study packs.
+
+Saves belong to the current browser and site origin. They survive ordinary
+Amplify code deployments at the same origin; they do not automatically sync
+between a laptop and iPad. A different browser, cleared site data, private
+browsing, or a new domain can make previous saves unavailable. Export backups
+before changing devices or site addresses. Offline play works from the complete
+downloaded HTML where the browser supports local files; hosting alone does not
+install an offline app.
+
+Developer validation from the repository root:
+
+```sh
+node tests/adventure-save.test.cjs
+node tests/bank-v29.test.cjs
+node tests/worlds.test.cjs
+node tests/adventure-effects.test.cjs
+node tests/librarian-v4-smoke.test.cjs
+node tests/adventure-save-browser.test.cjs
+```
+
+The browser suite requires Playwright and Chromium (set `CHROMIUM_PATH` if it is
+not `/usr/bin/chromium`). It starts its own local HTTP server and tests actual
+browser close/reopen, reloads, profile switching, confirmation, backup handling,
+network-free gameplay, corrupted saves, quota failures and same-origin updates.
+It does not validate a live AWS deployment or physical iPad hardware.
+
+`src/adventure-save.js` is embedded verbatim in `index.html` for offline play;
+keep both copies synchronized. Save schema version 1 uses keys of the form
+`recall-rally-rigby-save-v1:<learning-profile-id>`. It stores the map position,
+sequential completed encounters and seals, run counts, hero identity and an
+interrupted-encounter marker. Unlocks, rewards, rescue stage, next objective,
+answer-point score, accuracy and persistent seal assistance are reconstructed
+from those validated fields and the world's definitions. Imported extra fields
+cannot unlock destinations. Invalid or unsupported saves are kept until the
+player explicitly replaces them.
+
+Run `node scripts/build-standalone.cjs` after changing the game or Librarian
+assets to regenerate **Ellery_Recall_Rally_Librarian_v4.html**, the complete
+self-contained game suitable for static hosting. The save test checks that this
+file and `index.html` embed the current save implementation.
+
 This package uses the version 29 Ten Worlds game. It includes 1,550 built-in
 questions across 64 curriculum areas: 1,436 eligible for Quick Recall and 114
 written-only questions. Adventure can use all 1,550.
@@ -37,8 +105,9 @@ file page previews source code; use Amplify's URL to play the hosted game.
    option. The output directory is `dist`.
 5. Review the configuration and deploy. Open the HTTPS URL Amplify provides.
 
-The build copies only `index.html` into `dist`. Repository documentation and
-configuration are not included in the deployed site. Later commits to the
+The build runs the game checks, stages `index.html` and the Librarian v4 assets
+in `dist`, and adds the Librarian launch scripts to the staged page. Repository
+documentation and configuration are not included in the deployed site. Later commits to the
 connected branch deploy automatically when Amplify automatic builds are enabled.
 AWS usage and pricing are controlled by your AWS account; this package does not
 configure budgets or guarantee free hosting.

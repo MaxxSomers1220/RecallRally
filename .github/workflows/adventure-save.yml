@@ -1,0 +1,38 @@
+name: Quest for Rigby save and resume
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'src/adventure-save.js'
+      - 'scripts/build-standalone.cjs'
+      - 'tests/adventure*'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'amplify.yml'
+      - '.github/workflows/adventure-save.yml'
+  push:
+    branches: [main, feature/quest-save-resume]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adventure, bank and Librarian regressions
+        run: |
+          node tests/adventure-save.test.cjs
+          node tests/bank-v29.test.cjs
+          node tests/worlds.test.cjs
+          node tests/adventure-effects.test.cjs
+          node tests/librarian-v4-smoke.test.cjs
+      - name: Install browser test tools outside the checkout
+        run: |
+          npm install --prefix "$RUNNER_TEMP/rigby-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/rigby-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Real browser persistence and recovery scenarios
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/rigby-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          node tests/adventure-save-browser.test.cjs
