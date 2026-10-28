@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 84" width="240" height="168">
+<defs><linearGradient id="leather" x2="1" y2=".7"><stop stop-color="#ce7a75"/><stop offset=".4" stop-color="#853a60"/><stop offset="1" stop-color="#381a51"/></linearGradient><linearGradient id="pages" y2="1"><stop stop-color="#fff9e6"/><stop offset="1" stop-color="#cfaf86"/></linearGradient></defs>
+<path d="M8 13Q34 2 58 18Q85 3 110 13V70Q87 58 58 73Q31 59 8 70Z" fill="url(#pages)" stroke="#d2b17c" stroke-width="4"/>
+<path d="M5 8Q32-3 59 13V69Q32 54 5 65Z" fill="url(#leather)" stroke="#f1c983" stroke-width="3"/>
+<path d="M59 13Q86-3 113 8V65Q86 54 59 69Z" fill="#653453" stroke="#edbc72" stroke-width="3"/>
+<path d="M16 16Q36 10 53 22M16 58Q36 53 53 64M65 23Q85 12 104 17M65 63Q87 52 104 60" stroke="#ecc68c" stroke-width="2.6" fill="none"/>
+<path d="M28 35L34 29 40 35 34 42Z" fill="#f5d78e"/><path d="M79 35l10-6 9 7-9 7Z" fill="#bc84d7"/>
+<path d="M59 12V72" stroke="#271a40" stroke-width="4"/>
+<path d="M16 21H48M68 22H101" stroke="#f9dfae" stroke-width="1.5" opacity=".65"/>
+</svg>
