@@ -1,0 +1,10 @@
+{
+  "name": "The Alchemist's Science Lab",
+  "provenance": "Original SVG illustrations authored for Recall Rally. No third-party images, fonts, runtime dependencies or external asset requests.",
+  "assets": [
+    {"file": "laboratory.svg", "role": "Layered stone-and-copper laboratory room, without UI or characters", "width": 1440, "height": 800, "transparent": false, "max_bytes": 20000},
+    {"file": "professor-fizzwick.svg", "role": "Recurring professor with normal and surprised expression groups", "width": 220, "height": 300, "transparent": true, "max_bytes": 12000}
+  ],
+  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build.",
+  "motion": "CSS-only equipment and character reactions, disabled by prefers-reduced-motion; no new frame loop or external animation library."
+}
