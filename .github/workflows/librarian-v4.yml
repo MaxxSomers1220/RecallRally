@@ -1,0 +1,20 @@
+name: Librarian v4 multiple-choice and arcade tests
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'librarian/**'
+      - 'tests/librarian-v4-smoke.test.cjs'
+      - 'amplify.yml'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+  push:
+    branches: [feature/librarian-multiple-choice-v4]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/librarian-v4-smoke.test.cjs
