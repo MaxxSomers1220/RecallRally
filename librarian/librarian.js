@@ -1,391 +1,277 @@
-// The Librarian: optional Recall Rally arcade world. No server or extra account needed.
+/* The Librarian v4 — multi-choice, precise platform controls, magic lessons.
+ * Isolated enhancement: original Recall Rally and local progress are untouched. */
 (function(){
 'use strict';
 if(window.__librarianInstalled)return;
 window.__librarianInstalled=true;
-var W=960,H=460,FLOOR=405,COUNT=8,KEY='recall-rally-librarian-v1';
-var demos=[
-['Who wrote Charlotte’s Web?','E. B. White','E. B. White wrote the story of Wilbur and Charlotte.'],
-['Who wrote The Lion, the Witch and the Wardrobe?','C. S. Lewis','C. S. Lewis created the Chronicles of Narnia.'],
-['Who is the pig in Charlotte’s Web?','Wilbur','Wilbur is Charlotte’s friend.'],
-['Who wrote The Wonderful Wizard of Oz?','L. Frank Baum','L. Frank Baum created the Land of Oz.'],
-['What kind of animal is Aslan in the Narnia stories?','Lion','Aslan appears as a great lion.'],
-['Who wrote Alice’s Adventures in Wonderland?','Lewis Carroll','Lewis Carroll was Charles Lutwidge Dodgson’s pen name.'],
-['Who wrote Anne of Green Gables?','L. M. Montgomery','Lucy Maud Montgomery wrote Anne of Green Gables.'],
-['Who is the main girl in Alice’s Adventures in Wonderland?','Alice','Alice visits Wonderland.']
-].map(function(v,i){return {id:'librarian-demo-'+i,prompt:v[0],answer:v[1],explanation:v[2],source:'Example question · not from state study guide'};});
-var theme=/\b(books?|novels?|authors?|writers?|wrote|poems?|poets?|characters?|literature|fiction|nonfiction|biography|fables?|genres?|stories|story|tales?|plays?|reading|protagonists?|antagonists?|narrators?|folktales?|illustrators?)\b/i;
-function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function pool(){
- var all=[];try{if(typeof SAMPLES!=='undefined'&&Array.isArray(SAMPLES))all=SAMPLES;}catch(e){}
- var f=all.filter(function(q){return q&&q.subject==='language'&&typeof q.prompt==='string'&&typeof q.answer==='string'&&q.prompt.length<200&&q.answer.length<100&&(!q.modes||q.modes.includes('quick'))&&theme.test((q.topic||'')+' '+q.prompt);});
- return f.length>=COUNT?f:demos;
+const WIDTH=960,HEIGHT=460,FLOOR=405,COUNT=8,RECORD_KEY='recall-rally-librarian-v1';
+const LETTERS=['A','B','C','D'];
+const DEMO=[
+ ['Who wrote Charlotte’s Web?','E. B. White',['Roald Dahl','Beverly Cleary','Kate DiCamillo'],'E. B. White wrote the story of Wilbur and Charlotte.'],
+ ['Who wrote The Lion, the Witch and the Wardrobe?','C. S. Lewis',['J. R. R. Tolkien','Madeleine L’Engle','L. Frank Baum'],'C. S. Lewis wrote the Chronicles of Narnia.'],
+ ['Which pig is Charlotte’s friend in Charlotte’s Web?','Wilbur',['Templeton','Fern','Homer'],'Wilbur is the young pig that Charlotte helps.'],
+ ['Who wrote The Wonderful Wizard of Oz?','L. Frank Baum',['Lewis Carroll','J. M. Barrie','Beatrix Potter'],'L. Frank Baum created the land of Oz.'],
+ ['What kind of animal is Aslan in the Narnia stories?','A lion',['A tiger','A wolf','A bear'],'Aslan is the great lion of Narnia.'],
+ ['Who wrote Alice’s Adventures in Wonderland?','Lewis Carroll',['Oscar Wilde','Charles Dickens','Jules Verne'],'Lewis Carroll was the pen name of Charles Lutwidge Dodgson.'],
+ ['Who wrote Anne of Green Gables?','L. M. Montgomery',['Louisa May Alcott','Frances Hodgson Burnett','Laura Ingalls Wilder'],'Lucy Maud Montgomery created Anne Shirley.'],
+ ['Who is the main girl in Alice’s Adventures in Wonderland?','Alice',['Dorothy','Wendy','Matilda'],'Alice travels through the fantastical world of Wonderland.']
+].map((a,i)=>({id:'lib-demo-'+(i+1),subject:'language',topic:'Literature',prompt:a[0],answer:a[1],options:[a[1],...a[2]],explanation:a[3],source:'Original demonstration question; not from state study guide',demo:true}));
+const BOOK_TOPIC=/\b(book|novel|author|poet|poem|story|stories|literature|fiction|fairy|folktale|fable|character|protagonist|biography|reading|playwright|drama|legend|myth|genre|title|writers?)\b/i;
+const MOVEMENT_CODES=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','KeyA','KeyD','KeyW','KeyS','Space','ShiftLeft','ShiftRight','KeyQ'];
+const reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+const $=id=>root&&root.querySelector('#'+id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s??'').normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+function unique4(q){
+ if(!q||!q.answer||!Array.isArray(q.options))return null;
+ const answers=[q.answer,...q.options].filter(x=>typeof x==='string'&&x.trim());
+ const seen=new Set(),out=[];
+ for(const a of answers){const k=norm(a);if(k&&!seen.has(k)){seen.add(k);out.push(a.trim());}}
+ if(out.length<4)return null;
+ return [q.answer,...out.filter(a=>norm(a)!==norm(q.answer)).slice(0,3)];
 }
-function normalize(s){return String(s||'').normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');}
-function right(s,q){var a=normalize(s);return !!a&&[q.answer].concat(q.aliases||[]).some(function(x){return normalize(x)===a;});}
-function keep(question,correct,speed){
- try{var o=JSON.parse(localStorage.getItem(KEY)||'{}');if(!o||typeof o!=='object')o={};
- var id=String(question.id||question.prompt),v=o[id]||{asked:0,correct:0};v.asked++;if(correct){v.correct++;v.best=Math.min(v.best||99,speed);}o[id]=v;localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function history(){try{const h=JSON.parse(localStorage.getItem(RECORD_KEY)||'{}');return h&&typeof h==='object'?h:{}}catch(e){return {}}}
+function questionBank(){
+ let all=[];try{if(typeof SAMPLES!=='undefined'&&Array.isArray(SAMPLES))all=SAMPLES;}catch(e){}
+ let valid=all.filter(q=>q&&q.subject==='language'&&typeof q.prompt==='string'&&typeof q.answer==='string'&&q.prompt.length<250&&q.answer.length<100&&BOOK_TOPIC.test((q.topic||'')+' '+q.prompt)&&unique4(q));
+ // Use only reviewed four-choice questions; demonstrations remain explicitly labeled.
+ if(valid.length<COUNT)valid=DEMO;
+ const h=history();
+ return shuffle(valid).sort((a,b)=>{
+  const ax=h[String(a.id)]||{},bx=h[String(b.id)]||{};
+  return (Number(ax.lastSeen)||0)-(Number(bx.lastSeen)||0);
+ }).slice(0,COUNT);
 }
-var launch=document.createElement('button');launch.id='lib-launch';launch.type='button';launch.textContent='Take a rest in our nice peaceful library';
-launch.setAttribute('aria-label','Take a rest in our nice peaceful library');
-document.body.appendChild(launch);
-var root=null,c=null,ctx=null,frame=0,last=0,t=0,prior=null;
-var phase='intro',deck=[],question=null,round=0,correct=0,missed=0,points=0,lives=4,seconds=12,speed=0;
-var hero={x:150,jump:0,vy:0,inv:0,vx:0,facing:1,pose:'ready',poseTime:0},held={left:false,right:false,duck:false},books=[],storm=0,spawn=0,shield=0,shieldReady=true;
-var warnings=[],dashCooldown=0,dashTime=0,stormHits=0,shakeTime=0,freezeOnHide=false,bookSprite=new Image();
-bookSprite.src='librarian/enchanted-book.svg';
-var heroNode=null,guardianNode=null,throwCount=0,defeatPending=false;
-var reducedMotion=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-function el(id){return root?root.querySelector('#'+id):null;}
-function show(id,yes){var e=el(id);if(e)e.hidden=!yes;}
-function note(s){el('lib-feedback').textContent=s;}
-function sync(){
- if(!root)return;
- el('lib-lives').textContent=lives>0?'♥ '.repeat(lives):'—';
- el('lib-score').textContent=points;
- el('lib-count').textContent=Math.min(round,COUNT)+' / '+COUNT;
- el('lib-clock').textContent=phase==='question'?Math.ceil(Math.max(0,seconds))+'s':'';
- el('lib-shield').textContent=shieldReady?'🛡 SHIELD':'🛡 USED';
- el('lib-dash').disabled=phase!=='storm'||dashCooldown>0;
- var bar=el('lib-attack-info');
- if(bar)bar.textContent=phase==='storm'
-  ?('BOOK STORM · '+Math.max(0,Math.ceil(storm))+'s  |  '+(warnings.length?'⚠ Incoming: '+warnings[warnings.length-1].name:'Read the glowing lanes'))
-  :phase==='defeated'?'Defeated · Next Question to recover':phase==='defeat-hit'?'A final blow!':phase==='review'?'The Librarian reveals the answer':phase==='question'?'BUZZ before the clock ends':'Watch the shelves';
+function persistAttempt(q,correct,chosen,elapsed,timeout=false){
+ const key=String(q.id||q.prompt),h=history(),r=h[key]||{asked:0,correct:0};
+ r.asked++;if(correct)r.correct++;r.lastSeen=Date.now();r.lastChoice=chosen;r.lastCorrect=!!correct;
+ r.bestCorrectSeconds=correct?Math.min(r.bestCorrectSeconds||999,elapsed):r.bestCorrectSeconds;
+ h[key]=r;try{localStorage.setItem(RECORD_KEY,JSON.stringify(h));}catch(e){}
+ // Integrate with the existing Learning Journal for original bank items; demos do not pollute official study metrics.
+ if(!q.demo&&typeof RallyLearning!=='undefined'&&typeof RallyLearning.record==='function'){
+  try{RallyLearning.record(journal,q,timeout?'timeout':correct?'correct':'incorrect',timeout?'timeout':'choice',true)}catch(e){console.warn('Librarian journal attempt could not be recorded',e);}
+ }
 }
-function clearHeld(){held.left=false;held.right=false;held.duck=false;if(root){['lib-left','lib-right','lib-duck'].forEach(function(id){var n=el(id);if(n)n.dataset.held='false';});}}
-function reset(){
- hero={x:150,jump:0,vy:0,inv:0,vx:0,facing:1,pose:'ready',poseTime:0};clearHeld();
- books=[];warnings=[];storm=0;spawn=0;shield=0;shieldReady=true;
- dashTime=0;dashCooldown=0;stormHits=0;shakeTime=0;throwCount=0;defeatPending=false;sparks=[];
+const journal={seating:'solo',mode:'written'};
+function presentJournal(q){
+ if(!q.demo&&typeof RallyLearning!=='undefined'&&typeof RallyLearning.present==='function'){
+  try{RallyLearning.present(journal,q,'written','solo');}catch(e){console.warn('Librarian journal could not start',e);}
+ }
 }
-function start(){deck=shuffle(pool()).slice(0,COUNT);round=0;correct=0;missed=0;points=0;lives=4;reset();next();}
+let root=null,stage=null,ctx=null,heroNode=null,guardian=null,frame=0,last=0,elapsed=0;
+let screen='intro',deck=[],question=null,options=[],round=0,correctCount=0,wrongCount=0,points=0,hearts=4;
+let selected=-1,answerLocked=false,remaining=16,responseSeconds=0,attackClock=0,launchClock=0,throwIndex=0,hitCount=0;
+let freeze=false,previousFocus=null,jumpBuffer=0,dashTimer=0,dashRecharge=0,shieldTimer=0,shieldReady=true;
+let hero={x:174,y:0,vy:0,facing:1,pose:'idle',poseDuration:0,invulnerable:0},held={left:false,right:false,duck:false},warnings=[],books=[],particles=[];
+let bookImage=new Image();bookImage.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgODQiIHdpZHRoPSIyNDAiIGhlaWdodD0iMTY4Ij4KPGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJsZWF0aGVyIiB4Mj0iMSIgeTI9Ii43Ij48c3RvcCBzdG9wLWNvbG9yPSIjY2U3YTc1Ii8+PHN0b3Agb2Zmc2V0PSIuNCIgc3RvcC1jb2xvcj0iIzg1M2E2MCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzM4MWE1MSIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJwYWdlcyIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiNmZmY5ZTYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNjZmFmODYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz4KPHBhdGggZD0iTTggMTNRMzQgMiA1OCAxOFE4NSAzIDExMCAxM1Y3MFE4NyA1OCA1OCA3M1EzMSA1OSA4IDcwWiIgZmlsbD0idXJsKCNwYWdlcykiIHN0cm9rZT0iI2QyYjE3YyIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik01IDhRMzItMyA1OSAxM1Y2OVEzMiA1NCA1IDY1WiIgZmlsbD0idXJsKCNsZWF0aGVyKSIgc3Ryb2tlPSIjZjFjOTgzIiBzdHJva2Utd2lkdGg9IjMiLz4KPHBhdGggZD0iTTU5IDEzUTg2LTMgMTEzIDhWNjVRODYgNTQgNTkgNjlaIiBmaWxsPSIjNjUzNDUzIiBzdHJva2U9IiNlZGJjNzIiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMTYgMTZRMzYgMTAgNTMgMjJNMTYgNThRMzYgNTMgNTMgNjRNNjUgMjNRODUgMTIgMTA0IDE3TTY1IDYzUTg3IDUyIDEwNCA2MCIgc3Ryb2tlPSIjZWNjNjhjIiBzdHJva2Utd2lkdGg9IjIuNiIgZmlsbD0ibm9uZSIvPgo8cGF0aCBkPSJNMjggMzVMMzQgMjkgNDAgMzUgMzQgNDJaIiBmaWxsPSIjZjVkNzhlIi8+PHBhdGggZD0iTTc5IDM1bDEwLTYgOSA3LTkgN1oiIGZpbGw9IiNiYzg0ZDciLz4KPHBhdGggZD0iTTU5IDEyVjcyIiBzdHJva2U9IiMyNzFhNDAiIHN0cm9rZS13aWR0aD0iNCIvPgo8cGF0aCBkPSJNMTYgMjFINDhNNjggMjJIMTAxIiBzdHJva2U9IiNmOWRmYWUiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIuNjUiLz4KPC9zdmc+';
+const entry=document.createElement('button');entry.type='button';entry.id='lib-launch';entry.textContent='Take a rest in our nice peaceful library';
+entry.setAttribute('aria-label','Take a rest in our nice peaceful library');document.body.appendChild(entry);
+function show(id,v){let e=$(id);if(e)e.hidden=!v;}
+function message(m){let x=$('lib-status');if(x)x.textContent=m;}
+function pose(p,d=0){if(hero.pose===p)return;hero.pose=p;hero.poseDuration=d;syncHero();}
+function clearInput(){held.left=held.right=held.duck=false;jumpBuffer=0;['lib-left','lib-right','lib-duck'].forEach(id=>{const b=$(id);if(b)b.dataset.held='false';});}
+function resetHero(){hero={x:174,y:0,vy:0,facing:1,pose:'idle',poseDuration:0,invulnerable:0};clearInput();warnings=[];books=[];particles=[];dashTimer=0;dashRecharge=0;shieldTimer=0;shieldReady=true;hitCount=0;}
+function updateHud(){if(!root)return;
+ $('lib-hearts').textContent=hearts?'♥ '.repeat(hearts):'—';$('lib-score').textContent=points;
+ $('lib-progress').textContent=Math.min(round,COUNT)+' / '+COUNT;
+ $('lib-timer').textContent=screen==='question'?Math.ceil(Math.max(0,remaining))+'s':'';
+ $('lib-shield').disabled=screen!=='storm'||!shieldReady;
+ $('lib-dash').disabled=screen!=='storm'||dashRecharge>0;
+ $('lib-attack').textContent=screen==='storm'?(warnings.length?'⚠ '+warnings[warnings.length-1].name:'BOOK STORM · '+Math.max(0,Math.ceil(attackClock))+'s'):
+  screen==='question'?'Choose A, B, C, or D':screen==='defeated'?'THE LIBRARIAN WINS':'THE GREAT ARCHIVES';
+}
+function reveal(){
+ show('lib-choices',false);show('lib-learn',true);show('lib-next',true);
+ const panel=$('lib-learn');panel.classList.remove('lib-arrived');void panel.offsetWidth;panel.classList.add('lib-arrived');
+ $('lib-learn-answer').textContent=question.answer;
+ $('lib-learn-explain').textContent=question.explanation||'Remember this answer for next time.';
+ $('lib-learn-source').textContent=[question.topic||'Literature',question.source||'Recall Rally practice'].filter(Boolean).join(' · ');
+ $('lib-learn-selection').textContent=selected<0?'Time ran out.':('You chose: '+options[selected]);
+ let magic=$('lib-knowledge');magic.classList.remove('lib-fly');void magic.offsetWidth;if(!reduced)magic.classList.add('lib-fly');
+ playTone('learn');
+}
+function start(){deck=questionBank();round=0;correctCount=wrongCount=points=0;hearts=4;resetHero();next();}
 function next(){
- if(phase==='defeated')lives=4; // A new question revives the hero; no attack can leak across rounds.
- if(round>=COUNT){end(lives>0);return;}
- question=deck[round++];phase='question';seconds=12;speed=0;reset();
- el('lib-question').textContent=question.prompt;
- el('lib-source').textContent=question.source||'Recall Rally · literature question';
- el('lib-answer').value='';
- show('lib-start',false);show('lib-next',false);show('lib-buzz',true);show('lib-form',false);
- note('Think of the answer and press BUZZ! before the clock runs out.');sync();
+ if(round>=COUNT){finish();return;}
+ if(screen==='defeated')hearts=4;
+ clearInput();resetHero();selected=-1;answerLocked=false;remaining=16;responseSeconds=0;
+ question=deck[round++];options=shuffle(unique4(question));screen='question';
+ $('lib-question').textContent=question.prompt;
+ $('lib-choices').innerHTML='';
+ options.forEach((a,i)=>{const b=document.createElement('button');b.type='button';b.className='lib-choice';b.dataset.index=i;
+  b.innerHTML='<span class="lib-key">'+LETTERS[i]+'</span><span>'+esc(a)+'</span>';b.addEventListener('click',()=>choose(i));$('lib-choices').appendChild(b);});
+ show('lib-start',false);show('lib-next',false);show('lib-learn',false);show('lib-choices',true);message('Choose an answer. One correct answer; the others may wake the shelves.');
+ presentJournal(question);updateHud();
 }
-function buzz(){if(phase!=='question')return;speed=12-seconds;phase='answer';show('lib-buzz',false);show('lib-form',true);note('The timer stopped. Type the answer you said aloud.');el('lib-answer').focus();sync();}
-function answer(e){
- if(e)e.preventDefault();if(phase!=='answer')return;
- var v=el('lib-answer').value.trim();if(!v){note('Enter an answer or choose “I missed it.”');return;}
- var good=right(v,question);keep(question,good,speed);show('lib-form',false);
- if(good){correct++;points+=100+Math.round(Math.max(0,12-speed)*5);phase='review';show('lib-next',true);
- note('Correct! '+(question.explanation||('Answer: '+question.answer))+' · Buzzer time '+speed.toFixed(1)+'s.');}
- else attack();
- sync();
+function choose(i,timeout=false){
+ if(screen!=='question'||answerLocked)return;
+ answerLocked=true;selected=i;responseSeconds=16-remaining;
+ const win=i>=0&&norm(options[i])===norm(question.answer);
+ persistAttempt(question,win,i>=0?options[i]:'',responseSeconds,timeout);
+ [...$('lib-choices').children].forEach((b,k)=>{b.disabled=true;if(norm(options[k])===norm(question.answer))b.classList.add('lib-correct');if(i===k&&!win)b.classList.add('lib-wrong');});
+ if(win){correctCount++;points+=100+Math.max(0,Math.round((16-responseSeconds)*3));screen='review';pose('idle');message('Correct! The Librarian shares her wisdom.');reveal();}
+ else {wrongCount++;screen='storm';attackClock=7.8;launchClock=.18;throwIndex=0;hitCount=0;clearInput();message('The shelves wake! Duck beneath HIGH books; jump above LOW books.');show('lib-choices',false);show('lib-learn',false);playTone('warning');}
+ updateHud();
 }
-function pass(){
- if(phase!=='answer'&&phase!=='question')return;
- if(phase==='question')speed=12;
- keep(question,false,speed);show('lib-form',false);show('lib-buzz',false);attack();
+function spawnWarning(){
+ const high=throwIndex++%2===0,extra=Math.min(110,Math.max(0,round-1)*14),speed=275+extra;
+ const label=high?'HIGH · DUCK':'LOW · JUMP';warnings.push({kind:high?'high':'low',name:label,y:high?FLOOR-87:FLOOR-22,x:WIDTH-10,duration:Math.max(.43,.68-round*.017),speed,color:high?'#a3e9fc':'#fcb779'});
 }
-function attack(){
- missed++;phase='storm';storm=8;spawn=.12;warnings=[];books=[];stormHits=0;throwCount=0;
- hero.pose='ready';hero.poseTime=0;defeatPending=false;clearHeld();
- note('Missed! HIGH books: hold DUCK. LOW books: jump, move, or shield.');
- var jumpButton=el('lib-jump');if(jumpButton)jumpButton.focus();
- sync();
-}
+function launchBook(w){books.push({kind:w.kind,x:WIDTH+25,y:w.y,speed:w.speed,hit:false,passed:false,color:w.color,seed:Math.random()*6});}
 function jump(){
- if(phase!=='storm'||held.duck||hero.pose==='ducking'||hero.pose==='hit'||hero.pose==='recovering'||hero.jump>0||hero.vy!==0)return;
- hero.vy=545;hero.pose='jumping';spawnBurst(hero.x,FLOOR-6,'#f6d6a0',6);
+ if(screen!=='storm'||hero.pose==='hit'||hero.pose==='recovering'||hero.pose==='defeated')return;
+ // Up overrides Down. Jump changes physics and visual pose in the same event, with no downward wind-up.
+ held.duck=false;const duck=$('lib-duck');if(duck)duck.dataset.held='false';
+ if(hero.y===0&&hero.vy===0){jumpBuffer=0;hero.vy=610;hero.y=1;pose('jump');particlesBurst(hero.x,FLOOR-5,'#f3cc94',5);playTone('jump');}
+ else jumpBuffer=.10;
 }
-function dash(){
- if(phase!=='storm'||dashCooldown>0||held.duck||hero.pose==='hit'||hero.pose==='recovering')return;
- hero.facing=(held.left&&!held.right)?-1:(held.right&&!held.left)?1:hero.facing;
- dashTime=.21;dashCooldown=2.2;hero.inv=Math.max(hero.inv,.25);
- spawnBurst(hero.x,FLOOR-hero.jump-43,'#91def2',10);sync();
-}
-function useShield(){if(phase==='storm'&&shieldReady){shieldReady=false;shield=1.3;sync();}}
-function hitBook(b){
- if(phase!=='storm'||b.hit)return;
+function shield(){if(screen!=='storm'||!shieldReady)return;shieldReady=false;shieldTimer=1.1;updateHud();playTone('shield');}
+function dash(){if(screen!=='storm'||dashRecharge>0||hero.pose==='hit'||hero.pose==='recovering')return;dashTimer=.2;dashRecharge=2.2;hero.invulnerable=Math.max(hero.invulnerable,.20);playTone('dash');}
+function collide(b){
+ if(b.hit||screen!=='storm'||hero.invulnerable>0)return;
  b.hit=true;
- if(shield>0){shield=0;points+=20;spawnBurst(b.x,b.y,'#8fedff',16);note('Shield spell! The book dissolves into sparks.');return;}
- if(hero.inv>0||defeatPending)return;
- lives=Math.max(0,lives-1);stormHits++;hero.inv=1.0;hero.pose='hit';hero.poseTime=.30;
- shakeTime=reducedMotion?0:.12;spawnBurst(b.x,b.y,'#f8b7aa',14);
- if(lives===0){
-  defeatPending=true;phase='defeat-hit';books=[];warnings=[];clearHeld();
-  note('The Librarian wins this round! Correct answer: '+question.answer+'. '+(question.explanation||''));
- }else note('A book struck your hero. Recover and keep moving! '+lives+' hearts remain.');
+ if(shieldTimer>0){shieldTimer=0;points+=15;message('Your shield dissolves an enchanted book!');particlesBurst(b.x,b.y,'#b4f4ff',11);playTone('shield');return;}
+ if(hero.pose==='hit'||hero.pose==='recovering')return;
+ hearts=Math.max(0,hearts-1);hitCount++;
+ hero.invulnerable=.86;pose('hit',.24);particlesBurst(b.x,b.y,'#ffb6a0',12);playTone('hit');
+ if(hearts===0){screen='defeat-hit';warnings=[];books=[];clearInput();hero.vy=0;message('The Librarian has won this encounter.');playTone('defeat');}
+ else message('Ouch! The Librarian has sharp aim. Keep moving!');
 }
-function resolveDefeat(){
- if(phase!=='defeat-hit')return;
- phase='defeated';hero.pose='defeated';hero.poseTime=0;hero.vy=0;hero.jump=0;hero.vx=0;
- books=[];warnings=[];clearHeld();dashTime=0;shield=0;
- show('lib-next',round<COUNT);show('lib-start',true);el('lib-start').textContent='Restart adventure';
- el('lib-question').textContent='The Librarian has defeated your hero!';
- el('lib-source').textContent='You learned: '+question.answer+'. '+(question.explanation||'');
- note('Your hero is resting. '+(round<COUNT?'Select Next Question to recover with four hearts, or restart.':'Restart to challenge the library again.'));
- sync();
-}
-function end(win){
- phase='done';books=[];warnings=[];show('lib-form',false);show('lib-buzz',false);show('lib-next',false);show('lib-start',true);
- el('lib-start').textContent='Play again';
- el('lib-question').textContent=win?'You have earned the Golden Bookmark!':'The Librarian sends you back to the entrance.';
- el('lib-source').textContent=win?'Chapter complete!':'Your answers are still valuable practice.';
- note('Score: '+points+' · Correct: '+correct+' · Missed: '+missed+'. Try again to improve!');sync();
-}
-var sparks=[];
-function spawnBurst(x,y,color,count){
- if(reducedMotion)count=Math.min(3,count);
- for(var i=0;i<count;i++)sparks.push({x:x,y:y,vx:(Math.random()-.5)*170,vy:-Math.random()*140-30,life:.5+Math.random()*.35,color:color});
- if(sparks.length>80)sparks=sparks.slice(-80);
-}
-function bookWarning(){
- // Two deterministic, readable lanes: duck the high throw; jump or leave the low throw's path.
- var high=(throwCount++%2)===0;
- var type=high
-  ?{kind:'high',y:FLOOR-93,name:'HIGH · DUCK',color:'#9fe8fa'}
-  :{kind:'low',y:FLOOR-22,name:'LOW · JUMP / MOVE',color:'#ffbc81'};
- warnings.push({kind:type.kind,y:type.y,name:type.name,color:type.color,time:.55,max:.55,speed:350});
-}
-function tick(dt){
- t+=dt;
- if(phase==='question'){seconds-=dt;if(seconds<=0){seconds=0;pass();}}
- if(phase==='defeat-hit'){
-  hero.poseTime=Math.max(0,hero.poseTime-dt);
-  if(hero.poseTime===0)resolveDefeat();
+function defeated(){if(screen!=='defeat-hit')return;screen='defeated';hero.y=0;hero.vy=0;hero.invulnerable=0;clearInput();pose('defeated');reveal();message('Your hero needs a moment. You can continue with fresh hearts.');updateHud();}
+function endWave(){if(screen!=='storm')return;screen='review';warnings=[];books=[];clearInput();pose('idle');
+ message(hitCount?'You survived the flying books!':'Flawless defense! The Librarian looks impressed.');reveal();updateHud();}
+function finish(){screen='complete';clearInput();warnings=[];books=[];pose('idle');show('lib-choices',false);show('lib-learn',false);show('lib-next',false);show('lib-start',true);
+ $('lib-start').textContent='Explore again';$('lib-question').textContent='The Golden Bookmark is yours!';
+ message('You answered '+correctCount+' of '+COUNT+' correctly and earned '+points+' points.');updateHud();}
+function particlesBurst(x,y,color,n){for(let i=0;i<(reduced?Math.min(2,n):n);i++)particles.push({x,y,vx:(Math.random()-.5)*160,vy:-Math.random()*140,life:.5,color});if(particles.length>65)particles.splice(0,particles.length-65);}
+function update(dt){elapsed+=dt;
+ if(screen==='question'){
+  remaining-=dt;if(remaining<=0){remaining=0;choose(-1,true);}
  }
- if(phase==='storm'){
-  var hitLocked=hero.pose==='hit'||hero.pose==='recovering';
-  if(hitLocked){
-   hero.poseTime=Math.max(0,hero.poseTime-dt);
-   if(hero.poseTime===0){
-    if(hero.pose==='hit'){hero.pose='recovering';hero.poseTime=.24;}
-    else hero.pose='ready';
-   }
+ if(screen==='defeat-hit'){hero.poseDuration=Math.max(0,hero.poseDuration-dt);if(hero.poseDuration===0)defeated();}
+ if(screen==='storm'){
+  // Direct movement; no acceleration and no slide after release, including while airborne.
+  const dx=Number(held.right)-Number(held.left);
+  if(hero.pose==='hit'||hero.pose==='recovering'){
+   hero.poseDuration=Math.max(0,hero.poseDuration-dt);
+   if(hero.poseDuration===0){if(hero.pose==='hit')pose('recovering',.20);else pose('idle');}
   }
-  var ducking=held.duck&&hero.jump===0&&dashTime===0&&!hitLocked;
-  var dx=(held.right?1:0)-(held.left?1:0);
-  var desired=hitLocked?0:dx*(ducking?155:390);
-  hero.vx+=(desired-hero.vx)*Math.min(1,dt*(hitLocked?18:14));
+  const locked=hero.pose==='hit'||hero.pose==='recovering';
+  const ducking=held.duck&&hero.y===0&&!locked&&dashTimer===0;
   if(dx)hero.facing=dx;
-  if(!hitLocked)hero.x=Math.max(33,Math.min(W-33,hero.x+(dashTime>0?hero.facing*780:hero.vx)*dt));
-  dashTime=Math.max(0,dashTime-dt);
-  dashCooldown=Math.max(0,dashCooldown-dt);
-  var previousJump=hero.jump;
-  hero.jump=Math.max(0,hero.jump+hero.vy*dt);
-  if(hero.vy!==0||hero.jump>0){
-   hero.vy-=1300*dt;
-   if(hero.jump===0){hero.vy=0;if(previousJump>0)spawnBurst(hero.x,FLOOR-2,'#cbbca5',5);}
+  if(!locked)hero.x=Math.max(33,Math.min(WIDTH-33,hero.x+dx*(ducking?160:355)*dt+(dashTimer>0?hero.facing*620*dt:0)));
+  dashTimer=Math.max(0,dashTimer-dt);dashRecharge=Math.max(0,dashRecharge-dt);
+  if(hero.vy!==0||hero.y>0){
+   const wasAirborne=hero.y>0;
+   hero.y+=hero.vy*dt;hero.vy-=1520*dt;
+   if(hero.y<=0){hero.y=0;hero.vy=0;if(wasAirborne)particlesBurst(hero.x,FLOOR-2,'#f2d4a2',5);if(jumpBuffer>0)jump();}
   }
-  hero.inv=Math.max(0,hero.inv-dt);
-  shield=Math.max(0,shield-dt);
-  shakeTime=Math.max(0,shakeTime-dt);
-  if(!hitLocked)hero.pose=ducking?'ducking':dashTime>0?'dashing':hero.jump>0?'jumping':dx?'moving':'ready';
-  storm-=dt;spawn-=dt;
-  if(spawn<=0&&storm>1.1){bookWarning();spawn=.92;}
-  warnings.forEach(function(w){w.time-=dt;});
-  warnings.filter(function(w){return w.time<=0;}).forEach(function(w){
-   books.push({x:W+22,y:w.y,kind:w.kind,speed:w.speed,angle:0,phase:Math.random()*6,color:w.color,hit:false,dodged:false});
-  });
-  warnings=warnings.filter(function(w){return w.time>0;});
-  books.forEach(function(b){
-   var before=b.x;
-   b.x-=b.speed*dt;
-   // Physics hitbox follows the *actual* body height, not the decorative cloak/hair.
-   var bodyTop=FLOOR-hero.jump-(hero.pose==='ducking'?48:116);
-   var bodyBottom=FLOOR-hero.jump-6;
-   var overlaps=b.x+23>hero.x-20&&b.x-23<hero.x+20&&b.y+15>bodyTop&&b.y-15<bodyBottom;
-   if(!b.hit&&overlaps&&hero.inv<=0)hitBook(b);
-   // Credit a legible, tactical duck or jump after the hazard passes the hero's x-position.
-   if(!b.hit&&!b.dodged&&before>=hero.x&&b.x<hero.x){
-    b.dodged=true;
-    if(b.kind==='high'&&hero.pose==='ducking'){points+=25;spawnBurst(hero.x,FLOOR-52,'#9fe8fa',8);note('Perfect duck! +25 points.');}
-    else if(b.kind==='low'&&hero.jump>43){points+=25;spawnBurst(hero.x,FLOOR-hero.jump,'#ffe0a5',8);note('Great leap! +25 points.');}
+  jumpBuffer=Math.max(0,jumpBuffer-dt);
+  hero.invulnerable=Math.max(0,hero.invulnerable-dt);shieldTimer=Math.max(0,shieldTimer-dt);
+  if(!locked)pose(hero.y>0?'jump':ducking?'duck':dx?'run':'idle');
+  attackClock-=dt;launchClock-=dt;
+  if(launchClock<=0&&attackClock>.9){spawnWarning();launchClock=Math.max(.83,1.18-(round-1)*.035);}
+  for(const w of warnings)w.duration-=dt;
+  warnings.filter(w=>w.duration<=0).forEach(launchBook);
+  warnings=warnings.filter(w=>w.duration>0);
+  for(const b of books){
+   const oldX=b.x;b.x-=b.speed*dt;
+   const bodyTop=FLOOR-hero.y-(hero.pose==='duck'?49:116),bodyBottom=FLOOR-hero.y-5;
+   // Tight, visible-aligned collision. High clears duck; low still reaches crouched body.
+   const overlap=b.x+24>hero.x-18&&b.x-24<hero.x+18&&b.y+14>bodyTop&&b.y-14<bodyBottom;
+   if(!b.hit&&overlap)collide(b);
+   if(!b.hit&&!b.passed&&oldX>=hero.x&&b.x<hero.x){
+    b.passed=true;
+    if((b.kind==='high'&&hero.pose==='duck')||(b.kind==='low'&&hero.y>57)){
+     points+=25;particlesBurst(hero.x,FLOOR-hero.y-55,b.color,7);message(b.kind==='high'?'Perfect duck! +25':'Perfect jump! +25');playTone('dodge');
+    }
    }
-  });
-  books=books.filter(function(b){return b.x>-65&&!b.hit;});
-  if(phase==='storm'&&storm<=0){
-   phase='review';books=[];warnings=[];hero.pose='ready';hero.poseTime=0;clearHeld();hero.inv=0;
-   show('lib-next',true);
-   note('You survived'+(stormHits===0?' without a hit!':'!')+' Correct answer: '+question.answer+'. '+(question.explanation||''));
   }
+  books=books.filter(b=>!b.hit&&b.x>-60);
+  if(screen==='storm'&&attackClock<=0)endWave();
  }
- sparks.forEach(function(p){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=190*dt;p.life-=dt;});
- sparks=sparks.filter(function(p){return p.life>0;});
- sync();
+ for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=210*dt;p.life-=dt;}
+ particles=particles.filter(p=>p.life>0);updateHud();
 }
-function poly(points,fill,stroke){
- ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(var i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.closePath();
- if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=3;ctx.stroke();}
-}
-function scenery(){
- if(!ctx)return;
- // The architectural art is rendered once by CSS as a static background.
- // This canvas contains only interactive hazards, telegraphs, particles, and light.
- ctx.clearRect(0,0,W,H);
- ctx.save();
- for(var i=0;i<(reducedMotion?0:12);i++){
-  var x=(i*137+32+t*(4+i%3))%W,y=(i*51+t*6)%350;
-  ctx.fillStyle=i%2?'#d1aeeb77':'#ffe8ba66';
-  ctx.beginPath();ctx.arc(x,y,1.3,0,Math.PI*2);ctx.fill();
+function paint(){if(!ctx)return;ctx.clearRect(0,0,WIDTH,HEIGHT);
+ if(screen==='storm'){
+  for(const w of warnings){ctx.save();ctx.strokeStyle=w.color;ctx.lineWidth=5;ctx.setLineDash([16,10]);ctx.globalAlpha=reduced?.8:.5+.3*Math.sin(elapsed*14);
+   ctx.beginPath();ctx.moveTo(18,w.y);ctx.lineTo(WIDTH-12,w.y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=w.color;ctx.font='bold 19px system-ui';ctx.fillText(w.name,WIDTH-210,w.y-18);ctx.restore();}
  }
- ctx.restore();
+ for(const b of books){ctx.save();ctx.translate(b.x,b.y);
+  if(!reduced)ctx.rotate(Math.sin(elapsed*8+b.seed)*.09);
+  ctx.shadowColor=b.color;ctx.shadowBlur=reduced?3:15;
+  if(bookImage.complete&&bookImage.naturalWidth)ctx.drawImage(bookImage,-29,-20,58,40);
+  else{ctx.fillStyle='#8f4b78';ctx.fillRect(-24,-14,48,28);ctx.strokeStyle='#e6c08b';ctx.lineWidth=3;ctx.strokeRect(-24,-14,48,28);}
+  ctx.restore();}
+ for(const p of particles){ctx.save();ctx.globalAlpha=Math.max(0,p.life*1.9);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,2.4,0,Math.PI*2);ctx.fill();ctx.restore();}
+ if(!heroNode){ctx.save();ctx.translate(hero.x,FLOOR-hero.y);
+  if(hero.pose==='defeated')ctx.rotate(-1.16);
+  ctx.fillStyle='#3666a8';ctx.beginPath();ctx.ellipse(0,hero.pose==='duck'?-24:-55,23,hero.pose==='duck'?22:48,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#e0b59b';ctx.beginPath();ctx.arc(0,hero.pose==='duck'?-46:-105,17,0,Math.PI*2);ctx.fill();ctx.restore();}
+ if(shieldTimer>0){ctx.save();ctx.strokeStyle='#9eeeff';ctx.lineWidth=5;ctx.beginPath();ctx.ellipse(hero.x,FLOOR-hero.y-54,42,hero.pose==='duck'?37:64,0,0,Math.PI*2);ctx.stroke();ctx.restore();}
 }
-function actor(){
- // The saved customizable hero is the primary sprite. Use a pose-aware fallback only if absent.
- if(heroNode)return;
- ctx.save();ctx.translate(hero.x,FLOOR-hero.jump);
- if(hero.pose==='defeated'){ctx.translate(0,-10);ctx.rotate(-1.15);}
- var ducking=hero.pose==='ducking';
- ctx.fillStyle='#182a56';
- ctx.beginPath();ctx.ellipse(0,ducking?-26:-52,ducking?26:21,ducking?22:45,0,0,Math.PI*2);ctx.fill();
- ctx.fillStyle='#e9b99e';ctx.beginPath();ctx.arc(ducking?10:0,ducking?-49:-102,ducking?14:18,0,Math.PI*2);ctx.fill();
- if(shield>0){ctx.strokeStyle='#a5dfff';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(0,ducking?-37:-57,36,ducking?32:62,0,0,Math.PI*2);ctx.stroke();}
- ctx.restore();
+function syncHero(){if(!root)return;
+ if(heroNode){heroNode.style.left=(hero.x/WIDTH*100)+'%';heroNode.style.bottom=((HEIGHT-FLOOR+hero.y)/HEIGHT*100)+'%';heroNode.style.transform='translateX(-50%) scaleX('+hero.facing+')';
+  heroNode.className='lib-hero-sprite lib-v4-'+hero.pose;heroNode.style.opacity='1';}
+ if(guardian)guardian.className='lib-guardian-sprite'+(screen==='storm'||screen==='defeat-hit'||screen==='review'?' lib-casting':'');
 }
-function draw(){
- if(!ctx)return;
- scenery();
- if(phase==='storm'){
-  warnings.forEach(function(w){
-   var a=reducedMotion?.7:.25+.45*Math.sin(t*24),y=w.y;
-   ctx.save();ctx.strokeStyle=w.color;ctx.globalAlpha=a;
-   ctx.setLineDash([18,11]);ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(25,y);ctx.lineTo(W-20,y);ctx.stroke();
-   ctx.setLineDash([]);ctx.fillStyle=w.color;ctx.beginPath();
-   ctx.moveTo(W-28,y-23);ctx.lineTo(W-6,y);ctx.lineTo(W-28,y+23);ctx.closePath();ctx.fill();
-   ctx.restore();
-  });
- }
- books.forEach(function(b){
-  ctx.save();ctx.translate(b.x,b.y+Math.sin(t*10+b.phase)*2.5);
-  ctx.rotate(Math.sin(t*8+b.phase)*.13);
-  var trail=ctx.createLinearGradient(-80,0,25,0);
-  trail.addColorStop(0,'#855ed400');trail.addColorStop(1,'#ba7bf4b3');
-  ctx.strokeStyle=trail;ctx.lineWidth=13;ctx.beginPath();ctx.moveTo(-70,0);ctx.quadraticCurveTo(-30,-8,0,0);ctx.stroke();
-  ctx.shadowColor=b.color||'#bd87fd';ctx.shadowBlur=18;
-  if(bookSprite.complete&&bookSprite.naturalWidth>0){ctx.drawImage(bookSprite,-30,-20,60,42);}
-  else{ctx.fillStyle='#9f5381';ctx.fillRect(-24,-16,48,32);ctx.strokeStyle='#e9c18b';ctx.lineWidth=3;ctx.strokeRect(-24,-16,48,32);}
-  ctx.restore();
- });
- sparks.forEach(function(p){
-  ctx.fillStyle=p.color;ctx.globalAlpha=Math.min(1,p.life*2);
-  ctx.beginPath();ctx.arc(p.x,p.y,2.2,0,Math.PI*2);ctx.fill();
- });
- ctx.globalAlpha=1;
- actor();
- if(shield>0&&heroNode){
-  ctx.save();ctx.strokeStyle='#a0ebff';ctx.shadowColor='#7bdffa';ctx.shadowBlur=24;ctx.lineWidth=5;
-  ctx.beginPath();ctx.ellipse(hero.x,FLOOR-hero.jump-63,39,59,0,0,Math.PI*2);ctx.stroke();ctx.restore();
- }
- if(phase==='intro'||phase==='done'){
-  ctx.fillStyle='#11132cd9';ctx.fillRect(143,296,674,86);
-  ctx.strokeStyle='#d6b57d';ctx.lineWidth=3;ctx.strokeRect(143,296,674,86);
-  ctx.fillStyle='#f6ddaa';ctx.font='bold 25px Georgia,serif';ctx.textAlign='center';
-  ctx.fillText(phase==='intro'?'THE GUARDIAN OF THE LOST LIBRARY':'THE ARCHIVES REMEMBER YOU',W/2,330);
-  ctx.fillStyle='#d8e0ff';ctx.font='17px Georgia,serif';
-  ctx.fillText(phase==='intro'?'Answer the riddle. Outsmart the flying books.':'A scholar learns from every encounter.',W/2,360);
- }
-}
-function syncActors(){
- if(!root)return;
- if(heroNode){
-  heroNode.style.left=(hero.x/W*100)+'%';
-  heroNode.style.bottom=((H-FLOOR+hero.jump)/H*100)+'%';
-  heroNode.style.transform='translateX(-50%) scaleX('+hero.facing+')';
-  // Exactly one pose class: never combine looping run, hit and defeat animations.
-  heroNode.className='lib-hero-sprite lib-pose-'+hero.pose;
-  heroNode.style.opacity='1'; // No damage-timer flicker; injury is one finite animation.
- }
- if(guardianNode)guardianNode.className='lib-guardian-sprite'+(phase==='storm'||phase==='defeat-hit'?' lib-casting':'');
-}
-function mountActors(){
- heroNode=document.createElement('div');heroNode.id='lib-hero-sprite';heroNode.className='lib-hero-sprite';
- heroNode.setAttribute('aria-hidden','true');
- try{
-  if(typeof renderGameHero==='function'&&typeof avatarLook!=='undefined'){
-   heroNode.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 420">'+
-     renderGameHero(avatarLook,{idPrefix:'librarian-arcade-hero',pose:'idle'})+'</svg>';
-  } else heroNode=null;
- }catch(e){console.warn('Could not render saved hero in The Librarian:',e);heroNode=null;}
- guardianNode=document.createElement('img');guardianNode.id='lib-guardian-sprite';guardianNode.className='lib-guardian-sprite';
- guardianNode.src='librarian/librarian-guardian.svg';guardianNode.alt='';
- var stage=el('lib-canvas').parentElement;
- if(heroNode)stage.appendChild(heroNode);
- stage.appendChild(guardianNode);
- syncActors();
-}
-function animate(now){if(!root)return;var dt=Math.min(.033,Math.max(0,(now-last)/1000));last=now;if(!freezeOnHide)tick(dt);draw();syncActors();frame=requestAnimationFrame(animate);}
-function down(e){
- if(!root)return;
+function animation(now){if(!root)return;let dt=Math.min(.032,Math.max(0,(now-last)/1000));last=now;if(!freeze)update(dt);paint();syncHero();frame=requestAnimationFrame(animation);}
+function keydown(e){if(!root)return;
  if(e.key==='Escape'){close();return;}
- // Never capture keyboard gameplay actions while the student types an answer.
- if(e.target===el('lib-answer')||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
- if(phase==='question'&&(e.code==='Space'||e.key==='Enter')){e.preventDefault();buzz();return;}
- if(phase!=='storm')return;
- if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space','KeyA','KeyD','KeyW','KeyS','KeyQ','ShiftLeft','ShiftRight'].includes(e.code))e.preventDefault();
+ const t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT')return;
+ if(screen==='question'&&/^Digit[1-4]$/.test(e.code)){e.preventDefault();choose(Number(e.code.slice(-1))-1);return;}
+ if(screen==='storm'&&MOVEMENT_CODES.includes(e.code))e.preventDefault();
+ if(screen!=='storm')return;
  if(e.code==='ArrowLeft'||e.code==='KeyA')held.left=true;
  if(e.code==='ArrowRight'||e.code==='KeyD')held.right=true;
  if(e.code==='ArrowDown'||e.code==='KeyS')held.duck=true;
- if((e.code==='ArrowUp'||e.code==='Space'||e.code==='KeyW')&&!e.repeat)jump();
- if(e.code==='KeyQ'&&!e.repeat)useShield();
+ if((e.code==='ArrowUp'||e.code==='KeyW'||e.code==='Space')&&!e.repeat)jump();
+ if(e.code==='KeyQ'&&!e.repeat)shield();
  if((e.code==='ShiftLeft'||e.code==='ShiftRight')&&!e.repeat)dash();
+ syncHero();
 }
-function up(e){
- if(e.code==='ArrowLeft'||e.code==='KeyA')held.left=false;
- if(e.code==='ArrowRight'||e.code==='KeyD')held.right=false;
- if(e.code==='ArrowDown'||e.code==='KeyS')held.duck=false;
+function keyup(e){if(e.code==='ArrowLeft'||e.code==='KeyA')held.left=false;if(e.code==='ArrowRight'||e.code==='KeyD')held.right=false;
+ if(e.code==='ArrowDown'||e.code==='KeyS'){held.duck=false;if(hero.pose==='duck')pose('idle');}}
+function pointerHold(id,k){const b=$(id);if(!b)return;
+ b.addEventListener('pointerdown',e=>{if(screen!=='storm')return;e.preventDefault();held[k]=true;b.dataset.held='true';try{b.setPointerCapture(e.pointerId);}catch(x){};
+ if(k==='duck'&&hero.y===0)pose('duck');});
+ for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,()=>{held[k]=false;b.dataset.held='false';if(k==='duck'&&hero.pose==='duck')pose('idle');});
 }
-function touch(id,key){
- var b=el(id);
- b.addEventListener('pointerdown',function(e){
-  if(phase!=='storm')return;
-  e.preventDefault();held[key]=true;b.dataset.held='true';
-  try{b.setPointerCapture(e.pointerId);}catch(x){}
- });
- ['pointerup','pointercancel','lostpointercapture'].forEach(function(ev){
-  b.addEventListener(ev,function(){held[key]=false;b.dataset.held='false';});
- });
+function pointerAction(id,fn){const b=$(id);if(!b)return;b.addEventListener('pointerdown',e=>{if(screen!=='storm')return;e.preventDefault();fn();});
+ // Keyboard activation generates click without pointerdown.
+ b.addEventListener('click',e=>{if(e.detail===0)fn();});}
+function loseFocus(){clearInput();last=performance.now();}
+function visibility(){freeze=document.hidden;if(freeze)loseFocus();else last=performance.now();}
+let audioCtx=null;
+function soundEnabled(){try{if(typeof soundOn!=='undefined')return !!soundOn;}catch(e){}try{return localStorage.getItem('recall-rally-sound-v1')!=='off';}catch(e){return false;}}
+function playTone(name){if(!soundEnabled())return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+ audioCtx=audioCtx||new AC();if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});
+ const config={jump:[480,.055],dodge:[680,.085],hit:[170,.11],defeat:[125,.2],learn:[600,.12],warning:[300,.08],shield:[570,.09],dash:[310,.055]};
+ const v=config[name]||config.jump,o=audioCtx.createOscillator(),gain=audioCtx.createGain();o.type='sine';o.frequency.value=v[0];gain.gain.setValueAtTime(.0001,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.035,audioCtx.currentTime+.014);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+v[1]);o.connect(gain);gain.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+v[1]+.01);
+ }catch(e){} }
+function open(){if(root)return;previousFocus=document.activeElement;
+ root=document.createElement('div');root.id='lib-overlay';root.className='lib-game lib-v4-game';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','The Librarian game');
+ root.innerHTML=`<div class="lib-frame"><header class="lib-top"><div><p class="lib-kicker">ELLERY'S RECALL RALLY · THE LOST LIBRARY</p><h2 class="lib-title">THE LIBRARIAN</h2></div><button id="lib-close" class="lib-close" type="button">✕ Return to Rally</button></header>
+ <div class="lib-card"><div class="lib-hud"><span class="lib-stat">📜 CHAPTER I · THE GREAT ARCHIVES</span><span class="lib-stat">♥ <b id="lib-hearts">♥ ♥ ♥ ♥</b></span><span class="lib-stat">⭐ <b id="lib-score">0</b></span><span class="lib-stat">📖 <b id="lib-progress">0 / 8</b></span></div>
+ <div class="lib-canvas-wrap"><canvas id="lib-canvas" width="960" height="460" role="img" aria-label="Enchanted books fly through a gothic library; control the hero using movement buttons."></canvas><div class="lib-scene-label">THE GUARDIAN OF THE LOST LIBRARY</div><div id="lib-attack" class="lib-attack-info">THE GREAT ARCHIVES</div><div id="lib-knowledge" class="lib-knowledge-wisp" aria-hidden="true">✧</div></div>
+ <div class="lib-dialogue"><div class="lib-prompt-tag">THE LIBRARIAN ASKS <span id="lib-timer" class="lib-timer"></span></div><p class="lib-prompt" id="lib-question">Welcome, traveler. The library is very peaceful today.</p>
+ <div id="lib-choices" class="lib-choices" hidden></div><section id="lib-learn" class="lib-learning" hidden aria-live="polite"><div class="lib-learn-kicker">✦ YOU LEARNED:</div><div id="lib-learn-answer" class="lib-learn-answer"></div><p id="lib-learn-explain" class="lib-learn-explain"></p><p id="lib-learn-selection" class="lib-learn-selection"></p><p id="lib-learn-source" class="lib-learn-source"></p></section><div class="lib-feedback" id="lib-status" aria-live="polite">An unexpected book may be waiting.</div></div>
+ <div class="lib-actions"><button type="button" class="lib-btn primary" id="lib-start">ENTER THE READING ROOM</button><button type="button" class="lib-btn secondary" id="lib-next" hidden>NEXT QUESTION →</button></div>
+ <div class="lib-controls"><button type="button" id="lib-left" class="lib-touch" aria-label="Move left">◀ LEFT</button><button type="button" id="lib-right" class="lib-touch" aria-label="Move right">RIGHT ▶</button><button type="button" id="lib-duck" class="lib-touch lib-duck-btn" aria-label="Duck while held">↓ DUCK</button><button type="button" id="lib-jump" class="lib-touch" aria-label="Jump">↑ JUMP</button><button type="button" id="lib-dash" class="lib-touch" aria-label="Dash">✦ DASH</button><button type="button" id="lib-shield" class="lib-touch" aria-label="Shield">🛡 SHIELD</button></div>
+ <p class="lib-instructions">Movement: ← → · Jump ↑ · Duck ↓ · Shift dash · Q shield. Answers: tap A–D or press 1–4.</p></div></div>`;
+ document.body.appendChild(root);stage=$('lib-canvas').parentElement;ctx=$('lib-canvas').getContext('2d');
+ heroNode=document.createElement('div');heroNode.className='lib-hero-sprite';heroNode.id='lib-hero-sprite';heroNode.setAttribute('aria-hidden','true');
+ try{if(typeof renderGameHero==='function'&&typeof avatarLook!=='undefined'){heroNode.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 420">'+renderGameHero(avatarLook,{idPrefix:'librarian-v4-hero',pose:'idle'})+'</svg>';stage.appendChild(heroNode);}else heroNode=null;}catch(e){heroNode=null;}
+ guardian=document.createElement('img');guardian.className='lib-guardian-sprite';guardian.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NDAiIGhlaWdodD0iNTIwIiB2aWV3Qm94PSIwIDAgMjIwIDI2MCI+PGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icm9iZSIgeDI9IjEiIHkyPSIuOCI+PHN0b3Agc3RvcC1jb2xvcj0iIzI5MTk0NCIvPjxzdG9wIG9mZnNldD0iLjYiIHN0b3AtY29sb3I9IiM2NTNlODMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMxNjBlMmMiLz48L2xpbmVhckdyYWRpZW50Pgo8bGluZWFyR3JhZGllbnQgaWQ9InNpbHZlciIgeDI9IjEiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZmFmNWVmIi8+PHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iI2I2YjhkNiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzczN2JhNyIvPjwvbGluZWFyR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0id2FuZCI+PHN0b3Agc3RvcC1jb2xvcj0iI2ZjZjlmZiIvPjxzdG9wIG9mZnNldD0iLjI4IiBzdG9wLWNvbG9yPSIjZTZhZGZmIi8+PHN0b3Agb2Zmc2V0PSIuNzIiIHN0b3AtY29sb3I9IiM5YzVhZTkiIHN0b3Atb3BhY2l0eT0iLjg1Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWM1YWU5IiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz4KPGVsbGlwc2UgY3g9IjEwOCIgY3k9IjI0MCIgcng9Ijg3IiByeT0iMTIiIGZpbGw9IiMxMzBkMjEiIG9wYWNpdHk9Ii4zIi8+CjxwYXRoIGQ9Ik03MiAxMzJRMzIgMTUzIDE3IDI0NVExMDggMjY0IDIwNSAyNDZRMTkxIDE1NiAxNDggMTMzWiIgZmlsbD0idXJsKCNyb2JlKSIgc3Ryb2tlPSIjYjc5MTY3IiBzdHJva2Utd2lkdGg9IjMiLz4KPHBhdGggZD0iTTEwOCAxNDdMOTggMjM5IDEzOCAyNDMgMTIzIDE0NiIgZmlsbD0iIzIzMTQyZiIgc3Ryb2tlPSIjZDRhZjc0IiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEwOCAxNTZMOTIgMTY5IDEwOCAxOTQgMTI3IDE2OFoiIGZpbGw9IiM3ZDUwYWIiIHN0cm9rZT0iI2VmY2Y5OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik05NCAxMDlWMTM3TDEwOCAxNTEgMTIzIDEzNlYxMTEiIGZpbGw9IiNlMmI1OWEiIHN0cm9rZT0iI2EwNzc2YyIvPgo8cGF0aCBkPSJNNjggODlRNTggMzIgMTAwIDI0UTE1MSAxNiAxNjggNTNRMTg0IDgzIDE1MCAxMTdMNzMgMTE1WiIgZmlsbD0idXJsKCNzaWx2ZXIpIiBzdHJva2U9IiNjNWM2ZGQiIHN0cm9rZS13aWR0aD0iMyIvPgo8ZWxsaXBzZSBjeD0iMTEwIiBjeT0iOTMiIHJ4PSIzNSIgcnk9IjM5IiBmaWxsPSIjZTdiYWEwIiBzdHJva2U9IiNhMDdhNzUiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNNzcgNzdRNzggNDYgOTYgNTNRMTEzIDI3IDEzNyA1MFExNjEgNjAgMTQ4IDgyTDEzNiA2NVExMDggNzkgNzcgNzdaIiBmaWxsPSJ1cmwoI3NpbHZlcikiIHN0cm9rZT0iI2VkZWRmOSIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik04MSA4OVE5NSA4MCAxMDQgODlNMTIyIDg5UTEzOSA4MSAxNDkgOTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM1MjQzZCIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPGVsbGlwc2UgY3g9Ijk0IiBjeT0iOTgiIHJ4PSI5IiByeT0iNiIgZmlsbD0iI2ZiZmNmZiIgc3Ryb2tlPSIjNDUzNDU2IiBzdHJva2Utd2lkdGg9IjIiLz48ZWxsaXBzZSBjeD0iMTMyIiBjeT0iOTgiIHJ4PSI5IiByeT0iNiIgZmlsbD0iI2ZiZmNmZiIgc3Ryb2tlPSIjNDUzNDU2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSI5NiIgY3k9Ijk4IiByPSIzIiBmaWxsPSIjMjgyMjM1Ii8+PGNpcmNsZSBjeD0iMTMxIiBjeT0iOTgiIHI9IjMiIGZpbGw9IiMyODIyMzUiLz4KPHBhdGggZD0iTTEwMCAxMTlRMTEwIDExNCAxMjMgMTIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM5YTQ3NTUiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNNTIgMTU2TDIzIDEwNSAxMiA5Nk0xNjUgMTU0TDE5NSAxMTIgMjA4IDk3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1NjM1NzYiIHN0cm9rZS13aWR0aD0iMjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTIgMTU2TDIzIDEwNSAxMiA5Nk0xNjUgMTU0TDE5NSAxMTIgMjA4IDk3IiBmaWxsPSJub25lIiBzdHJva2U9IiNkOWE5NjgiIHN0cm9rZS13aWR0aD0iMi44Ii8+CjxwYXRoIGQ9Ik00IDkzTDE3IDgwIDI4IDk5IDE3IDExNVoiIGZpbGw9IiNlZGJiOWIiIHN0cm9rZT0iIzliN2E3MiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTE5NyA5N0wyMTEgODIgMjIxIDEwNiAyMTAgMTIwWiIgZmlsbD0iI2VkYmI5YiIgc3Ryb2tlPSIjOWI3YTcyIiBzdHJva2Utd2lkdGg9IjIiLz4KPGNpcmNsZSBjeD0iMjA3IiBjeT0iNjgiIHI9IjMwIiBmaWxsPSJ1cmwoI3dhbmQpIi8+PHBhdGggZD0iTTIwNyAyNVY0NU0yMDcgOTBWMTA4TTE2NyA2OEgxODlNMjI1IDY4SDI0NyIgc3Ryb2tlPSIjZGNhNWZiIiBzdHJva2Utd2lkdGg9IjMiLz48L3N2Zz4=';guardian.alt='';stage.appendChild(guardian);
+ $('lib-close').addEventListener('click',close);$('lib-start').addEventListener('click',start);$('lib-next').addEventListener('click',next);
+ pointerHold('lib-left','left');pointerHold('lib-right','right');pointerHold('lib-duck','duck');pointerAction('lib-jump',jump);pointerAction('lib-shield',shield);pointerAction('lib-dash',dash);
+ document.addEventListener('keydown',keydown);document.addEventListener('keyup',keyup);document.addEventListener('visibilitychange',visibility);window.addEventListener('blur',loseFocus);
+ screen='intro';freeze=false;elapsed=0;resetHero();last=performance.now();updateHud();frame=requestAnimationFrame(animation);$('lib-start').focus();
 }
-function lostFocus(){clearHeld();last=performance.now();}
-
-function open(){
- if(root)return;freezeOnHide=false;prior=document.activeElement;
- root=document.createElement('div');root.id='lib-overlay';root.className='lib-game';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','The Librarian game');
- root.innerHTML=[
- '<div class="lib-frame"><div class="lib-top"><div><p class="lib-kicker">Ellery’s Recall Rally · Epic literature encounter</p><h2 class="lib-title">THE LIBRARIAN</h2></div><button id="lib-close" type="button" class="lib-close">✕ Return to Recall Rally</button></div>',
- '<div class="lib-card"><div class="lib-hud"><span class="lib-stat">📚 CHAPTER 1 · THE GREAT ARCHIVES</span><span class="lib-stat">♥ <b id="lib-lives">♥ ♥ ♥ ♥</b></span><span class="lib-stat">⭐ <b id="lib-score">0</b></span><span class="lib-stat">📖 <b id="lib-count">0 / 8</b></span></div>',
- '<div class="lib-canvas-wrap"><canvas id="lib-canvas" width="960" height="460" role="img" aria-label="A storybook gothic library. Orange, purple and cyan warning lanes reveal incoming enchanted books."></canvas><div class="lib-scene-label">THE GUARDIAN OF THE LOST LIBRARY</div><div id="lib-attack-info" class="lib-attack-info" aria-live="off">Watch the shelves</div></div>',
- '<div class="lib-dialogue"><div class="lib-prompt-tag">THE LIBRARIAN ASKS <span id="lib-clock" class="lib-timer"></span></div><p class="lib-prompt" id="lib-question">Only the well-read may leave these halls.</p><p class="lib-source" id="lib-source">Answer aloud, buzz, then enter the answer. Missing awakens flying books!</p><div class="lib-feedback" id="lib-feedback" aria-live="polite"></div></div>',
- '<div class="lib-actions"><button type="button" class="lib-btn primary" id="lib-start">ENTER THE ARCHIVES</button><button type="button" class="lib-btn primary" id="lib-buzz" hidden>⚡ BUZZ!</button>',
- '<form id="lib-form" class="lib-answer" hidden><label class="lib-small" for="lib-answer">Your answer:</label><input id="lib-answer" autocomplete="off" maxlength="100" aria-label="Your answer"><button type="submit" class="lib-btn secondary">Submit</button><button type="button" id="lib-pass" class="lib-btn">I missed it</button></form>',
- '<button type="button" id="lib-next" class="lib-btn secondary" hidden>Next question →</button></div>',
- '<div class="lib-controls"><button type="button" id="lib-left" class="lib-touch" aria-label="Move left">◀</button><button type="button" id="lib-right" class="lib-touch" aria-label="Move right">▶</button><button type="button" id="lib-duck" class="lib-touch lib-duck-btn" aria-label="Duck - press and hold">↓ DUCK</button><button type="button" id="lib-jump" class="lib-touch" aria-label="Jump">↑ JUMP</button><button type="button" id="lib-dash" class="lib-touch" aria-label="Dash forward">✦ DASH</button><button type="button" id="lib-shield" class="lib-touch" aria-label="Shield">🛡 SHIELD</button></div>',
- '<div class="lib-instructions">During the storm: move ◀ ▶, jump ↑, dash ✦, shield 🛡. Keyboard: A/D or Left/Right to move, S/Down to DUCK, Space/Up to jump, Shift to dash, Q to shield. Space buzzes questions.</div></div></div>'
- ].join('');
- document.body.appendChild(root);c=el('lib-canvas');ctx=c.getContext('2d');mountActors();
- el('lib-close').addEventListener('click',close);
- el('lib-start').addEventListener('click',function(){el('lib-start').textContent='ENTER THE ARCHIVES';start();});
- el('lib-buzz').addEventListener('click',buzz);
- el('lib-form').addEventListener('submit',answer);
- el('lib-pass').addEventListener('click',pass);
- el('lib-next').addEventListener('click',next);
- el('lib-jump').addEventListener('click',jump);
- el('lib-jump').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')jump();});
- el('lib-shield').addEventListener('click',useShield);el('lib-dash').addEventListener('click',dash);
- el('lib-dash').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')dash();});
- el('lib-shield').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')useShield();});
- touch('lib-left','left');touch('lib-right','right');touch('lib-duck','duck');
- document.addEventListener('keydown',down);document.addEventListener('keyup',up);if(window.addEventListener)window.addEventListener('blur',lostFocus);
- reset();phase='intro';t=0;last=performance.now();sync();syncActors();document.addEventListener('visibilitychange',visibilityChanged);frame=requestAnimationFrame(animate);el('lib-start').focus();
-}
-function visibilityChanged(){
- if(!root)return;
- freezeOnHide=document.hidden;
- if(freezeOnHide)clearHeld();
- last=performance.now();
-}
-function close(){
- if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',down);document.removeEventListener('keyup',up);
- document.removeEventListener('visibilitychange',visibilityChanged);if(window.removeEventListener)window.removeEventListener('blur',lostFocus);clearHeld();root.remove();root=null;ctx=null;c=null;heroNode=null;guardianNode=null;if(prior&&prior.focus)prior.focus();
-}
-launch.addEventListener('click',open);
+function close(){if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',loseFocus);clearInput();root.remove();root=null;ctx=null;heroNode=null;guardian=null;if(previousFocus&&previousFocus.focus)previousFocus.focus();}
+entry.addEventListener('click',open);
+// Expose narrow, read-only hooks to automated gameplay tests without affecting production play.
+if(window.__RECALL_RALLY_TEST__){window.__librarianTest={open,close,start,next,choose,jump,keydown,keyup,update,get state(){return screen},get hero(){return hero},get held(){return held},get question(){return question},get options(){return options},get books(){return books},get hearts(){return hearts},get round(){return round},get points(){return points},get remaining(){return remaining},setHearts(v){hearts=v},spawnBook(kind,x){books.push({kind,x,y:kind==='high'?FLOOR-87:FLOOR-22,speed:280,hit:false,passed:false,color:'#fff',seed:1})},get history(){return history()}};}
 })();
