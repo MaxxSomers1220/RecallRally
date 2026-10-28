@@ -6,7 +6,7 @@ frontend:
         - node tests/librarian.test.cjs
         - mkdir -p dist/librarian
         - cp index.html dist/index.html
-        - cp librarian/librarian.css librarian/librarian.js dist/librarian/
+        - cp librarian/librarian.css librarian/librarian.js librarian/library-backdrop.svg librarian/librarian-guardian.svg librarian/enchanted-book.svg dist/librarian/
         - node scripts/inject-librarian.cjs dist/index.html
   artifacts:
     baseDirectory: dist
