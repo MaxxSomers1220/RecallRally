@@ -85,6 +85,7 @@ function pass(){
 function attack(){
  missed++;phase='storm';storm=7.3;spawn=.15;warnings=[];books=[];stormHits=0;
  note('Missed! Watch the glowing attack lane. Jump, sidestep or dash; shield blocks one book.');
+ var jumpButton=el('lib-jump');if(jumpButton)jumpButton.focus();
  sync();
 }
 function jump(){if(phase==='storm'&&hero.jump===0&&hero.vy===0){hero.vy=540;spawnBurst(hero.x,FLOOR-6,'#f6d6a0',6);}}
@@ -301,7 +302,10 @@ function open(){
  el('lib-pass').addEventListener('click',pass);
  el('lib-next').addEventListener('click',next);
  el('lib-jump').addEventListener('click',jump);
+ el('lib-jump').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')jump();});
  el('lib-shield').addEventListener('click',useShield);el('lib-dash').addEventListener('click',dash);
+ el('lib-dash').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')dash();});
+ el('lib-shield').addEventListener('pointerdown',function(e){if(e.pointerType==='touch')useShield();});
  touch('lib-left','left');touch('lib-right','right');
  document.addEventListener('keydown',down);document.addEventListener('keyup',up);
  reset();phase='intro';t=0;last=performance.now();sync();syncActors();document.addEventListener('visibilitychange',visibilityChanged);frame=requestAnimationFrame(animate);el('lib-start').focus();
