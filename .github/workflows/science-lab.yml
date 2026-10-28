@@ -1,0 +1,42 @@
+name: Alchemist Science Lab
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'src/science-lab*'
+      - 'src/adventure-save.js'
+      - 'assets/science-lab/**'
+      - 'scripts/**'
+      - 'tests/science-lab*'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'amplify.yml'
+      - '.github/workflows/science-lab.yml'
+  push:
+    branches: [main, feature/alchemist-science-lab]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Shared bank, save, main-quest and Librarian regression checks
+        run: |
+          node tests/science-lab.test.cjs
+          node tests/adventure-save.test.cjs
+          node tests/bank-v29.test.cjs
+          node tests/worlds.test.cjs
+          node tests/adventure-effects.test.cjs
+          node tests/librarian-v4-smoke.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/fizzwick-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/fizzwick-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Play all five stations and verify browser persistence
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/fizzwick-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          node tests/science-lab-browser.test.cjs
+          node tests/adventure-save-browser.test.cjs

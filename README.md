@@ -3,6 +3,94 @@
 A self-contained academic-team practice game with Quick Recall, Written warm-up,
 the Rescue Rigby adventure, customizable heroes, and a local learning journal.
 
+## The Alchemist's Science Lab
+
+Choose **Visit the Science Lab** on the home screen, or **Enter the Science Lab**
+on the adventure map. Professor Fizzwick and your existing customized hero guide
+five playable experiments in an illustrated laboratory:
+
+| Station | Existing topic coverage | Equipment response |
+| --- | --- | --- |
+| Potion Mixer | Materials, inquiry and scientific tools | Five dispensers activate, the mixture changes color and bubbles |
+| Circuit Constructor | Motion, light, heat, electricity and magnetism | Connections power up and the central lamp lights |
+| Creature Incubator | Organisms, plants, animals and body systems | The chamber stabilizes and a fictional Moonwing emerges |
+| Weather Machine | Earth systems, weather, climate and the water cycle | Controls repair, the cloud clears and a magical rainbow appears |
+| Star Observatory | Solar-system topics | Telescope alignment and a fictional constellation are revealed |
+
+Each experiment uses **five different, existing four-choice science questions**.
+The built-in bank currently has 310 science records. Station selection favors
+matching curriculum metadata; if a station has fewer than five eligible matching
+records, the broader science pool fills the deck. Questions recently presented
+in the lab or answered in the active player's journal are deprioritized. Eligible
+science questions from **My study pack** can be included with the hub's checkbox.
+The lab retains the selected records' IDs, answers, distractors, explanations,
+sources, topic metadata and difficulty. There is no separate lab question bank.
+
+Click, tap, or press **1–4** to answer. Correct answers activate the equipment.
+A mistake produces a harmless, station-specific magical mishap and shows the
+original answer and explanation. **Apply the explanation & continue** repairs
+that step; it never changes an incorrect journal entry into a correct one.
+Completing all five reviewed questions earns the station's discovery badge.
+Completing all five stations earns **The Alchemist's Prism**, displayed on the
+adventure map as a cosmetic artifact. It does not answer or skip questions, alter
+guardian scoring, or remove earned seals. The imaginary equipment effects and
+creatures are explicitly distinguished from the real question-bank science.
+
+The lab uses the same stable learning-profile ID and the `QuestSaves` storage
+interface, with a **separate side-quest record**. It never replaces the Rigby
+run's level, keys, location, statistics or hero. Completed stations survive browser
+close/reopen and normal deployments at the same origin. An unfinished experiment
+restarts from the hub, retaining previously completed badges and recorded answers.
+Separate profiles have separate discoveries. Lab progress also survives starting
+a fresh Rigby adventure. Use **Export lab backup** / **Import lab backup** to move
+discoveries between browsers; the main adventure and learning journal have their
+own existing backup controls. Browser storage does not provide automatic device
+synchronization. Failed or damaged saves show a warning; damaged records are kept
+until the player explicitly replaces them or imports a validated lab backup.
+
+The laboratory runs from embedded SVG artwork, CSS and JavaScript, with no new
+runtime library or external asset requests. Laptop and landscape-tablet layouts
+show the question beside the active equipment; small screens stack the panels.
+Reduced motion, the existing sound setting, keyboard focus and large touch
+targets are supported. The complete downloadable HTML includes the lab, saved
+Quest for Rigby and Librarian v4; static Amplify output includes the same lab.
+
+Shared code reused:
+
+- `SAMPLES`, `sourceQuestions('custom')`, `supportsMode`, `stableQuestionId` and
+  `shuffle`: existing records, custom-pack access, eligibility and deck selection.
+- `RallyLearning.activeProfile()` and `snapshot()`: stable player identity and
+  recent answers; `present()`, `record()` and `syncPause()`: the existing attempt
+  journal and active response time. The journal validator now accepts the
+  `science-lab` session mode so these records remain valid after reload/import.
+- `sourceLink()`: existing source/reference rendering; explanations are taken
+  directly from the selected question record.
+- `renderGameHero()`, `tone()` and `setSoundPreference()`: the selected hero and
+  the game's existing sound behavior.
+- `QuestSaves.readSideQuest()` / `saveSideQuest()`: additive profile-scoped save
+  methods. The lab key is `recall-rally-sidequest-science-lab-v1:<profile-id>`;
+  the main adventure's key and data remain separate.
+
+Editable implementation: `src/science-lab.js`, `src/science-lab.css`, and original
+artwork/provenance in `assets/science-lab/`. Run
+`node scripts/build-standalone.cjs` to synchronize the embedded modules and artwork
+in `index.html` and regenerate `Ellery_Recall_Rally_Librarian_v4.html`.
+
+Science Lab validation:
+
+```sh
+node tests/science-lab.test.cjs
+node tests/science-lab-browser.test.cjs
+```
+
+The browser suite uses Playwright and Chromium, exercises every station with
+correct answers and mishaps, checks original content and journal IDs, retains
+three main-quest seals, tests persistence/profile switching/backups/storage
+failures, and exercises keyboard, simulated tablet touch, reduced motion and
+1366×768, 1024×768, 820×1180 and 390×844 layouts. Set `CHROMIUM_PATH` as needed and
+`SCIENCE_LAB_SCREENSHOTS=/tmp/lab-review` to save actual rendered test states.
+These tests do not establish a live AWS deployment or physical iPad validation.
+
 ## Quest for Rigby: automatic save and resume
 
 Adventures now save automatically for the active **learning profile**, using its
@@ -57,7 +145,8 @@ network-free gameplay, corrupted saves, quota failures and same-origin updates.
 It does not validate a live AWS deployment or physical iPad hardware.
 
 `src/adventure-save.js` is embedded verbatim in `index.html` for offline play;
-keep both copies synchronized. Save schema version 1 uses keys of the form
+`node scripts/build-standalone.cjs` synchronizes it from the source module.
+Save schema version 1 uses keys of the form
 `recall-rally-rigby-save-v1:<learning-profile-id>`. It stores the map position,
 sequential completed encounters and seals, run counts, hero identity and an
 interrupted-encounter marker. Unlocks, rewards, rescue stage, next objective,

@@ -5,6 +5,23 @@ const QuestSaves=(()=>{
  let initialized=false,loading=false,hasRun=false,invalid=false,stored=false,pendingEncounter=null,message='',warning='',confirmation=null;
  const profile=()=>RallyLearning.activeProfile();
  const key=()=>PREFIX+profile().id;
+ // Side quests share profile identity, validation and storage-error handling,
+ // but have independent records: they never replace the main adventure.
+ function sideQuestKey(id){if(!/^[a-z][a-z0-9-]{1,40}$/.test(id))throw Error('Invalid side quest');return 'recall-rally-sidequest-'+id+'-v1:'+profile().id}
+ function readSideQuest(id,validateData){
+  try{const raw=localStorage.getItem(sideQuestKey(id));if(raw===null)return{data:null,error:'',invalid:false};
+   if(raw.length>250000)throw Error('The side-quest save is too large.');
+   const v=JSON.parse(raw);if(v?.format!=='recall-rally-sidequest'||v.version!==1||v.questId!==id||v.profileId!==profile().id)throw Error('The side-quest save is incompatible.');
+   return{data:validateData(v.data),error:'',invalid:false};
+  }catch(e){return{data:null,error:'This side-quest save could not be read. Existing data has been kept. Play for this visit or restore a valid backup.',invalid:true}}
+ }
+ function saveSideQuest(id,value,validateData){
+  try{if(!RallyLearning.isSaving())throw Error('The learning profile could not be saved.');
+   const json=JSON.stringify({format:'recall-rally-sidequest',version:1,questId:id,profileId:profile().id,savedAt:new Date().toISOString(),data:validateData(value)});
+   if(json.length>250000)throw Error('The side-quest save is too large.');
+   const target=sideQuestKey(id);localStorage.setItem(target,json);if(localStorage.getItem(target)!==json)throw Error('Storage did not retain this save.');return{ok:true,error:''};
+  }catch(e){return{ok:false,error:'Science Lab saving is unavailable. Progress may last only for this visit. Your saved Rigby adventure is unchanged.'}}
+ }
  const finiteInt=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
  const validId=v=>typeof v==='string'&&/^[a-zA-Z0-9-]{1,120}$/.test(v);
  const validText=(v,max)=>typeof v==='string'&&v.trim().length>0&&v.length<=max&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
@@ -76,6 +93,7 @@ const QuestSaves=(()=>{
   if(!look)look=value?.hero||(legacy?hero():{name:cleanHeroName(profile().name),style:'fairy',look:{...DEFAULT_FAIRY_LOOK},creatorSeen:false});
   applyHero(look);loading=false;
   if(!hasRun&&!invalid)saveHero();
+  if(typeof ScienceLab!=='undefined'&&ScienceLab.ready())ScienceLab.loadProfile();
   renderHeroProfile();feedback();
  }
  function onMap(){
@@ -146,6 +164,6 @@ const QuestSaves=(()=>{
   window.addEventListener('pagehide',save);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});
  }
- return{init,validate,save,saveHero,loadProfile,onMap,recovery,continueQuest,requestNew,exportSave,importSave,duelStarted,duelLeft,status,ready:()=>initialized};
+ return{init,validate,save,saveHero,loadProfile,onMap,recovery,continueQuest,requestNew,exportSave,importSave,duelStarted,duelLeft,status,readSideQuest,saveSideQuest,ready:()=>initialized};
 })();
 /* QUEST_SAVES_END */

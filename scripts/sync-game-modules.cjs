@@ -1,0 +1,18 @@
+'use strict';
+// Keep the distributed single-file game in sync with its editable modules/art.
+const fs=require('node:fs'),path=require('node:path');
+const root=path.join(__dirname,'..'),file=path.join(root,'index.html');
+let html=fs.readFileSync(file,'utf8');
+const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
+const quest=read('src/adventure-save.js');
+const a=html.indexOf('/* QUEST_SAVES_START'),b=html.indexOf('/* QUEST_SAVES_END */',a)+'/* QUEST_SAVES_END */'.length;
+if(a<0||b<a)throw Error('Adventure save embed markers not found');
+html=html.slice(0,a)+quest+html.slice(b);
+const art={room:'data:image/svg+xml;base64,'+Buffer.from(read('assets/science-lab/laboratory.svg')).toString('base64'),professor:read('assets/science-lab/professor-fizzwick.svg')};
+const script='/* SCIENCE_LAB_START */\nconst SCIENCE_LAB_ART='+JSON.stringify(art).replace(/</g,'\\u003c')+';\n'+read('src/science-lab.js')+'\n/* SCIENCE_LAB_END */';
+if(html.includes('/* SCIENCE_LAB_START */'))html=html.replace(/\/\* SCIENCE_LAB_START \*\/[\s\S]*?\/\* SCIENCE_LAB_END \*\//,script);
+else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n\n'+script);
+const css='<style id="science-lab-styles">\n'+read('src/science-lab.css')+'\n</style>';
+if(html.includes('<style id="science-lab-styles">'))html=html.replace(/<style id="science-lab-styles">[\s\S]*?<\/style>/,css);
+else html=html.replace('</head>',css+'\n</head>');
+fs.writeFileSync(file,html);
