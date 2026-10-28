@@ -1,0 +1,23 @@
+name: Librarian game checks
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "librarian/**"
+      - "tests/librarian*"
+      - "amplify.yml"
+      - "Ellery_Recall_Rally_Librarian_Duck.html"
+      - ".github/workflows/librarian-tests.yml"
+  push:
+    branches: [feature/librarian-duck-defeat-v3]
+jobs:
+  javascript-and-gameplay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/librarian.test.cjs
+      - run: node tests/librarian-dodge-v2.test.cjs
+      - run: node tests/librarian-duck-v3.test.cjs
