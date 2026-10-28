@@ -69,3 +69,40 @@
   .lib-touch {min-width:57px;}
 }
 @media(prefers-reduced-motion:reduce){.lib-game{scroll-behavior:auto;}}
+
+
+/* Illustrated arcade: independently rendered gothic background and animated sprites. */
+.lib-canvas-wrap {position:relative;isolation:isolate;aspect-ratio:960/460;background:#161831 url("library-backdrop.svg") center/100% 100% no-repeat;box-shadow:inset 0 0 40px #0a1029aa;}
+.lib-canvas-wrap:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;background:linear-gradient(0deg,#080b2277,transparent 30%,transparent 75%,#08112a45)}
+#lib-canvas{position:relative;z-index:4;display:block;width:100%;height:100%;background:transparent;pointer-events:none}
+.lib-guardian-sprite{position:absolute;z-index:3;left:43.4%;top:12%;width:13.6%;height:auto;pointer-events:none;filter:drop-shadow(0 6px 11px #110b27bb);transform-origin:50% 80%;animation:lib-guardian-breathe 4.8s ease-in-out infinite}
+.lib-guardian-sprite.lib-casting{animation:lib-guardian-cast 2.2s ease-in-out infinite;filter:drop-shadow(0 1px 16px #ad74e4bb)}
+.lib-hero-sprite{position:absolute;z-index:6;left:15%;bottom:11.5%;width:10.5%;aspect-ratio:320/420;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 4px 6px #12142ba8);will-change:left,bottom,transform}
+.lib-hero-sprite svg{display:block;width:100%;height:100%;overflow:visible}
+.lib-hero-sprite.lib-running svg{animation:lib-hero-run .18s ease-in-out infinite alternate}
+.lib-hero-sprite.lib-jumping svg{animation:lib-hero-leap .5s ease-out both}
+.lib-hero-sprite.lib-stagger svg{animation:lib-hero-stagger .1s ease-in-out infinite alternate}
+.lib-hero-sprite.lib-dashing svg{filter:drop-shadow(9px 0 6px #77d4f5)}
+.lib-hero-sprite .panther-cape{transform-box:fill-box;transform-origin:center top;animation:lib-cloak 3.2s ease-in-out infinite}
+.lib-hero-sprite.lib-running .panther-cape{animation-duration:.38s}
+.lib-attack-info{position:absolute;z-index:8;right:12px;bottom:12px;max-width:80%;background:#161d3ae8;border:1px solid #d6b578a1;border-radius:9px;padding:7px 12px;color:#fff4d8;font:800 clamp(9px,1.2vw,12px)/1.3 system-ui,sans-serif;letter-spacing:.04em;pointer-events:none}
+.lib-scene-label{z-index:8;background:#141732c9;border:1px solid #c6a37388;border-radius:8px;padding:6px 9px}
+.lib-dialogue{padding:11px 15px 10px;background:linear-gradient(105deg,#1c213e,#302443)}
+.lib-prompt{font-family:Georgia,serif;line-height:1.25}
+.lib-feedback{font-size:13px;padding:8px 11px;margin-top:7px;line-height:1.45}
+.lib-controls{padding:7px 10px;gap:8px}
+.lib-touch{min-height:48px;min-width:75px;font-size:14px;background:linear-gradient(145deg,#263653,#414066);box-shadow:0 3px 0 #0b1224}
+.lib-touch:active{transform:translateY(2px);box-shadow:0 1px 0 #0b1224}
+.lib-touch:disabled{opacity:.42;cursor:default}
+.lib-actions{padding:8px 11px;gap:7px}
+.lib-btn{min-height:43px;padding:10px 14px}
+.lib-instructions{padding:6px 12px 9px}
+.lib-top{padding:8px 4px}
+@keyframes lib-guardian-breathe{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes lib-guardian-cast{0%,100%{transform:translateY(0) rotate(-3deg)}45%{transform:translateY(-9px) rotate(4deg)}}
+@keyframes lib-hero-run{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-5px) rotate(2deg)}}
+@keyframes lib-hero-leap{from{transform:scale(.94,1.05)}to{transform:scale(1)}}
+@keyframes lib-hero-stagger{from{transform:translateX(-4px)}to{transform:translateX(3px)}}
+@keyframes lib-cloak{0%,100%{transform:skewX(0)}50%{transform:skewX(2.5deg)}}
+@media(max-width:700px){.lib-hero-sprite{width:12%}.lib-guardian-sprite{width:15%}.lib-attack-info{right:5px;bottom:4px;padding:4px 6px;font-size:9px}.lib-scene-label{top:4px;left:5px;padding:4px;font-size:8px}.lib-touch{min-width:50px;min-height:52px;padding:6px;font-size:11px;flex:1}.lib-controls{gap:4px;padding:7px}.lib-instructions{font-size:10px}.lib-title{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.lib-hero-sprite,.lib-hero-sprite *,.lib-guardian-sprite{animation:none!important;transition:none!important}.lib-hero-sprite.lib-stagger{opacity:.7}}
