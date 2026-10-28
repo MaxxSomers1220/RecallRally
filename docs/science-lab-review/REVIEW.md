@@ -1,5 +1,32 @@
 # Science Lab discovery workshop — review record
 
+## October 28, 2026 — failed workflow investigation
+
+Run `40688735977` at `b56f7e2` was reproduced locally: after five completed
+stations, the immediate inventory text read still showed one badge. Diagnostic
+instrumentation found `science-lab.open === false` but zero delivered `close`
+events at that read. The saved record already contained all five station IDs,
+and `ScienceLab.inventoryMarkup()` already returned The Alchemist’s Prism.
+After the queued native dialog `close` event, the existing `init()` listener
+called `renderAdventure()` and the visible inventory displayed the Prism.
+
+The cause was an unsynchronized browser assertion, not a missing save or an
+incorrect reward expectation. The correction waits for the visible inventory
+title with Playwright before asserting it, without a fixed delay or another
+navigation to force rendering. Production code and distributed HTML are unchanged.
+
+The browser regression now also checks the one-badge inventory after restarting
+an unfinished experiment; the completed inventory after return, lab reopening,
+Escape, page reload, full browser restart and the standalone HTML; and unchanged
+five badges, learning attempts, three Rigby seals and customized hero.
+
+Local verification: Node `v24.22.1`, Playwright `1.62.1`, Chromium
+`153.0.8010.0` (isolated tooling outside the repository). All six workflow Node
+regressions and all four browser suites passed, including the actual staged
+Amplify build commands. No deployment or merge was performed. The earlier
+validation record below describes the original workshop work; this section
+records the reproduced failure and its correction.
+
 ## Recovery and scope
 
 - Default branch verified via `git ls-remote --symref origin HEAD`: `main`.
@@ -141,3 +168,4 @@ Recommended student/teacher questions:
 Next highest-value usability pass: watch a fifth grader use the compare controls
 and repair flow on a physical iPad, checking reading load, scroll discovery and
 touch spacing before adding more content.
+

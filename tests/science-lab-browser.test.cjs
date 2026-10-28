@@ -11,6 +11,12 @@ async function openBrowser(){
 const main=()=>page.evaluate(()=>({progress:questProgress,keys:[...questKeys],completed:[...questCompleted],location:questLocation,stats:{...questRunStats},hero:heroName,look:{...avatarLook},style:heroStyle}));
 const labSave=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('recall-rally-sidequest-science-lab-v1:'+RallyLearning.activeProfile().id)));
 const attempts=()=>page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab'));
+async function expectPrismInventory(){
+ // dialog.close() queues a close event; the adventure renders in that handler.
+ // Wait for the visible result instead of reading the previous map's HTML.
+ const reward=page.locator('.sl-map-entrance strong').filter({hasText:'The Alchemist’s Prism'});
+ await reward.waitFor({state:'visible'});assert.equal(await reward.innerText(),'The Alchemist’s Prism');
+}
 async function questionRecord(){const id=await page.locator('.sl-question').getAttribute('data-question-id');return page.evaluate(id=>[...SAMPLES,...customPack].find(q=>q.id===id),id)}
 async function answerLab(correct=true){
  const q=await questionRecord(),options=await page.locator('[data-sl-choice]>span').allTextContents();assert.equal(q.subject,'science');
@@ -59,16 +65,25 @@ async function switchPlayer(id){await page.locator('#open-learning').click();awa
   // A browser close/reopen retains a badge but cannot complete an abandoned experiment.
   await page.locator('[data-sl-station="circuit"]').click();await answerLab(true);assert.equal((await labSave()).data.completed.length,1);
   await context.close();await openBrowser();await page.locator('#quest-home-continue').click();assert.deepEqual(await main(),original);
+  assert.match(await page.locator('.sl-map-entrance').innerText(),/1 \/ 5 discovery badges/);
   await page.locator('#quest-science-lab').click();assert.equal((await labSave()).data.completed.length,1);assert(await page.locator('[data-sl-station="potion"]').getAttribute('class').then(x=>x.includes('is-discovered')));
   await runStation('circuit',true);await runStation('creature',true);await runStation('weather',true);await runStation('observatory',true);
   assert.equal((await labSave()).data.completed.length,5);assert.match(await page.locator('.sl-discovery-shelf').innerText(),/Prism is yours/);
-  assert.deepEqual(await main(),original);await page.locator('#sl-close').click();assert.match(await page.locator('.sl-map-entrance').innerText(),/Alchemist’s Prism/);assert.deepEqual(await main(),original);
+  assert.deepEqual(await main(),original);await page.locator('#sl-close').click();await expectPrismInventory();assert.deepEqual(await main(),original);
+  if(screens)await page.screenshot({path:path.join(screens,'prism-inventory.png'),fullPage:true});
   const journal=await attempts();assert.equal(journal.length,26);assert.equal(journal.filter(a=>a.outcome==='incorrect').length,5);
+  // Reopening, Escape, reload and a full browser restart keep the same reward.
+  await page.locator('#quest-science-lab').click();assert.equal(await page.locator('.sl-station.is-discovered').count(),5);assert.match(await page.locator('.sl-discovery-shelf').innerText(),/Prism is yours/);
+  await page.keyboard.press('Escape');await expectPrismInventory();await page.waitForFunction(()=>document.activeElement.id==='quest-science-lab');
+  await page.reload({waitUntil:'domcontentloaded'});await page.locator('#quest-home-continue').click();await expectPrismInventory();assert.deepEqual(await main(),original);assert.deepEqual(await attempts(),journal);
+  await context.close();await openBrowser();await page.locator('#quest-home-continue').click();await expectPrismInventory();assert.deepEqual(await main(),original);assert.deepEqual(await attempts(),journal);
+  assert.equal((await labSave()).data.completed.length,5);
+  console.log('PASS Prism inventory after close, reopen, Escape, reload and browser restart; five badges, journal and main adventure retained');
   console.log('PASS all five machines progress to completion; badges restore, incomplete experiment restarts, Prism enters inventory, Rigby keeps three seals and hero');
   // A normal deployment at the same browser origin retains lab and main saves.
   await page.goto(url+'Ellery_Recall_Rally_Librarian_v4.html',{waitUntil:'domcontentloaded'});assert(await page.locator('#lib-launch').isVisible());await page.locator('#quest-home-continue').click();assert.deepEqual(await main(),original);await page.locator('#quest-science-lab').click();assert.equal((await labSave()).data.completed.length,5);assert.equal((await attempts()).length,26);
   assert.equal(await page.evaluate(()=>RallyLearning.validateState(JSON.parse(localStorage.getItem('recall-rally-learning-v1'))).attempts.filter(a=>a.mode==='science-lab').length),26);
-  await page.locator('#sl-close').click();
+  await page.locator('#sl-close').click();await expectPrismInventory();
   console.log('PASS complete standalone HTML, Librarian v4, same-origin deployment and learning-journal import validation');
   await page.locator('#open-learning').click();await page.locator('#learning-add-player').click();await page.locator('#learning-new-name').fill('Other Scientist');await page.locator('#learning-new-player button[type="submit"]').click();await page.locator('#learning-dialog [data-close]').click();
   const otherProfile=await page.evaluate(()=>RallyLearning.activeProfile().id);assert.notEqual(otherProfile,firstProfile);await page.locator('#quest-science-lab').click();assert.equal(await labSave(),null);assert.equal((await attempts()).length,0);assert.match(await page.locator('.sl-discovery-shelf').innerText(),/0 \/ 5/);await page.locator('#sl-close').click();
@@ -115,3 +130,4 @@ async function switchPlayer(id){await page.locator('#open-learning').click();awa
   assert.deepEqual(errors,[],'no browser script errors');console.log('PASS corrupt laboratory save cannot break startup or the main adventure; no browser script errors');
  }finally{if(context)await context.close();if(server)await new Promise(r=>server.close(r));fs.rmSync(temp,{recursive:true,force:true})}
 })().catch(e=>{console.error(e);process.exitCode=1});
+
