@@ -33,4 +33,17 @@ const journal=()=>page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>
  if(screens)await page.screenshot({path:path.join(screens,'repair-feedback.png')});
  await page.locator('#sl-next').click();assert.equal((await journal()).length,1);assert.equal(await page.locator('.sl-stage').getAttribute('data-sl-progress'),'1');
  await page.locator('#sl-hub').click();console.log('PASS a visible repair step, honest first grade, and immediate progress after applying the explanation');
+ const notes=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('recall-rally-sidequest-science-lab-v1:'+RallyLearning.activeProfile().id)).data);
+ assert.equal((await notes()).notes.length,5);await page.locator('#sl-notebook').click();assert.equal(await page.locator('.sl-notebook article').count(),5);assert.equal(await page.locator('.sl-notebook article .sl-source').count(),5);await page.locator('#sl-notebook-back').click();
+ for(const id of ['potion','circuit','creature','weather','observatory']){
+  await page.locator('[data-sl-station="'+id+'"]').click();
+  for(let i=0;i<5;i++){
+   const id=await page.locator('.sl-question').getAttribute('data-question-id'),answer=await page.evaluate(id=>SAMPLES.find(q=>q.id===id).answer,id),choices=await page.locator('[data-sl-choice]>span').allTextContents();
+   await page.keyboard.press(String(choices.findIndex(v=>i===0?v!==answer:v===answer)+1));await page.locator('#sl-next').click();
+  }
+  if(id==='observatory'){await page.locator('#sl-light-prism').click();assert(await page.locator('.sl-finale').isVisible());assert.equal(await page.locator('.sl-finale-badges li').count(),5);if(screens)await page.screenshot({path:path.join(screens,'prism-ending.png')});await page.locator('#sl-finale-hub').click()}
+  else await page.locator('#sl-back-hub').click();
+ }
+ assert.equal((await notes()).prismLit,true);assert.equal((await notes()).completed.length,5);await page.reload({waitUntil:'domcontentloaded'});await page.locator('#open-science-lab').click();assert.equal((await notes()).notes.length,5);assert.equal((await notes()).prismLit,true);assert.match(await page.locator('.sl-discovery-shelf').innerText(),/Prism is yours/);
+ assert.deepEqual(errors,[]);console.log('PASS five saved field notes, mistakes in every station, Prism ending and reload without replaying the finale');
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});

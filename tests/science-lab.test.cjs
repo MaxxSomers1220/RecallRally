@@ -28,6 +28,7 @@ const base=science[0];customPack=[{...base,id:'custom-science-unit',prompt:'Cust
 console.log('PASS incomplete topic coverage falls back to science, eligible custom records are optional, quick-only questions stay out');
 const valid={version:1,completed:['potion'],seen:{'sample-science-1':1234},records:{potion:{runs:1,bestCorrect:4,lastCorrect:4,completedAt:'2026-10-28T12:00:00Z'}},includeCustom:false};
 assert.equal(ScienceLab.validate(valid).completed.length,1);assert.equal(ScienceLab.validate({...valid,artifact:'skip-all-questions'}).artifact,undefined);
+assert.deepEqual(ScienceLab.validate(valid).notes,[],'older saves gain an empty optional notebook');assert.equal(ScienceLab.validate(valid).prismLit,false);assert.throws(()=>ScienceLab.validate({...valid,prismLit:true}));assert.throws(()=>ScienceLab.validate({...valid,notes:['potion','potion']}));
 for(const v of [null,{}, {...valid,version:9},{...valid,completed:['potion','potion']},{...valid,completed:['unknown']},{...valid,records:{}},{...valid,seen:{'bad-id':-1}},{...valid,records:{potion:{...valid.records.potion,bestCorrect:6}}},{...valid,records:{potion:{...valid.records.potion,runs:0}}}])assert.throws(()=>ScienceLab.validate(v));
 console.log('PASS versioned station saves validate badge consistency, history, grades and corrupted data');
 `,ctx,{timeout:5000});
