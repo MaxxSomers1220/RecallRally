@@ -5,6 +5,16 @@ the Rescue Rigby adventure, customizable heroes, and a local learning journal.
 
 ## The Alchemist's Science Lab
 
+The **discovery workshop** adds optional predict-and-observe models, three
+question trails (Explore, Review, Stretch), a collectible field notebook, clearer
+repair steps, and a player-triggered Prism celebration. Each model changes one
+condition and cites an existing Science-bank explanation. Model guesses are not
+graded and cannot skip questions. Comparing both conditions keeps a field note;
+five reviewed quiz questions still earn each discovery badge. Old lab saves and
+backups remain supported; the optional `notes` and `prismLit` fields default safely.
+See [the four-pass review and validation report](docs/science-lab-review/REVIEW.md)
+for exact checks, screenshots, limitations and fifth-grade playtesting questions.
+
 Choose **Visit the Science Lab** on the home screen, or **Enter the Science Lab**
 on the adventure map. Professor Fizzwick and your existing customized hero guide
 five playable experiments in an illustrated laboratory:
@@ -81,6 +91,8 @@ Science Lab validation:
 ```sh
 node tests/science-lab.test.cjs
 node tests/science-lab-browser.test.cjs
+node tests/science-lab-review.test.cjs
+node tests/science-lab-static.test.cjs
 ```
 
 The browser suite uses Playwright and Chromium, exercises every station with

@@ -13,7 +13,7 @@ on:
       - 'amplify.yml'
       - '.github/workflows/science-lab.yml'
   push:
-    branches: [main, feature/alchemist-science-lab]
+    branches: [main, feature/alchemist-science-lab, feature/science-lab-discovery-workshop]
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -39,4 +39,6 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/fizzwick-browser/node_modules"
           export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
           node tests/science-lab-browser.test.cjs
+          node tests/science-lab-review.test.cjs
+          node tests/science-lab-static.test.cjs
           node tests/adventure-save-browser.test.cjs

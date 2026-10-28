@@ -619,6 +619,14 @@
 .sl-finale{text-align:center;padding:18px 26px}.sl-finale-cast{display:flex;justify-content:center;align-items:center;height:205px;gap:34px}.sl-finale-cast>.sl-hero-art,.sl-finale-cast>.sl-fizzwick{width:110px;height:160px}.sl-prism-finale{width:155px;height:165px;filter:drop-shadow(0 0 24px #b4e4dc88);animation:sl-prism-arrive 1.4s ease-out both}.sl-prism-finale svg{height:100%;width:100%}.sl-finale h3{font:700 29px Georgia,serif;color:#ffedc5;margin:10px 0}.sl-finale>p{max-width:780px;margin:10px auto;font-size:13px;line-height:1.5;color:#dfebdc}.sl-finale-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0;list-style:none;margin:14px 0}.sl-finale-badges li{font-size:12px;padding:9px;border:1px solid #baaa7c;border-radius:12px;background:#d9d4a50e}.sl-finale-actions{display:flex;justify-content:center;gap:12px;margin:18px 0}.sl-finale-actions .sl-next{width:auto!important;max-width:350px;margin:0!important}@keyframes sl-prism-arrive{from{opacity:.3;transform:translateY(12px) scale(.8)}to{opacity:1;transform:none}}
 @media(max-width:720px){.sl-finale{padding:14px}.sl-finale-cast{gap:8px;height:160px}.sl-finale-cast>.sl-hero-art,.sl-finale-cast>.sl-fizzwick{height:125px;width:75px}.sl-prism-finale{width:100px;height:130px}.sl-finale h3{font-size:23px}.sl-finale-actions{flex-wrap:wrap}.sl-notebook{padding:14px}.sl-finale>p{font-size:12px}}
 @media(prefers-reduced-motion:reduce){#science-lab .sl-prism-finale{animation:none!important}}
+/* Readable dark-panel sources, predictable focus and generous touch targets. */
+#science-lab .sl-model .sl-source,#science-lab .sl-notebook .sl-source,#science-lab .sl-model .sl-source summary,#science-lab .sl-notebook .sl-source summary{color:#e2dab8;font-size:12px}
+#science-lab .sl-model .sl-source p,#science-lab .sl-model .sl-source small,#science-lab .sl-notebook .sl-source p,#science-lab .sl-notebook .sl-source small{color:#e2dab8;font-size:12px}
+#science-lab .sl-model .sl-source a,#science-lab .sl-notebook .sl-source a{color:#aee2ef;text-decoration:underline}
+#science-lab :focus-visible{outline:3px solid #8ee6df;outline-offset:3px}#science-lab .sl-question :focus-visible{outline-color:#185e69}
+.sl-footer{font-size:11px}.sl-hub-tools{font-size:11px}.sl-header-actions .sl-quiet{font-size:12px!important}.sl-model fieldset button{font-size:12px!important}.sl-experiment-heading{flex-wrap:wrap}
+@media(pointer:coarse){#science-lab .sl-quiet,#science-lab .sl-header-actions .sl-quiet,#science-lab .sl-question .sl-quiet{min-height:44px!important;min-width:44px}#science-lab summary{min-height:44px;display:list-item;padding:12px 0}#science-lab select,#science-lab .sl-hub-tools label{min-height:44px}#science-lab input[type=file]{min-height:44px;max-width:200px;font-size:12px}#science-lab input[type=file]::file-selector-button{min-height:44px}}
+@media(max-width:720px){.sl-footer{font-size:10px;align-items:flex-start}.sl-footer>span{max-width:58%}.sl-footer #sl-save-status{max-width:42%}.sl-header-actions{flex-shrink:1}.sl-header h2{font-size:19px}.sl-model p{font-size:13px}}
 </style>
 </head>
 <body>
@@ -2523,7 +2531,7 @@ const ScienceLab=(()=>{
   {id:'weather',name:'Weather Machine',badge:'Weather Keeper',color:'#91d6f2',topics:['science-04','science-05'],keywords:/weather|climate|atmosphere|water cycle|earth|rock|soil|mineral|fossil/i,goal:'Repair five weather controls.',win:'The tiny magical sky is balanced!',mishap:'A tiny imaginary cloud is raining teacups. Fizzwick has brought an umbrella.',repair:'Apply the explanation to repair the next weather control.'},
   {id:'observatory',name:'Star Observatory',badge:'Starlight Explorer',color:'#e8bcf2',topics:['science-06'],keywords:/solar|planet|astronom|space|sun|moon|star|orbit/i,goal:'Align five telescope markers.',win:'Fizzwick’s fictional Teapot constellation shines!',mishap:'The telescope has located Fizzwick’s left slipper instead of the sky.',repair:'Apply the explanation to realign the telescope.'}
  ];
- let bench=null,approach='explore';
+ let bench=null,approach='explore',openerId='',lastStation='';
  let initialized=false,data=empty(),run=null,storageMessage='',invalidSave=false,notice='';
  const stationById=id=>STATIONS.find(s=>s.id===id);
  function empty(){return{version:1,completed:[],seen:{},records:{},includeCustom:false,notes:[],prismLit:false}}
@@ -2576,7 +2584,7 @@ const ScienceLab=(()=>{
   return '<section class="sl-map-entrance" aria-label="Science Lab side quest"><span class="sl-prism-token" aria-hidden="true">'+prismIcon()+'</span><div><strong>'+(data.completed.length===5?'The Alchemist’s Prism':'Professor Fizzwick’s laboratory')+'</strong><p>'+(data.completed.length===5?'Artifact earned · a cosmetic keepsake of five discoveries. Your answers and guardian seals work exactly as before.':data.completed.length+' / 5 discovery badges · help repair five magical science stations.')+'</p></div><button class="secondary" id="quest-science-lab">Enter the Science Lab →</button></section>';
  }
  function open(){
-  if(!initialized)return;
+  if(!initialized)return;openerId=document.activeElement?.id||(mode==='adventure'?'quest-science-lab':'open-science-lab');
   if(questWalking)cancelQuestTravel();if(duel?.phase==='open'&&!duel.paused)pauseQuest();
   if(game&&!game.paused&&!['summary','result'].includes(game.phase))togglePause();
   run=null;bench=null;notice='';renderHub();showDialog('science-lab');$('sl-title').focus({preventScroll:true});
@@ -2603,7 +2611,7 @@ const ScienceLab=(()=>{
   if($('sl-repair-save'))$('sl-repair-save').onclick=()=>{if(window.confirm('Replace this damaged lab save with the discoveries from this visit? Rigby’s adventure and learning history will be kept.')){invalidSave=false;save();renderHub()}};
  }
  function start(id){
-  const station=stationById(id),selection=pickDeck(id);if(!station||selection.deck.length<COUNT){notice='Five different science questions are needed. Add eligible science questions or try the built-in pool.';renderHub();return}
+  lastStation=id;const station=stationById(id),selection=pickDeck(id);if(!station||selection.deck.length<COUNT){notice='Five different science questions are needed. Add eligible science questions or try the built-in pool.';renderHub();return}
   run={station,approach,wasCompleted:data.completed.includes(id),deck:selection.deck,index:0,phase:'question',steps:0,correctCount:0,selected:null,choices:[],correct:null,profileId:RallyLearning.activeProfile().id,fallback:selection.fallback,paused:false};present();
  }
  function present(){
@@ -2615,7 +2623,7 @@ const ScienceLab=(()=>{
   const q=run.deck[run.index];run.phase='feedback';run.selected=index;run.correct=run.choices[index]===q.answer;
   if(run.correct){run.correctCount++;run.steps++}
   RallyLearning.record(run,q,run.correct?'correct':'incorrect','choice',true);
-  tone(run.correct?'correct':'miss');renderExperiment();$('sl-next').focus({preventScroll:true});
+  tone(run.correct?'correct':'miss');renderExperiment();$('sl-next').focus({preventScroll:true});if(window.innerWidth<=720)$('sl-next').scrollIntoView({block:'nearest',behavior:'instant'});
  }
  function next(){
   if(bench||!run||run.phase!=='feedback')return;
@@ -2637,14 +2645,14 @@ const ScienceLab=(()=>{
  function renderExperiment(){
   const q=run.deck[run.index],s=run.station,answered=run.phase==='feedback',topic=CURRICULUM_TOPICS.find(t=>t.id===q.curriculumTopicId)?.title||q.topic||'Science practice';
   $('science-lab').innerHTML=header(s.name+' · Question '+(run.index+1)+' of '+COUNT)+'<div class="sl-body sl-workspace"><section class="sl-question" data-question-id="'+esc(q.id)+'" aria-label="Science question and answers"><div class="sl-question-meta"><span>SCIENCE · '+(run.index+1)+' / 5</span><button class="sl-quiet" id="sl-hub">Laboratory hub</button></div><h3 id="sl-prompt" tabindex="-1">'+esc(q.prompt)+'</h3><div class="sl-answers">'+run.choices.map((answer,i)=>'<button class="sl-answer '+(answered&&answer===q.answer?'sl-correct':answered&&i===run.selected?'sl-incorrect':'')+'" data-sl-choice="'+i+'" '+(answered?'disabled':'')+'><kbd>'+(i+1)+'</kbd><span>'+esc(answer)+(answered&&answer===q.answer?'<small>✓ Correct answer</small>':answered&&i===run.selected?'<small>Your answer</small>':'')+'</span></button>').join('')+'</div>'+
-   (answered?'<section class="sl-feedback '+(run.correct?'is-correct':'is-mishap')+'" role="status"><strong>'+(run.correct?'✓ It worked! One step fixed.':'↺ A clue to investigate. Read, then repair.')+'</strong><p class="sl-right-answer">Correct answer: '+esc(q.answer)+'</p><p class="sl-explanation">'+esc(q.explanation)+'</p>'+(!run.correct?'<p class="sl-repair-copy">'+esc(s.repair)+'</p>':'')+'<details class="sl-source"><summary>Question source &amp; topic</summary><p>'+esc(topic)+'</p>'+(!q.guide?'<p>'+esc(q.source||'Recall Rally built-in practice')+'</p>':'')+sourceLink(q)+'<small>Question ID: '+esc(q.id)+'</small></details></section><button class="sl-next" id="sl-next">'+(run.correct?(run.index===COUNT-1?'Finish experiment & earn badge →':'Next experiment step →'):(run.index===COUNT-1?'Apply the explanation & finish →':'Apply the explanation & continue →'))+'</button>':'<p class="sl-question-tip">Choose an answer, or press 1–4. No timer. Mistakes are a chance to learn.</p>')+
+   (answered?'<section class="sl-feedback '+(run.correct?'is-correct':'is-mishap')+'" role="status"><strong id="sl-feedback-title">'+(run.correct?'✓ It worked! One step fixed.':'↺ A clue to investigate. Read, then repair.')+'</strong><p class="sl-right-answer">Correct answer: '+esc(q.answer)+'</p><p class="sl-explanation">'+esc(q.explanation)+'</p>'+(!run.correct?'<p class="sl-repair-copy">'+esc(s.repair)+'</p>':'')+'<details class="sl-source"><summary>Question source &amp; topic</summary><p>'+esc(topic)+'</p>'+(!q.guide?'<p>'+esc(q.source||'Recall Rally built-in practice')+'</p>':'')+sourceLink(q)+'<small>Question ID: '+esc(q.id)+'</small></details></section><button class="sl-next" id="sl-next" aria-describedby="sl-feedback-title">'+(run.correct?(run.index===COUNT-1?'Finish experiment & earn badge →':'Next experiment step →'):(run.index===COUNT-1?'Apply the explanation & finish →':'Apply the explanation & continue →'))+'</button>':'<p class="sl-question-tip">Choose an answer, or press 1–4. No timer. Mistakes are a chance to learn.</p>')+
    (run.fallback?'<p class="sl-fallback">Science topics are mixed here to provide five different questions.</p>':'')+'</section>'+machinePanel()+'</div>'+footer();
-  bindCommon();$('sl-hub').onclick=()=>{run=null;renderHub()};$('science-lab').querySelectorAll('[data-sl-choice]').forEach(b=>b.onclick=()=>choose(Number(b.dataset.slChoice)));if($('sl-next'))$('sl-next').onclick=next;
+  bindCommon();$('sl-hub').onclick=returnHub;$('science-lab').querySelectorAll('[data-sl-choice]').forEach(b=>b.onclick=()=>choose(Number(b.dataset.slChoice)));if($('sl-next'))$('sl-next').onclick=next;
  }
  function renderComplete(){
   const s=run.station,all=data.completed.length===5;
   $('science-lab').innerHTML=header(s.name+' · Experiment complete')+'<div class="sl-body sl-complete"><section><div class="sl-award">'+prismIcon()+'</div><span class="sl-eyebrow">DISCOVERY BADGE EARNED</span><h3>'+s.badge+'</h3><p>'+esc(s.win)+'</p><p>'+run.correctCount+' / 5 correct on your first try; '+(COUNT-run.correctCount)+' learned with repairs.</p><p>Every answer helps. Your first answers stay in My learning.</p>'+(all?'<div class="sl-artifact"><strong>The Alchemist’s Prism</strong><p>All five discoveries complete! Your new cosmetic artifact is waiting in your adventure inventory.</p></div>':'<p>'+data.completed.length+' of 5 badges earned. Explore another station to keep discovering.</p>')+(STATIONS.find(x=>!data.completed.includes(x.id))?'<button class="sl-next" id="sl-next-station">Next discovery: '+esc(STATIONS.find(x=>!data.completed.includes(x.id)).name)+' →</button>':'')+(all?'<button class="sl-next" id="sl-light-prism">'+(data.prismLit?'Visit the shining Prism':'Light the Alchemist’s Prism')+' ✦</button>':'')+'<button class="sl-next" id="sl-back-hub">Back to Fizzwick’s laboratory →</button></section>'+machinePanel()+'</div>'+footer();
-  bindCommon();if($('sl-light-prism'))$('sl-light-prism').onclick=lightPrism;if($('sl-next-station'))$('sl-next-station').onclick=()=>start(STATIONS.find(x=>!data.completed.includes(x.id)).id);$('sl-back-hub').onclick=()=>{run=null;renderHub()};$('sl-back-hub').focus({preventScroll:true});
+  bindCommon();if($('sl-light-prism'))$('sl-light-prism').onclick=lightPrism;if($('sl-next-station'))$('sl-next-station').onclick=()=>start(STATIONS.find(x=>!data.completed.includes(x.id)).id);$('sl-back-hub').onclick=returnHub;$('sl-back-hub').focus({preventScroll:true});
  }
  function renderNotebook(){
   $('science-lab').innerHTML=header('Fizzwick’s field notebook')+'<div class="sl-body sl-notebook"><h3>Small tests. Big discoveries.</h3><p>Compare both conditions in a science model to keep its note. These are the explanations from your science bank.</p>'+STATIONS.map(s=>{const m=ScienceLabModels.get(s.id);return '<article><h4>'+(data.notes.includes(s.id)?'✓ ':'◇ ')+esc(m.title)+'</h4>'+(data.notes.includes(s.id)?'<p>'+esc(m.record.explanation)+'</p><details class="sl-source"><summary>Science source</summary><p>'+esc(m.record.prompt)+'</p>'+sourceLink(m.record)+'<small>Question ID: '+esc(m.record.id)+'</small></details>':'<p>Try the model at '+s.name+' and compare both conditions.</p>')+'</article>'}).join('')+'<button class="sl-next" id="sl-notebook-back">Back to the laboratory</button>'+(data.completed.length===5?'<button class="sl-next" id="sl-light-prism">Visit the Alchemist’s Prism ✦</button>':'')+'</div>'+footer();
@@ -2653,7 +2661,7 @@ const ScienceLab=(()=>{
  function lightPrism(){
   if(data.completed.length!==5)return;data.prismLit=true;save();
   $('science-lab').innerHTML=header('Five discoveries · The Alchemist’s Prism')+'<div class="sl-body sl-finale"><div class="sl-finale-cast">'+heroArt('victory')+'<div class="sl-prism-finale">'+prismIcon()+'</div>'+professor()+'</div><h3>The laboratory is humming again!</h3><p>“Five discoveries, one shining Prism. And only one teacup in the rain gauge. A new record!”</p><p>Professor Fizzwick bows. “You observed, tested, and learned from each surprise. Thank you, apprentice.”</p><ul class="sl-finale-badges">'+STATIONS.map(s=>'<li>✓ '+s.badge+'</li>').join('')+'</ul><p>Your Prism is in your adventure inventory. It is a keepsake, not an answer key.</p><div class="sl-finale-actions"><button class="sl-next" id="sl-finale-return">Return to Recall Rally →</button><button class="sl-quiet" id="sl-finale-hub">Revisit the laboratory</button></div></div>'+footer();
-  bindCommon();$('sl-finale-return').onclick=close;$('sl-finale-hub').onclick=()=>{run=null;renderHub();$('sl-title').focus({preventScroll:true})};$('sl-title').focus({preventScroll:true});
+  bindCommon();$('sl-finale-return').onclick=close;$('sl-finale-hub').onclick=returnHub;$('sl-title').focus({preventScroll:true});
  }
  async function importBackup(event){
   const input=event.target,file=input.files?.[0],profileId=RallyLearning.activeProfile().id;if(!file)return;
@@ -2663,21 +2671,24 @@ const ScienceLab=(()=>{
    const result=QuestSaves.saveSideQuest(ID,incoming,validate);if(!result.ok)throw Error(result.error);data=incoming;invalidSave=false;storageMessage='✓ Laboratory discoveries saved on this device';notice='Lab backup imported.';renderHub();
   }catch(e){notice='Lab import did not finish: '+e.message;const el=$('sl-notice');if(el)el.textContent=notice}finally{input.value=''}
  }
+ function returnHub(){
+  run=null;bench=null;renderHub();const target=$('science-lab').querySelector('[data-sl-station="'+lastStation+'"]')||$('sl-title');target.focus({preventScroll:true});
+ }
  function openModel(id){
   if(!ScienceLabModels.get(id))return;
   if(run&&run.phase==='question'){run.paused=true;RallyLearning.syncPause(run)}
-  bench={id,setting:0,prediction:null,observed:false,checked:0};renderModel();
+  bench={id,setting:0,prediction:null,observed:false,checked:0};renderModel();$('sl-model-title').focus({preventScroll:true});
  }
  function renderModel(){
   const m=ScienceLabModels.get(bench.id),result=bench.observed?ScienceLabModels.outcome(bench.id,bench.setting):null;
-  $('science-lab').innerHTML=header('Predict → change one thing → observe → compare')+'<div class="sl-body sl-model"><section><span class="sl-eyebrow">OPTIONAL SCIENCE MODEL · NO GRADE</span><h3>'+esc(m.title)+'</h3><p>'+esc(m.scope)+'</p><fieldset><legend>'+esc(m.control)+'</legend>'+m.settings.map((text,i)=>'<button class="sl-quiet" data-sl-condition="'+i+'" aria-pressed="'+(bench.setting===i)+'">'+esc(text)+'</button>').join('')+'</fieldset><fieldset><legend>'+esc(m.ask)+'</legend>'+m.predictions.map((text,i)=>'<button class="sl-quiet" data-sl-predict="'+i+'" aria-pressed="'+(bench.prediction===i)+'">'+(i+1)+' · '+esc(text)+'</button>').join('')+'</fieldset><button class="sl-next" id="sl-observe" '+(bench.prediction===null?'disabled':'')+'>Test this condition</button><button class="sl-quiet" id="sl-model-back">Back to my experiment</button></section><section class="sl-model-observation">'+ScienceLabModels.diagram(bench.id,bench.setting,bench.observed)+'<div id="sl-model-result" role="status">'+(bench.observed?'<strong>Observed: '+esc(m.predictions[result])+'</strong><p>'+(bench.prediction===result?'Your prediction matched.':'The result was different. That gives us a clue!')+'</p><p>'+esc(m.record.explanation)+'</p><p>Now change one thing and compare.</p><p class="sl-note-earned">'+(data.notes.includes(bench.id)?'✓ Field note collected. You compared both conditions.':'Compare both conditions to collect a field note.')+'</p>':'<strong>What do you notice?</strong><p>Choose a condition and make a prediction. Then test it.</p>')+'</div><details class="sl-source"><summary>Science source</summary><p>'+esc(m.record.prompt)+'</p><p>'+esc(m.record.explanation)+'</p>'+sourceLink(m.record)+'<small>Question ID: '+esc(m.record.id)+'</small></details><p class="sl-model-note">Simplified model, not a measured experiment. Your five question answers stay in My learning; these guesses are not graded.</p></section></div>'+footer();
+  $('science-lab').innerHTML=header('Predict → change one thing → observe → compare')+'<div class="sl-body sl-model"><section><span class="sl-eyebrow">OPTIONAL SCIENCE MODEL · NO GRADE</span><h3 id="sl-model-title" tabindex="-1">'+esc(m.title)+'</h3><p>'+esc(m.scope)+'</p><fieldset><legend>'+esc(m.control)+'</legend>'+m.settings.map((text,i)=>'<button class="sl-quiet" data-sl-condition="'+i+'" aria-pressed="'+(bench.setting===i)+'">'+esc(text)+'</button>').join('')+'</fieldset><fieldset><legend>'+esc(m.ask)+'</legend>'+m.predictions.map((text,i)=>'<button class="sl-quiet" data-sl-predict="'+i+'" aria-pressed="'+(bench.prediction===i)+'">'+(i+1)+' · '+esc(text)+'</button>').join('')+'</fieldset><button class="sl-next" id="sl-observe" '+(bench.prediction===null?'disabled':'')+'>Test this condition</button><button class="sl-quiet" id="sl-model-back">Back to my experiment</button></section><section class="sl-model-observation">'+ScienceLabModels.diagram(bench.id,bench.setting,bench.observed)+'<div id="sl-model-result" role="status">'+(bench.observed?'<strong>Observed: '+esc(m.predictions[result])+'</strong><p>'+(bench.prediction===result?'Your prediction matched.':'The result was different. That gives us a clue!')+'</p><p>'+esc(m.record.explanation)+'</p><p>Now change one thing and compare.</p><p class="sl-note-earned">'+(data.notes.includes(bench.id)?'✓ Field note collected. You compared both conditions.':'Compare both conditions to collect a field note.')+'</p>':'<strong>What do you notice?</strong><p>Choose a condition and make a prediction. Then test it.</p>')+'</div><details class="sl-source"><summary>Science source</summary><p>'+esc(m.record.prompt)+'</p><p>'+esc(m.record.explanation)+'</p>'+sourceLink(m.record)+'<small>Question ID: '+esc(m.record.id)+'</small></details><p class="sl-model-note">Simplified model, not a measured experiment. Your five question answers stay in My learning; these guesses are not graded.</p></section></div>'+footer();
   bindCommon();
-  $('science-lab').querySelectorAll('[data-sl-condition]').forEach(b=>b.onclick=()=>{bench.setting=Number(b.dataset.slCondition);bench.prediction=null;bench.observed=false;renderModel()});
+  $('science-lab').querySelectorAll('[data-sl-condition]').forEach(b=>b.onclick=()=>{bench.setting=Number(b.dataset.slCondition);bench.prediction=null;bench.observed=false;const condition=bench.setting;renderModel();$('science-lab').querySelector('[data-sl-condition="'+condition+'"]').focus({preventScroll:true})});
   $('science-lab').querySelectorAll('[data-sl-predict]').forEach(b=>b.onclick=()=>predict(Number(b.dataset.slPredict)));
   $('sl-observe').onclick=observe;$('sl-model-back').onclick=()=>{bench=null;if(run){if(run.phase==='complete'){renderComplete();return}run.paused=document.hidden;RallyLearning.syncPause(run);renderExperiment();$('sl-prompt').focus({preventScroll:true})}else renderHub()};
  }
  function predict(index){if(!bench||![0,1].includes(index))return;bench.prediction=index;bench.observed=false;renderModel();$('sl-observe').focus({preventScroll:true})}
- function observe(){if(!bench||bench.prediction===null)return;bench.observed=true;bench.checked|=1<<bench.setting;if(bench.checked===3&&!data.notes.includes(bench.id)){data.notes.push(bench.id);save()}renderModel();$('sl-model-result').setAttribute('tabindex','-1');$('sl-model-result').focus({preventScroll:true})}
+ function observe(){if(!bench||bench.prediction===null)return;bench.observed=true;bench.checked|=1<<bench.setting;if(bench.checked===3&&!data.notes.includes(bench.id)){data.notes.push(bench.id);save()}renderModel();$('sl-model-result').setAttribute('tabindex','-1');$('sl-model-result').focus({preventScroll:true});if(window.innerWidth<=720)$('sl-model-result').scrollIntoView({block:'nearest',behavior:'instant'})}
  function keydown(e){
   if(!$('science-lab').open||e.repeat||e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(e.target.tagName)||e.target.isContentEditable)return;
   if(bench){if(/^[12]$/.test(e.key)){e.preventDefault();predict(Number(e.key)-1)}return}
@@ -2686,7 +2697,7 @@ const ScienceLab=(()=>{
  }
  function init(){
   initialized=true;loadProfile();$('open-science-lab').onclick=open;
-  $('science-lab').addEventListener('close',()=>{if(run){run.paused=true;RallyLearning.syncPause(run)}run=null;bench=null;if(mode==='adventure')renderAdventure()});
+  $('science-lab').addEventListener('close',()=>{if(run){run.paused=true;RallyLearning.syncPause(run)}run=null;bench=null;if(mode==='adventure')renderAdventure();$(openerId)?.focus({preventScroll:true})});
   document.addEventListener('keydown',keydown);document.addEventListener('visibilitychange',()=>{if(run&&!bench){run.paused=document.hidden;RallyLearning.syncPause(run)}});
  }
  // Hand-authored, state-driven equipment. The art is fictional; question records
