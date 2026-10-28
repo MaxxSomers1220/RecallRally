@@ -144,7 +144,7 @@ function bookWarning(){
  var type=high
   ?{kind:'high',y:FLOOR-93,name:'HIGH · DUCK',color:'#9fe8fa'}
   :{kind:'low',y:FLOOR-22,name:'LOW · JUMP / MOVE',color:'#ffbc81'};
- warnings.push({kind:type.kind,y:type.y,name:type.name,color:type.color,time:.62,max:.62,speed:350});
+ warnings.push({kind:type.kind,y:type.y,name:type.name,color:type.color,time:.55,max:.55,speed:350});
 }
 function tick(dt){
  t+=dt;
