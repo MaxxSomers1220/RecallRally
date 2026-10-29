@@ -1,0 +1,73 @@
+'use strict';
+const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),assert=require('node:assert/strict');
+const {chromium}=require('playwright');
+const root=path.join(__dirname,'..'),screens=process.env.RECALL_SCREENSHOTS;
+let server,browser;
+(async()=>{try{
+ server=http.createServer((req,res)=>{const file=path.join(root,req.url==='/'?'Ellery_Recall_Rally_Librarian_v4.html':req.url.split('?')[0]);if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return}fs.readFile(file,(err,data)=>{if(err){res.writeHead(404).end();return}res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(data)})});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+ if(screens)fs.mkdirSync(screens,{recursive:true});
+ const errors=[];
+ for(const [name,width,height] of [['laptop',1366,768],['tablet-landscape',1024,768],['tablet-portrait',820,1180],['phone',390,844]]){
+  const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce',hasTouch:name!=='laptop'});
+  page.on('pageerror',e=>errors.push(name+': '+e.message));
+  await page.addInitScript(()=>{window.__RECALL_RALLY_TEST__=true});
+  await page.goto('http://127.0.0.1:'+server.address().port+'/',{waitUntil:'domcontentloaded'});
+  const prepare=()=>page.evaluate(()=>{mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';$('sound-setting').value='off';startRound([{...SAMPLES.find(q=>q.answer.toLowerCase()==='photosynthesis'),id:'experience-test',prompt:'Which process lets plants use sunlight to make food?',answer:'photosynthesis',aliases:[],options:['photosynthesis','digestion','respiration','evaporation']}]);buzz(0,'Tester')});
+  await prepare();
+  const count=await page.evaluate(()=>RallyLearning.snapshot().attempts.length);
+  await page.locator('#typed-answer').fill('photosyntesis');await page.locator('.answer-form button').click();
+  assert(await page.locator('.answer-confirm').isVisible());
+  assert.match(await page.locator('.answer-confirm').innerText(),/photosyntesis[\s\S]*photosynthesis/);
+  assert.equal(await page.evaluate(()=>game.scores[0]),0);
+  assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.length),count);
+  assert(await page.locator('#confirm-answer').evaluate(e=>document.activeElement===e),'Confirmation receives keyboard focus');
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),'No horizontal overflow');
+  for(const box of await page.locator('.answer-confirm button').evaluateAll(a=>a.map(e=>{const b=e.getBoundingClientRect();return {left:b.left,right:b.right,height:b.height}}))){assert(box.height>=44);assert(box.left>=0&&box.right<=width+1)}
+  if(screens)await page.screenshot({path:path.join(screens,name+'-confirm.png'),fullPage:true});
+  await page.getByRole('button',{name:'Edit or retry',exact:true}).click();
+  assert.equal(await page.locator('#typed-answer').inputValue(),'photosyntesis');
+  await page.locator('.answer-form button').click();
+  await page.locator('#confirm-answer').click();
+  assert.equal(await page.evaluate(()=>game.scores[0]),1);
+  let records=await page.evaluate(()=>RallyLearning.snapshot().attempts);
+  assert.equal(records.length,count+1);assert.equal(records.at(-1).outcome,'correct');
+  await page.evaluate(()=>checkTyped('photosynthesis'));
+  assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.length),count+1,'Repeated submission cannot score twice');
+  await prepare();await page.locator('#typed-answer').fill('respiration');await page.locator('.answer-form button').click();
+  assert.equal(await page.evaluate(()=>game.scores[0]),0);assert(await page.locator('.feedback.miss').isVisible());
+  assert.match(await page.locator('#feedback').innerText(),/photosynthesis/);
+  // Multiple choice continues to use equality; typed matching never handles it.
+  await page.evaluate(()=>{goHome();mode='written';startRound([SAMPLES[0]]);choose(game.choices.indexOf(current().answer))});
+  assert.equal(await page.evaluate(()=>game.scores[0]),1);
+  await page.evaluate(()=>{goHome();goHome();questPace=20000;pantherCreatorSeen=true;selectMode('adventure');$('quest-speed').value='20000';startDuel(0);openQuestQuestion()});
+  assert(await page.locator('#quest-time-track').isVisible());
+  if(screens)await page.screenshot({path:path.join(screens,name+'-adventure.png'),fullPage:true});
+  await page.evaluate(()=>{duel.deadline=performance.now()+4000});
+  await page.waitForFunction(()=>document.getElementById('quest-time-track').classList.contains('is-low'));
+  await page.evaluate(()=>pauseQuest());
+  const paused=await page.locator('#quest-time-track span').getAttribute('style');
+  await page.waitForTimeout(350);assert.equal(await page.locator('#quest-time-track span').getAttribute('style'),paused);
+  await page.evaluate(()=>{leaveDuel();questPace=0;renderAdventure();$('quest-speed').value='0';startDuel(0);openQuestQuestion()});
+  assert.equal(await page.locator('#quest-time-track').count(),0,'Untimed Adventure stays untimed');
+  await page.evaluate(()=>{leaveDuel();goHome();openHeroCreator('settings')});
+  // Shared renderer contains the same selected silhouette across contexts.
+  const art=await page.evaluate(()=>{heroStyle='fairy';avatarLook=normalizePantherLook({...avatarLook,outfit:'ranger'});return [renderGameHero(avatarLook,{idPrefix:'map'}),renderGameHero(avatarLook,{idPrefix:'science'}),renderGameHero(avatarLook,{idPrefix:'library'})]});
+  assert(art.every(s=>s.includes('scout-trousers')&&s.includes('hero-idle')));
+  await page.evaluate(()=>{renderHeroCreatorPreview()});
+  const idle=page.locator('#hero-creator .hero-idle').first();
+  assert.equal(await idle.evaluate(e=>getComputedStyle(e).animationName),'none','Reduced motion stops new ambient movement');
+  if(screens)await page.screenshot({path:path.join(screens,name+'-hero.png'),fullPage:true});
+  await page.evaluate(()=>$('hero-creator').close());
+  await page.locator('#lib-launch').click();await page.locator('#lib-start').click();
+  assert(await page.locator('#lib-time-track').isVisible());
+  assert(await page.locator('.lib-hero-sprite [data-outfit-silhouette="scout-trousers"]').count(),'Librarian uses the same customized scout');
+  await page.evaluate(()=>window.__librarianTest.update(12));
+  assert(await page.locator('#lib-time-track').evaluate(e=>e.classList.contains('is-low')));
+  await page.locator('#lib-close').click();assert.equal(await page.locator('#lib-time-track').count(),0);
+  console.log('PASS '+name+': confirmation/edit/scoring, journal, choices, timer/pause/untimed, shared hero/reduced motion, Librarian close');
+  await page.close();
+ }
+ assert.deepEqual(errors,[]);
+}finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r))}})().catch(e=>{console.error(e);process.exitCode=1});

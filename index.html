@@ -670,6 +670,30 @@
 @media(pointer:coarse){#science-lab .sl-quiet,#science-lab .sl-header-actions .sl-quiet,#science-lab .sl-question .sl-quiet{min-height:44px!important;min-width:44px}#science-lab summary{min-height:44px;display:list-item;padding:12px 0}#science-lab select,#science-lab .sl-hub-tools label{min-height:44px}#science-lab input[type=file]{min-height:44px;max-width:200px;font-size:12px}#science-lab input[type=file]::file-selector-button{min-height:44px}}
 @media(max-width:720px){.sl-footer{font-size:10px;align-items:flex-start}.sl-footer>span{max-width:58%}.sl-footer #sl-save-status{max-width:42%}.sl-header-actions{flex-shrink:1}.sl-header h2{font-size:19px}.sl-model p{font-size:13px}}
 </style>
+<style id="player-experience-styles">
+/* Ambient SVG movement uses a shared hero wrapper; combat poses stay still. */
+.hero-idle{transform-origin:160px 400px;animation:rally-breathe 5.2s ease-in-out infinite}
+.hero-idle .hero-blink{transform-box:fill-box;transform-origin:center;animation:rally-blink 7.4s linear infinite}
+.hero-idle .panther-magic-accent{animation:rally-magic 4.6s ease-in-out infinite}
+.hero-idle:has([data-hero-outfit="ranger"]){animation-duration:6.4s}
+.hero-idle:has([data-hero-outfit="knight"]){animation-duration:7.2s}
+.hero-thumb-choice .hero-idle,.hero-thumb-choice .hero-blink,.hero-thumb-choice .panther-magic-accent,
+.lib-hero-sprite:not(.lib-v4-idle) .hero-idle,.lib-hero-sprite:not(.lib-v4-idle) .hero-blink,.lib-hero-sprite:not(.lib-v4-idle) .panther-magic-accent{animation:none!important;transform:none!important}
+@keyframes rally-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.006)}}
+@keyframes rally-blink{0%,44%,47%,100%{transform:scaleY(1)}45.5%{transform:scaleY(.08)}}
+@keyframes rally-magic{0%,100%{opacity:.72}50%{opacity:.95}}
+.answer-confirm{margin-top:12px;padding:14px;border:2px solid var(--teal);border-radius:10px;background:#fff;overflow-wrap:anywhere}
+.answer-confirm p+p{margin-top:8px}
+.answer-confirm .judge-actions button{min-height:44px;white-space:normal}
+.rally-time-track{height:6px;border-radius:4px;background:#d3dedb;overflow:hidden;flex-basis:100%;width:100%;margin-top:4px}
+.rally-time-fill{display:block;height:100%;width:100%;background:#246c68;transform:scaleX(var(--time-left,1));transform-origin:left}
+.rally-time-track.is-low .rally-time-fill{background:#ad4b29}
+.duel-question-head:has(.rally-time-track){flex-wrap:wrap}
+.lib-time-track{background:#3c3958;margin:0 0 8px}
+.lib-time-track .rally-time-fill{background:#a3e9fc}
+.lib-time-track.is-low .rally-time-fill{background:#ffc48a}
+@media(prefers-reduced-motion:reduce){.hero-idle,.hero-idle .hero-blink,.hero-idle .panther-magic-accent{animation:none!important;transform:none!important}}
+</style>
 </head>
 <body>
 <header>
@@ -931,7 +955,7 @@ const DEFAULT_PANTHER_LOOK={wings:'none',wingColor:'rose',shoes:'boots',face:'so
 const DEFAULT_FAIRY_LOOK={...DEFAULT_PANTHER_LOOK,face:'soft',skin:'warm',hairStyle:'long',hairColor:'chestnut',hood:'none',hoodUp:'down',ears:'none',outfit:'mage',outfitColor:'pink',cape:'none',capeColor:'pink',wings:'butterfly',wingColor:'rose',shoes:'slippers',pattern:'stars',belt:'sash',shoulders:'none',magicColor:'rose',magicStyle:'paws',staff:'moonstaff'};
 const HERO_PRESETS=[
  {id:'moonpaw',name:'Moonpaw Mage',description:'A flowing cloak, gold crescent staff, and hopeful amethyst magic.',look:{...DEFAULT_PANTHER_LOOK,face:'soft',hairStyle:'long',hairColor:'brown'}},
- {id:'starclaw',name:'Starclaw Adventurer',description:'Tousled hair, a panther hood, and a brave sparkle in the eyes.',look:{...DEFAULT_PANTHER_LOOK,face:'angular',hairStyle:'short',expression:'focused',hood:'moon',outfit:'ranger',cape:'long',shoulders:'plate'}},
+ {id:'starclaw',name:'Starclaw Adventurer',description:'A high ponytail, short festival tunic, and a brave sparkle in the eyes.',look:{...DEFAULT_PANTHER_LOOK,face:'angular',hairStyle:'ponytail',expression:'focused',hood:'moon',outfit:'bard',cape:'short',shoulders:'none',hoodUp:'down'}},
  {id:'wildwood',name:'Wildwood Pathfinder',description:'Textured curls, forest cloth, and a living-branch staff.',look:{...DEFAULT_PANTHER_LOOK,face:'round',skin:'deep',hairStyle:'puffs',hairColor:'black',eyeColor:'green',hoodUp:'down',ears:'rounded',outfit:'ranger',outfitColor:'forest',cape:'short',capeColor:'sage',pattern:'runes',staff:'branch',magicColor:'emerald',magicStyle:'leaves',gloves:'none',shoulders:'none',accessory:'compass'}},
  {id:'frost',name:'Frostlight Guardian',description:'Silver locs, blue armor, and bright crystalline magic.',look:{...DEFAULT_PANTHER_LOOK,face:'strong',skin:'brown',hairStyle:'locs',hairColor:'silver',eyeColor:'blue',hood:'armored',ears:'tufted',outfit:'knight',outfitColor:'ocean',cape:'mantle',capeColor:'blue',pattern:'stars',staff:'crystal',magicColor:'ice',magicStyle:'claws',emblem:'panther',belt:'chain',gloves:'gauntlets',shoulders:'plate',accessory:'scroll'}}
 ];
@@ -1114,7 +1138,7 @@ function renderPantherHero(value,options={}){
  const magicAccents='<g class="panther-magic-accent" opacity=".85"><circle cx="48" cy="221" r="'+(pose==='cast'?32:23)+'" fill="'+g('magic')+'"/><g transform="translate(44 218) scale('+(pose==='cast'?.57:.35)+')">'+heroMagicGlyph(l)+'</g>'+star(31,211,.45,tone(magic,.45))+star(64,216,.3,magic)+'</g>';
  const label=options.label?'<text x="160" y="418" text-anchor="middle" fill="#34534c" font-size="12" font-weight="800">PANTHER ADVENTURER</text>':'';
  const tilt=pose==='hit'?4:pose==='victory'?-7:pose==='cast'?-5:-3;
- const head='<g class="panther-head" transform="rotate('+tilt+' 160 140)">'+hood+face+eyes+mouth+front+hoodEdges+mask+'</g>';
+ const head='<g class="panther-head" transform="rotate('+tilt+' 160 140)">'+hood+face+'<g class="hero-blink">'+eyes+'</g>'+mouth+front+hoodEdges+mask+'</g>';
  const fabricDepth=path('M123 221 132 251 127 257 116 232Z',tone(cloth,-.22),'none')+path('M183 217 190 237 183 255 175 251Z',tone(cloth,.12),'none')+path('M130 243 140 255M172 246l10-16','none',tone(cloth,.3),1.1);
  const bootFolds=path('M82 377 96 382 110 382M216 378 229 384 242 384','none',tone(cloth,.32),1.8)+path('M79 382 92 387M218 385l12 3','none',tone(cloth,-.36),2);
  const wavingCape='<g class="panther-cape" transform="rotate('+(pose==='cast'?-3:pose==='hit'?2:pose==='victory'?-4:0)+' 157 190)">'+capeLayer+'</g>';
@@ -1232,15 +1256,14 @@ function fairyHeroFromLayers(l,options,L){
  }else if(l.outfit==='ranger'){
   sleeves=p('M96 195Q104 185 121 191L126 208 110 221 95 214Z',g('petal'))+p('M195 192Q211 185 218 199L220 214 206 221 194 209Z',g('petal'))+p('M98 207 112 214M202 211l14-7','none',g('gold'),2);
   bodice=p('M124 191 146 193 159 213 175 194 192 190 194 251 181 268 137 268 124 252 115 215Z',g('silk'))+p('M126 196 150 222 190 199M148 223 158 263','none',g('gold'),2)+p('M132 205 183 257 174 268 121 208Z','#956646','#614b37',1.2)+p('M130 210 178 261','none','#d6b379',1.3);
-  skirt=p('M128 256Q105 266 97 294L116 289 120 309 150 290 164 314 185 289 210 305 209 282 225 291Q212 267 188 256Z',g('petal'))+
-   p('M130 270 115 293 122 297M161 275 164 303M185 271 205 292M140 281l9-13','none',g('gold'),1.7)+p('M139 268 128 288 139 283ZM179 266 190 287 183 284Z',t(c,.43),'none',0);
+  skirt='<g data-outfit-silhouette="scout-trousers">'+p('M133 259 158 272 177 260 192 270 198 302 223 338 211 351 179 321 161 295 144 322 113 354 98 344 123 302Z',g('cape'))+p('M128 254 158 265 188 252 204 285 178 295 157 277 135 293 112 283Z',g('silk'))+p('M138 296 126 318 109 340M182 296 194 319 213 339','none',g('gold'),2)+p('M180 273h17v12h-17Z',g('petal'),g('gold'),1)+'</g>';
  }else if(l.outfit==='knight'){
   bodice=p('M123 191 154 185 193 194 201 222 188 260 159 275 130 260 116 224Z',g('steel'),t(c,-.46),1.7)+p('M128 203 157 218 189 202 183 246 159 263 135 246Z',g('silk'),g('gold'),2)+p('M157 218 159 262M134 237 159 247 185 235','none',t(c,.7),2)+pantherPaw(158,235,.48,g('gold'));
   skirt=p('M131 256Q109 273 97 305Q120 301 131 316L155 298 174 318Q194 305 216 309Q210 275 189 255Z',g('ruffle'),t(c,-.27),1.5)+p('M131 260 114 283 126 302 149 279 158 307 174 282 194 302 205 281 188 260Z',g('steel'),t(c,-.44),1.5)+p('M131 266 124 282 130 291M158 275v23M185 266 195 284 190 291','none',g('gold'),2.4)+p('M102 305 113 299 129 311M177 314 197 304 212 309','none',g('gold'),2);
  }else if(l.outfit==='scholar'){
   sleeves=p('M124 192 99 195 91 215 74 225 81 245 113 232 126 211Z',g('silk'))+p('M192 192 213 196 226 215 242 194 258 202 224 240 200 226Z',g('silk'))+p('M78 227 86 243M241 196l14 9','none',g('ruffle'),7)+p('M103 206 108 224M209 208l6 20','none',t(c,.55),2.1);
   bodice=p('M125 193 158 202 190 192 193 233 186 261 133 266 120 222Z',g('silk'))+p('M132 197 146 209 148 258 137 261 137 225ZM180 197 168 210 175 259 187 255 178 224Z',g('cape'),g('gold'),1.1);
-  skirt=p('M133 255Q120 274 118 302L100 344Q111 355 133 351L159 336 184 351Q211 353 222 343L202 298Q196 271 187 255Z',g('silk'))+p('M141 263 133 305 119 345 134 341 152 326 156 270M175 266 181 306 201 343 184 337 167 326 164 270',g('cape'),g('gold'),1.1)+p('M151 286 158 277 166 287 159 298ZM151 311 158 303 167 312 159 321Z','none',g('gold'),1.7)+p('M105 344 125 349M192 347l24-3','none',g('gold'),2.2);
+  skirt='<g data-outfit-silhouette="scholar-travel-coat">'+p('M138 258 161 278 182 258 193 302 222 341 210 351 179 321 160 295 143 325 113 353 100 342 128 303Z',g('cape'))+p('M133 255 151 267 144 307 127 335 111 331 123 297ZM171 266 187 255 197 297 211 331 193 337 177 309Z',g('silk'),g('gold'),1.5)+p('M139 270 130 302 120 325M184 269 188 301 202 328','none',g('gold'),2)+p('M130 290h12v13h-12ZM182 290h12v13h-12Z',g('cape'),g('gold'),1)+'</g>';
  }else if(l.outfit==='bard'){
   sleeves=puff(110,202,1)+puff(208,201,-1);
   bodice=p('M125 190 145 193 160 211 178 192 192 192 191 225 185 260 133 263 124 224Z',g('petal'))+p('M145 201 158 222 175 200 170 254 156 268 145 251Z',g('ruffle'),g('gold'),1.3)+p('M148 223 169 229M149 234 167 241M153 248l12 4','none',t(c,-.18),1.6);
@@ -1299,7 +1322,7 @@ try{
   localStorage.setItem(PANTHER_HERO_KEY,JSON.stringify(avatarLook));localStorage.setItem(FAIRY_LAYER_KEY,'yes');
  }
 }catch(e){}
-function renderGameHero(look,options={}){return heroStyle==='fairy'?renderFairyHero(look,options):renderPantherHero(look,options)}
+function renderGameHero(look,options={}){const art=heroStyle==='fairy'?renderFairyHero(look,options):renderPantherHero(look,options);return !options.pose||options.pose==='idle'?'<g class="hero-idle">'+art+'</g>':art}
 function gameHeroWeaponFocus(){return heroWeaponFocus(avatarLook)}
 function heroLookDescription(){return heroOptionLabel('outfit',avatarLook.outfit)+' · '+heroOptionLabel('staff',avatarLook.staff)}
 function selectFairyHero(){heroStyle='fairy';avatarLook={...DEFAULT_FAIRY_LOOK};savePantherPreferences();renderHeroCreatorPreview();renderHeroChoices();renderHeroPresets();$('hero-creator-announcement').textContent='Moonpetal Fairy selected. Every category is yours to customize.'}
@@ -1665,7 +1688,7 @@ function startRound(retryItems){
  const subjects=retryItems?[...new Set(items.map(q=>q.subject))]:selectedSubjects().filter(id=>items.some(q=>q.subject===id));
  if(!retryItems&&length==='all'&&subjects.length>1)target=Math.min(...subjects.map(id=>items.filter(q=>q.subject===id).length))*subjects.length;
  stopTimers();soundOn=$('sound-setting').value==='on';initAudio();
- game={mode,seating:mode==='written'?'solo':$('seating').value,deck:makeDeck(items,target,subjects),index:0,scores:[0,0],results:[],phase:'reading',paused:false,seconds:Number($('clock').value),progressive:mode==='quick'&&$('reveal').value==='progressive',active:null,attempted:[],lastAnswer:'',draft:'',checkedMiss:false,soloRevealed:false,choices:[],words:[],wordIndex:0,remainingMs:0,deadline:0};
+ game={mode,seating:mode==='written'?'solo':$('seating').value,deck:makeDeck(items,target,subjects),index:0,scores:[0,0],results:[],phase:'reading',paused:false,seconds:Number($('clock').value),progressive:mode==='quick'&&$('reveal').value==='progressive',active:null,attempted:[],lastAnswer:'',draft:'',checkedMiss:false,answerReview:null,soloRevealed:false,choices:[],words:[],wordIndex:0,remainingMs:0,deadline:0};
  if(typeof RallyLearning!=='undefined')RallyLearning.startSession(game,game.mode,game.seating);
  showView('game');$('game-mode-label').textContent=mode==='quick'?'The buzzer rally':'The written warm-up';$('game-view').querySelector('h2').textContent=mode==='quick'?'Think it. Buzz it. Say it.':'Read closely. Choose confidently.';
  $('game-note').textContent=mode==='quick'?'Simplified toss-up practice · no bonuses or official match clock. The optional buzz window starts after the question finishes appearing and stops on a buzz.':'Original multiple-choice practice · separate from Quick Recall. An optional response clock runs while you choose.';
@@ -1676,7 +1699,7 @@ function current(){return game.deck[game.index]}
 function teamName(team){return game.seating==='solo'?heroName:team===0?'Blue team':'Gold team'}
 function nextQuestion(){
  stopTimers();if(game.index>=game.deck.length){finish();return}
- const q=current();Object.assign(game,{phase:game.progressive?'reading':'open',paused:false,active:null,attempted:[],lastAnswer:'',draft:'',checkedMiss:false,soloRevealed:false,choices:shuffle(q.options),words:q.prompt.split(/\s+/),wordIndex:game.progressive?0:q.prompt.split(/\s+/).length,remainingMs:game.seconds*1000});
+ const q=current();Object.assign(game,{phase:game.progressive?'reading':'open',paused:false,active:null,attempted:[],lastAnswer:'',draft:'',checkedMiss:false,answerReview:null,soloRevealed:false,choices:shuffle(q.options),words:q.prompt.split(/\s+/),wordIndex:game.progressive?0:q.prompt.split(/\s+/).length,remainingMs:game.seconds*1000});
  if(typeof RallyLearning!=='undefined')RallyLearning.present(game,q,game.mode,game.seating);
  $('question-subject').textContent=subjectName(q.subject);$('question-source').textContent=q.guide?'Guide-based practice':q.kind==='sample'?'Original practice':'Your study pack';$('topic-source').textContent=[q.topic?`Topic: ${q.topic}`:'',q.modes?.length===1?(q.modes[0]==='written'?'Written warm-up only':'Quick Recall only'):'',q.kind==='custom'&&q.source?`Source noted by you: ${q.source}`:''].filter(Boolean).join(' · ');
  $('feedback').replaceChildren();$('bottom-action').replaceChildren();$('question-text').textContent=game.progressive?'…':q.prompt;$('accessible-question').textContent=game.progressive?'':q.prompt;
@@ -1724,6 +1747,13 @@ function renderControls(){
  }else if(['buzzed','checking'].includes(game.phase)){
   $('status-text').textContent=`${game.active.name} buzzed first. All other buzzers are locked.`;
   const panel=document.createElement('div');panel.className='answer-panel';const h=document.createElement('h3');h.textContent=game.seating==='solo'?`You’re up, ${heroName}.`:`${game.active.name}, you’re up.`;panel.append(h);
+  if(game.answerReview){
+   const review=document.createElement('section');review.className='answer-confirm';review.setAttribute('aria-label','Confirm your answer');
+   review.innerHTML='<p>Your response: <strong>'+esc(game.lastAnswer)+'</strong></p><p>Did you mean <strong>'+esc(game.answerReview.interpretation)+'</strong>?</p><p class="answer-note">No point has been awarded. Confirm only if this is what you meant, or edit your response.</p>';
+   const actions=document.createElement('div');actions.className='judge-actions';
+   const yes=button('Yes, that is what I meant','secondary correctbtn',()=>{if(game.paused||!game.answerReview)return;game.answerReview=null;award()});yes.id='confirm-answer';
+   actions.append(yes,button('Edit or retry','secondary',reviseTypedAnswer),button('Count a miss','secondary',()=>{game.answerReview=null;miss()}));review.append(actions);panel.append(review);root.append(panel);$('bottom-action').replaceChildren();updateClock();return;
+  }
   if(!game.soloRevealed){
    if(!game.checkedMiss){const form=document.createElement('form');form.className='answer-form';form.innerHTML='<label class="sr-only" for="typed-answer">Your answer</label><input id="typed-answer" type="text" maxlength="200" autocomplete="off" autocapitalize="off" placeholder="Type your answer…" required><button class="secondary correctbtn" type="submit">Check answer</button>';form.addEventListener('submit',e=>{e.preventDefault();checkTyped($('typed-answer').value)});form.querySelector('input').value=game.draft||'';form.querySelector('input').addEventListener('input',e=>game.draft=e.target.value);panel.append(form)}
    if(game.checkedMiss){const p=document.createElement('p');p.className='answer-note';p.textContent=`“${game.lastAnswer}” didn’t match the saved answer. Accept an equivalent answer, or count a miss.`;panel.append(p)}
@@ -1737,14 +1767,58 @@ function renderControls(){
  updateClock();
 }
 function buzz(team,name){
- if(!canBuzz(team))return;if(game.seconds&&game.phase==='open'&&performance.now()>=game.deadline){complete(false,null,'Time’s up.');return}stopTimers();game.active={team,name:game.seating==='solo'?heroName:name};game.phase='buzzed';game.checkedMiss=false;tone('buzz');renderControls();if($('typed-answer'))$('typed-answer').focus({preventScroll:true});
+ if(!canBuzz(team))return;if(game.seconds&&game.phase==='open'&&performance.now()>=game.deadline){complete(false,null,'Time’s up.');return}stopTimers();game.active={team,name:game.seating==='solo'?heroName:name};game.phase='buzzed';game.checkedMiss=false;game.answerReview=null;tone('buzz');renderControls();if($('typed-answer'))$('typed-answer').focus({preventScroll:true});
 }
-function checkTyped(value){if(!game||game.paused||!['buzzed','checking'].includes(game.phase))return;game.lastAnswer=value.trim();if(!game.lastAnswer)return;const q=current();if([q.answer,...q.aliases].some(a=>norm(a)===norm(value)))award();else{game.checkedMiss=true;game.phase='checking';renderControls()}}
+/* ANSWER_RECOGNITION_START */
+// Conservative local matching. No network, microphone access, or saved-data changes.
+const RallyAnswers=(()=>{
+ const words=s=>String(s??'').normalize('NFKC').toLowerCase().replace(/[’']/g,'').replace(/[.,!?;:"“”()]/g,' ').replace(/\s+/g,' ').trim();
+ const protectedWord=/^(?:no|not|never|non|without|except|least|less|more|plus|minus|positive|negative|zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million|billion|first|second|third|fourth|fifth|half|quarter|percent|degrees?|meters?|metres?|centimeters?|kilometers?|grams?|kilograms?|liters?|litres?|seconds?|minutes?|hours?|celsius|fahrenheit|kelvin|newtons?|watts?|volts?|joules?|moles?|mol|cm|mm|km|kg|mg|ml)$/;
+ function lexicon(bank){const vocabulary=new Set();for(const q of bank||[])for(const a of [q.answer,...q.aliases||[],...q.options||[]])for(const w of words(a).split(' '))vocabulary.add(w);return vocabulary}
+ function distance(a,b){const d=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));for(let i=0;i<=a.length;i++)d[i][0]=i;for(let j=0;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++){d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]!==b[j-1]));if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1)}return d[a.length][b.length]}
+ function evaluate(raw,q,bank=[]){
+  const original=String(raw??'').trim(),input=words(original),answers=[q.answer,...q.aliases||[]].filter(a=>typeof a==='string'&&a.trim());
+  // Numeric answers retain every symbol, decimal point, fraction and unit.
+  const literal=s=>String(s).normalize('NFKC').replace(/\s+/g,' ').trim();
+  const sensitive=a=>/[\d=+−–×÷/%°^<>]/.test(a)||q.subject==='science'&&(/^(?:[A-Z][a-z]?){1,6}$/.test(a)||/^(?:m|s|g|L|l|N|W|V|J|Pa|Hz|K)$/.test(a));
+  const numeric=answers.some(sensitive);
+  const exact=answers.find(a=>sensitive(a)?literal(a)===literal(original):words(a)===input);
+  if(exact)return {confidence:'high',interpretation:exact,reason:'exact'};
+  if(!input||numeric||/[^a-z\s]/.test(input)||input.split(' ').some(w=>protectedWord.test(w)))return {confidence:'low'};
+  // An actual distractor or a different known academic term is never a typo.
+  if((q.options||[]).some(a=>!answers.some(x=>words(x)===words(a))&&words(a)===input))return {confidence:'low'};
+  const known=lexicon(bank),candidates=[];
+  for(const a of answers){const target=words(a),aa=input.split(' '),bb=target.split(' ');if(aa.length!==bb.length||/[^a-z\s]/.test(target))continue;
+   const changed=aa.map((w,i)=>w===bb[i]?-1:i).filter(i=>i>=0);if(changed.length!==1)continue;
+   const i=changed[0],from=aa[i],to=bb[i];if(protectedWord.test(to)||Math.min(from.length,to.length)<5||known.has(from))continue;
+   const edits=distance(from,to);if(edits>1&&!(Math.min(from.length,to.length)>=9&&edits===2))continue;
+   // A nearby distractor makes an interpretation ambiguous in meaning: reject.
+   if((q.options||[]).some(x=>!answers.some(y=>words(y)===words(x))&&distance(input,words(x))<=edits))continue;
+   const swapped=from.length===to.length&&[...from].filter((c,j)=>c!==to[j]).length===2&&edits===1;
+   candidates.push({confidence:swapped&&to.length>=8?'high':'intermediate',interpretation:a,reason:'spelling',edits});
+  }
+  candidates.sort((a,b)=>a.edits-b.edits);
+  if(!candidates.length)return {confidence:'low'};
+  if(candidates.length>1&&candidates[0].edits===candidates[1].edits&&words(candidates[0].interpretation)!==words(candidates[1].interpretation))return {confidence:'low'};
+  return candidates[0];
+ }
+ return {evaluate};
+})();
+/* ANSWER_RECOGNITION_END */
+function checkTyped(value){
+ if(!game||game.paused||!['buzzed','checking'].includes(game.phase)||game.answerReview)return;game.lastAnswer=value.trim();if(!game.lastAnswer)return;
+ const match=RallyAnswers.evaluate(value,current(),[...SAMPLES,...customPack]);
+ if(match.confidence==='high'){award();return}
+ if(match.confidence==='low'){game.answerReview=null;miss();return}
+ game.phase='checking';game.answerReview=match;game.checkedMiss=false;renderControls();
+ if(game.answerReview)$('confirm-answer')?.focus({preventScroll:true});
+}
+function reviseTypedAnswer(){if(!game||game.paused||!game.answerReview)return;game.draft=game.lastAnswer;game.answerReview=null;game.checkedMiss=false;renderControls();$('typed-answer')?.focus({preventScroll:true})}
 function award(){if(!game||game.paused||!['buzzed','checking'].includes(game.phase))return;complete(true,game.active.team,game.seating==='solo'?`That’s a point, ${heroName}!`:`${teamName(game.active.team)} scores a point!`)}
 function miss(){
  if(!game||game.paused||!['buzzed','checking'].includes(game.phase))return;tone('miss');const team=game.active.team;game.attempted.push(team);
  if(game.seating==='solo'||game.attempted.length===2){complete(false,null,'Good try. Keep this one for next time.');return}
- Object.assign(game,{active:null,phase:'open',checkedMiss:false,soloRevealed:false,lastAnswer:'',draft:'',wordIndex:game.words.length,remainingMs:game.seconds*1000});$('question-text').textContent=current().prompt;$('accessible-question').textContent=current().prompt;renderControls();startClock();
+ Object.assign(game,{active:null,phase:'open',checkedMiss:false,answerReview:null,soloRevealed:false,lastAnswer:'',draft:'',wordIndex:game.words.length,remainingMs:game.seconds*1000});$('question-text').textContent=current().prompt;$('accessible-question').textContent=current().prompt;renderControls();startClock();
 }
 function choose(i){if(!game||game.paused||game.phase!=='open'||game.mode!=='written')return;if(game.seconds&&performance.now()>=game.deadline){complete(false,null,'Time’s up.');return}game.lastAnswer=game.choices[i];const correct=game.lastAnswer===current().answer;complete(correct,correct?0:null,correct?'Nice thinking. That’s a point!':'Good try. Here’s the connection.')}
 function complete(correct,winner,title){
@@ -2233,7 +2307,7 @@ function renderDuel(){
   content='<div class="duel-workspace duel-outcome"><section class="guardian-intro duel-result-panel"><div class="guardian-icon" aria-hidden="true">'+(won?'🗝️':'🌱')+'</div><h2 tabindex="-1" id="quest-result-title">'+(rescued?'You rescued Rigby!':won?esc(l.reward)+' earned!':'A good adventure takes practice.')+'</h2>'+(rescued?rigbySceneArt(LANDS.length,false):'')+'<p>'+resultText+'</p><p class="duel-tactic-result">✧ '+d.tacticalStars+' tactical '+(d.tacticalStars===1?'star':'stars')+' earned · bonus only. Answer points decided this duel.</p><p class="hint">Run record: '+questRunStats.correct+' correct from '+questRunStats.answered+' shown · best streak '+questRunStats.bestStreak+'. Progress saves automatically on this device. An unfinished duel restarts from its beginning.</p><button class="primary" id="quest-return">'+(rescued?'Return to Rigby →':won?'Back to the map →':'Return to map & retry this guardian')+'</button><br><button class="secondary quest-new-run" id="quest-new-run">Start a new adventure at level 0</button></section><aside class="duel-arena-panel" aria-label="Final duel progress">';
   content+=spellDuelScene(d,l)+'</aside></div>';
  }else{
-  content='<div class="duel-workspace"><section class="duel-question-panel'+(q.prompt.length>180||q.options.some(answer=>answer.length>65)?' duel-long-copy':'')+'" aria-label="Question and answer choices"><div class="duel-question-head"><span class="badge subject-badge">'+subjectName(q.subject)+'</span><div class="question-tools"><span class="timer" id="quest-countdown">'+(d.phase==='result'?(d.reason==='rival'?'Time expired':'Answered'):d.speed?Math.ceil(d.remaining/1000)+'s':'No timer')+'</span><button class="smallbtn" id="quest-pause" '+(d.phase==='result'?'disabled':'')+'>Pause</button></div></div>'+duelTacticsPanel(d,l)+'<div class="quest-prompt" id="quest-prompt" tabindex="-1">'+esc(q.prompt)+'</div>';
+  content='<div class="duel-workspace"><section class="duel-question-panel'+(q.prompt.length>180||q.options.some(answer=>answer.length>65)?' duel-long-copy':'')+'" aria-label="Question and answer choices"><div class="duel-question-head"><span class="badge subject-badge">'+subjectName(q.subject)+'</span><div class="question-tools"><span class="timer" id="quest-countdown">'+(d.phase==='result'?(d.reason==='rival'?'Time expired':'Answered'):d.speed?Math.ceil(d.remaining/1000)+'s':'No timer')+'</span><button class="smallbtn" id="quest-pause" '+(d.phase==='result'?'disabled':'')+'>Pause</button></div>'+(d.speed&&d.phase==='open'?'<div class="rally-time-track" id="quest-time-track" aria-hidden="true"><span class="rally-time-fill" style="--time-left:'+Math.max(0,Math.min(1,d.remaining/d.speed))+'"></span></div>':'')+'</div>'+duelTacticsPanel(d,l)+'<div class="quest-prompt" id="quest-prompt" tabindex="-1">'+esc(q.prompt)+'</div>';
   content+=duelChoiceMarkup(d,q)+duelAnswerFeedback(d,l,q)+duelBattleDetails(d,l,q)+'</section><aside class="duel-arena-panel" aria-label="Animated duel and progress">'+spellDuelScene(d,l)+'</aside></div>';
  }
  root.innerHTML='<div class="duel-board" style="--land:'+l.color+'">'+header+content+'</div>';
@@ -2261,7 +2335,7 @@ function adventureKey(e){
  if(/^[sw]$/i.test(e.key)&&duel.phase==='open'){e.preventDefault();selectDuelSpell(e.key.toLowerCase()==='w'?'ward':'strike')}else if(/^[1-4]$/.test(e.key)&&duel.phase==='open'){e.preventDefault();chooseQuest(Number(e.key)-1)}else if(e.key==='Enter'&&duel.phase==='result'&&e.target.tagName!=='BUTTON'){e.preventDefault();advanceDuel()}
 }
 // Refresh only the visible clock label, without re-rendering choices or moving focus.
-setInterval(()=>{if(!duel||duel.paused||duel.phase!=='open'||!duel.speed)return;const label=$('quest-countdown');if(label){const remaining=Math.max(0,duel.deadline-performance.now());label.textContent=`${Math.ceil(remaining/1000)}s`;label.classList.toggle('urgent',remaining<=5000)}},200);
+setInterval(()=>{if(!duel||duel.paused||duel.phase!=='open'||!duel.speed)return;const label=$('quest-countdown');if(label){const remaining=Math.max(0,duel.deadline-performance.now());label.textContent=`${Math.ceil(remaining/1000)}s`;label.classList.toggle('urgent',remaining<=5000);const track=$('quest-time-track');if(track){track.classList.toggle('is-low',remaining<=5000);track.firstElementChild.style.setProperty('--time-left',Math.max(0,Math.min(1,remaining/duel.speed)))}}},200);
 
 /* LEARNING_SYSTEM_START */
 // Learning data is local to this browser. Stable IDs match the portable SQLite catalog.
@@ -2836,4 +2910,5 @@ $('runtime-status').hidden=false;
 </script>
 </body>
 </html>
+
 

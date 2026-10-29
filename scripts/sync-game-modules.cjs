@@ -4,6 +4,12 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
+const answers=read('src/answer-recognition.js');
+if(html.includes('/* ANSWER_RECOGNITION_START */'))html=html.replace(/\/\* ANSWER_RECOGNITION_START \*\/[\s\S]*?\/\* ANSWER_RECOGNITION_END \*\//,answers);
+else html=html.replace('function checkTyped(',answers+'\nfunction checkTyped(');
+const experienceCSS='<style id="player-experience-styles">\n'+read('src/player-experience.css')+'\n</style>';
+if(html.includes('<style id="player-experience-styles">'))html=html.replace(/<style id="player-experience-styles">[\s\S]*?<\/style>/,experienceCSS);
+else html=html.replace('</head>',experienceCSS+'\n</head>');
 const quest=read('src/adventure-save.js');
 const a=html.indexOf('/* QUEST_SAVES_START'),b=html.indexOf('/* QUEST_SAVES_END */',a)+'/* QUEST_SAVES_END */'.length;
 if(a<0||b<a)throw Error('Adventure save embed markers not found');
@@ -16,3 +22,4 @@ const css='<style id="science-lab-styles">\n'+read('src/science-lab.css')+'\n</s
 if(html.includes('<style id="science-lab-styles">'))html=html.replace(/<style id="science-lab-styles">[\s\S]*?<\/style>/,css);
 else html=html.replace('</head>',css+'\n</head>');
 fs.writeFileSync(file,html);
+

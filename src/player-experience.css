@@ -1,0 +1,22 @@
+/* Ambient SVG movement uses a shared hero wrapper; combat poses stay still. */
+.hero-idle{transform-origin:160px 400px;animation:rally-breathe 5.2s ease-in-out infinite}
+.hero-idle .hero-blink{transform-box:fill-box;transform-origin:center;animation:rally-blink 7.4s linear infinite}
+.hero-idle .panther-magic-accent{animation:rally-magic 4.6s ease-in-out infinite}
+.hero-idle:has([data-hero-outfit="ranger"]){animation-duration:6.4s}
+.hero-idle:has([data-hero-outfit="knight"]){animation-duration:7.2s}
+.hero-thumb-choice .hero-idle,.hero-thumb-choice .hero-blink,.hero-thumb-choice .panther-magic-accent,
+.lib-hero-sprite:not(.lib-v4-idle) .hero-idle,.lib-hero-sprite:not(.lib-v4-idle) .hero-blink,.lib-hero-sprite:not(.lib-v4-idle) .panther-magic-accent{animation:none!important;transform:none!important}
+@keyframes rally-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.006)}}
+@keyframes rally-blink{0%,44%,47%,100%{transform:scaleY(1)}45.5%{transform:scaleY(.08)}}
+@keyframes rally-magic{0%,100%{opacity:.72}50%{opacity:.95}}
+.answer-confirm{margin-top:12px;padding:14px;border:2px solid var(--teal);border-radius:10px;background:#fff;overflow-wrap:anywhere}
+.answer-confirm p+p{margin-top:8px}
+.answer-confirm .judge-actions button{min-height:44px;white-space:normal}
+.rally-time-track{height:6px;border-radius:4px;background:#d3dedb;overflow:hidden;flex-basis:100%;width:100%;margin-top:4px}
+.rally-time-fill{display:block;height:100%;width:100%;background:#246c68;transform:scaleX(var(--time-left,1));transform-origin:left}
+.rally-time-track.is-low .rally-time-fill{background:#ad4b29}
+.duel-question-head:has(.rally-time-track){flex-wrap:wrap}
+.lib-time-track{background:#3c3958;margin:0 0 8px}
+.lib-time-track .rally-time-fill{background:#a3e9fc}
+.lib-time-track.is-low .rally-time-fill{background:#ffc48a}
+@media(prefers-reduced-motion:reduce){.hero-idle,.hero-idle .hero-blink,.hero-idle .panther-magic-accent{animation:none!important;transform:none!important}}
