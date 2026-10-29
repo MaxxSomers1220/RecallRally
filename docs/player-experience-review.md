@@ -4,7 +4,7 @@ Typed Quick Recall answers now receive conservative local matching. Existing mul
 
 - High confidence: exact accepted answers with harmless punctuation/capitalization, or a single clear transposition in a long word. Numeric expressions, chemical symbols and units retain stricter comparisons.
 - Intermediate confidence: one plausible spelling error. The student sees their original response and the proposed accepted answer before any score or journal attempt is recorded. They can confirm, edit/retry, or count a miss. Confirmed attempts retain the original response in the journal.
-- Low confidence: count a miss using the existing solo explanation/team handoff. Known competing academic terms, distractors, changed numbers, units, formulas and negation do not receive fuzzy credit. Spoken answers judged by a reader retain their existing controls. Device dictation entered into the answer field uses the same matcher; this update adds no microphone service.
+- Low confidence: count a miss using the existing solo explanation/team handoff. Known competing academic terms, distractors, changed numbers, units, formulas and negation do not receive fuzzy credit. Case and punctuation remain exact when they distinguish choices; spelling questions do not receive typo credit. Spoken answers judged by a reader retain their existing controls. Device dictation entered into the answer field uses the same matcher; this update adds no microphone service.
 
 The matcher is deliberately conservative. It is spelling assistance, not a semantic language model. Unlisted synonyms and uncertain dictation may still need the existing reader/self-judging route. No online service receives student answers.
 
@@ -26,7 +26,7 @@ The artwork preview uses the actual game renderers, with identical colors to mak
 
 Local passes: answer-recognition tests (all 1,550 canonical answers and aliases plus spelling/academic counterexamples), home launcher, Adventure saves, bank integrity, ten worlds, Adventure effects, Science Lab, Librarian v4 smoke, artwork manifest and inline JavaScript syntax. Existing archived Librarian v1–v3 tests refer to obsolete buzzer/pose APIs and fail on the unchanged baseline too; they are outside the current build checks.
 
-Local interactive browser execution is unavailable: the runtime blocks Chrome's process sockets. `tests/player-experience-browser.test.cjs` and the Player experience workflow cover 1366×768, 1024×768, 820×1180 and 390×844, confirmation focus/touch/scoring/journal, choices, timed/pause/untimed behavior, shared hero rendering and reduced motion. The workflow uploads actual screenshots. Check the run results and inspect those screenshots before release. Physical iPad, mobile Safari, dictation and sustained-device performance are not verified here.
+Local interactive browser execution is unavailable: the runtime blocks Chrome's process sockets. `tests/player-experience-browser.test.cjs` and the Player experience workflow cover 1366×768, 1024×768, 820×1180 and 390×844, confirmation focus/touch/scoring/journal, choices, timed/pause/untimed behavior, shared hero rendering and reduced motion. The workflow uploads actual screenshots. The four-viewport interaction suite passed in GitHub Actions run 40879083133. Subsequent commits must pass again. Inspect the uploaded screenshots before release. Physical iPad, mobile Safari, dictation and sustained-device performance are not verified here.
 
 ## Deferred
 

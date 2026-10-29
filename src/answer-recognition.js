@@ -8,12 +8,16 @@ const RallyAnswers=(()=>{
  function evaluate(raw,q,bank=[]){
   const original=String(raw??'').trim(),input=words(original),answers=[q.answer,...q.aliases||[]].filter(a=>typeof a==='string'&&a.trim());
   // Numeric answers retain every symbol, decimal point, fraction and unit.
-  const literal=s=>String(s).normalize('NFKC').replace(/\s+/g,' ').trim();
+  const literal=s=>String(s).normalize('NFKC').replace(/[’‘]/g,"'").replace(/\s+/g,' ').trim();
+  // If choices differ only in case or punctuation, that distinction is the
+  // academic task (for example girl's vs girls'), not harmless formatting.
+  const formMatters=(q.options||[]).some(a=>!answers.some(b=>literal(b)===literal(a))&&answers.some(b=>words(b)===words(a)));
   const sensitive=a=>/[\d=+−–×÷/%°^<>]/.test(a)||q.subject==='science'&&(/^(?:[A-Z][a-z]?){1,6}$/.test(a)||/^(?:m|s|g|L|l|N|W|V|J|Pa|Hz|K)$/.test(a));
   const numeric=answers.some(sensitive);
-  const exact=answers.find(a=>sensitive(a)?literal(a)===literal(original):words(a)===input);
+  const exact=answers.find(a=>formMatters||sensitive(a)?literal(a)===literal(original):words(a)===input);
   if(exact)return {confidence:'high',interpretation:exact,reason:'exact'};
-  if(!input||numeric||/[^a-z\s]/.test(input)||input.split(' ').some(w=>protectedWord.test(w)))return {confidence:'low'};
+  const spellingTask=q.subject==='language'&&/\bspell(?:ing|ed)?\b/i.test((q.prompt||'')+' '+(q.topic||''));
+  if(!input||numeric||formMatters||spellingTask||/[^a-z\s]/.test(input)||input.split(' ').some(w=>protectedWord.test(w)))return {confidence:'low'};
   // An actual distractor or a different known academic term is never a typo.
   if((q.options||[]).some(a=>!answers.some(x=>words(x)===words(a))&&words(a)===input))return {confidence:'low'};
   const known=lexicon(bank),candidates=[];

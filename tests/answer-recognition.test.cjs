@@ -7,6 +7,10 @@ vm.runInContext(bank+'\n'+fs.readFileSync('src/answer-recognition.js','utf8')+'\
 const question=(answer,options=[],aliases=[],subject='science')=>({answer,options,aliases,subject});
 function check(raw,q,want,bank=ctx.bank){const r=ctx.evaluate(raw,q,bank);assert.equal(r.confidence,want,raw+' -> '+q.answer+': '+JSON.stringify(r));return r;}
 for(const q of ctx.bank)for(const a of [q.answer,...q.aliases||[]])check(a,q,'high');
+for(const q of ctx.bank)for(const a of q.options.filter(a=>a!==q.answer))check(a,q,'low');
+check("The girl's backpack",ctx.bank.find(q=>q.id==='expanded-language-171'),'high');
+check('East',ctx.bank.find(q=>q.id==='expanded-language-174'),'low');
+check('acommodate',{...question('accommodate',[],[],'language'),prompt:'Spell the word accommodate.'},'low');
 check('  GEORGE WASHINGTON!!! ',question('George Washington'),'high');
 check('E. B. White',question('E B White'),'high');
 check('CARBON MONOXIDE',question('carbon monoxide',[],['CO']),'high');
