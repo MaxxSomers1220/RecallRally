@@ -53,7 +53,7 @@ let server,browser;
   await page.evaluate(()=>pauseQuest());assert(await page.locator('#quest-time-track').isVisible(),'Countdown returns on resume');
   await page.evaluate(()=>{leaveDuel();questPace=0;renderAdventure();$('quest-speed').value='0';startDuel(0);openQuestQuestion()});
   assert.equal(await page.locator('#quest-time-track').count(),0,'Untimed Adventure stays untimed');
-  await page.evaluate(()=>{leaveDuel();goHome();openHeroCreator('settings')});
+  await page.evaluate(()=>{leaveDuel();$('home-brand').click();openHeroCreator('settings')});
   // Shared renderer contains the same selected silhouette across contexts.
   const art=await page.evaluate(()=>{heroStyle='fairy';avatarLook=normalizePantherLook({...avatarLook,outfit:'ranger'});return [renderGameHero(avatarLook,{idPrefix:'map'}),renderGameHero(avatarLook,{idPrefix:'science'}),renderGameHero(avatarLook,{idPrefix:'library'})]});
   assert(art.every(s=>s.includes('scout-trousers')&&s.includes('hero-idle')));
