@@ -10,7 +10,11 @@ The matcher is deliberately conservative. It is spelling assistance, not a seman
 
 The shared SVG hero renderer adds slow breathing, occasional blinking and a subtle magic glow. Reduced-motion disables these additions; combat poses and Librarian movement suppress the ambient motion. Small creator thumbnails stay still. Fairy scout clothing now has trousers and an asymmetric field jacket; scholar clothing has a narrow open traveling coat over trousers. Mage and bard dresses remain available. The Starclaw preset uses a ponytail and short bard tunic. Saved selections are never reset.
 
-Countdown bars follow the existing Adventure and Librarian clocks. Low time changes the bar color alongside the numeric countdown without flashing. Adventure pause freezes the bar; untimed Adventure has no bar. Quick Recall timing and Written Practice clocks are unchanged. These are practice-game indicators, not claims about official competition timing.
+Countdown bars follow the existing Adventure and Librarian clocks. Low time changes the bar color alongside the numeric countdown without flashing. Adventure pause freezes its clock and hides the bar with the existing pause screen; untimed Adventure has no bar. Quick Recall timing and Written Practice clocks are unchanged. These are practice-game indicators, not claims about official competition timing.
+
+![Actual shared hero renderers: gown, scout trousers, scholar coat and festival dress](player-experience/hero-outfits.png)
+
+The artwork preview uses the actual game renderers, with identical colors to make silhouette differences visible. It is a still preview, not a browser layout or animation capture.
 
 ## Review path
 
