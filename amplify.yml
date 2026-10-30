@@ -3,6 +3,7 @@ frontend:
   phases:
     build:
       commands:
+        - node tests/answer-recognition.test.cjs
         - node tests/home-launcher.test.cjs
         - node tests/science-lab.test.cjs
         - node tests/adventure-save.test.cjs
@@ -18,3 +19,4 @@ frontend:
     baseDirectory: dist
     files:
       - '**/*'
+
