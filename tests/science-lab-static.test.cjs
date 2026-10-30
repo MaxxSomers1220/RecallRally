@@ -24,7 +24,11 @@ const root=path.join(__dirname,'..'),stage=fs.mkdtempSync(path.join(os.tmpdir(),
  assert.equal(await page.locator('.sl-stage .pm-dispenser').count(),5);
  for(let i=0;i<5;i++){const k=await page.evaluate(()=>{const id=$('science-lab').querySelector('.sl-question').dataset.questionId,q=SAMPLES.find(q=>q.id===id);return [...$('science-lab').querySelectorAll('[data-sl-choice]>span')].findIndex(e=>e.textContent===q.answer)});await page.locator('[data-sl-choice="'+k+'"]').click();await page.locator('#sl-next').click()}
  assert.equal(await page.locator('.sl-stage .pm-machine').getAttribute('data-potion-level'),'5');assert(await page.locator('.sl-stage .pm-finale').count());
- assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),10);
- assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian, Circuit model/badge, illustrated Potion Mixer stages 0–5, ten journal answers, unchanged Rigby progress');
+ await page.locator('#sl-back-hub').click();await page.locator('[data-sl-station="creature"]').click();
+ assert.equal(await page.locator('.sl-stage .ci-machine').getAttribute('data-creature-level'),'0');
+ for(let i=0;i<5;i++){const k=await page.evaluate(i=>{const id=$('science-lab').querySelector('.sl-question').dataset.questionId,q=SAMPLES.find(q=>q.id===id);return [...$('science-lab').querySelectorAll('[data-sl-choice]>span')].findIndex(e=>i===2?e.textContent!==q.answer:e.textContent===q.answer)},i);await page.locator('[data-sl-choice="'+k+'"]').click();if(i===2)assert.equal(await page.locator('[data-creature-repair="3"]').count(),1);await page.locator('#sl-next').click()}
+ assert.equal(await page.locator('.sl-stage .ci-machine').getAttribute('data-creature-level'),'5');assert.equal(await page.locator('.sl-stage .ci-moonwing').getAttribute('data-moonwing-state'),'greeting');assert.match(await page.locator('.sl-complete').innerText(),/4 \/ 5 correct/);
+ assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),15);
+ assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian, Circuit model/badge, illustrated Potion/Creature stages 0–5, creature mistake/repair, fifteen journal answers, unchanged Rigby progress');
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.rmSync(stage,{recursive:true,force:true})}})().catch(e=>{console.error(e);process.exitCode=1});
 
