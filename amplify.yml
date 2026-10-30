@@ -3,6 +3,7 @@ frontend:
   phases:
     build:
       commands:
+        - node tests/observatory-art.test.cjs
         - node tests/creature-art.test.cjs
         - node tests/circuit-art.test.cjs
         - node tests/potion-art.test.cjs
