@@ -1,0 +1,53 @@
+name: Rescue Rigby and ten illustrated worlds
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/adventure/**'
+      - 'src/adventure-illustrations*'
+      - 'src/adventure-save.js'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'scripts/**'
+      - 'tests/adventure*'
+      - 'tests/worlds*'
+      - 'tests/fixtures/adventure*'
+      - 'amplify.yml'
+      - '.github/workflows/adventure-illustrations.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install Pillow==11.3.0
+          python scripts/check-adventure-assets.py
+          node scripts/build-standalone.cjs
+          node tests/adventure-illustrations.test.cjs
+          node tests/adventure-effects.test.cjs
+          node tests/worlds.test.cjs
+      - name: Install isolated browser test tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/rigby-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/rigby-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Actual game at laptop, tablet and phone sizes; actual Amplify output
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/rigby-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export RIGBY_SCREENSHOTS="$RUNNER_TEMP/rigby-screenshots"
+          node tests/adventure-illustrated-browser.test.cjs
+          node tests/adventure-static.test.cjs
+          node tests/adventure-save-browser.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rescue-rigby-illustrated-gameplay
+          path: ${{ runner.temp }}/rigby-screenshots
+          if-no-files-found: ignore

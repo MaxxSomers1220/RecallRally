@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path');
 require('./sync-game-modules.cjs');
 require('./sync-librarian-art.cjs');
+require('./sync-adventure-art.cjs');
 const root=path.join(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const css=fs.readFileSync(path.join(root,'librarian/librarian.css'),'utf8');
