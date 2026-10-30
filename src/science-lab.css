@@ -111,3 +111,10 @@
 @keyframes pm-professor-startle{25%{transform:translateY(-5px) rotate(5deg)}65%{transform:rotate(-2deg)}100%{transform:none}}
 @media(prefers-reduced-motion:reduce){#science-lab .pm-machine *,#science-lab .pm-fizzwick{animation:none!important;transition:none!important}.pm-event-mishap .pm-oops-bubble{opacity:1}.pm-event-activate .pm-transfer,.pm-event-repair .pm-transfer,.pm-event-finale .pm-transfer,.pm-falling-ingredient{opacity:.8}}
 
+/* Polish pass: a brief rising ribbon of moonbubbles marks the final ingredient.
+   It stays inside the apparatus and settles before the player leaves review. */
+.pm-finale-plume{opacity:0;transform-origin:360px 290px}
+.pm-event-finale .pm-finale-plume{animation:pm-final-plume 2.6s ease-out both}
+@keyframes pm-final-plume{0%{opacity:0;transform:translateY(24px) scale(.5)}25%{opacity:.9;transform:translateY(0) scale(1)}65%{opacity:.7}100%{opacity:0;transform:translateY(-20px) scale(1.05)}}
+@media(prefers-reduced-motion:reduce){.pm-event-finale .pm-finale-plume{opacity:.55;transform:none}}
+

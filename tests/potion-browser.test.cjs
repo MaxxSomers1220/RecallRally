@@ -55,7 +55,18 @@ let browser,server;
   const stored=await page.evaluate(()=>QuestSaves.readSideQuest('science-lab',ScienceLab.validate).data);assert(stored.completed.includes('potion'));assert.equal(stored.records.potion.lastCorrect,4);
   // Same origin + complete offline package: badges, history and hero carry over.
   await page.goto('http://127.0.0.1:'+server.address().port+'/Ellery_Recall_Rally_Librarian_v4.html',{waitUntil:'domcontentloaded'});
+  await page.context().setOffline(true);
   await page.locator('#open-science-lab').click();assert(await page.locator('[data-sl-station="potion"].is-discovered').count());await page.locator('[data-sl-station="potion"]').click();assert.equal(await art.getAttribute('data-potion-level'),'0');assert.equal((await records()).length,5);
+  if(name==='desktop'){
+   for(let i=0;i<5;i++){
+    const qid=await page.locator('.sl-question').getAttribute('data-question-id'),q=await page.evaluate(id=>SAMPLES.find(q=>q.id===id),qid),choices=await page.locator('[data-sl-choice]>span').allTextContents();
+    const k=choices.findIndex(a=>i===4?a!==q.answer:a===q.answer);await page.keyboard.press(String(k+1));
+    if(i===4){assert.equal(await art.getAttribute('data-potion-level'),'4');assert.equal(await art.locator('.pm-finale').count(),0);}
+    await page.locator('#sl-next').click();
+   }
+   assert.equal(await art.getAttribute('data-potion-level'),'5');assert.match(await page.locator('.sl-complete').innerText(),/4 \/ 5 correct/);assert.equal((await records()).length,10);
+   await capture('final-repair-offline');
+  }
   await page.locator('#sl-close').click();await page.locator('#open-science-lab').click();await page.locator('[data-sl-station="circuit"]').click();assert.equal(await page.locator('.pm-machine').count(),0,'other equipment still uses its original renderer');await page.locator('#sl-close').click();
   console.log('PASS '+name+': real five-question experiment, distinct activations, actual animation, mistake/repair with honest grades, final potion, customized hero, offline replay and reduced motion');await page.close();
  }

@@ -17,6 +17,7 @@ s=s.replace(' <path d="M53 85H166"',''' <path d="M39 64 52 70M54 42 68 55M85 30 
  <path d="M53 85H166"''')
 s=s.replace(' <g class="fizz-calm">',''' <g class="pmf-goggle-engraving" fill="none" stroke="#f8df9e" stroke-width="1"><circle cx="83" cy="88" r="20"/><circle cx="137" cy="88" r="20"/><path d="M65 79l3 1M63 88h4M65 97l3-1M152 79l3-1M153 88h5M151 98l4 1"/></g>
  <g class="fizz-calm">''',1)
+s=s.replace('<g class="fizz-calm"><path d="M75 90Q83 82 91 90M129 90Q137 82 145 90" stroke="#35445e" fill="none"/></g>', '<g class="fizz-calm"><ellipse cx="83" cy="88" rx="9" ry="7" fill="#edf4dc" stroke="#567784" stroke-width="1.5"/><ellipse cx="137" cy="88" rx="9" ry="7" fill="#edf4dc" stroke="#567784" stroke-width="1.5"/><ellipse cx="80" cy="88" rx="3.5" ry="5" fill="#3d5969" stroke="none"/><ellipse cx="134" cy="88" rx="3.5" ry="5" fill="#3d5969" stroke="none"/><path d="M74 77q8-7 17-3M129 76q8-3 16 2" fill="none" stroke="#f8eacd" stroke-width="2"/></g>')
 s=s.replace(' <path d="M105 94', ''' <g class="fizz-excited"><path d="M74 89q9-17 18 0M128 89q9-17 18 0" fill="none" stroke="#35445e" stroke-width="3"/></g>
  <g class="fizz-celebrate"><path d="M73 91q10-19 20 0M127 91q10-19 20 0" fill="none" stroke="#35445e" stroke-width="3.5"/><path d="M73 98l4 1M143 98l4-1" stroke="#ecb080" stroke-width="2"/></g>
  <path d="M105 94''')
