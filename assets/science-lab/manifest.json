@@ -2,9 +2,39 @@
   "name": "The Alchemist's Science Lab",
   "provenance": "Original SVG illustrations authored for Recall Rally. No third-party images, fonts, runtime dependencies or external asset requests.",
   "assets": [
-    {"file": "laboratory.svg", "role": "Layered stone-and-copper laboratory room, without UI or characters", "width": 1440, "height": 800, "transparent": false, "max_bytes": 20000},
-    {"file": "professor-fizzwick.svg", "role": "Recurring professor with normal and surprised expression groups", "width": 220, "height": 300, "transparent": true, "max_bytes": 12000}
+    {
+      "file": "laboratory.svg",
+      "role": "Layered stone-and-copper laboratory room, without UI or characters",
+      "width": 1440,
+      "height": 800,
+      "transparent": false,
+      "max_bytes": 20000
+    },
+    {
+      "file": "professor-fizzwick.svg",
+      "role": "Recurring professor with normal and surprised expression groups",
+      "width": 220,
+      "height": 300,
+      "transparent": true,
+      "max_bytes": 12000
+    },
+    {
+      "file": "potion-mixer-chassis.svg",
+      "role": "Original engraved brass/copper chassis, glass routes, gauges, wood-inlaid pedestal; dynamic potion layers inserted at build/runtime",
+      "width": 1440,
+      "height": 1000,
+      "transparent": true,
+      "max_bytes": 22000
+    },
+    {
+      "file": "professor-fizzwick-potion.svg",
+      "role": "Potion-only illustration of the established Fizzwick design, with curious/excited/startled/celebrating expression layers",
+      "width": 220,
+      "height": 300,
+      "transparent": true,
+      "max_bytes": 12000
+    }
   ],
-  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build.",
+  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build. PotionMixerArt in src/science-lab-potion.js builds five distinct clipped glass vessels, progress-dependent liquid/drive states and bounded transition effects. The other four equipment renderers and original professor asset are unchanged.",
   "motion": "CSS-only equipment and character reactions, disabled by prefers-reduced-motion; no new frame loop or external animation library."
 }
