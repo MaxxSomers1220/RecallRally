@@ -1,0 +1,45 @@
+name: Librarian illustration and playable encounter
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'librarian/**'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'scripts/**'
+      - 'tests/librarian*'
+      - 'tests/fixtures/librarian*'
+      - 'amplify.yml'
+      - '.github/workflows/librarian-art.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node scripts/build-standalone.cjs
+          node tests/librarian-art.test.cjs
+          node tests/librarian-v4-smoke.test.cjs
+          node tests/home-launcher.test.cjs
+          node tests/adventure-save.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/librarian-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/librarian-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Full encounters, desktop/tablet/phone and actual Amplify build
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/librarian-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export LIBRARIAN_SCREENSHOTS="$RUNNER_TEMP/librarian-screenshots"
+          node tests/librarian-illustrated-browser.test.cjs
+          node tests/science-lab-static.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: librarian-illustrated-gameplay
+          path: ${{ runner.temp }}/librarian-screenshots
+          if-no-files-found: ignore

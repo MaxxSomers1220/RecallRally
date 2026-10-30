@@ -1,50 +1,44 @@
-# The Librarian — arcade prototype (v1)
+# The Librarian — illustrated multiple-choice encounter
 
-This is an **optional arcade mode** for Ellery's Recall Rally, designed for a fifth-grade academic team student. It does not replace any existing Adventure worlds.
+Launch **The Librarian** from Recall Rally's home screen. The current game asks eight literature questions with four choices and a 16-second answer window. A miss or timeout starts the existing 7.8-second book storm. High books require ducking; low books require jumping. The correct answer, explanation and original source appear afterward. This is the current v4 multiple-choice game, not the historical buzzer prototype.
 
-## Gameplay
-- Launch from the floating "Enter The Librarian" button in the existing Recall Rally page.
-- The game asks eight literature questions with a twelve-second quick-recall buzzer window.
-- Press **BUZZ!** (or Space) when ready, say the answer aloud, then type it for scoring.
-- A miss or timeout starts a 6.5-second flying-book dodge challenge. Move with left/right, jump, and use one shield each wave.
-- Correct answers award points and faster buzzes earn a bonus.
-- A wrong answer is revealed after surviving the book storm.
-- Four lives, score, and completion results are included.
-- Attempts and buzzer speeds are saved in browser storage under `recall-rally-librarian-v1`, separately from existing Recall Rally progress.
+Correct answers retain their original points/speed bonus. Dodge/shield rewards, four hearts, defeat recovery, question selection, journal integration and `recall-rally-librarian-v1` history are unchanged. Reviewed eligible questions come from the shared bank; the original, explicitly labeled demonstration fallback remains separate from academic journal records.
 
 ## Controls
-- Tablet: on-screen left/right, Jump, Shield buttons.
-- Keyboard: A/D or arrow keys to move, Space/Up to jump, S for shield.
-- On question screen, Space or Enter buzzes. Input is typed after buzzing.
 
-## Question sourcing
-The game tries to select quick-recall, book/literature-related questions from the **existing** `SAMPLES` bank in Recall Rally. If there aren't eight eligible questions, it falls back to eight clearly labeled demonstration questions. **The separate 2026–27 official study guide has not been imported or verified in this branch.** Never represent demonstrations as official state questions.
+- Answer: click/tap A–D or press 1–4.
+- Move: A/D or left/right arrows; touch hold Left/Right.
+- Duck: Down/S or hold Duck. Jump: Space/Up/W or tap Jump.
+- Dash: Shift or tap Dash. Shield: Q or tap Shield, once per storm.
+- Exit: Return to Rally or Escape.
 
-## Build & integration
-`amplify.yml` executes `node tests/librarian.test.cjs`, copies existing `index.html` unchanged into `dist`, copies `librarian.css` and `librarian.js`, then uses `scripts/inject-librarian.cjs` to append asset references to the staged HTML. Source `index.html` and existing local storage keys remain unchanged.
+Movement controls appear during storms. In review, the explanation and Next get priority. Pointer cancellation and lost focus release held controls. Reduced motion keeps warning lanes, poses and feedback visible without optional animation.
 
-To test locally from the repository root:
+## Illustrated scene and character preservation
+
+The original painted room has carved shelves, varied antique books, stained glass, ladders, moonlight, candlelight and an empty central balcony. Independent DOM planes use one cached painting with masks for the distant room, shelving and balcony rail, plus a separate foreground SVG and lighting layer. The balcony sits in front of the guardian's lower robe; the hero, canvas hazards and warnings remain above the scenery. All foreground carving is below the unchanged FLOOR=405 baseline.
+
+An original inline SVG Librarian has curious, impressed, preparing, casting, frustrated and satisfied expressions, independent head/arm poses, a floating reading book and a bounded casting gesture. Three original flying-book page poses animate in the existing canvas loop, with the original visible dimensions and collision bounds. Warning lanes have a dark contrast backing and a steady high/low label rather than flashing.
+
+The hero still comes from the saved `renderGameHero(avatarLook)` configuration. An opt-in `articulated` option adds semantic groups only for the arcade. Local clipped limb instances reuse the exact customized geometry, gradients, shoes, skin, hair and clothing. Running swings separate legs/arms; jumping tucks the legs; ducking bends the upper body and legs instead of scaling down the whole hero. This is lightweight layered articulation, not a new universal skeletal system or frame-by-frame sprite pack. Noncombat review/completion poses are grounded visually without changing physics state. The normal shared renderer's idle output is byte-identical for all 48 baseline fairy/panther × outfit × shoe combinations tested.
+
+## Assets and offline delivery
+
+`art-manifest.json` records asset roles, dimensions, budgets, hashes and provenance. The painted room was created with OpenAI's image_gen tool for this project. The guardian, three book poses and foreground are original project-authored SVG from `scripts/draw-librarian-illustrations.py`. No borrowed artwork, remote fonts or runtime dependency was added.
+
+Run `node scripts/build-standalone.cjs` after edits. It runs the module/art synchronization and creates `Ellery_Recall_Rally_Librarian_v4.html`. `scripts/sync-librarian-art.cjs` embeds the local art into `librarian.css` and `librarian.js`; Amplify copies those bundles, so play never needs separate image requests. The standalone file embeds both bundles.
+
+## Verification
+
 ```sh
-node tests/librarian.test.cjs
-mkdir -p dist/librarian
-cp index.html dist/index.html
-cp librarian/librarian.css librarian/librarian.js dist/librarian/
-node scripts/inject-librarian.cjs dist/index.html
+node scripts/build-standalone.cjs
+node tests/librarian-art.test.cjs
+node tests/librarian-v4-smoke.test.cjs
+python scripts/check-librarian-assets.py
+CHROMIUM_PATH=/usr/bin/chromium node tests/librarian-illustrated-browser.test.cjs
+CHROMIUM_PATH=/usr/bin/chromium node tests/science-lab-static.test.cjs
 ```
-Serve `dist` with a local static web server; opening the HTML file directly can also work on desktop.
 
-## Known limitations / planned improvements
-- This is canvas-drawn concept art, not the final cinematic sprites or the previously generated illustration asset.
-- The prototype has a built-in small hero; it does not yet import the personalized hero design from the character creator.
-- Typed answers use exact normalized matching with explicit aliases, so more answer aliases are needed.
-- Question bank filtering is heuristic; content needs review against the state guide.
-- The game saves basic attempts locally only; cloud sync and cross-device progress are not yet implemented.
-- There is no speech recognition or automatic grading of spoken answers.
-- Actual iPad gameplay testing and a live AWS Amplify deployment have not been verified.
+The Python asset checker uses Pillow as a development tool. Browser tests use Playwright and an installed Chromium, with tools installed outside the game checkout in CI. They cover the full encounter, controls, actual collision/dodge/shield behavior, source questions and grades, all guardian moods, customized hero preservation, four viewport sizes, reduced motion and offline replay. The static test executes the actual Amplify build and then plays all five Science Lab stations plus a real Librarian storm/review sequence from its output.
 
-## Next iteration
-1. Import and validate the state literature question bank.
-2. Reuse the customized hero avatar and animation frames.
-3. Replace the canvas sketch with optimized illustrated layered assets.
-4. Add multiple chapters, improved projectile patterns, responsive touch tuning, and accessibility/reduced-motion controls.
-5. Connect the Learning Journal and provide deeper parent progress reports.
+See [actual gameplay screenshots and detailed test results](../docs/reviews/librarian/README.md). Physical iPad/iPhone and Safari/Firefox testing remain separate follow-up work. `ARTWORK-v2.md` is historical design documentation.

@@ -37,6 +37,15 @@ const root=path.join(__dirname,'..'),stage=fs.mkdtempSync(path.join(os.tmpdir(),
  for(let i=0;i<5;i++){const k=await page.evaluate(i=>{const id=$('science-lab').querySelector('.sl-question').dataset.questionId,q=SAMPLES.find(q=>q.id===id);return [...$('science-lab').querySelectorAll('[data-sl-choice]>span')].findIndex(e=>i===2?e.textContent!==q.answer:e.textContent===q.answer)},i);await page.locator('[data-sl-choice="'+k+'"]').click();if(i===2)assert.equal(await page.locator('[data-observatory-repair="3"]').count(),1);await page.locator('#sl-next').click()}
  assert.equal(await page.locator('.sl-stage .so-machine').getAttribute('data-observatory-level'),'5');assert.equal(await page.locator('[data-observatory-celebration="true"]').count(),1);assert.match(await page.locator('.sl-complete').innerText(),/4 \/ 5 correct/);
  assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),25);
- assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian, Circuit model/badge, illustrated Potion/Creature stages 0–5, creature mistake/repair, Weather and Observatory mistakes/repairs and finales, twenty-five journal answers, unchanged Rigby progress');
+ // Play the real staged Librarian assets, not just its launch button.
+ await page.locator('#sl-close').click();await page.locator('#lib-launch').click();
+ assert((await page.locator('.lib-art-room').evaluate(e=>getComputedStyle(e).backgroundImage)).includes('data:image/webp'));
+ assert.equal(await page.locator('.lib-guardian-art').count(),1);await page.locator('#lib-start').click();
+ const wrong=await page.evaluate(()=>{const q=SAMPLES.find(q=>q.prompt===document.getElementById('lib-question').textContent);if(!q)throw Error('Expected real literature bank question');return [...document.querySelectorAll('.lib-choice')].findIndex(b=>b.lastElementChild.textContent!==q.answer)});
+ await page.locator('.lib-choice').nth(wrong).click();await page.keyboard.down('ArrowDown');
+ await page.waitForFunction(()=>document.getElementById('lib-overlay').dataset.scene==='storm');
+ if(process.env.LIBRARIAN_SCREENSHOTS){await page.waitForTimeout(2600);fs.mkdirSync(process.env.LIBRARIAN_SCREENSHOTS,{recursive:true});await page.screenshot({path:path.join(process.env.LIBRARIAN_SCREENSHOTS,'staged-book-storm.png')})}
+ await page.waitForSelector('#lib-learn:not([hidden])',{timeout:12000});await page.keyboard.up('ArrowDown');assert(await page.locator('#lib-next').isVisible());assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.length),26);await page.locator('#lib-close').click();
+ assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian, Circuit model/badge, illustrated Potion/Creature stages 0–5, creature mistake/repair, Weather and Observatory mistakes/repairs and finales, twenty-five journal answers, unchanged Rigby progress, illustrated Librarian real book storm/review and one honest journal answer');
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.rmSync(stage,{recursive:true,force:true})}})().catch(e=>{console.error(e);process.exitCode=1});
 

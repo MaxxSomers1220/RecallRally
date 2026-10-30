@@ -3,6 +3,8 @@ frontend:
   phases:
     build:
       commands:
+        - node scripts/build-standalone.cjs
+        - node tests/librarian-art.test.cjs
         - node tests/weather-art.test.cjs
         - node tests/observatory-art.test.cjs
         - node tests/creature-art.test.cjs
