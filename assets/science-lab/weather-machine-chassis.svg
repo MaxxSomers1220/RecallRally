@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 720 500" class="sl-equipment sl-machine-weather wm-machine" role="img" aria-label="Weather Machine">
+<defs>
+<linearGradient id="__WM__-brass" x2=".8" y2="1"><stop stop-color="#fff1b7"/><stop offset=".22" stop-color="#d7ab60"/><stop offset=".44" stop-color="#805433"/><stop offset=".64" stop-color="#edcf8d"/><stop offset="1" stop-color="#6e4b37"/></linearGradient>
+<linearGradient id="__WM__-copper" x2="1" y2=".7"><stop stop-color="#efc5a1"/><stop offset=".3" stop-color="#b37653"/><stop offset=".55" stop-color="#69473d"/><stop offset=".8" stop-color="#dba575"/><stop offset="1" stop-color="#81553e"/></linearGradient>
+<linearGradient id="__WM__-wood" x2=".1" y2="1"><stop stop-color="#79523b"/><stop offset=".5" stop-color="#433932"/><stop offset="1" stop-color="#202633"/></linearGradient>
+<linearGradient id="__WM__-enamel" x2="1" y2=".7"><stop stop-color="#426c70"/><stop offset=".5" stop-color="#183341"/><stop offset="1" stop-color="#345864"/></linearGradient>
+<linearGradient id="__WM__-glass" x2="1" y2=".1"><stop stop-color="#c9f7f0" stop-opacity=".4"/><stop offset=".18" stop-color="#d4f5ea" stop-opacity=".04"/><stop offset=".68" stop-color="#e8f9ec" stop-opacity=".06"/><stop offset=".92" stop-color="#f6f7d4" stop-opacity=".48"/><stop offset="1" stop-color="#a5ced9" stop-opacity=".18"/></linearGradient>
+<linearGradient id="__WM__-sky" x2=".2" y2="1"><stop stop-color="#2b536d"/><stop offset="1" stop-color="#7daebc"/></linearGradient>
+<linearGradient id="__WM__-cloud" x2=".1" y2="1"><stop stop-color="#fff4d9"/><stop offset=".5" stop-color="#e3e9d9"/><stop offset="1" stop-color="#88b4c0"/></linearGradient>
+<linearGradient id="__WM__-water" x2=".8" y2="1"><stop stop-color="#aee8e5"/><stop offset=".5" stop-color="#5babbc"/><stop offset="1" stop-color="#2c6d91"/></linearGradient>
+<radialGradient id="__WM__-halo"><stop stop-color="#f5e6a8" stop-opacity=".65"/><stop offset="1" stop-color="#e8c97e" stop-opacity="0"/></radialGradient>
+<filter id="__WM__-blur" x="-.5" y="-.5" width="2" height="2"><feGaussianBlur stdDeviation="5"/></filter>
+<clipPath id="__WM__-chamber"><path d="M230 366V190Q230 88 360 80Q490 88 490 190V366Z"/></clipPath>
+</defs>
+<g class="wm-chassis" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="360" cy="468" rx="294" ry="15" fill="#0b202c" opacity=".5"/>
+<path d="M206 368V185Q206 62 360 54Q514 62 514 185V368H499V185Q499 78 360 69Q221 78 221 185V368Z" fill="url(#__WM__-copper)" stroke="#634733" stroke-width="3"/>
+<path d="M214 341V185Q214 70 360 61Q506 70 506 185V341" fill="none" stroke="#f5daa0" stroke-width="1.5"/>
+<path d="M338 63 346 41 360 28 374 41 382 63 360 54Z" fill="url(#__WM__-brass)" stroke="#765337" stroke-width="2"/>
+<path d="M360 36V53M349 47l11 8 11-8" stroke="#fff0b8" fill="none"/>
+<path d="M126 285V363Q126 383 227 383M494 381H564Q587 381 587 357V232" fill="none" stroke="#5e4639" stroke-width="17"/>
+<path d="M126 285V363Q126 383 227 383M494 381H564Q587 381 587 357V232" fill="none" stroke="url(#__WM__-brass)" stroke-width="11"/>
+<path d="M152 382Q360 356 568 382L593 420Q360 465 127 420Z" fill="url(#__WM__-wood)" stroke="#ac8256" stroke-width="4"/>
+<path d="M140 403Q360 437 580 403V419Q360 454 140 419Z" fill="url(#__WM__-copper)" stroke="#e9c688" stroke-width="2"/>
+<path d="M173 432 151 472H208L225 440M495 440 512 472H569L547 432" fill="url(#__WM__-brass)" stroke="#654832" stroke-width="3"/>
+<path d="M320 441 335 431H385L400 441 386 455H334Z" fill="url(#__WM__-brass)" stroke="#654832" stroke-width="2"/>
+<text x="360" y="448" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="2" fill="#58442f">F · W</text>
+<path d="M225 177Q246 117 292 103M495 177Q474 117 428 103" fill="none" stroke="#b7c5a1" stroke-opacity=".5"/>
+<!-- Scientific instrument: rain collector and marked measuring vessel. -->
+<g transform="translate(607 355)"><path d="M-29-24H29L9-2V43H-9V-2Z" fill="url(#__WM__-glass)" stroke="#c0e1d6" stroke-width="2"/><path d="M-9 28H9V43H-9Z" fill="url(#__WM__-water)"/><path d="M11 7H18M11 17H16M11 27H18M11 37H16" stroke="#eed8a4" stroke-width="1.5"/></g>
+</g>
+<!-- WEATHER_LAYERS -->
+</svg>
