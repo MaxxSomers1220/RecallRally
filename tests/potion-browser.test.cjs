@@ -37,6 +37,7 @@ let browser,server;
    else if(i===1){await page.waitForTimeout(1250);await capture('two-ingredients');}
    else if(i===3){assert.equal(await art.locator('.pm-drive.is-running').count(),1);assert(await art.locator('.pm-bubble').count());const cog=art.locator('.pm-cog').first(),a=await cog.evaluate(e=>getComputedStyle(e).transform);await page.waitForTimeout(220);assert.notEqual(await cog.evaluate(e=>getComputedStyle(e).transform),a,'mixing drive actually moves');await capture('machinery');}
    else if(i===4){assert(await art.locator('.pm-finale').count());assert(await page.locator('.sl-professor .is-celebrate').count());await page.waitForTimeout(700);await capture('fifth-answer');}
+   if(name==='phone'&&(wrong||i===4)){await page.locator('#sl-next').scrollIntoViewIfNeeded();if(screens)await page.screenshot({path:path.join(screens,'phone-'+(wrong?'mistake':'final')+'-controls.png')});const box=await page.locator('#sl-next').boundingBox();assert(box.height>=44&&box.y>=0&&box.y+box.height<=height,'Phone explanation/Next remains reachable');}
    if(width>=1000){
     const boxes=await page.locator('#sl-prompt,[data-sl-choice],#sl-next,.sl-feedback,.sl-stage').evaluateAll(es=>es.map(e=>{const b=e.getBoundingClientRect();return {top:b.top,bottom:b.bottom,left:b.left,right:b.right}}));
     assert(boxes.every(b=>b.top>=0&&b.bottom<=height+1&&b.left>=0&&b.right<=width+1),'Question, choices, explanation, Next and machine fit laptop/tablet viewport');

@@ -115,8 +115,10 @@ async function switchPlayer(id){await page.locator('#open-learning').click();awa
    await page.locator('#sl-next').scrollIntoViewIfNeeded();await page.locator('#sl-next').click();await page.locator('#sl-hub').click();
   }
   console.log('PASS desktop, tablet landscape, tablet portrait and phone layouts, keyboard choices and reachable feedback');
-  await page.setViewportSize({width:1366,height:768});await page.locator('[data-sl-station="potion"]').click();await answerLab(true);assert.equal(await page.locator('.sl-bubble').first().evaluate(el=>getComputedStyle(el).animationName),'none');
-  await page.emulateMedia({reducedMotion:'no-preference'});assert.equal(await page.locator('.sl-bubble').first().evaluate(el=>getComputedStyle(el).animationName),'sl-bubble');
+  await page.setViewportSize({width:1366,height:768});await page.locator('[data-sl-station="potion"]').click();
+  for(let step=0;step<3;step++){await answerLab(true);if(step<2){assert.equal(await page.locator('.pm-bubble').count(),0,'Potion simmer starts at the third repaired step');await page.locator('#sl-next').click()}}
+  assert.equal(await page.locator('.pm-bubble').first().evaluate(el=>getComputedStyle(el).animationName),'none');
+  await page.emulateMedia({reducedMotion:'no-preference'});assert.equal(await page.locator('.pm-bubble').first().evaluate(el=>getComputedStyle(el).animationName),'pm-bubble-rise');
   await page.locator('#sl-hub').click();await page.locator('#sl-sound').click();assert.equal(await page.evaluate(()=>soundOn),false);assert.equal(await page.locator('#sl-sound').getAttribute('aria-pressed'),'false');await page.locator('#sl-close').click();assert.deepEqual((await main()).keys,original.keys);
   // Separate touch context exercises actual tap events; it has its own profile.
   const touch=await context.browser().newContext({viewport:{width:1024,height:768},hasTouch:true,isMobile:true,reducedMotion:'reduce'}),touchPage=await touch.newPage();touchPage.on('pageerror',e=>errors.push(e.message));
@@ -130,4 +132,5 @@ async function switchPlayer(id){await page.locator('#open-learning').click();awa
   assert.deepEqual(errors,[],'no browser script errors');console.log('PASS corrupt laboratory save cannot break startup or the main adventure; no browser script errors');
  }finally{if(context)await context.close();if(server)await new Promise(r=>server.close(r));fs.rmSync(temp,{recursive:true,force:true})}
 })().catch(e=>{console.error(e);process.exitCode=1});
+
 

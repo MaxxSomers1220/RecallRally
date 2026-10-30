@@ -18,5 +18,12 @@ const root=path.join(__dirname,'..'),stage=fs.mkdtempSync(path.join(os.tmpdir(),
  await page.locator('#sl-model-back').click();for(let i=0;i<5;i++){await page.locator('[data-sl-choice="0"]').click();await page.locator('#sl-next').click()}
  assert(await page.locator('.sl-complete').isVisible());assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),5);
  assert(await page.evaluate(()=>{const lab=JSON.parse(localStorage.getItem('recall-rally-sidequest-science-lab-v1:'+RallyLearning.activeProfile().id));return lab.data.notes.includes('circuit')&&lab.data.completed.includes('circuit')&&questProgress===0}));
- assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian mounts, both model conditions work, five journal answers, saved badge/note, unchanged Rigby progress');
+ await page.locator('#sl-back-hub').click();await page.locator('[data-sl-station="potion"]').click();
+ assert.equal(await page.locator('.sl-stage .pm-machine').getAttribute('data-potion-level'),'0');
+ assert.equal(await page.locator('.sl-stage .pm-dispenser').count(),5);
+ for(let i=0;i<5;i++){const k=await page.evaluate(()=>{const id=$('science-lab').querySelector('.sl-question').dataset.questionId,q=SAMPLES.find(q=>q.id===id);return [...$('science-lab').querySelectorAll('[data-sl-choice]>span')].findIndex(e=>e.textContent===q.answer)});await page.locator('[data-sl-choice="'+k+'"]').click();await page.locator('#sl-next').click()}
+ assert.equal(await page.locator('.sl-stage .pm-machine').getAttribute('data-potion-level'),'5');assert(await page.locator('.sl-stage .pm-finale').count());
+ assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),10);
+ assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian, Circuit model/badge, illustrated Potion Mixer stages 0–5, ten journal answers, unchanged Rigby progress');
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.rmSync(stage,{recursive:true,force:true})}})().catch(e=>{console.error(e);process.exitCode=1});
+
