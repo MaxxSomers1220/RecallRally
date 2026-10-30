@@ -33,8 +33,16 @@
       "height": 300,
       "transparent": true,
       "max_bytes": 12000
+    },
+    {
+      "file": "circuit-constructor-chassis.svg",
+      "role": "Original carved oak cabinet, engraved brass chassis and circuit guides; dynamic battery, switch, lamp, wiring and ammeter layers inserted at runtime",
+      "width": 1440,
+      "height": 1000,
+      "transparent": true,
+      "max_bytes": 16000
     }
   ],
-  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build. PotionMixerArt in src/science-lab-potion.js builds five distinct clipped glass vessels, progress-dependent liquid/drive states and bounded transition effects. The other four equipment renderers and original professor asset are unchanged.",
+  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build. PotionMixerArt in src/science-lab-potion.js builds five distinct clipped glass vessels, progress-dependent liquid/drive states and bounded transition effects. CircuitConstructorArt in src/science-lab-circuit.js adds five assembly actions, an open-switch repair state and closed-loop illumination. Creature, Weather, Observatory and the original professor asset are unchanged.",
   "motion": "CSS-only equipment and character reactions, disabled by prefers-reduced-motion; no new frame loop or external animation library."
 }

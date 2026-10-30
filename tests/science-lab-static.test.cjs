@@ -16,6 +16,7 @@ const root=path.join(__dirname,'..'),stage=fs.mkdtempSync(path.join(os.tmpdir(),
  await page.goto('http://127.0.0.1:'+server.address().port+'/',{waitUntil:'domcontentloaded'});assert(await page.locator('#lib-launch').isVisible());await page.locator('#open-science-lab').click();await page.locator('[data-sl-station="circuit"]').click();await page.locator('#sl-open-model').click();
  for(const condition of [0,1]){await page.locator('[data-sl-condition="'+condition+'"]').click();await page.keyboard.press(String(condition+1));await page.locator('#sl-observe').click()}
  await page.locator('#sl-model-back').click();for(let i=0;i<5;i++){await page.locator('[data-sl-choice="0"]').click();await page.locator('#sl-next').click()}
+ assert.equal(await page.locator('.sl-stage .cc-machine').getAttribute('data-circuit-level'),'5');assert.equal(await page.locator('.sl-stage .cc-machine').getAttribute('data-circuit-closed'),'true');assert.equal(await page.locator('.sl-stage .cc-filament.is-lit').count(),1);
  assert(await page.locator('.sl-complete').isVisible());assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),5);
  assert(await page.evaluate(()=>{const lab=JSON.parse(localStorage.getItem('recall-rally-sidequest-science-lab-v1:'+RallyLearning.activeProfile().id));return lab.data.notes.includes('circuit')&&lab.data.completed.includes('circuit')&&questProgress===0}));
  await page.locator('#sl-back-hub').click();await page.locator('[data-sl-station="potion"]').click();

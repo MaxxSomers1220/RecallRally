@@ -118,3 +118,43 @@
 @keyframes pm-final-plume{0%{opacity:0;transform:translateY(24px) scale(.5)}25%{opacity:.9;transform:translateY(0) scale(1)}65%{opacity:.7}100%{opacity:0;transform:translateY(-20px) scale(1.05)}}
 @media(prefers-reduced-motion:reduce){.pm-event-finale .pm-finale-plume{opacity:.55;transform:none}}
 
+/* Circuit Constructor: hand-illustrated hardware with a physically complete
+   series loop. These selectors never change another station's composition. */
+.sl-circuit-experiment .sl-stage{min-height:295px;max-height:340px;background-color:#1a3039;background-blend-mode:soft-light;border-color:#c3a171;box-shadow:inset 0 0 60px #112934,0 4px 14px #071a2a38}
+.sl-circuit-experiment .sl-stage>.cc-machine{width:100%;height:100%;inset:0;animation:none;filter:drop-shadow(0 5px 4px #0b1e28a0)}
+.sl-circuit-experiment .sl-stage .sl-hero{left:0;bottom:2%;height:33%;width:17%}
+.sl-circuit-experiment .sl-stage .sl-professor{right:0;bottom:2%;height:34%;width:17%}
+.sl-circuit-experiment .sl-poof{display:none}
+.cc-scene-caption{position:absolute;bottom:2%;left:18%;width:64%;text-align:center;font:700 10px/1.4 "Segoe UI",sans-serif;color:#faecc4;text-shadow:0 1px 3px #142d38;pointer-events:none}
+.cc-machine .is-waiting{opacity:.22}.cc-machine .is-missing{opacity:.13}.cc-machine .is-installed,.cc-machine .is-connected{opacity:1}
+.cc-switch-arm{transform:rotate(var(--cc-angle));transform-origin:0 0}
+.cc-needle{transform:rotate(var(--cc-needle));transform-origin:0 0}
+.cc-next-action{font-size:12px;font-weight:700;line-height:1.4;color:#ffe0a1;text-align:center;margin:3px 0 5px}
+.cc-science-note{font-size:10px;line-height:1.45;color:#c0d5cf;text-align:center;margin:0 8px}
+.sl-circuit-experiment .sl-fizzwick-line{margin:9px 0 5px;font-size:11px;line-height:1.45}
+.sl-circuit-experiment .sl-step-track{margin:6px 0}
+.cc-arrive{animation:cc-seat .85s ease-out both}
+.cc-event-activate .cc-wire.is-connected,.cc-event-repair .cc-wire.is-connected{animation:cc-connect 1s ease-out both}
+.cc-event-finale .cc-switch-arm{animation:cc-close 1s ease-in-out both}
+.cc-event-finale .cc-needle{animation:cc-meter 1.4s ease-out both}
+.cc-current{animation:cc-current 2.5s linear infinite}.cc-event-finale .cc-current{animation-delay:.7s}.cc-machine .cc-malfunction{animation:none}
+.cc-lamp-aura{animation:cc-warm 1.5s ease-out both}
+.cc-event-finale .cc-filament,.cc-event-finale .cc-filament-glow{animation:cc-warm 1.5s ease-out both}
+.cc-event-finale .cc-illumination{transform-origin:360px 235px;animation:cc-illuminate 1.8s ease-out both}
+.cc-illumination{opacity:0}.cc-light-rays{opacity:.7}
+.cc-event-mishap .cc-bell{transform-origin:0 -30px;animation:cc-hiccup .75s ease-in-out 2}
+.cc-event-mishap .cc-hiccup{animation:cc-connect .6s ease-out 2}
+.sl-circuit-experiment.is-thinking .cc-machine *{animation-play-state:running}
+.sl-station .cc-machine *{animation:none!important}
+@keyframes cc-seat{from{transform:translateY(-10px);opacity:.3}to{transform:none;opacity:1}}
+@keyframes cc-connect{from{opacity:.25}to{opacity:1}}
+@keyframes cc-close{from{transform:rotate(-31deg)}to{transform:rotate(0)}}
+@keyframes cc-meter{0%,50%{transform:rotate(-90deg)}to{transform:rotate(25deg)}}
+@keyframes cc-current{to{stroke-dashoffset:-50}}
+@keyframes cc-warm{0%,45%{opacity:0}to{opacity:1}}
+@keyframes cc-illuminate{0%,40%{opacity:0;transform:scale(.65)}65%{opacity:.7}to{opacity:0;transform:scale(1.25)}}
+@keyframes cc-hiccup{20%,60%{transform:rotate(10deg)}40%,80%{transform:rotate(-8deg)}to{transform:none}}
+@media(min-width:1000px) and (max-height:780px){.sl-circuit-experiment .sl-stage{min-height:260px;max-height:300px}.cc-next-action{font-size:11px}.cc-science-note{font-size:10px}}
+@media(max-width:1000px) and (min-width:721px){.sl-circuit-experiment .sl-stage{min-height:250px;max-height:300px}.sl-circuit-experiment .sl-fizzwick-line{font-size:10px}}
+@media(max-width:720px){.sl-circuit-experiment .sl-stage{height:235px;min-height:235px;max-height:none}.cc-scene-caption{font-size:9px}.cc-next-action{font-size:11px}.cc-science-note{font-size:10px;margin-bottom:6px}.sl-circuit-experiment .sl-fizzwick-line{font-size:10px}}
+@media(prefers-reduced-motion:reduce){#science-lab .cc-machine *{animation:none!important;transition:none!important}.cc-lamp-aura,.cc-filament-glow{opacity:1}}

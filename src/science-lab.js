@@ -4,12 +4,13 @@ const ScienceLab=(()=>{
  const ID='science-lab',COUNT=5;
  const STATIONS=[
   {id:'potion',name:'Potion Mixer',badge:'Prismatic Potion',color:'#79ddba',topics:['science-01','science-12'],keywords:/material|chemistry|properties|scientific tool|inquiry/i,goal:'Activate five ingredient dispensers.',win:'The Moonbubble Potion is ready!',mishap:'A completely imaginary bubble has given the kettle a magnificent moustache.',repair:'Apply the explanation to steady the dispenser.'},
-  {id:'circuit',name:'Circuit Constructor',badge:'Bright Circuit',color:'#f5cb79',topics:['science-02','science-03'],keywords:/electric|magnet|circuit|energy|motion|light|heat/i,goal:'Connect five glowing components.',win:'The enchanted circuit is humming!',mishap:'The enchanted bell has developed a very squeaky hiccup.',repair:'Apply the explanation to reconnect this component.'},
+  {id:'circuit',name:'Circuit Constructor',badge:'Bright Circuit',color:'#f5cb79',topics:['science-02','science-03'],keywords:/electric|magnet|circuit|energy|motion|light|heat/i,goal:'Build a complete loop to light the lamp.',win:'The switch is closed and the lamp is shining!',mishap:'“HIC! The imaginary Fizz-o-bell has the hiccups. The switch stays open while we repair. Read the clue, apprentice!”',repair:'Apply the explanation to reconnect this component.'},
   {id:'creature',name:'Creature Incubator',badge:'Gentle Creature',color:'#d4b6ff',topics:['science-07','science-08','science-09','science-10','science-11'],keywords:/organism|plant|animal|cell|life cycle|body|health/i,goal:'Stabilize five chamber controls.',win:'Meet a make-believe Moonwing!',mishap:'Our make-believe Moonwing sneezed a shower of harmless confetti.',repair:'Apply the explanation to stabilize the chamber.'},
   {id:'weather',name:'Weather Machine',badge:'Weather Keeper',color:'#91d6f2',topics:['science-04','science-05'],keywords:/weather|climate|atmosphere|water cycle|earth|rock|soil|mineral|fossil/i,goal:'Repair five weather controls.',win:'The tiny magical sky is balanced!',mishap:'A tiny imaginary cloud is raining teacups. Fizzwick has brought an umbrella.',repair:'Apply the explanation to repair the next weather control.'},
   {id:'observatory',name:'Star Observatory',badge:'Starlight Explorer',color:'#e8bcf2',topics:['science-06'],keywords:/solar|planet|astronom|space|sun|moon|star|orbit/i,goal:'Align five telescope markers.',win:'Fizzwick’s fictional Teapot constellation shines!',mishap:'The telescope has located Fizzwick’s left slipper instead of the sky.',repair:'Apply the explanation to realign the telescope.'}
  ];
  let bench=null,approach='explore',openerId='',lastStation='';
+ let circuitCue=''; // presentation only; independent of questions and grades
  let potionCue=''; // presentation only; never saved or used to grade an answer
  let initialized=false,data=empty(),run=null,storageMessage='',invalidSave=false,notice='';
  const stationById=id=>STATIONS.find(s=>s.id===id);
@@ -90,7 +91,7 @@ const ScienceLab=(()=>{
   if($('sl-repair-save'))$('sl-repair-save').onclick=()=>{if(window.confirm('Replace this damaged lab save with the discoveries from this visit? Rigby’s adventure and learning history will be kept.')){invalidSave=false;save();renderHub()}};
  }
  function start(id){
-  potionCue='';lastStation=id;const station=stationById(id),selection=pickDeck(id);if(!station||selection.deck.length<COUNT){notice='Five different science questions are needed. Add eligible science questions or try the built-in pool.';renderHub();return}
+  potionCue='';circuitCue='';lastStation=id;const station=stationById(id),selection=pickDeck(id);if(!station||selection.deck.length<COUNT){notice='Five different science questions are needed. Add eligible science questions or try the built-in pool.';renderHub();return}
   run={station,approach,wasCompleted:data.completed.includes(id),deck:selection.deck,index:0,phase:'question',steps:0,correctCount:0,selected:null,choices:[],correct:null,profileId:RallyLearning.activeProfile().id,fallback:selection.fallback,paused:false};present();
  }
  function present(){
@@ -102,6 +103,7 @@ const ScienceLab=(()=>{
   const q=run.deck[run.index];run.phase='feedback';run.selected=index;run.correct=run.choices[index]===q.answer;
   if(run.correct){run.correctCount++;run.steps++}
   if(run.station.id==='potion')potionCue=run.correct?(run.steps===5?'finale':'activate'):'mishap';
+  if(run.station.id==='circuit')circuitCue=run.correct?(run.steps===5?'finale':'activate'):'mishap';
   RallyLearning.record(run,q,run.correct?'correct':'incorrect','choice',true);
   tone(run.correct?'correct':'miss');renderExperiment();$('sl-next').focus({preventScroll:true});if(window.innerWidth<=720)$('sl-next').scrollIntoView({block:'nearest',behavior:'instant'});
  }
@@ -110,6 +112,7 @@ const ScienceLab=(()=>{
   // Applying the existing explanation repairs a mishap, never changes its grade.
   if(!run.correct)run.steps++;
   if(run.station.id==='potion')potionCue=!run.correct?(run.steps===5?'finale':'repair'):'';
+  if(run.station.id==='circuit')circuitCue=!run.correct?(run.steps===5?'finale':'repair'):'';
   if(run.index===COUNT-1){finishExperiment();return}
   run.index++;present();
  }
@@ -120,11 +123,11 @@ const ScienceLab=(()=>{
   data.records[id]={runs:(old?.runs||0)+1,bestCorrect:Math.max(old?.bestCorrect||0,run.correctCount),lastCorrect:run.correctCount,completedAt:new Date().toISOString()};save();renderComplete();
  }
  function machinePanel(){
-  const s=run.station,mishap=run.phase==='feedback'&&!run.correct,isPotion=s.id==='potion',cue=isPotion?potionCue:'';
-  if(isPotion)potionCue='';
+  const s=run.station,mishap=run.phase==='feedback'&&!run.correct,isPotion=s.id==='potion',isCircuit=s.id==='circuit',cue=isPotion?potionCue:isCircuit?circuitCue:'';
+  if(isPotion)potionCue='';if(isCircuit)circuitCue='';
   const reaction=mishap?'startled':run.steps===5?'celebrate':cue==='activate'||cue==='repair'?'excited':'curious';
   const potionProfessor=isPotion?SCIENCE_LAB_ART.potionProfessor.replace('sl-fizzwick pm-fizzwick','sl-fizzwick pm-fizzwick is-'+(reaction==='startled'?'surprised':reaction)):'';
-  return '<aside class="sl-experiment '+(isPotion?'sl-potion-experiment ':'')+(mishap?'sl-mishap':run.correct?'sl-success':'is-thinking')+'" aria-label="Interactive '+s.name+'"><div class="sl-experiment-heading"><span>'+esc(s.goal)+'</span><strong>'+(run.phase==='feedback'?run.index+1:run.phase==='complete'?5:run.index)+' answered · '+run.steps+' / 5 repaired</strong></div><button class="sl-quiet sl-model-link" id="sl-open-model">Try a science model: predict → observe</button><div class="sl-stage" style="background-image:url('+SCIENCE_LAB_ART.room+');--station-color:'+s.color+'" data-sl-progress="'+run.steps+'" data-sl-machine="'+s.id+'">'+equipment(s,run.steps,'experiment',cue,mishap)+(isPotion?'<span class="pm-scene-caption" role="status">'+esc(mishap?'A moustache bubble! Read, then repair.':PotionMixerArt.description(run.steps))+'</span>':'')+'<div class="sl-hero">'+heroArt(run.correct?'cast':'idle')+'</div><div class="sl-professor">'+(isPotion?potionProfessor:professor(mishap?'mishap':'calm'))+'</div><div class="sl-poof" aria-hidden="true">✦ · ✧</div></div><div class="sl-fizzwick-line"><strong>Professor Fizzwick</strong><p>'+esc(mishap?s.mishap:isPotion&&run.steps===5?'“Moonbubbles! A perfectly splendid potion. You made every step work!”':isPotion&&cue==='repair'?'“Aha! Applying that explanation fixed the valve. Onward, apprentice!”':run.correct?'“Brilliant thinking! Another piece of our experiment is working.”':'“Take your time. A discovery begins with a question.”')+'</p></div><div class="sl-step-track" aria-label="'+run.steps+' of 5 experiment steps repaired">'+Array.from({length:COUNT},(_,i)=>{const repair=i===run.index&&mishap,state=i<run.steps?'repaired':repair?'needs-repair':i===run.index?'current':'waiting';return '<span class="'+state+'" data-sl-step="'+state+'" aria-label="Step '+(i+1)+': '+(repair?'needs repair':state)+'">'+(i<run.steps?'✓':repair?'↺':i+1)+'</span>'}).join('')+'</div></aside>';
+  return '<aside class="sl-experiment '+(isPotion?'sl-potion-experiment ':isCircuit?'sl-circuit-experiment ':'')+(mishap?'sl-mishap':run.correct?'sl-success':'is-thinking')+'" aria-label="Interactive '+s.name+'"><div class="sl-experiment-heading"><span>'+esc(s.goal)+'</span><strong>'+(run.phase==='feedback'?run.index+1:run.phase==='complete'?5:run.index)+' answered · '+run.steps+' / 5 repaired</strong></div><button class="sl-quiet sl-model-link" id="sl-open-model">Try a science model: predict → observe</button><div class="sl-stage" style="background-image:url('+SCIENCE_LAB_ART.room+');--station-color:'+s.color+'" data-sl-progress="'+run.steps+'" data-sl-machine="'+s.id+'">'+equipment(s,run.steps,'experiment',cue,mishap)+(isCircuit?'<span class="cc-scene-caption" role="status">'+esc(mishap?'Hiccup! Switch open · repair needed.':CircuitConstructorArt.description(run.steps))+'</span>':'')+(isPotion?'<span class="pm-scene-caption" role="status">'+esc(mishap?'A moustache bubble! Read, then repair.':PotionMixerArt.description(run.steps))+'</span>':'')+'<div class="sl-hero">'+heroArt(run.correct?'cast':'idle')+'</div><div class="sl-professor">'+(isPotion?potionProfessor:professor(mishap?'mishap':'calm'))+'</div><div class="sl-poof" aria-hidden="true">✦ · ✧</div></div><div class="sl-fizzwick-line"><strong>Professor Fizzwick</strong><p>'+esc(mishap?s.mishap:isCircuit?run.steps===5?'“A complete loop! The battery transfers energy to the lamp as light and heat. Splendid!”':cue==='repair'?'“Hiccups cured! You used the explanation to fix the connection.”':'“'+CircuitConstructorArt.steps[run.steps]+'. The lamp needs a complete conducting loop.”':isPotion&&run.steps===5?'“Moonbubbles! A perfectly splendid potion. You made every step work!”':isPotion&&cue==='repair'?'“Aha! Applying that explanation fixed the valve. Onward, apprentice!”':run.correct?'“Brilliant thinking! Another piece of our experiment is working.”':'“Take your time. A discovery begins with a question.”')+'</p></div><div class="sl-step-track" aria-label="'+run.steps+' of 5 experiment steps repaired">'+Array.from({length:COUNT},(_,i)=>{const repair=i===run.index&&mishap,state=i<run.steps?'repaired':repair?'needs-repair':i===run.index?'current':'waiting';return '<span class="'+state+'" data-sl-step="'+state+'" aria-label="Step '+(i+1)+': '+(repair?'needs repair':state)+'">'+(i<run.steps?'✓':repair?'↺':i+1)+'</span>'}).join('')+'</div>'+(isCircuit?'<p class="cc-next-action">'+esc(CircuitConstructorArt.nextAction(run.steps,mishap))+'</p><p class="cc-science-note">Wire glow shows current only when the loop is closed. Battery energy becomes light and heat; the bell’s hiccup is make-believe.</p>':'')+'</aside>';
  }
  function renderExperiment(){
   const q=run.deck[run.index],s=run.station,answered=run.phase==='feedback',topic=CURRICULUM_TOPICS.find(t=>t.id===q.curriculumTopicId)?.title||q.topic||'Science practice';
@@ -188,16 +191,10 @@ const ScienceLab=(()=>{
  // and explanations are never changed to fit a visual effect.
  function equipment(s,n,context,cue='',needsRepair=false){
   if(s.id==='potion')return PotionMixerArt.render(n,context,cue,needsRepair);
+  if(s.id==='circuit')return CircuitConstructorArt.render(n,context,cue,needsRepair);
   const id='sl-'+context+'-'+s.id,lit=i=>i<n,light=i=>lit(i)?s.color:'#475b70';let art='';
   const valve=(x,y,i)=>'<g class="sl-valve '+(lit(i)?'is-powered':'')+'" transform="translate('+x+' '+y+')"><circle r="17" fill="'+light(i)+'" stroke="#dfbe86" stroke-width="3"/><path d="M-10 0H10M0-10V10" stroke="#203b4a" stroke-width="3"/>'+(lit(i)?'<circle r="4" fill="#fff8d5"/>':'')+'</g>';
-  if(s.id==='circuit'){
-   art+='<rect x="66" y="44" width="268" height="226" rx="21" fill="#294e55" stroke="#c9a778" stroke-width="7"/><path d="M90 64H310V248H90Z" fill="none" stroke="#658b7a" stroke-width="2"/><path d="M111 119V87H288V214H111V168" fill="none" stroke="#577d6e" stroke-width="10"/><path d="M92 132H131V166H92Z" fill="#d6b77f"/><path d="M101 141H122M111 134V151" stroke="#2a4653" stroke-width="3"/>';
-   const paths=['M111 119V87H163','M163 87H230','M230 87H288V133','M288 133V214H226','M226 214H111V168'];
-   paths.forEach((p,i)=>{art+='<path d="'+p+'" class="sl-wire '+(lit(i)?'is-powered':'')+'" fill="none" stroke="'+light(i)+'" stroke-width="7" stroke-linecap="round"/>'});
-   [[163,87],[230,87],[288,133],[226,214],[111,168]].forEach(([x,y],i)=>art+=valve(x,y,i));
-   art+='<path d="M178 129Q200 106 222 129Q237 149 213 171V187H187V171Q163 149 178 129Z" fill="'+(n===5?'#ffe7a0':'#80a7ab')+'" stroke="#ecd4a3" stroke-width="3"/><path d="M187 193H213M190 199H210" stroke="#e5bb77" stroke-width="4"/>';
-   if(n===5)art+='<g class="sl-rays" stroke="#ffedb3" stroke-width="3"><path d="M200 108V98M172 120 163 112M229 119 238 111M161 146H150M240 146H251"/></g>';
-  }else if(s.id==='creature'){
+  if(s.id==='creature'){
    art+='<path d="M111 252V97Q111 40 200 35Q289 40 289 97V252Z" fill="#9ac9d6" fill-opacity=".19" stroke="#ddc99f" stroke-width="6"/><path d="M125 241V98Q125 54 200 50Q275 54 275 98V241Z" fill="#a5d5d4" opacity=".13"/><path d="M88 251H312L300 279H100Z" fill="url(#'+id+'-metal)"/>';
    if(n<3)art+='<path class="sl-egg" d="M151 204Q144 161 181 129Q200 110 219 129Q256 161 249 204Q246 237 200 239Q154 237 151 204Z" fill="#d8cae4" stroke="#f3e4bb" stroke-width="3"/><path d="m160 169 26 12 16-17 21 18 22-12" fill="none" stroke="#9e90c0" stroke-width="4"/>';
    else art+='<g class="sl-creature '+(n===5?'is-awake':'')+'"><path d="M189 173Q133 107 128 171Q123 224 187 206M211 173Q267 107 272 171Q277 224 213 206" fill="'+(n===5?'#bfafea':'#8ca9b1')+'" stroke="#edcfaf" stroke-width="3"/><path d="M142 155 180 189M259 155 220 189" fill="none" stroke="#e4ddf1" stroke-width="3"/><ellipse cx="200" cy="197" rx="23" ry="42" fill="#d5dcbb"/><circle cx="200" cy="158" r="25" fill="#e5e8c8"/><path d="M190 139 183 120M210 139 217 120" stroke="#e4c89a" stroke-width="4" stroke-linecap="round"/><circle cx="190" cy="155" r="4" fill="#35465d"/><circle cx="211" cy="155" r="4" fill="#35465d"/><path d="M194 168Q200 173 207 168" fill="none" stroke="#35465d" stroke-width="2"/></g>';
@@ -218,7 +215,6 @@ const ScienceLab=(()=>{
   }
   let mishap='';
   if(s.id==='potion')mishap='<path d="M200 225Q172 202 150 220Q164 247 200 233Q236 247 250 220Q228 202 200 225Z" fill="#42455b" stroke="#f9e5c3" stroke-width="2"/>';
-  if(s.id==='circuit')mishap='<g fill="#f7dfb2" stroke="#bf90c4" stroke-width="2"><path d="M251 134V101L273 96V126M251 108 273 103"/><ellipse cx="245" cy="136" rx="7" ry="5"/><ellipse cx="267" cy="128" rx="7" ry="5"/><path d="m146 147-14 8 14 6-14 9" fill="none" stroke-width="4"/></g>';
   if(s.id==='creature')mishap=Array.from({length:12},(_,i)=>'<path d="M'+(120+i*41%166)+' '+(61+i*29%89)+'l7-3 3 7-7 3Z" fill="'+['#f1c490','#d6b0ee','#88dbbe'][i%3]+'"/>').join('');
   if(s.id==='weather')mishap=[[128,154],[161,173],[190,151]].map(([x,y])=>'<g class="sl-teacup" transform="translate('+x+' '+y+')" fill="#f5d8bf" stroke="#a3809c" stroke-width="2"><path d="M-9 0H9L6 15H-6ZM9 3Q22 2 18 11L7 12"/><path d="M-12 19H12" stroke="#f5d8bf"/></g>').join('');
   if(s.id==='observatory')mishap='<g transform="rotate(-20 212 103)"><path d="M163 108Q166 87 192 95Q198 72 219 81L236 108Q256 119 240 129H165Q153 122 163 108Z" fill="#bf93ae" stroke="#f1d4b3" stroke-width="3"/><path d="M162 125H242M191 99 207 110" stroke="#fff0cf" stroke-width="4"/><circle cx="214" cy="98" r="5" fill="#c6e2d0"/></g>';
