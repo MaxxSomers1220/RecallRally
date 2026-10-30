@@ -1,0 +1,67 @@
+{
+  "name": "Librarian illustrated encounter",
+  "assets": [
+    {
+      "file": "library-painted.webp",
+      "role": "Original painted architecture: windows, shelves, ladders, empty balcony and clear walkway",
+      "width": 1812,
+      "height": 868,
+      "transparent": false,
+      "max_bytes": 500000,
+      "sha256": "b8de292443fff08e63214c58a4994e9ae6fb2ed5310127a6d19e7f6bef6cde03"
+    },
+    {
+      "file": "library-foreground.svg",
+      "role": "Separate carved stone foreground below collision baseline",
+      "width": 1920,
+      "height": 920,
+      "transparent": true,
+      "max_bytes": 8000,
+      "sha256": "abd3e04eef9d118edce239080f4cfbaa576b8541fa5480c376496ece67fcdbff"
+    },
+    {
+      "file": "librarian-guardian.svg",
+      "role": "Original articulated Librarian with curious, impressed, preparing, casting, frustrated and satisfied face/arm groups",
+      "width": 520,
+      "height": 680,
+      "transparent": true,
+      "max_bytes": 16000,
+      "sha256": "4a1698b51e822269b28d7199df911d70a8c6bba3e56c0f8af9cb4c3ec059423b"
+    },
+    {
+      "file": "enchanted-book.svg",
+      "role": "Ornate hazard book: page pose 0",
+      "width": 240,
+      "height": 168,
+      "transparent": true,
+      "max_bytes": 4000,
+      "sha256": "bcbe4a994b53993776186105c4e0148a72ab3f48162182db83ffea9dcd34ca5f"
+    },
+    {
+      "file": "enchanted-book-1.svg",
+      "role": "Ornate hazard book: page pose 1",
+      "width": 240,
+      "height": 168,
+      "transparent": true,
+      "max_bytes": 4000,
+      "sha256": "4a6c614cbd1c5d8e38aa593cccf3e507a7d8d5400cb58f9a2d81ccd7a383036f"
+    },
+    {
+      "file": "enchanted-book-2.svg",
+      "role": "Ornate hazard book: page pose 2",
+      "width": 240,
+      "height": 168,
+      "transparent": true,
+      "max_bytes": 4000,
+      "sha256": "ae02dfc50db60974d664b37cbc889e0831c8170e25ca1ddc63b9f822e1f6a397"
+    }
+  ],
+  "provenance": {
+    "painted_environment": "Original image generated with the OpenAI image_gen tool for Recall Rally on 2026-10-30; optimized as WebP, no third-party source images. Original PNG retained in the session generated_images directory.",
+    "painted_source_sha256": "7edc56be73bbb754048e0c677a19f80177f32ec6e41b3b46db7fa9cc52be7eb8",
+    "prompt": "Wide panoramic side-view gothic storybook library; carved walnut shelves, varied antique leather books, stained glass, brass rolling ladders, central empty balcony, blue-violet moonlight and warm candles. No characters, text or UI. Clear dark lower walkway, horizontal floor baseline at 88 percent height and carved stone foreground below it.",
+    "vector_equipment": "Original project-authored SVG guardian, book page poses and foreground in scripts/draw-librarian-illustrations.py; no external fonts or borrowed assets.",
+    "hero": "Existing saved hero geometry/colors/appearance from renderGameHero; opt-in semantic layer groups plus a local DOM rig. Normal shared-renderer output unchanged."
+  },
+  "runtime": "Artwork embedded by scripts/sync-librarian-art.cjs into local CSS/JS; standalone embeds both. No remote image requests. Physics/timing/grading and hitboxes unchanged. DOM limb/mood changes are presentation only; book pages use the existing canvas animation loop. Reduced motion stops optional animation."
+}
