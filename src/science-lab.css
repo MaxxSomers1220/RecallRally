@@ -219,6 +219,48 @@
 @media(max-width:720px){.sl-creature-experiment .sl-stage{height:245px;min-height:245px;max-height:none}.ci-scene-caption{font-size:9px}.ci-next-action{font-size:11px}.ci-science-note{font-size:10px;margin-bottom:6px}.sl-creature-experiment .sl-fizzwick-line{font-size:10px}}
 @media(prefers-reduced-motion:reduce){#science-lab .ci-machine *{animation:none!important;transition:none!important}.ci-sneeze-fog{opacity:.35}.ci-confetti-piece{opacity:.8}}
 
+/* Original illustrated observatory equipment, isolated from all other stations. */
+.sl-observatory-experiment .sl-stage{min-height:295px;max-height:340px;background-color:#1c303f;background-blend-mode:soft-light;border-color:#bba37a;box-shadow:inset 0 0 65px #122637,0 4px 14px #071a2a38}
+.sl-observatory-experiment .sl-stage>.so-machine{width:100%;height:100%;inset:0;animation:none;filter:drop-shadow(0 5px 4px #0b1e28a0)}
+.sl-observatory-experiment .sl-stage .sl-hero{left:0;bottom:2%;height:33%;width:17%}
+.sl-observatory-experiment .sl-stage .sl-professor{right:0;bottom:2%;height:34%;width:17%}
+.sl-observatory-experiment .sl-poof{display:none}
+.so-scene-caption{position:absolute;bottom:2%;left:18%;width:64%;text-align:center;font:700 10px/1.4 "Segoe UI",sans-serif;color:#f4eacb;text-shadow:0 1px 3px #142d38;pointer-events:none}
+.so-next-action{font-size:12px;font-weight:700;line-height:1.4;color:#f0dba7;text-align:center;margin:3px 0 5px}
+.so-science-note{font-size:10px;line-height:1.45;color:#c0d5cf;text-align:center;margin:0 8px}
+.sl-observatory-experiment .sl-fizzwick-line{margin:9px 0 5px;font-size:11px;line-height:1.45}
+.sl-observatory-experiment .sl-step-track{margin:6px 0;gap:5px}
+.sl-observatory-experiment .sl-step-track span{width:auto;flex:1;min-width:0;height:30px;border-radius:8px;display:flex;gap:4px;justify-content:center;font-size:10px}
+.sl-observatory-experiment .sl-step-track small{font-size:10px;font-weight:600}
+.so-machine .so-malfunction{animation:none}
+.sl-observatory-experiment.is-thinking .so-machine *{animation-play-state:running}
+.sl-station .so-machine *{animation:none!important}
+@media(min-width:1000px) and (max-height:780px){.sl-observatory-experiment .sl-stage{min-height:260px;max-height:300px}.so-next-action{font-size:11px}}
+@media(max-width:1000px) and (min-width:721px){.sl-observatory-experiment .sl-stage{min-height:250px;max-height:300px}.sl-observatory-experiment .sl-fizzwick-line{font-size:10px}}
+@media(max-width:720px){.sl-observatory-experiment .sl-stage{height:245px;min-height:245px;max-height:none}.so-scene-caption{font-size:9px}.so-next-action{font-size:11px}.so-science-note{font-size:10px;margin-bottom:6px}.sl-observatory-experiment .sl-fizzwick-line{font-size:10px}}
+@media(prefers-reduced-motion:reduce){#science-lab .so-machine *{animation:none!important;transition:none!important}}
+.so-telescope{transform-origin:0 0;transform:rotate(var(--so-angle))}
+.so-armillary{transform-origin:0 0;transform:rotate(var(--so-ring))}
+.so-sextant-arm{transform-origin:0 -38px;transform:rotate(var(--so-arm))}
+.so-alignment-needle{transform-origin:0 0;transform:rotate(var(--so-needle))}
+.so-event-activate .so-telescope,.so-event-repair .so-telescope{animation:so-align 1.2s ease-in-out both}
+.so-level-2.so-event-activate .so-armillary,.so-level-2.so-event-repair .so-armillary{animation:so-ring-set 1.4s ease-in-out both}
+.so-level-4.so-event-activate .so-focus-knob,.so-level-4.so-event-repair .so-focus-knob{transform-origin:0 0;animation:so-focus 1.1s ease-out both}
+.so-star-light{animation:so-star-breathe 5.5s ease-in-out var(--so-star-delay) infinite}
+.so-lens-glint{animation:so-glint 5s ease-in-out infinite}
+.so-event-finale .so-trace{stroke-dasharray:100;animation:so-trace 2.1s ease-out both}
+.so-event-finale .so-reveal-ring{transform-origin:360px 158px;animation:so-reveal 2s ease-out both}
+.so-reveal-ring{opacity:0}
+.so-event-mishap .so-slipper{animation:so-slipper .9s ease-out both;transform-origin:0 0}
+@keyframes so-align{from{transform:rotate(var(--so-before))}to{transform:rotate(var(--so-angle))}}
+@keyframes so-ring-set{from{transform:rotate(-30deg)}to{transform:rotate(22deg)}}
+@keyframes so-focus{from{transform:rotate(-65deg)}to{transform:rotate(0)}}
+@keyframes so-star-breathe{50%{opacity:.5}}
+@keyframes so-glint{50%{opacity:.4}}
+@keyframes so-trace{from{stroke-dashoffset:100;opacity:.2}to{stroke-dashoffset:0;opacity:1}}
+@keyframes so-reveal{0%{opacity:0;transform:scale(.65)}50%{opacity:.7}to{opacity:0;transform:scale(1.15)}}
+@keyframes so-slipper{0%{opacity:0;transform:translateY(-12px) rotate(-14deg)}40%{opacity:1;transform:rotate(7deg)}to{opacity:1;transform:none}}
+
 /* Original illustrated weather equipment, isolated from all other stations. */
 .sl-weather-experiment .sl-stage{min-height:295px;max-height:340px;background-color:#1c303f;background-blend-mode:soft-light;border-color:#bba37a;box-shadow:inset 0 0 65px #122637,0 4px 14px #071a2a38}
 .sl-weather-experiment .sl-stage>.wm-machine{width:100%;height:100%;inset:0;animation:none;filter:drop-shadow(0 5px 4px #0b1e28a0)}
