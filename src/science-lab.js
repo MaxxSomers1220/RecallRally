@@ -10,6 +10,7 @@ const ScienceLab=(()=>{
   {id:'observatory',name:'Star Observatory',badge:'Starlight Explorer',color:'#e8bcf2',topics:['science-06'],keywords:/solar|planet|astronom|space|sun|moon|star|orbit/i,goal:'Align five telescope markers.',win:'Fizzwick’s fictional Teapot constellation shines!',mishap:'The telescope has located Fizzwick’s left slipper instead of the sky.',repair:'Apply the explanation to realign the telescope.'}
  ];
  let bench=null,approach='explore',openerId='',lastStation='';
+ let potionCue=''; // presentation only; never saved or used to grade an answer
  let initialized=false,data=empty(),run=null,storageMessage='',invalidSave=false,notice='';
  const stationById=id=>STATIONS.find(s=>s.id===id);
  function empty(){return{version:1,completed:[],seen:{},records:{},includeCustom:false,notes:[],prismLit:false}}
@@ -89,7 +90,7 @@ const ScienceLab=(()=>{
   if($('sl-repair-save'))$('sl-repair-save').onclick=()=>{if(window.confirm('Replace this damaged lab save with the discoveries from this visit? Rigby’s adventure and learning history will be kept.')){invalidSave=false;save();renderHub()}};
  }
  function start(id){
-  lastStation=id;const station=stationById(id),selection=pickDeck(id);if(!station||selection.deck.length<COUNT){notice='Five different science questions are needed. Add eligible science questions or try the built-in pool.';renderHub();return}
+  potionCue='';lastStation=id;const station=stationById(id),selection=pickDeck(id);if(!station||selection.deck.length<COUNT){notice='Five different science questions are needed. Add eligible science questions or try the built-in pool.';renderHub();return}
   run={station,approach,wasCompleted:data.completed.includes(id),deck:selection.deck,index:0,phase:'question',steps:0,correctCount:0,selected:null,choices:[],correct:null,profileId:RallyLearning.activeProfile().id,fallback:selection.fallback,paused:false};present();
  }
  function present(){
@@ -100,6 +101,7 @@ const ScienceLab=(()=>{
   if(bench||!run||run.phase!=='question'||run.paused||run.profileId!==RallyLearning.activeProfile().id||!Number.isInteger(index)||index<0||index>3)return;
   const q=run.deck[run.index];run.phase='feedback';run.selected=index;run.correct=run.choices[index]===q.answer;
   if(run.correct){run.correctCount++;run.steps++}
+  if(run.station.id==='potion')potionCue=run.correct?(run.steps===5?'finale':'activate'):'mishap';
   RallyLearning.record(run,q,run.correct?'correct':'incorrect','choice',true);
   tone(run.correct?'correct':'miss');renderExperiment();$('sl-next').focus({preventScroll:true});if(window.innerWidth<=720)$('sl-next').scrollIntoView({block:'nearest',behavior:'instant'});
  }
@@ -107,6 +109,7 @@ const ScienceLab=(()=>{
   if(bench||!run||run.phase!=='feedback')return;
   // Applying the existing explanation repairs a mishap, never changes its grade.
   if(!run.correct)run.steps++;
+  if(run.station.id==='potion')potionCue=!run.correct?(run.steps===5?'finale':'repair'):'';
   if(run.index===COUNT-1){finishExperiment();return}
   run.index++;present();
  }
@@ -117,8 +120,11 @@ const ScienceLab=(()=>{
   data.records[id]={runs:(old?.runs||0)+1,bestCorrect:Math.max(old?.bestCorrect||0,run.correctCount),lastCorrect:run.correctCount,completedAt:new Date().toISOString()};save();renderComplete();
  }
  function machinePanel(){
-  const s=run.station,mishap=run.phase==='feedback'&&!run.correct;
-  return '<aside class="sl-experiment '+(mishap?'sl-mishap':run.correct?'sl-success':'is-thinking')+'" aria-label="Interactive '+s.name+'"><div class="sl-experiment-heading"><span>'+esc(s.goal)+'</span><strong>'+(run.phase==='feedback'?run.index+1:run.phase==='complete'?5:run.index)+' answered · '+run.steps+' / 5 repaired</strong></div><button class="sl-quiet sl-model-link" id="sl-open-model">Try a science model: predict → observe</button><div class="sl-stage" style="background-image:url('+SCIENCE_LAB_ART.room+');--station-color:'+s.color+'" data-sl-progress="'+run.steps+'" data-sl-machine="'+s.id+'">'+equipment(s,run.steps,'experiment')+'<div class="sl-hero">'+heroArt(run.correct?'cast':'idle')+'</div><div class="sl-professor">'+professor(mishap?'mishap':'calm')+'</div><div class="sl-poof" aria-hidden="true">✦ · ✧</div></div><div class="sl-fizzwick-line"><strong>Professor Fizzwick</strong><p>'+esc(mishap?s.mishap:run.correct?'“Brilliant thinking! Another piece of our experiment is working.”':'“Take your time. A discovery begins with a question.”')+'</p></div><div class="sl-step-track" aria-label="'+run.steps+' of 5 experiment steps repaired">'+Array.from({length:COUNT},(_,i)=>{const repair=i===run.index&&mishap,state=i<run.steps?'repaired':repair?'needs-repair':i===run.index?'current':'waiting';return '<span class="'+state+'" data-sl-step="'+state+'" aria-label="Step '+(i+1)+': '+(repair?'needs repair':state)+'">'+(i<run.steps?'✓':repair?'↺':i+1)+'</span>'}).join('')+'</div></aside>';
+  const s=run.station,mishap=run.phase==='feedback'&&!run.correct,isPotion=s.id==='potion',cue=isPotion?potionCue:'';
+  if(isPotion)potionCue='';
+  const reaction=mishap?'startled':run.steps===5?'celebrate':cue==='activate'||cue==='repair'?'excited':'curious';
+  const potionProfessor=isPotion?SCIENCE_LAB_ART.potionProfessor.replace('sl-fizzwick pm-fizzwick','sl-fizzwick pm-fizzwick is-'+(reaction==='startled'?'surprised':reaction)):'';
+  return '<aside class="sl-experiment '+(isPotion?'sl-potion-experiment ':'')+(mishap?'sl-mishap':run.correct?'sl-success':'is-thinking')+'" aria-label="Interactive '+s.name+'"><div class="sl-experiment-heading"><span>'+esc(s.goal)+'</span><strong>'+(run.phase==='feedback'?run.index+1:run.phase==='complete'?5:run.index)+' answered · '+run.steps+' / 5 repaired</strong></div><button class="sl-quiet sl-model-link" id="sl-open-model">Try a science model: predict → observe</button><div class="sl-stage" style="background-image:url('+SCIENCE_LAB_ART.room+');--station-color:'+s.color+'" data-sl-progress="'+run.steps+'" data-sl-machine="'+s.id+'">'+equipment(s,run.steps,'experiment',cue,mishap)+(isPotion?'<span class="pm-scene-caption" role="status">'+esc(mishap?'A moustache bubble! Read, then repair.':PotionMixerArt.description(run.steps))+'</span>':'')+'<div class="sl-hero">'+heroArt(run.correct?'cast':'idle')+'</div><div class="sl-professor">'+(isPotion?potionProfessor:professor(mishap?'mishap':'calm'))+'</div><div class="sl-poof" aria-hidden="true">✦ · ✧</div></div><div class="sl-fizzwick-line"><strong>Professor Fizzwick</strong><p>'+esc(mishap?s.mishap:isPotion&&run.steps===5?'“Moonbubbles! A perfectly splendid potion. You made every step work!”':isPotion&&cue==='repair'?'“Aha! Applying that explanation fixed the valve. Onward, apprentice!”':run.correct?'“Brilliant thinking! Another piece of our experiment is working.”':'“Take your time. A discovery begins with a question.”')+'</p></div><div class="sl-step-track" aria-label="'+run.steps+' of 5 experiment steps repaired">'+Array.from({length:COUNT},(_,i)=>{const repair=i===run.index&&mishap,state=i<run.steps?'repaired':repair?'needs-repair':i===run.index?'current':'waiting';return '<span class="'+state+'" data-sl-step="'+state+'" aria-label="Step '+(i+1)+': '+(repair?'needs repair':state)+'">'+(i<run.steps?'✓':repair?'↺':i+1)+'</span>'}).join('')+'</div></aside>';
  }
  function renderExperiment(){
   const q=run.deck[run.index],s=run.station,answered=run.phase==='feedback',topic=CURRICULUM_TOPICS.find(t=>t.id===q.curriculumTopicId)?.title||q.topic||'Science practice';
@@ -180,17 +186,11 @@ const ScienceLab=(()=>{
  }
  // Hand-authored, state-driven equipment. The art is fictional; question records
  // and explanations are never changed to fit a visual effect.
- function equipment(s,n,context){
+ function equipment(s,n,context,cue='',needsRepair=false){
+  if(s.id==='potion')return PotionMixerArt.render(n,context,cue,needsRepair);
   const id='sl-'+context+'-'+s.id,lit=i=>i<n,light=i=>lit(i)?s.color:'#475b70';let art='';
   const valve=(x,y,i)=>'<g class="sl-valve '+(lit(i)?'is-powered':'')+'" transform="translate('+x+' '+y+')"><circle r="17" fill="'+light(i)+'" stroke="#dfbe86" stroke-width="3"/><path d="M-10 0H10M0-10V10" stroke="#203b4a" stroke-width="3"/>'+(lit(i)?'<circle r="4" fill="#fff8d5"/>':'')+'</g>';
-  if(s.id==='potion'){
-   const colors=['#a6d9ed','#bcb0ef','#f1c692','#8cdbb6','#e7aed0'];
-   art+='<path d="M69 53H331V88H69Z" fill="url(#'+id+'-metal)" stroke="#edce9f" stroke-width="3"/>';
-   for(let i=0;i<5;i++)art+='<g class="sl-dispenser '+(lit(i)?'is-powered':'')+'"><path d="M'+(86+i*48)+' 35h26v55h-26Z" fill="'+(lit(i)?colors[i]:'#49677c')+'" stroke="#e0c194" stroke-width="2"/><path d="M'+(99+i*48)+' 90v47" stroke="#d2ba94" stroke-width="6"/>'+(lit(i)?'<path class="sl-ingredient" d="M'+(99+i*48)+' 119v32" stroke="'+colors[i]+'" stroke-width="5" stroke-dasharray="7 8"/>':'')+'</g>';
-   art+='<path d="M138 131Q118 170 105 204Q95 259 200 265Q305 259 295 204Q282 170 262 131Z" fill="#b5e7dc" fill-opacity=".23" stroke="#c3e7df" stroke-width="5"/><path d="M112 216Q200 194 288 216Q295 255 200 257Q105 255 112 216Z" fill="'+colors[Math.max(0,n-1)]+'" opacity="'+(.35+n*.12)+'"/><ellipse cx="200" cy="216" rx="87" ry="14" fill="'+colors[Math.max(0,n-1)]+'"/><path d="M133 132H267" stroke="#f0d3a0" stroke-width="12" stroke-linecap="round"/>';
-   for(let i=0;i<n*2;i++)art+='<circle class="sl-bubble" cx="'+(145+i*37%116)+'" cy="'+(207-i*13%52)+'" r="'+(3+i%3*2)+'" fill="#fff8df" opacity=".6" style="animation-delay:-'+i*.3+'s"/>';
-   art+='<path d="M117 275H283L275 289H125Z" fill="url(#'+id+'-metal)"/>';
-  }else if(s.id==='circuit'){
+  if(s.id==='circuit'){
    art+='<rect x="66" y="44" width="268" height="226" rx="21" fill="#294e55" stroke="#c9a778" stroke-width="7"/><path d="M90 64H310V248H90Z" fill="none" stroke="#658b7a" stroke-width="2"/><path d="M111 119V87H288V214H111V168" fill="none" stroke="#577d6e" stroke-width="10"/><path d="M92 132H131V166H92Z" fill="#d6b77f"/><path d="M101 141H122M111 134V151" stroke="#2a4653" stroke-width="3"/>';
    const paths=['M111 119V87H163','M163 87H230','M230 87H288V133','M288 133V214H226','M226 214H111V168'];
    paths.forEach((p,i)=>{art+='<path d="'+p+'" class="sl-wire '+(lit(i)?'is-powered':'')+'" fill="none" stroke="'+light(i)+'" stroke-width="7" stroke-linecap="round"/>'});
@@ -226,3 +226,4 @@ const ScienceLab=(()=>{
  }
  return{init,open,close,loadProfile,validate,inventoryMarkup,pool,pickDeck,eligible,choose,next,save,ready:()=>initialized};
 })();
+

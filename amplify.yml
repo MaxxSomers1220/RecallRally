@@ -3,6 +3,7 @@ frontend:
   phases:
     build:
       commands:
+        - node tests/potion-art.test.cjs
         - node tests/answer-recognition.test.cjs
         - node tests/home-launcher.test.cjs
         - node tests/science-lab.test.cjs
@@ -19,4 +20,5 @@ frontend:
     baseDirectory: dist
     files:
       - '**/*'
+
 
