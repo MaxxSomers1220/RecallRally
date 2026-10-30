@@ -2,6 +2,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
 const source=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+const illustrations=source.slice(source.indexOf('/* ADVENTURE_ILLUSTRATIONS_START */'),source.indexOf('/* ADVENTURE_ILLUSTRATIONS_END */'));
 const lands=source.slice(source.indexOf('const LANDS=['),source.indexOf('let questProgress='));
 const functions=source.slice(source.indexOf('function startDuel('),source.indexOf('// Refresh only the visible clock'));
 const lifecycle=['resetQuestRun','cancelQuestClock','cancelQuestFxTimers','leaveDuel'].map(n=>source.match(new RegExp('^function '+n+'\\([^\\n]+','m'))[0]).join('\n');
@@ -13,7 +14,7 @@ function setTimeout(fn,ms){const id=nextTimer++;timers.set(id,{fn,ms});return id
 const window={matchMedia:()=>({matches:reduced})},performance={now:()=>100},document={querySelector:()=>null};
 function $(id){if(!elements.has(id))elements.set(id,{value:id==='quest-speed'?0:id==='quest-bank'?'all':undefined,innerHTML:'',textContent:'',focus(){},scrollIntoView(){},closest(){return null},querySelector(){return null},querySelectorAll(){return []}});return elements.get(id)}
 function esc(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;')}function norm(s){return String(s).toLowerCase()}function shuffle(a){return [...a]}function subjectName(s){return s}function sourceLink(){return ''}function avatarEllery(){return '<g>hero</g>'}function heroMagicColor(){return '#a47bed'}function heroMagicGlyph(){return '<g>hero glyph</g>'}function pantherBattleFocus(){return {x:173,y:42}}function pantherSpellTrail(){return '<path/>'}function clearMusicOutcome(){}function syncAdventureMusic(){}function playMusicOutcome(){}function duckMusic(){}function initAudio(){}function tone(){}function stopQuestionCue(){}function questionFanfare(){}function cancelQuestTravel(){}function questSoundEnabled(){return false}function journeyPosition(){return {x:1,y:2}}function saveQuestPreferences(){}function setSoundPreference(){}function renderAdventure(){}function beginFreshAdventure(){resetQuestRun()}function rigbySceneArt(){return 'Rigby artwork'}function rigbyCutawayMarkup(d){return 'Rigby rescue '+d.rescueStage}function stableQuestionId(q){return q.prompt}function recordQuestExposure(q){questHistory.shown[q.prompt]={count:1}}function selectAdventureDeck(land){questHistory.duels++;return Array.from({length:7},(_,i)=>({subject:'math',prompt:'Q'+land+'-'+i,answer:'A',options:['A','B','C','D'],explanation:'Because A.'}))}
-${lands}\n${lifecycle}\n${functions}
+${illustrations}\n${lands}\n${lifecycle}\n${functions}
 function adventureSubjectLabel(l){return l.subjects?"Mixed subjects":subjectName(l.subject)}function adventureQuestionPool(){return Array.from({length:310})}
 function check(x,message){assert.ok(x,message)}
 function hit(){chooseQuest(0)}function miss(){chooseQuest(1)}function next(){advanceDuel()}
@@ -153,7 +154,7 @@ for(let i=5;i<10;i++){
  for(let point=0;point<4;point++){
   hit();const markup=spellDuelScene(duel,LANDS[i]);
   check(markup.includes('expanded-world world-'+i)&&markup.includes('data-guardian="'+i+'"'),'specific arena and guardian');
-  check(!markup.includes('undefined')&&!markup.includes('NaN'),'complete artwork at every score');next();
+  check(!markup.replace(/data:image[/]webp;base64,[A-Za-z0-9+/=]+/g,'painted-art').includes('undefined')&&!markup.replace(/data:image[/]webp;base64,[A-Za-z0-9+/=]+/g,'painted-art').includes('NaN'),'complete artwork at every score');next();
  }
  finishRigbyCutaway();leaveDuel();
 }
