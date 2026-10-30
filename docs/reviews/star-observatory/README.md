@@ -1,6 +1,6 @@
 # Star Observatory: playable graphics review
 
-Independent branch: `feature/star-observatory-illustrated-sky`. Based on `main` at `35b2be4` (including the completed Potion Mixer, Circuit Constructor and Creature Incubator). This PR changes only the Star Observatory presentation and its tests/build integration. The other requested sky-station upgrade has its own branch and PR.
+Independent branch: `feature/star-observatory-illustrated-sky`. Originally based on `main` at `35b2be4`; updated with `main` at `844156f`, including the completed Weather Machine. This PR changes only the Star Observatory presentation and its tests/build integration. The merged Weather Machine is preserved alongside the Observatory.
 
 To review: open the branch game → **Science Lab → Star Observatory**. Both `index.html` and `Ellery_Recall_Rally_Librarian_v4.html` contain the actual playable upgrade. No production deployment or merge is part of this change.
 
@@ -75,7 +75,7 @@ At 1366×768 and 1024×768, the apparatus, question, all choices, explanation, o
 - `CHROMIUM_PATH=/usr/bin/chromium node tests/science-lab-browser.test.cjs` — all five stations, shared bank/source records, badges/Prism, browser restart, profiles, eligible custom records, lab backup/import, offline play, save failures and the existing hero/Rigby seals passed.
 - `CHROMIUM_PATH=/usr/bin/chromium node tests/science-lab-review.test.cjs` — all five science models, field notes, repairs, Prism persistence, source contrast, focus restoration and four viewport layouts passed.
 - `CHROMIUM_PATH=/usr/bin/chromium node tests/potion-browser.test.cjs` — full benchmark regression at all four viewport sizes, including offline repair and reduced motion.
-- `CHROMIUM_PATH=/usr/bin/chromium node tests/science-lab-static.test.cjs` — **every actual Amplify build command** passed in isolated staging. Played Circuit/model, Potion, Creature, and this station including a miss and repair in its real static output; four finales, 20 journal attempts, honest 4/5 result, Librarian launcher and unchanged Rigby progress.
+- `CHROMIUM_PATH=/usr/bin/chromium node tests/science-lab-static.test.cjs` — **every actual Amplify build command** passed in isolated staging. Played Circuit/model, Potion, Creature, Weather, and this station including a miss and repair in its real static output; five finales, 25 journal attempts, honest 4/5 result, Librarian launcher and unchanged Rigby progress.
 - All current Amplify unit gates passed: this station, Creature/Circuit/Potion art, science lab, answer recognition, home launcher, adventure saves/effects, question bank, ten worlds and Librarian v4.
 - `node scripts/check-science-lab-assets.cjs` — original local artwork dimensions, byte budgets, complete SVG and no scripts/remote resources passed. All **11 generated SVG states** (six progress states plus five mistakes) also parsed as XML. Script syntax and `git diff --check` passed.
 
@@ -85,4 +85,8 @@ The new `observatory-art.yml` PR workflow repeats the artwork/browser checks and
 
 Automated Chromium with emulated touch viewports was tested; physical iPad/iPhone and Safari/Firefox remain untested. Offline tests load the self-contained HTML locally before disconnecting; direct file launch is not claimed as tested. No hosted preview URL or deployment is claimed.
 
-The next useful check is the final sky transition and repair timing on a physical iPad. This is a **draft PR for review; do not merge into main**.
+The next useful check is the final sky transition and repair timing on a physical iPad. This PR is for review; **do not merge into main**.
+
+## Main-branch integration verification
+
+Resolved the shared-file conflicts after Weather Machine merged into main (`844156f`). Both station renderers, assets, cue state, captions, named progress, scientific notes, CSS and offline embeds are retained. The combined staged build now plays all five upgraded stations and checks 25 academic attempts. After conflict resolution, both 65-answer Weather/Observatory browser suites passed at all four sizes, including every repair and offline replay; the full Science Lab browser and model/review suites also passed.

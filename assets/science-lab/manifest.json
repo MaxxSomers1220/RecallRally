@@ -57,8 +57,16 @@
       "height": 1000,
       "transparent": true,
       "max_bytes": 16000
+    },
+    {
+      "file": "weather-machine-chassis.svg",
+      "role": "Original engraved brass/copper weather equipment chassis; dynamic state-dependent instrument, glass and sky layers inserted at runtime",
+      "width": 1440,
+      "height": 1000,
+      "transparent": true,
+      "max_bytes": 16000
     }
   ],
-  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build. PotionMixerArt in src/science-lab-potion.js builds five distinct clipped glass vessels, progress-dependent liquid/drive states and bounded transition effects. CircuitConstructorArt in src/science-lab-circuit.js adds five assembly actions, an open-switch repair state and closed-loop illumination. CreatureIncubatorArt in src/science-lab-creature.js adds five habitat controls and an expressive fictional Moonwing, with pre-reveal movement, confetti sneeze and persistent repair targets. Weather and the original professor asset are unchanged. StarObservatoryArt in src/science-lab-observatory.js renders five independently repaired controls, scientific/fictional distinctions, mistake recovery and the final sky display.",
+  "interactive_art": "src/science-lab.js renders five distinct SVG machines from actual experiment steps. The existing renderGameHero supplies the customized player. Assets and machines are embedded in index.html and the standalone build. PotionMixerArt in src/science-lab-potion.js builds five distinct clipped glass vessels, progress-dependent liquid/drive states and bounded transition effects. CircuitConstructorArt in src/science-lab-circuit.js adds five assembly actions, an open-switch repair state and closed-loop illumination. CreatureIncubatorArt in src/science-lab-creature.js adds five habitat controls and an expressive fictional Moonwing, with pre-reveal movement, confetti sneeze and persistent repair targets. The original professor asset is unchanged. StarObservatoryArt in src/science-lab-observatory.js renders five independently repaired controls, scientific/fictional distinctions, mistake recovery and the final sky display. WeatherMachineArt in src/science-lab-weather.js renders five independently repaired controls, scientific/fictional distinctions, mistake recovery and the final sky display.",
   "motion": "CSS-only equipment and character reactions, disabled by prefers-reduced-motion; no new frame loop or external animation library."
 }
