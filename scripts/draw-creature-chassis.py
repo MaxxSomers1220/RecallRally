@@ -1,0 +1,46 @@
+"""Original botanical incubator illustration; local layered vector artwork."""
+from pathlib import Path
+root = Path(__file__).resolve().parents[1]
+p = ['''<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 720 500" class="sl-equipment sl-machine-creature ci-machine" role="img" aria-label="Creature Incubator">
+<defs>
+ <linearGradient id="__CI__-brass" x2=".8" y2="1"><stop stop-color="#fff0b8"/><stop offset=".22" stop-color="#d8ad67"/><stop offset=".45" stop-color="#87603c"/><stop offset=".65" stop-color="#e9ca8c"/><stop offset="1" stop-color="#695043"/></linearGradient>
+ <linearGradient id="__CI__-copper" x2="1" y2=".6"><stop stop-color="#f1c3a0"/><stop offset=".3" stop-color="#ae7056"/><stop offset=".55" stop-color="#694c46"/><stop offset=".82" stop-color="#d8a078"/><stop offset="1" stop-color="#885b49"/></linearGradient>
+ <linearGradient id="__CI__-enamel" x2="1" y2=".8"><stop stop-color="#426a69"/><stop offset=".5" stop-color="#1c3644"/><stop offset="1" stop-color="#37575f"/></linearGradient>
+ <linearGradient id="__CI__-glass" x2="1" y2=".15"><stop stop-color="#d6ffef" stop-opacity=".35"/><stop offset=".18" stop-color="#b5e8e0" stop-opacity=".03"/><stop offset=".65" stop-color="#d5f4ed" stop-opacity=".06"/><stop offset=".93" stop-color="#f4f6d7" stop-opacity=".4"/><stop offset="1" stop-color="#97d7db" stop-opacity=".2"/></linearGradient>
+ <linearGradient id="__CI__-wood" x2=".2" y2="1"><stop stop-color="#75503c"/><stop offset=".45" stop-color="#4b3c35"/><stop offset="1" stop-color="#242b33"/></linearGradient>
+ <linearGradient id="__CI__-leaf" x2=".8" y2="1"><stop stop-color="#b6d9a5"/><stop offset=".4" stop-color="#75b39a"/><stop offset="1" stop-color="#3b706c"/></linearGradient>
+ <linearGradient id="__CI__-wing" x2=".7" y2="1"><stop stop-color="#f5dcf3"/><stop offset=".45" stop-color="#c4b3e6"/><stop offset="1" stop-color="#7c9dba"/></linearGradient>
+ <linearGradient id="__CI__-fur" x2=".5" y2="1"><stop stop-color="#d6ecd0"/><stop offset=".4" stop-color="#9ed2bf"/><stop offset="1" stop-color="#4e9c9a"/></linearGradient>
+ <radialGradient id="__CI__-warmth"><stop stop-color="#f8d88c" stop-opacity=".34"/><stop offset="1" stop-color="#e7cb8b" stop-opacity="0"/></radialGradient>
+ <radialGradient id="__CI__-moonlight"><stop stop-color="#c5ecd6" stop-opacity=".48"/><stop offset="1" stop-color="#97c9db" stop-opacity="0"/></radialGradient>
+ <clipPath id="__CI__-interior"><path d="M238 365V190Q238 87 360 82Q482 87 482 190V365Q360 398 238 365Z"/></clipPath>
+ <filter id="__CI__-halo" x="-.5" y="-.5" width="2" height="2"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<g class="ci-chassis" stroke-linecap="round" stroke-linejoin="round">
+ <ellipse cx="360" cy="467" rx="278" ry="16" fill="#0a202b" opacity=".5"/>
+ <!-- Copper arch and two glass-stem instrument trees frame the specimen. -->
+ <path d="M202 373V188Q202 53 360 46Q518 53 518 188V373H503V188Q503 70 360 62Q217 70 217 188V373Z" fill="url(#__CI__-copper)" stroke="#62483a" stroke-width="3"/>
+ <path d="M210 333V188Q210 61 360 54Q510 61 510 188V333" fill="none" stroke="#f7dca5" stroke-width="1.5"/>
+ <path d="M341 53 348 36 360 25 372 36 379 53 360 47Z" fill="url(#__CI__-brass)" stroke="#78583c" stroke-width="2"/>
+ <path d="M360 30V43M351 39 360 44 369 39" fill="none" stroke="#fff0ba" stroke-width="1.5"/>
+ <g fill="none" stroke="#e2c487" stroke-width="2">
+  <path d="M205 101q-35-33-57-7q-14 20 9 28q17 5 13-10q-8 7-12 0q-3-12 12-14q16-2 27 14M515 101q35-33 57-7q14 20-9 28q-17 5-13-10q8 7 12 0q3-12-12-14q-16-2-27 14"/>
+ </g>
+ <path d="M167 173V344Q167 364 213 364H236M553 175V345Q553 365 507 365H484" fill="none" stroke="#493c37" stroke-width="14"/>
+ <path d="M167 173V344Q167 364 213 364H236M553 175V345Q553 365 507 365H484" fill="none" stroke="url(#__CI__-brass)" stroke-width="9"/>
+ <path d="M161 189V338M547 190V339" stroke="#f3ddac" stroke-width="1.5" opacity=".6"/>
+ <!-- Substantial beveled pedestal with five independent control bays. -->
+ <path d="M153 376Q360 349 567 376L590 420Q360 465 130 420Z" fill="url(#__CI__-wood)" stroke="#a37e55" stroke-width="4"/>
+ <path d="M143 400Q360 432 577 400L581 418Q360 453 139 418Z" fill="url(#__CI__-copper)" stroke="#e1bd82" stroke-width="2"/>
+ <path d="M168 429 151 471H203L218 438M502 438 517 471H569L552 429" fill="url(#__CI__-brass)" stroke="#634d38" stroke-width="3"/>
+ <path d="M321 438 334 429H386L399 438 387 453H333Z" fill="url(#__CI__-brass)" stroke="#634d38" stroke-width="2"/>
+ <text x="360" y="445" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="2" fill="#4e4633">F · W</text>
+ <!-- Petri dish and specimen notebook: scientific tools, not magic UI controls. -->
+ <g transform="translate(109 395)"><ellipse rx="37" ry="10" fill="#8bc8c6" fill-opacity=".23" stroke="#b7dbcf" stroke-width="2"/><path d="M-37 0V11Q0 28 37 11V0" fill="url(#__CI__-glass)" stroke="#b7dbcf" stroke-width="2"/><ellipse cy="11" rx="37" ry="10" fill="#8cc9bb" fill-opacity=".22"/><path d="M-15 9Q-2-8 15 9Q1 17-15 9Z" fill="url(#__CI__-leaf)" stroke="#dfdeac"/><path d="M-18 12 16 5" stroke="#e1dba8"/></g>
+ <g transform="translate(611 394) rotate(12)"><path d="M-31-18 4-24 34-16V24L2 17-31 24Z" fill="#e6dbb9" stroke="#886c4e" stroke-width="2"/><path d="M2-20V17M-24-9-5-13M-24-2-5-6M-24 5-5 1M10-11 26-7M10-4 26 0" fill="none" stroke="#8da18c" stroke-width="1.3"/><path d="M15 13q-12-14 2-18q13 7-2 18Z" fill="#76aa94"/></g>
+</g>
+<!-- CREATURE_LAYERS -->
+</svg>
+''']
+(root/'assets/science-lab/creature-incubator-chassis.svg').write_text(''.join(p))
+print('Drew original botanical glass-chamber chassis.')
