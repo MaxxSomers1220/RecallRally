@@ -30,8 +30,10 @@ const root=path.join(__dirname,'..'),screens=process.env.CREATURE_SCREENSHOTS;le
    if(i>=3){const wing=art.locator('.ci-wing').first();assert.equal(await wing.evaluate(e=>getComputedStyle(e).animationName),i===3?'ci-wing-stretch':'ci-wing-flutter');const a=await wing.evaluate(e=>getComputedStyle(e).transform);await page.waitForTimeout(180);assert.notEqual(await wing.evaluate(e=>getComputedStyle(e).transform),a,'wings actually animate');}
    if(i===4){
     assert.equal(await art.locator('.ci-body').evaluate(e=>getComputedStyle(e).animationName),'ci-breathe');
-    const eyes=art.locator('.ci-eyes'),previous=await eyes.evaluate(e=>{const a=e.getAnimations()[0],t=a.currentTime;a.currentTime=2332;return t});
-    assert(await eyes.evaluate(e=>new DOMMatrix(getComputedStyle(e).transform).d<.2),'eyes blink');await eyes.evaluate((e,t)=>e.getAnimations()[0].currentTime=t,previous);
+    // Seek and read in one browser task while paused; protocol latency must not move
+    // a 5.3s animation beyond its narrow 44% blink apex before the assertion.
+    const eyes=art.locator('.ci-eyes'),blink=await eyes.evaluate(e=>{const a=e.getAnimations()[0],t=a.currentTime,state=a.playState;a.pause();a.currentTime=2332;const scale=new DOMMatrix(getComputedStyle(e).transform).d;a.currentTime=t;if(state==='running')a.play();return scale});
+    assert(blink<.2,'eyes blink');
     const paw=art.locator('.ci-paw-wave');assert.equal(await paw.evaluate(e=>getComputedStyle(e).animationName),'ci-wave');await paw.evaluate(e=>e.getAnimations()[0].currentTime=2500);const a=await paw.evaluate(e=>getComputedStyle(e).transform);await page.waitForTimeout(160);assert.notEqual(await paw.evaluate(e=>getComputedStyle(e).transform),a,'Moonwing waves hello');
    }
    if(width>=1000){const boxes=await page.locator('#sl-prompt,[data-sl-choice],#sl-next,.sl-feedback,.sl-stage,.ci-next-action').evaluateAll(es=>es.map(e=>{const b=e.getBoundingClientRect();return {top:b.top,bottom:b.bottom,left:b.left,right:b.right}}));assert(boxes.every(b=>b.top>=0&&b.bottom<=height+1&&b.left>=0&&b.right<=width+1),'question, choices, feedback, machine, objective and Next fit');}
