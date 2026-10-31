@@ -6,7 +6,7 @@ for(const row of manifest.assets)art[row.key]='data:image/webp;base64,'+fs.readF
 const file=path.join(root,'index.html');let html=read('index.html');
 const source=read('src/hero-renderer.js');const a=html.indexOf('function renderPantherHero('),b=html.indexOf('/* FAIRY_ART_END */',a)+'/* FAIRY_ART_END */'.length;if(a<0||b<a)throw Error('Hero renderer markers missing');html=html.slice(0,a)+source+html.slice(b);
 const meta={};for(const row of manifest.assets)if(Number.isInteger(row.guardian))meta[row.guardian]={width:row.width,height:row.height};
-const block='/* CHARACTER_ART_START */\nconst CHARACTER_ART='+JSON.stringify(art)+';\nconst CHARACTER_META='+JSON.stringify(meta)+';\n'+read('src/character-art.js')+'\n/* CHARACTER_ART_END */';
+const block='/* CHARACTER_ART_START */\nconst CHARACTER_ART='+JSON.stringify(art)+';\nconst CHARACTER_META='+JSON.stringify(meta)+';\n'+read('src/character-art.js')+'\n'+read('src/guardian-motion-models.js')+'\n'+read('src/guardian-motion-render.js')+'\n'+read('src/guardian-motion.js')+'\n/* CHARACTER_ART_END */';
 if(html.includes('/* CHARACTER_ART_START */'))html=html.replace(/\/\* CHARACTER_ART_START \*\/[\s\S]*?\/\* CHARACTER_ART_END \*\//,()=>block);
 else html=html.replace('function renderPantherHero(',()=>block+'\nfunction renderPantherHero(');
 const style='<style id="character-art-styles">\n'+read('src/character-art.css')+'\n</style>';

@@ -1,0 +1,27 @@
+PASS ten native-pixel joint rigs, one approved paint per guardian, wrists/eyes/feet, focus coordinates, offline synchronization and presentation-only code
+PASS unchanged customization schema/presets, saves and Librarian physics; 30 embedded poses, shared hero drawing and offline synchronization
+PASS 22 original gameplay/hero functions, unchanged save module, all 23 embedded assets, ten visual objectives, one-file offline synchronization
+PASS guardian 0: charge, miss, phase, signature, victory, reset
+PASS guardian 1: charge, miss, phase, signature, victory, reset
+PASS guardian 2: charge, miss, phase, signature, victory, reset
+PASS guardian 3: charge, miss, phase, signature, victory, reset
+PASS guardian 4: charge, miss, phase, signature, victory, reset
+PASS guardian 5: charge, miss, phase, signature, victory, reset
+PASS guardian 6: charge, miss, phase, signature, victory, reset
+PASS guardian 7: charge, miss, phase, signature, victory, reset
+PASS guardian 8: charge, miss, phase, signature, victory, reset
+PASS guardian 9: charge, miss, phase, signature, victory, reset
+PASS all 140 intent/spell/result cases, protection expiry/refresh, Starfall, keyboard, timer, victory/defeat
+PASS seal eligibility, all five styles, once-only shield, Ward priority, Starfall/replay, progression, reset, no extra points/questions
+PASS all five evolving arenas: persistent steps, miss recovery, once-only phase/signature, victory, rescue, cleanup, reset, reduced motion
+PASS automatic Starfall, duplicate protection, adjacent question/choices, animation skip, compact layout lifecycle
+PASS compact header, reserved feedback/Next, selected and correct labels, timeout/scorer identity, concise arena and detailed disclosure
+PASS skip, navigation, rematch, reduced-motion automatic release, defeat
+PASS full ten-world journey, final rescue at world 9 only, reset, five new guardians and all arena progress states
+PASS ten worlds, mixed/finale subject coverage, unseen deck rotation, ten individual seals, no premature rescue, both map chapters and completed map
+PASS versioned save round-trip and unfinished encounter checkpoint
+PASS malformed, incompatible, inconsistent, wrong-profile and injected save data rejected
+PASS independent profile keys, quota/read failures and missing stable profile persistence
+PASS corrupt saves survive until explicit reset confirmation
+PASS inline source synchronization and complete HTML syntax
+PASS original academic, scoring, timing, movement and collision functions; six guardian moods; three page poses; asset provenance; exact offline bundles

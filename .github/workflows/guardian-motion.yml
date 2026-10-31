@@ -1,0 +1,48 @@
+name: Guardian motion
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/characters/**'
+      - 'amplify.yml'
+      - 'src/guardian-motion*'
+      - 'src/character-art*'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'scripts/**'
+      - 'tests/guardian-motion*'
+      - '.github/workflows/guardian-motion.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node scripts/build-standalone.cjs
+          node tests/guardian-motion.test.cjs
+          node tests/character-art.test.cjs
+          node tests/adventure-illustrations.test.cjs
+          node tests/adventure-effects.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/motion-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/motion-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Real encounters in four layouts and actual Amplify package
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/motion-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export GUARDIAN_RECORDINGS="$RUNNER_TEMP/guardian-recordings"
+          node tests/guardian-motion-browser.test.cjs
+          node tests/adventure-static.test.cjs
+          node tests/character-browser.test.cjs
+          node tests/adventure-save-browser.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: actual-guardian-motion-gameplay
+          path: ${{ runner.temp }}/guardian-recordings
+          if-no-files-found: ignore
