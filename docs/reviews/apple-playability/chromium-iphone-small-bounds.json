@@ -1,0 +1,50 @@
+{
+  "bounds": {
+    ".lib-canvas-wrap": {
+      "x": 4,
+      "y": 92.625,
+      "right": 371,
+      "bottom": 268.46875,
+      "width": 367,
+      "height": 175.84375
+    },
+    ".lib-controls": {
+      "x": 4,
+      "y": 404.46875,
+      "right": 371,
+      "bottom": 459.46875,
+      "width": 367,
+      "height": 55
+    },
+    "#lib-close": {
+      "x": 254.75,
+      "y": 10.5625,
+      "right": 365,
+      "bottom": 54.5625,
+      "width": 110.25,
+      "height": 44
+    }
+  },
+  "viewport": {
+    "width": 375,
+    "height": 667,
+    "visual": {
+      "width": 375,
+      "height": 667,
+      "scale": 1,
+      "top": 0
+    },
+    "fit": "667px",
+    "short": false,
+    "frame": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 667,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "left": 0
+    }
+  }
+}

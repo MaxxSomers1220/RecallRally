@@ -1,0 +1,11 @@
+{
+  "engine": "chromium",
+  "method": "native Chromium multi-touch + labeled synthetic duck hold",
+  "physicalDevice": false,
+  "timeline": {
+    "creator": 3.186,
+    "storm": 7.848,
+    "rotation": 11.277,
+    "review": 18.689
+  }
+}
