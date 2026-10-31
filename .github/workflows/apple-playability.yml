@@ -11,6 +11,9 @@ on:
       - 'tests/apple-*'
       - 'tests/mobile-playability*'
       - '.github/workflows/apple-playability.yml'
+concurrency:
+  group: apple-audit-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-latest
