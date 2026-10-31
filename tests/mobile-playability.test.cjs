@@ -1,0 +1,7 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');const html=fs.readFileSync('index.html','utf8'),offline=fs.readFileSync('Ellery_Recall_Rally_Librarian_v4.html','utf8');
+for(const f of ['src/mobile-playability.js','src/mobile-playability.css']){const s=fs.readFileSync(f,'utf8').trim();assert(html.includes(s)&&offline.includes(s),'Same mobile source in both builds: '+f);}
+assert(!/user-scalable\s*=\s*no|maximum-scale\s*=\s*1(?:[" ,]|$)/i.test(html),'Browser zoom remains enabled');assert(html.includes('viewport-fit=cover'));
+const js=fs.readFileSync('src/mobile-playability.js','utf8');assert(!/localStorage|fetch\(|setInterval\(|setTimeout\(|questProgress|duel\.|hero\.x|held\./.test(js),'No academic, movement, persistence or timer state in mobile adapter');for(const event of ['pointercancel','lostpointercapture','visibilitychange','blur'])assert(js.includes(event));assert(js.includes('visualViewport')&&js.includes('scale>1.01'));
+const css=fs.readFileSync('src/mobile-playability.css','utf8');assert(css.includes('aspect-ratio:960/460'));assert(css.includes('safe-area-inset'));assert(css.includes('html[data-rally-short]'));
+assert(!/serviceWorker\.register/.test(html),'No unrequested PWA/offline caching contract added');console.log('PASS bundled mobile viewport/focus/pointer adapter; zoom retained, safe areas and proportional arena; no grading, physics, saves or network added');

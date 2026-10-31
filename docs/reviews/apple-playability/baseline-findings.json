@@ -1,0 +1,175 @@
+[
+  {
+    "name": "small-phone",
+    "creator": {
+      "optionsHeight": 33,
+      "doneBottom": 630.8125,
+      "inputFont": "14px",
+      "viewport": 667
+    },
+    "focusEscaped": true,
+    "layout": {
+      ".lib-canvas-wrap": {
+        "x": 4,
+        "y": 92.625,
+        "width": 367,
+        "height": 175.84375,
+        "bottom": 268.46875
+      },
+      ".lib-controls": {
+        "x": 4,
+        "y": 382.15625,
+        "width": 367,
+        "height": 55,
+        "bottom": 437.15625
+      },
+      "#lib-close": {
+        "x": 254.75,
+        "y": 12.5625,
+        "width": 110.25,
+        "height": 40,
+        "bottom": 52.5625
+      }
+    },
+    "multi": {
+      "before": true,
+      "after": false
+    }
+  },
+  {
+    "name": "small-landscape",
+    "creator": {
+      "optionsHeight": 33,
+      "doneBottom": 338.8125,
+      "inputFont": "14px",
+      "viewport": 375
+    },
+    "focusEscaped": true,
+    "layout": {
+      ".lib-canvas-wrap": {
+        "x": 4,
+        "y": -131.5,
+        "width": 659,
+        "height": 315.765625,
+        "bottom": 184.265625
+      },
+      ".lib-controls": {
+        "x": 4,
+        "y": 281.765625,
+        "width": 659,
+        "height": 55,
+        "bottom": 336.765625
+      },
+      "#lib-close": {
+        "x": 546.75,
+        "y": -206,
+        "width": 110.25,
+        "height": 40,
+        "bottom": -166
+      }
+    },
+    "multi": null
+  },
+  {
+    "name": "modern-landscape",
+    "creator": {
+      "optionsHeight": 36.015625,
+      "doneBottom": 372,
+      "inputFont": "15px",
+      "viewport": 393
+    },
+    "focusEscaped": true,
+    "layout": {
+      ".lib-canvas-wrap": {
+        "x": 94,
+        "y": -89,
+        "width": 664,
+        "height": 318.15625,
+        "bottom": 229.15625
+      },
+      ".lib-controls": {
+        "x": 94,
+        "y": 313.546875,
+        "width": 664,
+        "height": 55,
+        "bottom": 368.546875
+      },
+      "#lib-close": {
+        "x": 627.1875,
+        "y": -164,
+        "width": 130.8125,
+        "height": 43,
+        "bottom": -121
+      }
+    },
+    "multi": null
+  },
+  {
+    "name": "ipad-portrait",
+    "creator": {
+      "optionsHeight": 586.625,
+      "doneBottom": 1143.8125,
+      "inputFont": "14px",
+      "viewport": 1180
+    },
+    "focusEscaped": true,
+    "layout": {
+      ".lib-canvas-wrap": {
+        "x": 13,
+        "y": 98,
+        "width": 794,
+        "height": 380.453125,
+        "bottom": 478.453125
+      },
+      ".lib-controls": {
+        "x": 13,
+        "y": 578.046875,
+        "width": 794,
+        "height": 61,
+        "bottom": 639.046875
+      },
+      "#lib-close": {
+        "x": 673.1875,
+        "y": 14,
+        "width": 130.8125,
+        "height": 43,
+        "bottom": 57
+      }
+    },
+    "multi": null
+  },
+  {
+    "name": "ipad-split",
+    "creator": {
+      "optionsHeight": 174.625,
+      "doneBottom": 731.8125,
+      "inputFont": "14px",
+      "viewport": 768
+    },
+    "focusEscaped": true,
+    "layout": {
+      ".lib-canvas-wrap": {
+        "x": 4,
+        "y": 81.5,
+        "width": 499,
+        "height": 239.09375,
+        "bottom": 320.59375
+      },
+      ".lib-controls": {
+        "x": 4,
+        "y": 440.40625,
+        "width": 499,
+        "height": 55,
+        "bottom": 495.40625
+      },
+      "#lib-close": {
+        "x": 386.75,
+        "y": 7,
+        "width": 110.25,
+        "height": 40,
+        "bottom": 47
+      }
+    },
+    "multi": null
+  }
+]
