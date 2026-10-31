@@ -9,7 +9,7 @@ const RallyMobile=(()=>{
   overlay=next;if(!overlay)return;mounts++;oldOverflow=document.body.style.overflow;
   for(const e of document.body.children)if(e!==overlay&&!['SCRIPT','STYLE'].includes(e.tagName)){background.set(e,e.inert);e.inert=true;}document.body.style.overflow='hidden';opener=opener?.isConnected?opener:document.getElementById('lib-launch');
  }
- function fit(){fitFrame=0;const v=window.visualViewport;if(v&&v.scale>1.01)return;const h=v?.height||innerHeight,top=v?.offsetTop||0,root=document.documentElement;root.style.setProperty('--rally-vh',h+'px');root.style.setProperty('--rally-vtop',top+'px');root.toggleAttribute('data-rally-short',h<520);
+ function fit(){fitFrame=0;const v=window.visualViewport;if(v&&v.scale>1.01)return;const h=v?.height||innerHeight,top=v?.offsetTop||0,root=document.documentElement;root.style.setProperty('--rally-vh',h+'px');root.style.setProperty('--rally-vtop',top+'px');root.toggleAttribute('data-rally-short',h<520);root.toggleAttribute('data-rally-tiny',h<300);
   const active=document.activeElement;if(active?.matches('input,textarea,select')&&active.closest('dialog[open]'))active.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
  }
  function resized(){release();if(!fitFrame)fitFrame=requestAnimationFrame(fit);}

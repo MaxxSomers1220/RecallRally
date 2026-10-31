@@ -167,3 +167,38 @@ PASS desktop guardian 7: continuous joints, planted feet, hand/tool focus, no-sn
 PASS desktop guardian 8: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
 PASS desktop guardian 9: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
 PASS desktop: 50 graded questions, defeat, rapid advancement/repeated exits, customized save, offline reduced motion
+
+Completed verification: audit-complete
+PASS chromium iphone-small: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium iphone-modern: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium iphone-small-landscape: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium iphone-modern-landscape: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium ipad-portrait: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium ipad-landscape: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium ipad-split: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium ipad-narrow: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+
+Completed verification: package-complete
+PASS chromium iphone-small-landscape: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS chromium ipad-split: 73 audit checks; creator/keyboard-height/rotation, all modes, touch ownership/cancellation, focus, save and offline
+PASS actual Amplify output: two layouts, all modes, input cancellation, saves, offline and reduced motion
+
+Completed verification: guardian-synchronized
+PASS desktop guardian 0: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 1: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 2: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 3: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 4: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 5: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 6: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 7: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 8: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 9: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop: 50 graded questions, defeat, rapid advancement/repeated exits, customized save, offline reduced motion
+
+Completed verification: creature-synchronized
+PASS desktop: 15 real answers; all five mistakes/repairs; no premature reveal; moving cocoon, wings, fan and expressions; layout/touch/keyboard; model, saves, hero, offline, reduced motion, other stations
+PASS tablet-landscape: 15 real answers; all five mistakes/repairs; no premature reveal; moving cocoon, wings, fan and expressions; layout/touch/keyboard; model, saves, hero, offline, reduced motion, other stations
+PASS tablet-portrait: 15 real answers; all five mistakes/repairs; no premature reveal; moving cocoon, wings, fan and expressions; layout/touch/keyboard; model, saves, hero, offline, reduced motion, other stations
+PASS phone: 15 real answers; all five mistakes/repairs; no premature reveal; moving cocoon, wings, fan and expressions; layout/touch/keyboard; model, saves, hero, offline, reduced motion, other stations
+PASS standalone 5/5 run with all networking disabled

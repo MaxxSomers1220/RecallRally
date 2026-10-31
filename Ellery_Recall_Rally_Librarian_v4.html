@@ -1127,6 +1127,17 @@ html[data-rally-short] #hero-creator .hero-builder-footer button{min-height:44px
 @media(pointer:coarse){body :is(input,textarea,select){font-size:max(16px,1em)!important}}
 html[data-rally-short] #hero-creator .hero-category-tabs{position:static}
 @media(max-width:450px){html[data-rally-short] #hero-creator .hero-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Very short visual viewports, including keyboard-height contraction. */
+html[data-rally-tiny] #hero-creator .hero-builder-heading{padding:4px 12px}
+html[data-rally-tiny] #hero-creator .hero-builder-heading .eyebrow{display:none}
+html[data-rally-tiny] #hero-creator .hero-builder-heading h2{font-size:20px}
+html[data-rally-tiny] #hero-creator .hero-builder-footer{padding:4px 10px;gap:5px}
+html[data-rally-tiny] #hero-creator .hero-creator-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+html[data-rally-tiny] #hero-creator .hero-preview-panel{padding:4px}
+html[data-rally-tiny] #hero-creator .hero-builder-footer{display:grid;grid-template-columns:1fr 1fr 1.4fr}
+html[data-rally-tiny] #hero-creator .hero-builder-footer button{min-width:0;white-space:normal;padding:4px;font-size:11px}
+html[data-rally-tiny] #hero-creator .hero-builder-footer .primary{margin-left:0}
 </style>
 </head>
 <body>
@@ -3407,7 +3418,7 @@ const RallyMobile=(()=>{
   overlay=next;if(!overlay)return;mounts++;oldOverflow=document.body.style.overflow;
   for(const e of document.body.children)if(e!==overlay&&!['SCRIPT','STYLE'].includes(e.tagName)){background.set(e,e.inert);e.inert=true;}document.body.style.overflow='hidden';opener=opener?.isConnected?opener:document.getElementById('lib-launch');
  }
- function fit(){fitFrame=0;const v=window.visualViewport;if(v&&v.scale>1.01)return;const h=v?.height||innerHeight,top=v?.offsetTop||0,root=document.documentElement;root.style.setProperty('--rally-vh',h+'px');root.style.setProperty('--rally-vtop',top+'px');root.toggleAttribute('data-rally-short',h<520);
+ function fit(){fitFrame=0;const v=window.visualViewport;if(v&&v.scale>1.01)return;const h=v?.height||innerHeight,top=v?.offsetTop||0,root=document.documentElement;root.style.setProperty('--rally-vh',h+'px');root.style.setProperty('--rally-vtop',top+'px');root.toggleAttribute('data-rally-short',h<520);root.toggleAttribute('data-rally-tiny',h<300);
   const active=document.activeElement;if(active?.matches('input,textarea,select')&&active.closest('dialog[open]'))active.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
  }
  function resized(){release();if(!fitFrame)fitFrame=requestAnimationFrame(fit);}

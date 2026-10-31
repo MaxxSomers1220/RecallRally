@@ -11,6 +11,7 @@ Base: main `901d5d8` after approved PR #20. Branch: `feature/ios-safari-playabil
 | P1 | Native Chromium two-finger press on Right becomes unheld when only the first finger lifts. | Track pointer ownership; release only the last held pointer, and clear ownership on interruption. |
 | P2 | Tab escapes the Librarian overlay into the page behind it. | Inert background, scoped Tab loop and focus restoration; preserve previous background state. |
 | P2 | Compact name input renders at 14px. | At least 16px form text on compact/coarse-pointer layouts. Actual iOS autozoom behavior requires a physical-device check. |
+| P2 | At 200px simulated visible height, the initial audit layout clips the name field against its preview panel. | Compact header/footer spacing and a single-row action grid; verify the full field fits its actual scrolling ancestor. |
 
 [Baseline measurements](baseline-findings.json) and `before-*.jpg` are actual Chromium mobile-viewport captures before editing. Native Chromium touch injection reproduces the same-button ownership bug. Those results are **not** physical Safari tests.
 
@@ -18,20 +19,20 @@ The adapter only coordinates viewport CSS, focus, and pointer release. Questions
 
 ## Coverage status
 
-Chromium 154.0.8037.57 passes **72 checks in each of eight layouts** (576 total), with no browser script errors. The actual Amplify output passes the same checks in small-phone landscape and iPad split view (144 more). The hosted Chromium/WebKit workflow publishes its own per-layout JSON, screenshots and normal-clock recording. The final hosted outcomes and artifact links are recorded in draft PR #21; consult those engine results separately from the local Chromium results below.
+Chromium 154.0.8037.57 passes **73 checks in each of eight layouts** (584 total), with no browser script errors. The actual Amplify output passes the same checks in small-phone landscape and iPad split view (146 more). The hosted Chromium/WebKit workflow publishes its own per-layout JSON, screenshots and normal-clock recording. The final hosted outcomes and artifact links are recorded in draft PR #21; consult those engine results separately from the local Chromium results below.
 
-| Layout (CSS pixels) | Local Chromium touch emulation | Desktop WebKit CI configuration |
+| Layout (CSS pixels) | Local Chromium touch emulation | Desktop WebKit verified at b384c9c |
 | --- | --- | --- |
-| Small phone 375×667 | PASS, 72 checks | Same scenario |
-| Modern phone 393×852 | PASS, 72 checks | Same scenario |
-| Small phone landscape 667×375 | PASS, 72 checks | Same scenario |
-| Modern phone landscape 852×393 | PASS, 72 checks | Same scenario |
-| iPad portrait 820×1180 | PASS, 72 checks | Same scenario |
-| iPad landscape 1180×820 | PASS, 72 checks | Same scenario |
-| iPad split 507×768 | PASS, 72 checks | Same scenario |
-| Narrow multitasking 320×768 | PASS, 72 checks | Same scenario |
+| Small phone 375×667 | PASS, 73 checks | PASS, 69 checks |
+| Modern phone 393×852 | PASS, 73 checks | PASS, 69 checks |
+| Small phone landscape 667×375 | PASS, 73 checks | PASS, 69 checks |
+| Modern phone landscape 852×393 | PASS, 73 checks | PASS, 69 checks |
+| iPad portrait 820×1180 | PASS, 73 checks | PASS, 69 checks |
+| iPad landscape 1180×820 | PASS, 73 checks | PASS, 69 checks |
+| iPad split 507×768 | PASS, 73 checks | PASS, 69 checks |
+| Narrow multitasking 320×768 | PASS, 73 checks | PASS, 69 checks |
 
-WebKit runs 69 assertions per layout: it includes background-rig suspension, but excludes the three Chromium-only native CDP multitouch/zoom assertions. CI uses Playwright1.62.1; the WebKit installation is26.5. **iOS Simulator: unavailable. Physical iPhone/iPad Safari: untested.** This matrix names layout targets, not tested physical device models.
+The verified WebKit run at b384c9c passes 69 assertions per layout (before the tight-height follow-up); the final expanded run has70. In both versions, it includes background-rig suspension, but excludes the three Chromium-only native CDP multitouch/zoom assertions. CI uses Playwright1.62.1; the WebKit installation is26.5. **iOS Simulator: unavailable. Physical iPhone/iPad Safari: untested.** This matrix names layout targets, not tested physical device models.
 
 [Local per-check results](chromium-results.json), [Amplify results](amplify/chromium-results.json), and [regression output](local-test-results.txt) preserve the actual observations.
 
@@ -113,6 +114,14 @@ The first WebKit attempt also exposed that Playwright's resize call can return b
 
 Existing source/asset hash gates still pass. Original Librarian physics, questions and saves are unchanged. The existing Librarian four-layout encounter regression, 140 tactics, ten-world staged Amplify journey, save/failure/recovery suite, and Science Lab staged five-station progression pass locally. Creature Incubator passes all four layouts plus a network-disabled standalone completion; guardian motion passes the full desktop journey. CI also runs the repository's remaining suites.
 
-The initial CI runs exposed timing-sensitive test observations. The guardian casting phase occupies 65–160ms; observing only after a Playwright click response could miss it. Its collector is now armed before the same native choice click, with the same phase/joint/foot/focus assertions. The Moonwing blink test previously sought to the 44% apex and read it in a second protocol call while the animation kept running. It now pauses, seeks, reads and restores playback in one browser task, retaining the same <0.2 scale assertion. No gameplay timing, artwork or assertion was relaxed. A first staged Lab run also exceeded its unchanged 12s real-storm watchdog under load; both baseline and the branch pass that original test on rerun. Failed attempts are not counted as passes.
+The initial CI runs exposed timing-sensitive test observations. The guardian casting phase occupies 65–160ms; observing only after a Playwright click response could miss it. Its collector is now armed before the same native choice click, with the same phase/joint/foot/focus assertions. The Moonwing blink test previously sought to the 44% apex and read it in a second protocol call while the animation kept running. It now pauses, seeks, reads and restores playback in one browser task, retaining the same <0.2 scale assertion. No gameplay timing, artwork or assertion was relaxed. The hosted guardian motion job still reported a missed casting phase after the collector change, despite passing the complete desktop run locally (with and without recording). That result is not counted as a pass; the assertion now includes phase/frame-gap diagnostics for the final run. Consult the final PR checks for this remaining regression risk. A first staged Lab run also exceeded its unchanged 12s real-storm watchdog under load; both baseline and the branch pass that original test on rerun. Failed attempts are not counted as passes.
 
 The baseline probe is reproducible with `APPLE_BASELINE_HTML=/path/to/main-901d5d8.html node docs/reviews/apple-playability/probe-baseline.cjs` from the repository root. Evidence ZIP downloads were restricted by the local network; WebKit artifacts remain available through the GitHub Actions links in the PR.
+
+## Tight visible-height follow-up
+
+A 200px visible-height simulation found that the initial audit layout (`b384c9c`) left the name field bottom at119px while its scrolling preview ended at109.8px. The final layout compacts the creator header/footer, retains all three live footer buttons, and keeps the status available to assistive technology. At667×200 the field now ends at138px inside a panel ending at139px. The new assertion checks the field against that ancestor, not just the viewport, in every layout.
+
+[Before the tight-height fix](before-tight-height.jpg) / [after](after-tight-height.jpg), [before geometry](before-tight-height.txt) / [after](after-tight-height.txt). These simulate reduced space; no OS keyboard is shown or claimed. `probe-tight-height.cjs` reproduces the screenshot and bounds, with optional `APPLE_TEST_HTML`, `APPLE_PROBE_SHOT` and `APPLE_PROBE_WIDTH`. The initial audit's72/69 per-layout assertions become73/70 with this additional clipping check; final engine JSON/artifacts are authoritative.
+
+Verified hosted evidence before the additional tight-height check: [Chromium/WebKit run41238296449](https://github.com/MaxxSomers1220/RecallRally/actions/runs/41238296449), [WebKit screenshots/recording/results](https://github.com/MaxxSomers1220/RecallRally/actions/runs/41238296449/artifacts/13056616587), [Chromium artifacts](https://github.com/MaxxSomers1220/RecallRally/actions/runs/41238296449/artifacts/13055339457). Both engines passed all eight layouts, real-clock recording and the actual Amplify output. The final expanded run is linked in PR#21.
