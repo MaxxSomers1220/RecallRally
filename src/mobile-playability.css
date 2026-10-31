@@ -1,0 +1,55 @@
+/* Apple-sized layouts: live controls and original art, with no global zoom lock. */
+:root{--rally-safe-top:env(safe-area-inset-top,0px);--rally-safe-right:env(safe-area-inset-right,0px);--rally-safe-bottom:env(safe-area-inset-bottom,0px);--rally-safe-left:env(safe-area-inset-left,0px)}
+body{padding-top:var(--rally-safe-top);padding-bottom:var(--rally-safe-bottom);padding-left:var(--rally-safe-left);padding-right:var(--rally-safe-right)}
+#lib-overlay{top:var(--rally-vtop,0px);bottom:auto;height:var(--rally-vh,100dvh);padding:var(--rally-safe-top) var(--rally-safe-right) var(--rally-safe-bottom) var(--rally-safe-left);box-sizing:border-box}
+#lib-overlay .lib-top{margin:0;width:100%;max-width:none;position:sticky;top:0;z-index:20;background:#11162ef5}
+#lib-overlay .lib-close{min-height:44px}
+@media(max-width:1000px){
+ body :is(input,textarea,select){font-size:max(16px,1em)!important}
+ :is(#hero-creator,#science-lab,#learning-dialog)[open]{position:fixed;top:calc(var(--rally-vtop,0px) + var(--rally-safe-top));left:var(--rally-safe-left);right:var(--rally-safe-right);bottom:auto;margin:7px auto;max-height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom));max-width:calc(100vw - 14px - var(--rally-safe-left) - var(--rally-safe-right))}
+ #hero-creator[open],#science-lab[open]{height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom))}
+ #hero-creator .hero-builder-heading button{min-height:44px;min-width:44px}
+ #science-lab .sl-header-actions .sl-quiet{min-height:44px!important}
+ #learning-dialog .learning-body{max-height:calc(var(--rally-vh,100dvh) - 100px - var(--rally-safe-top) - var(--rally-safe-bottom))}
+}
+@media(max-width:850px){
+ #hero-creator .hero-builder-body{grid-template-rows:160px minmax(0,1fr)}
+ #hero-creator .hero-customization{display:block;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ #hero-creator .hero-options-scroll{overflow:visible;max-height:none}
+ #hero-creator .hero-category-tabs{position:sticky;top:0;z-index:3}
+ #hero-creator .hero-category-tabs button{min-height:44px}
+ #hero-creator .hero-preview-tools button{min-height:44px}
+}
+html[data-rally-short] #hero-creator[open]{height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom));max-height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom));top:calc(var(--rally-vtop,0px) + var(--rally-safe-top));left:var(--rally-safe-left);right:var(--rally-safe-right);bottom:auto;margin:7px auto}
+html[data-rally-short] #hero-creator .hero-builder-body{grid-template-columns:minmax(155px,.75fr) minmax(0,1.25fr);grid-template-rows:minmax(0,1fr)}
+html[data-rally-short] #hero-creator .hero-preview-panel{display:flex;min-height:0;overflow-y:auto;padding:8px}
+html[data-rally-short] #hero-creator .hero-preview-header{width:100%;text-align:center;padding:0}
+html[data-rally-short] #hero-creator .hero-preview-header h3{font-size:18px;margin:3px 0}
+html[data-rally-short] #hero-creator .hero-full-preview{position:relative;inset:auto;flex:none;width:100%;height:115px}
+html[data-rally-short] #hero-creator .creator-name-field{position:static;width:100%;margin:4px 0}
+html[data-rally-short] #hero-creator .hero-preview-tools{position:static;max-width:100%;margin-top:4px}
+html[data-rally-short] #hero-creator .hero-customization{display:block;overflow-y:auto;min-height:0}
+html[data-rally-short] #hero-creator .hero-options-scroll{overflow:visible;max-height:none}
+html[data-rally-short] #hero-creator .hero-builder-footer .primary{flex-basis:auto;order:0}
+html[data-rally-short] #hero-creator .hero-builder-footer button{min-height:44px}
+/* During storms reserve the whole visual viewport for the arena and touch deck. */
+#lib-overlay[data-scene=storm] .lib-frame{height:100%;width:100%;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;min-height:0}
+#lib-overlay[data-scene=storm] .lib-top{flex:none}
+#lib-overlay[data-scene=storm] .lib-card{min-height:0}
+@media(orientation:landscape) and (max-height:600px){
+ #lib-overlay[data-scene=storm]{overflow:hidden}
+ #lib-overlay[data-scene=storm] .lib-card{display:grid;grid-template-columns:minmax(0,2fr) minmax(145px,1fr);grid-template-rows:auto minmax(0,1fr) auto;flex:1}
+ #lib-overlay[data-scene=storm] .lib-hud{grid-column:1/-1;padding:4px 7px;gap:5px}
+ #lib-overlay[data-scene=storm] .lib-hud .lib-stat{font-size:10px}
+ #lib-overlay[data-scene=storm] .lib-canvas-wrap{grid-column:1;grid-row:2;align-self:center;justify-self:center;width:min(100%,calc((var(--rally-vh,100dvh) - var(--rally-safe-top) - var(--rally-safe-bottom) - 150px)*2.08695652));aspect-ratio:960/460}
+ #lib-overlay[data-scene=storm] .lib-dialogue{grid-column:2;grid-row:2;min-height:0;overflow:auto;padding:7px}
+ #lib-overlay[data-scene=storm] .lib-prompt{font-size:14px;line-height:1.3}
+ #lib-overlay[data-scene=storm] .lib-feedback{font-size:11px}
+ #lib-overlay[data-scene=storm] .lib-controls{grid-column:1/-1;grid-row:3}
+ #lib-overlay[data-scene=storm] .lib-instructions,#lib-overlay[data-scene=storm] .lib-kicker{display:none}
+ #lib-overlay[data-scene=storm] .lib-top{padding:3px 7px}
+ #lib-overlay[data-scene=storm] .lib-title{font-size:20px}
+}
+@media(pointer:coarse){body :is(input,textarea,select){font-size:max(16px,1em)!important}}
+html[data-rally-short] #hero-creator .hero-category-tabs{position:static}
+@media(max-width:450px){html[data-rally-short] #hero-creator .hero-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}

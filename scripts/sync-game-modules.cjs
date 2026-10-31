@@ -21,6 +21,10 @@ else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n\n'+scrip
 const css='<style id="science-lab-styles">\n'+read('src/science-lab.css')+'\n</style>';
 if(html.includes('<style id="science-lab-styles">'))html=html.replace(/<style id="science-lab-styles">[\s\S]*?<\/style>/,css);
 else html=html.replace('</head>',css+'\n</head>');
+const mobileCSS='<style id="mobile-playability-styles">\n'+read('src/mobile-playability.css')+'\n</style>';
+if(html.includes('<style id="mobile-playability-styles">'))html=html.replace(/<style id="mobile-playability-styles">[\s\S]*?<\/style>/,()=>mobileCSS);else html=html.replace('</head>',mobileCSS+'\n</head>');
+const mobileJS='/* MOBILE_PLAYABILITY_START */\n'+read('src/mobile-playability.js')+'\n/* MOBILE_PLAYABILITY_END */';
+if(html.includes('/* MOBILE_PLAYABILITY_START */'))html=html.replace(/\/\* MOBILE_PLAYABILITY_START \*\/[\s\S]*?\/\* MOBILE_PLAYABILITY_END \*\//,()=>mobileJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+mobileJS);
 fs.writeFileSync(file,html);
 
 
