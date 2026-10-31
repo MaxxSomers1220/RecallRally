@@ -57,7 +57,7 @@ const viewports=[['desktop',1366,768],['tablet-landscape',1024,768],['tablet-por
   await page.reload({waitUntil:'domcontentloaded'});await page.locator('#quest-home-continue').click();assert.equal((await state()).progress,10);assert.deepEqual((await state()).look,original.look);
   // Offline plus reduced motion: decode new art and play a full rematch with no network.
   await context.setOffline(true);await page.emulateMedia({reducedMotion:'reduce'});await page.locator('[data-level="9"]').click();await page.locator('#quest-begin').click();
-  assert.equal(await page.locator('.guardian-head').evaluate(e=>getComputedStyle(e).animationName),'none');
+  assert.equal(await page.locator('.guardian-painted-frame').evaluate(e=>getComputedStyle(e).animationName),'none');
   for(let i=0;i<4;i++){await pick(true);await next();}assert.equal((await state()).phase,'won');assert.equal((await state()).progress,10);await snap('offline-reduced-victory');
   assert.deepEqual((await state()).look,original.look);await context.close();
   console.log('PASS '+name+': full ten-world journey, customized hero, journal, defeat, close/reopen, durable save, offline rematch, reduced motion');

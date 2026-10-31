@@ -37,10 +37,8 @@ function illustratedArenaEnvironment(d,l){
  const victory=h===4?'<g class="env-beacon"><path d="M360 4V166" stroke="'+c+'" stroke-width="6" opacity=".7"/><path d="M350 4V166M370 4V166" stroke="'+c+'" stroke-width="1" opacity=".5"/><text x="360" y="18" text-anchor="middle" fill="#fff3cc" stroke="#13253b" stroke-width="3" paint-order="stroke" font-size="10">SEAL LIGHT TO RIGBY</text></g>':'';
  return '<g class="arena-environment illustrated-world '+(d.land>=5?'expanded-world ':'')+'world-'+d.land+'" data-world-name="'+esc(l.land)+'" data-arena-progress="'+h+'" data-arena-phase="'+(phase?2:1)+'"><defs><linearGradient id="'+id+'-shade" x2="0" y2="1"><stop stop-color="#0b1a32" stop-opacity=".08"/><stop offset=".55" stop-color="#0b1a32" stop-opacity=".08"/><stop offset="1" stop-color="#0b1a32" stop-opacity=".65"/></linearGradient></defs><image class="world-painted-depth" href="'+ADVENTURE_ART[v.key]+'" width="720" height="300" preserveAspectRatio="xMidYMid slice"/><rect width="720" height="300" fill="url(#'+id+'-shade)"/>'+framework+mechanism+progress+'<path class="env-impact-route" d="M552 193Q440 40 360 80" fill="none" stroke="'+c+'" stroke-width="4"/><circle class="env-signature-wave" cx="360" cy="100" r="48" fill="none" stroke="'+c+'" stroke-width="4"/>'+victory+'</g>';
 }
-function illustratedGuardian(d,l,glyph){
- const mood=d.phase==='won'||d.scores[0]===4?'delighted':d.phase==='lost'?'kind':d.phase==='result'?(d.correct?'impressed':d.intent==='strike'?'casting':'guarding'):'curious';
- return '<g class="spell-fighter guardian-fighter"><g class="illustrated-guardian" data-guardian="'+d.land+'" data-mood="'+mood+'" transform="translate(588 73)"><svg x="-79" y="-100" width="158" height="204" viewBox="-100 -125 200 230">'+ADVENTURE_ART['guardian-'+d.land]+'</svg></g><g transform="translate(520 89)" fill="'+l.magicColor+'"><circle r="9" fill="'+l.magicColor+'"/><g class="guardian-charge">'+glyph+'</g></g></g>';
-}
+function illustratedGuardian(d,l,glyph){return paintedGuardianArt(d,l,glyph)}
+
 function illustratedWorldProgress(d){
  const v=ADVENTURE_VISUALS[d.land],h=Math.min(4,d.scores[0]);
  return '<div class="world-restoration" aria-label="'+esc(v.goal)+': '+h+' of 4 changes complete"><span class="restoration-goal">'+esc(v.goal)+'</span><ol>'+v.steps.map((s,i)=>'<li class="'+(i<h?'restored':i===h?'restoration-next':'')+'"><span aria-hidden="true">'+(i<h?'✓':i+1)+'</span>'+esc(s)+'</li>').join('')+'</ol></div>';
