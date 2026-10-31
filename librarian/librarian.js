@@ -224,7 +224,7 @@ function paint(){if(!ctx)return;ctx.clearRect(0,0,WIDTH,HEIGHT);
 }
 function syncHero(){if(!root)return;
  if(heroNode){heroNode.style.left=(hero.x/WIDTH*100)+'%';heroNode.style.bottom=((HEIGHT-FLOOR+(['storm','defeat-hit'].includes(screen)?hero.y:0))/HEIGHT*100)+'%';heroNode.style.transform='translateX(-50%) scaleX('+hero.facing+')';
-  heroNode.className='lib-hero-sprite lib-v4-'+hero.pose;heroNode.style.opacity='1';}
+  heroNode.className='lib-hero-sprite lib-v4-'+hero.pose;heroNode.style.opacity='1';/* HERO_PRESENTATION_START */const motionAction=dashTimer>0?'dash':shieldTimer>0?'shield':'';if(heroNode.dataset.motionAction!==motionAction)heroNode.dataset.motionAction=motionAction;/* HERO_PRESENTATION_END */}
  if(guardian){if(moodUntil&&elapsed>=moodUntil)guardianReaction(screen==='storm'?'preparing':screen==='complete'||screen==='defeated'?'satisfied':screen==='review'?'impressed':'curious');if(guardian.dataset.mood!==guardianMood)guardian.dataset.mood=guardianMood;guardian.className='lib-guardian-sprite';}
  if(root&&root.dataset.scene!==screen)root.dataset.scene=screen;
 }
@@ -265,7 +265,7 @@ function playTone(name){if(!soundEnabled())return;try{const AC=window.AudioConte
 // DOM articulation reuses the saved character's exact SVG geometry. The sources
 // live in defs once; split limb uses never duplicate gradients or change identity.
 function rigHero(svg){
- if(!svg)return;const body=svg.querySelector('.panther-hero');if(!body)return;
+ if(!svg)return;const body=svg.querySelector('.panther-hero');if(!body)return;/* HERO_PRESENTATION_START */if(body.classList.contains('hero-motion-rig')){svg.querySelector('.hero-idle')?.classList.replace('hero-idle','lib-source-idle');svg.dataset.articulated='true';return;}/* HERO_PRESENTATION_END */
  const ns='http://www.w3.org/2000/svg',make=(tag,attrs={})=>{const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e};
  const defs=make('defs');svg.appendChild(defs);let serial=0;
  function split(node,kind){if(!node)return;const wrap=make('g',{'class':'lib-rig-'+kind}),source='lib-rig-source-'+serial++;node.parentNode.insertBefore(wrap,node);node.setAttribute('id',source);defs.appendChild(node);

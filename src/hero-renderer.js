@@ -2,7 +2,7 @@ function renderPantherHero(value,options={}){
  const l=normalizePantherLook(value),id=String(options.idPrefix||'panther').replace(/[^a-zA-Z0-9_-]/g,'')||'panther',pose=['idle','cast','hit','victory'].includes(options.pose)?options.pose:'idle';
  const skin=heroOptionColor('skin',l.skin),hair=heroOptionColor('hairColor',l.hairColor),cloth=heroOptionColor('outfitColor',l.outfitColor),cape=heroOptionColor('capeColor',l.capeColor),eye=heroOptionColor('eyeColor',l.eyeColor),magic=heroMagicColor(l);
  const tone=pantherTone,g=n=>'url(#'+id+'-'+n+')',ink='#292738',light=tone(cloth,.29),dark=tone(cloth,-.37),gold='#e9b65b',goldDark='#9f692d';
- const path=(d,fill,stroke=ink,w=1.6,extra='')=>'<path d="'+d+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+w+'" stroke-linejoin="round" stroke-linecap="round" '+extra+'/>'+heroMaterialGrain(d,fill,id);
+ const path=(d,fill,stroke=ink,w=1.6,extra='')=>'<path d="'+d+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+w+'" stroke-linejoin="round" stroke-linecap="round" '+extra+'/>'+heroMaterialGrain(d,fill,id)+heroAtelierSurface(d,fill,id);
  const paw=(x,y,s,c)=>pantherPaw(x,y,s,c);
  const star=(x,y,s,c)=>'<path transform="translate('+x+' '+y+') scale('+s+')" d="M0-10 2.6-2.6 10 0 2.6 2.6 0 10-2.6 2.6-10 0-2.6-2.6Z" fill="'+c+'"/>';
  const extraDefs='<radialGradient id="'+id+'-skinlight" cx=".36" cy=".32" r=".72"><stop stop-color="'+tone(skin,.45)+'" stop-opacity=".44"/><stop offset=".55" stop-color="'+skin+'" stop-opacity="0"/><stop offset="1" stop-color="'+tone(skin,-.4)+'" stop-opacity=".22"/></radialGradient><linearGradient id="'+id+'-hood" x1="0" y1="0" x2="1" y2=".9"><stop stop-color="'+tone(cloth,-.22)+'"/><stop offset=".52" stop-color="'+tone(cloth,-.54)+'"/><stop offset="1" stop-color="'+tone(cloth,-.24)+'"/></linearGradient><linearGradient id="'+id+'-boot" x1="0" y1="0" x2="1" y2=".7"><stop stop-color="'+tone(cloth,-.45)+'"/><stop offset=".4" stop-color="'+tone(cloth,-.17)+'"/><stop offset=".7" stop-color="'+tone(cloth,-.42)+'"/><stop offset="1" stop-color="'+tone(cloth,-.65)+'"/></linearGradient>';
@@ -61,7 +61,7 @@ function renderPantherHero(value,options={}){
  const neck=path('M143 163 141 188 160 204 178 185 174 162Z',g('skin'),tone(skin,-.4),1.5)+path('M144 170Q159 185 177 172L174 183 159 195 143 184Z',tone(skin,-.15),'none');
  const ear=(x,y,flip)=>{
   let d=l.ears==='rounded'?'M0 26Q-10 4 3-4Q21-9 30 22Z':l.ears==='tufted'?'M0 28-4 0 4 4 7-12 15 2 30 22Z':'M0 28 1-7Q16-3 31 23Z';
-  return '<g transform="translate('+x+' '+y+') scale('+flip+' 1)">'+path(d,dark,ink,2.4)+path(l.ears==='rounded'?'M6 22Q1 6 8 3Q18 0 23 21Z':'M6 22 8 3 24 22Z',g('gold'),goldDark,1)+'</g>';
+  return '<g transform="translate('+x+' '+y+') scale('+flip+' 1)"><g data-hj="ear-'+(flip===1?'left':'right')+'" data-pivot="15,25">'+path(d,dark,ink,2.4)+path(l.ears==='rounded'?'M6 22Q1 6 8 3Q18 0 23 21Z':'M6 22 8 3 24 22Z',g('gold'),goldDark,1)+'</g></g>';
  };
  const ears=l.ears==='none'?'':ear(107,l.hoodUp==='up'?28:49,1)+ear(224,l.hoodUp==='up'?35:53,-1);
  let hood='';
@@ -82,7 +82,10 @@ function renderPantherHero(value,options={}){
  const face=path(faces[l.face],g('skin'),tone(skin,-.45),1.7)+path(faces[l.face],g('skinlight'),'none',0)+path('M121 112Q121 140 143 158Q161 174 184 157Q168 181 158 176Q130 167 121 142Z',tone(skin,-.1),'none')+path('M131 96Q142 83 162 84Q180 84 188 99Q162 92 145 104Z',tone(skin,.18),'none')+
  '<ellipse cx="126" cy="140" rx="8" ry="5" fill="'+tone(skin,-.05)+'" opacity=".55"/><ellipse cx="188" cy="140" rx="7" ry="5" fill="'+tone(skin,-.03)+'" opacity=".4"/>'+path('M157 132Q156 138 154 141Q153 145 160 146Q166 147 167 143Q164 142 163 138',tone(skin,-.06),tone(skin,-.19),.8)+'<ellipse cx="157" cy="141" rx="3" ry="1.7" fill="'+tone(skin,.27)+'" opacity=".7"/>'+path('M161 146q4 1 5-2','none',tone(skin,-.3),.8);
  const browStrong=['angular','strong'].includes(l.face),lash=['soft','heart'].includes(l.face),focused=l.expression==='focused'||pose==='cast';
- const eyeShape=(x,y,scale=1)=>pose==='hit'?'<g transform="translate('+x+' '+y+') scale('+(scale*.83)+')">'+path('M-13 2Q0-5 13 0','none',tone(hair,-.6),2.7)+path('M-10 8 0 10 8 7','none',tone(skin,-.22),1.2)+'</g>':'<g transform="translate('+x+' '+y+') scale('+(scale*.83)+')">'+path(focused?'M-14 0Q-3-9 13-6Q16 9 3 13Q-10 14-14 0Z':'M-14 2Q-10-13 4-12Q18-9 14 5Q8 16-4 12Q-12 10-14 2Z','#fff9e9',tone(skin,-.52),.85)+'<ellipse cx="2" cy="1" rx="8" ry="10.5" fill="'+g('iris')+'"/><ellipse cx="3" cy="0" rx="5.3" ry="8" fill="#302b2d"/><ellipse cx=".5" cy="-4.5" rx="2.8" ry="3.5" fill="#fffdf4"/><circle cx="6" cy="6" r="1.4" fill="#fffdf4"/>'+path(focused?'M-14-1Q-1-12 14-6':'M-14 1Q-11-14 5-12Q13-10 16-6','none',tone(hair,-.6),lash?2.8:1.8)+ (lash?path('M-13-3-17-8M-11-8-14-13M13-8l4-4','none',tone(hair,-.6),1.3):'')+'</g>';
+ const eyeShape=(x,y,scale=1)=>{
+  const eid=id+'-eye-'+x,shape=focused?'M-14 0Q-3-9 13-6Q16 9 3 13Q-10 14-14 0Z':'M-14 2Q-10-13 4-12Q18-9 14 5Q8 16-4 12Q-12 10-14 2Z';
+  return '<g class="hero-eye-socket" transform="translate('+x+' '+y+') scale('+(scale*.83)+')"><defs><clipPath id="'+eid+'"><ellipse data-hero-aperture="" data-radius="16" rx="19" ry="16"/></clipPath></defs>'+path(shape,skin,'none',0)+'<g clip-path="url(#'+eid+')">'+(pose==='hit'?path('M-13 2Q0-5 13 0','none',tone(hair,-.6),2.4):path(shape,'#fff9e9',tone(skin,-.52),.85)+'<g data-hero-gaze=""><ellipse cx="2" cy="1" rx="8" ry="10.5" fill="'+g('iris')+'"/>'+heroIrisDetail(id)+'<ellipse cx="3" cy="0" rx="4.8" ry="7.8" fill="#262432"/><ellipse cx=".5" cy="-4.5" rx="2.8" ry="3.5" fill="#fffdf4"/><circle cx="6" cy="6" r="1.4" fill="#fffdf4"/></g>'+path(focused?'M-14-1Q-1-12 14-6':'M-14 1Q-11-14 5-12Q13-10 16-6','none',tone(hair,-.6),lash?2.6:1.8)+(lash?path('M-13-3-17-8M-11-8-14-13M13-8l4-4','none',tone(hair,-.6),1.1):''))+'</g><path data-hero-lid="" d="M-13 1Q0 5 13 0" fill="none" stroke="'+tone(hair,-.5)+'" stroke-width="1.8" opacity="0"/>'+path('M-11 15Q0 19 10 13','none',tone(skin,-.22),.6)+'</g>';
+ };
  const eyes=eyeShape(137,123,browStrong?.95:1)+eyeShape(180,122,browStrong?.94:.97)+path(focused?'M123 103 145 108M169 107 190 99':'M124 102Q133 96 145 101M168 101Q181 94 190 100','none',tone(hair,-.35),browStrong?4.3:3.1);
  let mouth='';if(pose==='hit')mouth=path('M151 159Q161 154 170 158','none',tone(skin,-.46),1.8);else if(l.expression==='grin'||pose==='victory')mouth=path('M143 153Q159 160 177 151Q173 168 161 168Q149 167 143 153Z','#713d33',tone(skin,-.43),1.2)+path('M146 155Q162 161 174 154L171 160Q159 164 149 159Z','#fff5df','none');else if(l.expression==='calm')mouth=path('M150 158Q160 161 171 155','none',tone(skin,-.46),1.8);else if(l.expression==='focused')mouth=path('M148 158Q158 163 171 155','none',tone(skin,-.5),2);else mouth=path('M144 153Q156 166 175 153','none',tone(skin,-.48),1.9)+path('M151 166q8 3 14-1','none',tone(skin,.14),1.1);
  // Front hair uses locks, curls, braids, and texture rather than a color-only cap.
@@ -165,23 +168,23 @@ function renderPantherHero(value,options={}){
   if(l.staff==='lantern')weapon+=path('M267 99V91M257 51Q267 33 277 51','none',g('gold'),4)+path('M249 54 258 47 276 47 285 54 280 89 253 89Z',g('gold'),goldDark,1.3)+path('M254 57h26l-4 27h-18Z',tone(magic,.6),tone(magic,-.2),1.3)+path('M252 54 258 43 265 49 275 43 283 54Z',dark,g('gold'),1.2)+paw(267,73,.55,magic)+path('M254 88h26l-7 11h-13Z',g('gold'),goldDark,1.2);
   if(l.staff==='claw')weapon+=path('M267 104Q244 96 242 72Q242 53 251 44L253 70 261 82 262 43 269 34 272 80 280 69 283 43Q295 56 292 76Q291 99 267 104Z',g('gold'),goldDark,1.5)+paw(267,76,.85,magic)+path('M246 69 251 83M284 69 280 83','none','#ffdf95',2);
  }
- weapon='<g class="panther-weapon" data-staff="'+l.staff+'" transform="rotate(9 267 164)">'+weapon+'</g>';
+ weapon='<g class="panther-weapon" data-staff="'+l.staff+'" transform="rotate(9 267 164)">'+weapon+heroEquipmentDetail(l,id)+'</g>';
  const magicAccents='<g class="panther-magic-accent" opacity=".85"><circle cx="48" cy="221" r="'+(pose==='cast'?32:23)+'" fill="'+g('magic')+'"/><g transform="translate(44 218) scale('+(pose==='cast'?.57:.35)+')">'+heroMagicGlyph(l)+'</g>'+star(31,211,.45,tone(magic,.45))+star(64,216,.3,magic)+'</g>';
  const label=options.label?'<text x="160" y="418" text-anchor="middle" fill="#34534c" font-size="12" font-weight="800">PANTHER ADVENTURER</text>':'';
- const tilt=pose==='hit'?4:pose==='victory'?-7:pose==='cast'?-5:-3;
- const head='<g class="panther-head" transform="rotate('+tilt+' 160 140)">'+hood+face+heroFacePlanes(l)+'<g class="hero-blink">'+eyes+'</g>'+mouth+front+hoodEdges+mask+'</g>';
+ const tilt=0;
+ const head='<g class="panther-head" transform="rotate('+tilt+' 160 140)">'+hood+face+heroPortraitDetail(l,id,faces[l.face])+'<g class="hero-blink">'+eyes+'</g>'+mouth+front+hoodEdges+mask+'</g>';
  const fabricDepth=path('M123 221 132 251 127 257 116 232Z',tone(cloth,-.22),'none')+path('M183 217 190 237 183 255 175 251Z',tone(cloth,.12),'none')+path('M130 243 140 255M172 246l10-16','none',tone(cloth,.3),1.1);
  const bootFolds=path('M82 377 96 382 110 382M216 378 229 384 242 384','none',tone(cloth,.32),1.8)+path('M79 382 92 387M218 385l12 3','none',tone(cloth,-.36),2);
- const wavingCape='<g class="panther-cape" transform="rotate('+(pose==='cast'?-3:pose==='hit'?2:pose==='victory'?-4:0)+' 157 190)">'+capeLayer+'</g>';
+ const wavingCape='<g class="panther-cape" transform="rotate('+0+' 157 190)">'+capeLayer+'</g>';
  if(options.fairy)return fairyHeroFromLayers(l,{id,pose,articulated:options.articulated},{defs,wavingCape,hairBack,legs,bootFolds,torso,sleeves,outfit,fabricDepth,pattern,shoulders,belt,accessory,neck,head,collar,frontLocks,brooch,weapon,leftHand,rightHand,gloves,magicAccents,label,tilt});
- return '<g class="panther-hero storybook-hero panther-pose-'+pose+'" data-hero-face="'+l.face+'" data-hero-hair="'+l.hairStyle+'" data-hero-outfit="'+l.outfit+'" data-hero-staff="'+l.staff+'" data-hero-magic="'+l.magicColor+'" style="--hero-magic:'+magic+'">'+defs+'<ellipse cx="164" cy="400" rx="111" ry="10" fill="#435747" opacity=".12"/>'+renderHeroWings(l,id)+wavingCape+hairBack+(l.shoes==='boots'?(options.articulated?'<g class="hero-legs" data-shoes="boots">'+legs+bootFolds+'</g>':legs+bootFolds):renderHeroLegs(l,id))+torso+(options.articulated?'<g class="hero-sleeves">'+sleeves+'</g>':heroSplitLimbArt(sleeves,id,'sleeves'))+outfit+fabricDepth+pattern+heroTailoring(l,id,false)+shoulders+belt+accessory+neck+head+collar+'<g class="panther-front-hair" data-front-hair="'+l.hairStyle+'" transform="rotate('+tilt+' 160 140)">'+frontLocks+'</g>'+brooch+weapon+'<g class="'+(options.articulated?'':'atelier-arm-left')+'" transform="rotate('+(pose==='cast'?-12:pose==='victory'?-20:0)+' 60 239)">'+leftHand+'</g>'+rightHand+(options.articulated?gloves:heroSplitLimbArt(gloves,id,'gloves'))+magicAccents+label+'</g>';
+ return heroComposeRig(l,{id,pose,fairy:false},{defs,wings:renderHeroWings(l,id),cape:wavingCape,hairBack,legs:l.shoes==='boots'?legs+bootFolds:renderHeroLegs(l,id),torso,sleeves,arms:'',outfit,fabricDepth,pattern,tailoring:heroTailoring(l,id,false),shoulders,belt,accessory,neck,head,collar,frontLocks,brooch,weapon,leftHand,rightHand,gloves,magicAccents,label,skirt:'',flowers:''});
 }
 
 /* PANTHER_ART_END */
 /* FAIRY_ART_START */
 /* Moonpetal Fairy Atelier — composable, offline vector artwork.
  * Shares the Panther Atelier's face, hair, hands, hood, equipment and poses.
- * Canonical viewBox 0 0 320 420; no bitmap, network asset or gameplay changes.
+ * Canonical viewBox 0 0 320 420; locally embedded painted materials, no network requests.
  */
 function renderFairyHero(look,options={}){return renderPantherHero(look,{...options,fairy:true})}
 
@@ -216,8 +219,8 @@ function renderHeroWings(l,id,pose='idle'){
    p('M41 54 80 142 153 213 104 115ZM26 169 84 196 146 212 62 158ZM37 295 93 247 149 218 88 228Z',g('winglight'),gold,.8)+
    p('M80 142 49 143M84 196 60 214M93 247 103 271','none',t(c,.75),1.4)+s(78,140,.7)+s(92,246,.8);
  }
- const flare=pose==='cast'?-7:pose==='victory'?-11:pose==='hit'?7:0;
- return defs+'<g class="hero-wings fairy-wings" data-wings="'+l.wings+'" data-wing-color="'+l.wingColor+'"><g class="hero-wing-left" transform="rotate('+flare+' 153 212)">'+wing+'</g><g class="hero-wing-right" transform="translate(310 0) scale(-1 1) rotate('+flare+' 153 212)">'+wing+'</g></g>';
+ const flare=0;
+ return defs+'<g class="hero-wings fairy-wings" data-wings="'+l.wings+'" data-wing-color="'+l.wingColor+'"><g class="hero-wing-left" data-hj="wing-left" data-pivot="153,212" transform="rotate('+flare+' 153 212)">'+wing+'</g><g class="hero-wing-right" transform="translate(310 0) scale(-1 1)"><g data-hj="wing-right" data-pivot="153,212" transform="rotate('+flare+' 153 212)">'+wing+'</g></g></g>';
 }
 
 function renderHeroLegs(l,id){
@@ -255,7 +258,7 @@ function renderHeroLegs(l,id){
 
 function fairyHeroFromLayers(l,options,L){
  const id=options.id,pose=options.pose,t=pantherTone,c=heroOptionColor('outfitColor',l.outfitColor),cape=heroOptionColor('capeColor',l.capeColor),skin=heroOptionColor('skin',l.skin),magic=heroMagicColor(l),g=n=>'url(#'+id+'-'+n+')',ink=t(c,-.61),gold='#d7a34d',light=t(c,.63),dark=t(c,-.22);
- const p=(d,f,s=ink,w=1.4,extra='')=>'<path d="'+d+'" fill="'+f+'" stroke="'+s+'" stroke-width="'+w+'" stroke-linejoin="round" stroke-linecap="round" '+extra+'/>';
+ const p=(d,f,s=ink,w=1.4,extra='')=>'<path d="'+d+'" fill="'+f+'" stroke="'+s+'" stroke-width="'+w+'" stroke-linejoin="round" stroke-linecap="round" '+extra+'/>'+heroAtelierSurface(d,f,id);
  const star=(x,y,z,f)=>'<path transform="translate('+x+' '+y+') scale('+z+')" d="M0-8 2.4-2.4 8 0 2.4 2.4 0 8-2.4 2.4-8 0-2.4-2.4Z" fill="'+f+'"/>';
  const defs='<defs><linearGradient id="'+id+'-silk" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="'+t(c,.68)+'"/><stop offset=".26" stop-color="'+t(c,.27)+'"/><stop offset=".55" stop-color="'+c+'"/><stop offset=".82" stop-color="'+t(c,.22)+'"/><stop offset="1" stop-color="'+t(c,-.21)+'"/></linearGradient><linearGradient id="'+id+'-underskirt" x1="0" y1="0" x2="0" y2="1"><stop stop-color="'+t(c,-.27)+'"/><stop offset=".38" stop-color="'+t(c,.06)+'"/><stop offset="1" stop-color="'+t(c,.57)+'"/></linearGradient><linearGradient id="'+id+'-ruffle" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#fff5eb"/><stop offset=".42" stop-color="'+t(c,.64)+'"/><stop offset=".75" stop-color="'+t(c,.4)+'"/><stop offset="1" stop-color="'+t(c,.11)+'"/></linearGradient><linearGradient id="'+id+'-petal" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="'+t(c,.61)+'"/><stop offset=".45" stop-color="'+t(c,.15)+'"/><stop offset="1" stop-color="'+t(c,-.23)+'"/></linearGradient></defs>';
  const bow=(x,y,z)=>'<g transform="translate('+x+' '+y+') scale('+z+')">'+p('M0 0Q-28-25-32-8Q-33 8-5 9L0 0Q18-28 28-16Q39-1 5 9Z',g('cape'),t(cape,-.35),1.2)+p('M-4 6-23 39-8 32-9 46 5 14 22 39 22 26 34 30 9 4Z',g('cape'),t(cape,-.35),1.3)+p('M-25-11Q-16-8-4 3M9 2 25-12M-6 15-14 32M11 15l11 15','none',t(cape,.52),1.5)+p('M-5-1 6-4 12 8 0 15-8 7Z',g('gold'),gold,1.1)+'</g>';
@@ -323,7 +326,7 @@ function fairyHeroFromLayers(l,options,L){
  const skirtAngle=pose==='cast'?-3:pose==='victory'?-5:pose==='hit'?3:0;
  const leftAngle=pose==='cast'?-12:pose==='victory'?-20:pose==='hit'?6:0;
  const label=L.label?'<text x="160" y="418" text-anchor="middle" fill="#34534c" font-size="12" font-weight="800">PANTHER FAIRY</text>':'';
- return '<g class="panther-hero fairy-hero storybook-hero panther-pose-'+pose+'" data-hero-style="fairy" data-hero-face="'+l.face+'" data-hero-hair="'+l.hairStyle+'" data-hero-outfit="'+l.outfit+'" data-hero-staff="'+l.staff+'" data-hero-magic="'+l.magicColor+'" data-hero-pose="'+pose+'" data-hero-wings="'+l.wings+'" data-hero-shoes="'+l.shoes+'" style="--hero-magic:'+magic+'">'+L.defs+defs+'<ellipse cx="164" cy="400" rx="107" ry="9" fill="#435747" opacity=".11"/>'+renderHeroWings(l,id,pose)+L.wavingCape+L.hairBack+renderHeroLegs(l,id)+'<g class="fairy-skirt" transform="rotate('+skirtAngle+' 160 260)">'+skirt+pattern+'</g>'+(options.articulated?'<g class="hero-arms">'+arms+'</g>':heroSplitLimbArt(arms,id,'arms'))+bodice+heroTailoring(l,id,true)+(options.articulated?'<g class="hero-sleeves">'+sleeves+'</g>':heroSplitLimbArt(sleeves,id,'sleeves'))+L.shoulders+belt+L.accessory+L.neck+L.head+neckline+'<g class="panther-front-hair" data-front-hair="'+l.hairStyle+'" transform="rotate('+L.tilt+' 160 140)">'+L.frontLocks+'</g>'+L.brooch+'<g transform="rotate('+L.tilt+' 160 140)">'+flowers+'</g>'+L.weapon+'<g class="fairy-casting-hand '+(options.articulated?'':'atelier-arm-left')+'" transform="rotate('+leftAngle+' 60 239)">'+L.leftHand+'</g>'+L.rightHand+(options.articulated?L.gloves:heroSplitLimbArt(L.gloves,id,'gloves'))+L.magicAccents+label+'</g>';
+ return heroComposeRig(l,{id,pose,fairy:true},{defs:L.defs+defs,wings:renderHeroWings(l,id),cape:L.wavingCape,hairBack:L.hairBack,legs:renderHeroLegs(l,id),torso:bodice,sleeves,arms,outfit:'',fabricDepth:'',pattern:'',tailoring:heroTailoring(l,id,true),shoulders:L.shoulders,belt,accessory:L.accessory,neck:L.neck,head:L.head,collar:neckline,frontLocks:L.frontLocks,brooch:L.brooch,weapon:L.weapon,leftHand:L.leftHand,rightHand:L.rightHand,gloves:L.gloves,magicAccents:L.magicAccents,label,skirt:'<g class="fairy-skirt">'+skirt+pattern+'</g>',flowers});
 }
 
 /* FAIRY_ART_END */

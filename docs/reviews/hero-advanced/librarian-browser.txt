@@ -1,0 +1,4 @@
+PASS desktop: full 8-question run, real choices/grades/journal; warnings, run/duck/jump/dash/shield/hit, defeat, six guardian poses, shared hero, close/reopen, touch cancellation, offline and reduced motion
+PASS tablet-landscape: full 8-question run, real choices/grades/journal; warnings, run/duck/jump/dash/shield/hit, defeat, six guardian poses, shared hero, close/reopen, touch cancellation, offline and reduced motion
+PASS tablet-portrait: full 8-question run, real choices/grades/journal; warnings, run/duck/jump/dash/shield/hit, defeat, six guardian poses, shared hero, close/reopen, touch cancellation, offline and reduced motion
+PASS phone: full 8-question run, real choices/grades/journal; warnings, run/duck/jump/dash/shield/hit, defeat, six guardian poses, shared hero, close/reopen, touch cancellation, offline and reduced motion

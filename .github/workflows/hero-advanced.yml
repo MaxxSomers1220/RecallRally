@@ -1,0 +1,54 @@
+name: Advanced customizable hero
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/hero-advanced/**'
+      - 'src/hero-*'
+      - 'src/character-art*'
+      - 'librarian/librarian.js'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'amplify.yml'
+      - 'scripts/**'
+      - 'tests/hero-*'
+      - 'tests/character*'
+      - 'tests/fixtures/*hero*'
+      - '.github/workflows/hero-advanced.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node scripts/build-standalone.cjs
+          node tests/hero-advanced.test.cjs
+          node tests/character-art.test.cjs
+          node tests/guardian-motion.test.cjs
+          node tests/adventure-illustrations.test.cjs
+          node tests/adventure-effects.test.cjs
+          node tests/librarian-art.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/hero-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/hero-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Play all styles/outfits, four layouts, arcade controls and packaged game
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/hero-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export HERO_SCREENSHOTS="$RUNNER_TEMP/hero-review"
+          node tests/hero-motion-browser.test.cjs
+          node tests/character-browser.test.cjs
+          node tests/librarian-illustrated-browser.test.cjs
+          node tests/adventure-static.test.cjs
+          node tests/adventure-save-browser.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: actual-customizable-hero-gameplay
+          path: ${{ runner.temp }}/hero-review
+          if-no-files-found: ignore

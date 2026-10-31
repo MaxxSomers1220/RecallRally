@@ -1,0 +1,12 @@
+PASS close browser after two victories: both seals, location, objective, locks and hero restored
+PASS map reload restores the hero without replaying travel
+PASS interrupted duel resets its temporary state, retaining seals, assistance and learning records
+PASS two stable profile IDs retain independent adventures and hero appearances
+PASS new-run confirmation protects progress; reset retains learning, exposure history and hero
+PASS export/import validates backups and confirms replacement; bad import leaves the quest intact
+PASS normal same-origin deployment/file update retains three seals and Librarian v4
+PASS loaded game and save work with all network requests blocked
+PASS saving failures show a visible warning and recovery saves again
+PASS corrupt save cannot crash startup and is retained until intentional replacement
+PASS startup and a new adventure still work when all browser storage is denied
+PASS version, map, statistics and hero validation; no browser JavaScript errors

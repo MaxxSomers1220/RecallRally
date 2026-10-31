@@ -28,3 +28,12 @@
 .guardian-rig-art{overflow:visible}
 .guardian-rig [data-g-joint]{transform-box:view-box;animation:none!important;transition:none!important}
 .guardian-rig .guardian-painted-frame{animation:none!important;opacity:1}
+/* Advanced composable hero: the shared presentation rig owns articulation. */
+.hero-motion-rig [data-hj],.hero-motion-rig .hero-blink,.hero-motion-rig .panther-cape,.hero-motion-rig .panther-magic-accent{animation:none!important;transition:none!important}
+.hero-motion-rig .hero-blink{transform:none!important}
+.hero-motion-rig [data-hj]{transform-box:view-box}
+.hero-motion-rig .hero-atelier-paint{pointer-events:none}
+.lib-hero-sprite:has(.hero-motion-rig) .lib-rig-upper,.lib-hero-sprite:has(.hero-motion-rig) .lib-arm-left,.lib-hero-sprite:has(.hero-motion-rig) .lib-arm-right,.lib-hero-sprite:has(.hero-motion-rig) .lib-leg-left,.lib-hero-sprite:has(.hero-motion-rig) .lib-leg-right,.lib-hero-sprite:has(.hero-motion-rig) .panther-cape{animation:none!important;transform:none!important}
+.hero-preset .hero-motion-rig,.hero-thumb-choice .hero-motion-rig{pointer-events:none}
+.spell-from-guardian .hero-fighter:has(.hero-motion-rig),.spell-final-strike .hero-fighter:has(.hero-motion-rig){animation:none!important}
+.lib-hero-sprite:has(.hero-motion-rig) svg{animation:none!important;transform:none!important}
