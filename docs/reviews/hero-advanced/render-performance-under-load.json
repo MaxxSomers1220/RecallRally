@@ -1,0 +1,109 @@
+{
+  "environment": "Headless Chromium on shared cloud build machine; two styles with crystal wings, long cape and lantern. 2.4s samples after warm-up. Observations, not device guarantees.",
+  "rows": [
+    {
+      "device": "laptop",
+      "style": "fairy",
+      "version": "before",
+      "durationMs": 2410.39999999851,
+      "frames": 67,
+      "p50FrameMs": 33.19999999552965,
+      "p95FrameMs": 59.600000001490116,
+      "svgElements": 440,
+      "taskCpuPercent": 31.91710919351459,
+      "layoutMs": 65.083,
+      "heapBytes": 14709372
+    },
+    {
+      "device": "laptop",
+      "style": "fairy",
+      "version": "after",
+      "durationMs": 2446,
+      "frames": 55,
+      "p50FrameMs": 44.69999999552965,
+      "p95FrameMs": 58.5,
+      "svgElements": 580,
+      "taskCpuPercent": 54.763736713000824,
+      "layoutMs": 43.864,
+      "heapBytes": 12935748
+    },
+    {
+      "device": "laptop",
+      "style": "panther",
+      "version": "before",
+      "durationMs": 2405.10000000149,
+      "frames": 58,
+      "p50FrameMs": 38.30000000447035,
+      "p95FrameMs": 84.10000000149012,
+      "svgElements": 374,
+      "taskCpuPercent": 32.60375867945259,
+      "layoutMs": 74.79,
+      "heapBytes": 12661744
+    },
+    {
+      "device": "laptop",
+      "style": "panther",
+      "version": "after",
+      "durationMs": 2435.2000000029802,
+      "frames": 57,
+      "p50FrameMs": 42.79999999701977,
+      "p95FrameMs": 50.899999998509884,
+      "svgElements": 520,
+      "taskCpuPercent": 42.76416721413952,
+      "layoutMs": 48.849,
+      "heapBytes": 14049204
+    },
+    {
+      "device": "phone",
+      "style": "fairy",
+      "version": "before",
+      "durationMs": 2404.2999999970198,
+      "frames": 143,
+      "p50FrameMs": 16.600000001490116,
+      "p95FrameMs": 19.30000000447035,
+      "svgElements": 440,
+      "taskCpuPercent": 55.29513787803718,
+      "layoutMs": 111.165,
+      "heapBytes": 12827216
+    },
+    {
+      "device": "phone",
+      "style": "fairy",
+      "version": "after",
+      "durationMs": 2410.39999999851,
+      "frames": 111,
+      "p50FrameMs": 20.899999998509884,
+      "p95FrameMs": 29.100000001490116,
+      "svgElements": 580,
+      "taskCpuPercent": 71.57683372058857,
+      "layoutMs": 29.038,
+      "heapBytes": 30584492
+    },
+    {
+      "device": "phone",
+      "style": "panther",
+      "version": "before",
+      "durationMs": 2406.1999999955297,
+      "frames": 145,
+      "p50FrameMs": 16.69999999552965,
+      "p95FrameMs": 18,
+      "svgElements": 374,
+      "taskCpuPercent": 51.42419582754132,
+      "layoutMs": 106.803,
+      "heapBytes": 12791660
+    },
+    {
+      "device": "phone",
+      "style": "panther",
+      "version": "after",
+      "durationMs": 2406,
+      "frames": 118,
+      "p50FrameMs": 18.700000002980232,
+      "p95FrameMs": 31.400000005960464,
+      "svgElements": 520,
+      "taskCpuPercent": 70.16783042394013,
+      "layoutMs": 33.393,
+      "heapBytes": 23068692
+    }
+  ]
+}

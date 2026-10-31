@@ -1,0 +1,53 @@
+Desktop/tablet landscape run, then portrait/phone run (arena-local foot coordinates):
+PASS desktop fairy/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop fairy/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop fairy/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop fairy/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop fairy/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop fairy/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop panther/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop panther/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop panther/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop panther/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop panther/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop panther/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS desktop: both styles/all six outfits, 60 core answers; Ward/block, defeat, rapid next, reduced motion, offline and saved hero
+PASS tablet-landscape fairy/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape fairy/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape fairy/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape fairy/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape fairy/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape fairy/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape panther/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape panther/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape panther/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape panther/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape panther/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape panther/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-landscape: both styles/all six outfits, 60 core answers; Ward/block, defeat, rapid next, reduced motion, offline and saved hero
+PASS tablet-portrait fairy/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait fairy/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait fairy/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait fairy/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait fairy/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait fairy/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait panther/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait panther/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait panther/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait panther/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait panther/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait panther/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS tablet-portrait: both styles/all six outfits, 60 core answers; Ward/block, defeat, rapid next, reduced motion, offline and saved hero
+PASS phone fairy/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone fairy/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone fairy/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone fairy/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone fairy/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone fairy/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone panther/mage: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone panther/ranger: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone panther/knight: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone panther/scholar: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone panther/bard: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone panther/alchemist: painted customized creator; live eyelids/joints, planted feet, actual miss response, hand/tool focus, five real questions, victory, identity and cleanup
+PASS phone: both styles/all six outfits, 60 core answers; Ward/block, defeat, rapid next, reduced motion, offline and saved hero
