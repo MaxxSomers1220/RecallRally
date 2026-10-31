@@ -24,9 +24,7 @@
 .preview-casting .storybook-hero .atelier-arm-left{animation:atelier-open-palm .95s cubic-bezier(.2,.65,.3,1) both}
 .storybook-hero{isolation:isolate}
 .storybook-hero .hero-fold-paint{mix-blend-mode:multiply;pointer-events:none}
-/* Interpolate authored silhouettes through a short dissolve; never stretch the painted anatomy. */
-.guardian-transition-from{animation:guardian-pose-away .18s ease-out both}
-.guardian-transition-to{animation:guardian-pose-in .18s ease-out both}
-@keyframes guardian-pose-away{from{opacity:1}to{opacity:0}}
-@keyframes guardian-pose-in{from{opacity:0}to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.guardian-transition-from{display:none}.guardian-transition-to{opacity:1}}
+/* Native painted pieces are jointed, never crossfaded or scaled as a whole figure. */
+.guardian-rig-art{overflow:visible}
+.guardian-rig [data-g-joint]{transform-box:view-box;animation:none!important;transition:none!important}
+.guardian-rig .guardian-painted-frame{animation:none!important;opacity:1}

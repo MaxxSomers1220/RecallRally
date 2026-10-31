@@ -1,0 +1,44 @@
+PASS desktop guardian 0: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 1: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 2: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 3: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 4: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 5: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 6: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 7: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 8: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop guardian 9: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS desktop: 50 graded questions, defeat, rapid advancement/repeated exits, customized save, offline reduced motion
+PASS tablet-landscape guardian 0: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 1: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 2: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 3: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 4: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 5: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 6: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 7: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 8: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape guardian 9: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-landscape: 50 graded questions, defeat, rapid advancement/repeated exits, customized save, offline reduced motion
+PASS tablet-portrait guardian 0: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 1: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 2: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 3: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 4: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 5: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 6: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 7: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 8: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait guardian 9: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS tablet-portrait: 50 graded questions, defeat, rapid advancement/repeated exits, customized save, offline reduced motion
+PASS phone guardian 0: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 1: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 2: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 3: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 4: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 5: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 6: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 7: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 8: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone guardian 9: continuous joints, planted feet, hand/tool focus, no-snap next, honest seal, cleanup
+PASS phone: 50 graded questions, defeat, rapid advancement/repeated exits, customized save, offline reduced motion

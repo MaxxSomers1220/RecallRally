@@ -29,13 +29,7 @@ function heroSplitLimbArt(art,id,kind){
  const a=id+'-'+kind;
  return '<defs><g id="'+a+'-source">'+art+'</g><clipPath id="'+a+'-left"><rect x="-100" y="-100" width="260" height="650"/></clipPath><clipPath id="'+a+'-right"><rect x="160" y="-100" width="300" height="650"/></clipPath></defs>'+['left','right'].map(side=>'<g class="atelier-arm-'+side+'"><g clip-path="url(#'+a+'-'+side+')"><use href="#'+a+'-source"/></g></g>').join('');
 }
-function paintedGuardianArt(d,l,glyph){
- const mood=d.phase==='won'||d.scores[0]===4?'delighted':d.phase==='lost'?'kind':d.phase==='result'?(d.correct?'impressed':d.intent==='strike'?'casting':'guarding'):'curious';
- const key=GUARDIAN_CHARACTER_KEYS[d.land],frame=['casting','guarding'].includes(mood)?1:['impressed','delighted','kind'].includes(mood)?2:0;
- const sheet=CHARACTER_ART[key+'-'+frame],meta=CHARACTER_META[d.land]||{width:640,height:640},width=208*meta.width/meta.height,cx=d.land===9?585:588;
- const changing=d.phase==='result'&&d.fxActive&&frame!==0,draw=(src,extra)=>'<image class="guardian-painted-frame '+extra+'" href="'+src+'" x="'+(-width/2)+'" y="-98" width="'+width+'" height="208" preserveAspectRatio="xMidYMid meet"/>';
- return '<g class="spell-fighter guardian-fighter"><g class="illustrated-guardian painted-guardian" data-guardian="'+d.land+'" data-mood="'+mood+'" data-character-pose="'+frame+'" transform="translate('+cx+' 73)">'+(changing?draw(CHARACTER_ART[key+'-0'],'guardian-transition-from'):'')+draw(sheet,changing?'guardian-transition-to':'')+'</g><g transform="translate(520 89)" fill="'+l.magicColor+'"><circle r="9" fill="'+l.magicColor+'"/><g class="guardian-charge">'+glyph+'</g></g></g>';
-}
+function paintedGuardianArt(d,l,glyph){return guardianRigMarkup(d,l,glyph)}
 
 function heroFacePlanes(l){
  const c=heroOptionColor('skin',l.skin),t=pantherTone;

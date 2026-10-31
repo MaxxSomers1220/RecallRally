@@ -28,8 +28,8 @@ const root=path.join(__dirname,'..'),screens=process.env.CHARACTER_SCREENSHOTS,v
  async function choose(correct){const k=await page.evaluate(correct=>duel.choices.findIndex(c=>(c===duel.deck[duel.index].answer)===correct),correct);if(device==='phone')await page.locator('[data-quest-choice="'+k+'"]').tap();else await page.locator('[data-quest-choice="'+k+'"]').click();assert.equal(await page.evaluate(()=>duel.phase),'result');}
  for(let world=0;world<10;world++){
   await page.locator('#world-next').click();await page.locator('#quest-begin').click();const g=page.locator('.painted-guardian');assert.equal(await g.getAttribute('data-guardian'),String(world));assert.equal(await g.getAttribute('data-character-pose'),'0');
-  for(const c of ['.guardian-painted-frame','.hero-body-art .storybook-hero'])assert(await page.locator(c).isVisible());
-  assert(await page.locator('.guardian-painted-frame').evaluate(async e=>{const im=new Image();im.src=e.getAttribute('href');await im.decode();return im.naturalHeight===640&&im.naturalWidth>=640}));
+  for(const c of ['.guardian-rig-art','.hero-body-art .storybook-hero'])assert(await page.locator(c).isVisible());
+  assert(await page.locator('.guardian-rig-art image').evaluate(async e=>{const im=new Image();im.src=e.getAttribute('href');await im.decode();return im.naturalHeight===640&&im.naturalWidth>=640}));
   if(device==='desktop'||world===0||world===9)await snap('guardian-'+world+'-curious');
   await choose(false);assert.equal(await g.getAttribute('data-character-pose'),'1');assert.match(await g.getAttribute('data-mood'),/casting|guarding/);assert.match(await page.locator('.duel-feedback-slot').innerText(),/Incorrect answer/);
   if(device==='desktop'||world===0||world===9){await page.waitForTimeout(device==='desktop'?390:50);await snap('guardian-'+world+'-casting');}

@@ -1,0 +1,33 @@
+PASS actual Amplify command: node scripts/build-standalone.cjs
+PASS actual Amplify command: node tests/character-art.test.cjs
+PASS actual Amplify command: node tests/adventure-illustrations.test.cjs
+PASS actual Amplify command: node tests/librarian-art.test.cjs
+PASS actual Amplify command: node tests/weather-art.test.cjs
+PASS actual Amplify command: node tests/observatory-art.test.cjs
+PASS actual Amplify command: node tests/creature-art.test.cjs
+PASS actual Amplify command: node tests/circuit-art.test.cjs
+PASS actual Amplify command: node tests/potion-art.test.cjs
+PASS actual Amplify command: node tests/answer-recognition.test.cjs
+PASS actual Amplify command: node tests/home-launcher.test.cjs
+PASS actual Amplify command: node tests/science-lab.test.cjs
+PASS actual Amplify command: node tests/adventure-save.test.cjs
+PASS actual Amplify command: node tests/bank-v29.test.cjs
+PASS actual Amplify command: node tests/worlds.test.cjs
+PASS actual Amplify command: node tests/adventure-effects.test.cjs
+PASS actual Amplify command: node tests/librarian-v4-smoke.test.cjs
+PASS actual Amplify command: mkdir -p dist/librarian
+PASS actual Amplify command: cp index.html dist/index.html
+PASS actual Amplify command: cp librarian/librarian.css librarian/librarian.js dist/librarian/
+PASS actual Amplify command: node scripts/inject-librarian.cjs dist/index.html
+PASS desktop world 0: five real answers, miss review, four earned changes, phase, Starfall, seal 1
+PASS desktop world 1: five real answers, miss review, four earned changes, phase, Starfall, seal 2
+PASS desktop world 2: five real answers, miss review, four earned changes, phase, Starfall, seal 3
+PASS desktop world 3: five real answers, miss review, four earned changes, phase, Starfall, seal 4
+PASS desktop world 4: five real answers, miss review, four earned changes, phase, Starfall, seal 5
+PASS desktop world 5: five real answers, miss review, four earned changes, phase, Starfall, seal 6
+PASS desktop world 6: five real answers, miss review, four earned changes, phase, Starfall, seal 7
+PASS desktop world 7: five real answers, miss review, four earned changes, phase, Starfall, seal 8
+PASS desktop world 8: five real answers, miss review, four earned changes, phase, Starfall, seal 9
+PASS desktop world 9: five real answers, miss review, four earned changes, phase, Starfall, seal 10
+PASS desktop: full ten-world journey, customized hero, journal, defeat, close/reopen, durable save, offline rematch, reduced motion
+PASS staged Amplify: all ten worlds, fifty graded answers, defeat, saves, offline and reduced-motion rematch
