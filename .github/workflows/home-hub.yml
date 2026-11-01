@@ -43,6 +43,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/home-browser/node_modules"
           export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
           export HOME_HUB_REPORT="$RUNNER_TEMP/home-hub-report"
+          node tests/home-hub-feedback-browser.test.cjs
           node tests/home-hub-browser.test.cjs
           node scripts/record-home-hub.cjs
           node tests/home-hub-package.test.cjs

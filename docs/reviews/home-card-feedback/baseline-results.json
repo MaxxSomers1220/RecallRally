@@ -1,0 +1,54 @@
+{
+  "engine": "chromium",
+  "version": "154.0.8037.57",
+  "method": "Desktop browser with stated viewport/touch configuration. No physical-device claim.",
+  "results": [
+    {
+      "name": "small-phone",
+      "engine": "chromium",
+      "contrasts": [
+        {
+          "id": "mode-quick",
+          "ratio": 3.901072306313645
+        },
+        {
+          "id": "mode-written",
+          "ratio": 3.901072306313645
+        },
+        {
+          "id": "mode-adventure",
+          "ratio": 3.901072306313645
+        },
+        {
+          "id": "lib-launch",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "open-science-lab",
+          "ratio": 6.08146030663036
+        }
+      ],
+      "taps": [
+        {
+          "mode": "mode-quick",
+          "transform": "matrix(1, 0, 0, 1, 0, -2)",
+          "pressed": "true",
+          "shadow": "rgb(36, 116, 105) 0px 0px 0px 2px"
+        },
+        {
+          "mode": "mode-written",
+          "transform": "matrix(1, 0, 0, 1, 0, -2)",
+          "pressed": "true",
+          "shadow": "rgb(59, 110, 150) 0px 0px 0px 2px"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "small-phone: mode-quick contrast 3.901072306313645 < 4.5",
+    "small-phone: mode-written contrast 3.901072306313645 < 4.5",
+    "small-phone: mode-adventure contrast 3.901072306313645 < 4.5",
+    "small-phone: native tap retained movement matrix(1, 0, 0, 1, 0, -2)",
+    "small-phone: native tap retained movement matrix(1, 0, 0, 1, 0, -2)"
+  ]
+}

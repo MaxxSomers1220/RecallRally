@@ -591,7 +591,7 @@
 #home-view .home-games-heading .hint{font-size:11px}
 #home-view .home-activity-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 #home-view .home-choice{--home-accent:#247469;position:relative;min-width:0;min-height:150px;display:flex;flex-direction:column;align-items:start;gap:6px;padding:12px 13px;background:#fffefa;color:#173b40;text-align:left;border:1px solid #d6dfd7;border-top:4px solid var(--home-accent);border-radius:14px;box-shadow:0 3px 0 #213f3910;white-space:normal;touch-action:manipulation;transition:transform .14s,border-color .14s,box-shadow .14s}
-#home-view .home-choice:hover{border-color:var(--home-accent);box-shadow:0 6px 15px #153b4018;transform:translateY(-2px)}
+@media(hover:hover) and (pointer:fine){#home-view .home-choice:hover{border-color:var(--home-accent);box-shadow:0 6px 15px #153b4018;transform:translateY(-2px)}}
 #home-view .home-choice:focus-visible{outline:3px solid #2865a2;outline-offset:3px}
 #home-view.home-choice-open .home-choice[aria-pressed=true]{background:#eef5ed;border-color:var(--home-accent);box-shadow:0 0 0 2px var(--home-accent)}
 #home-view .home-choice-icon{display:grid;place-items:center;width:35px;height:35px;flex:none;border-radius:10px;background:#eaf1e8;color:var(--home-accent);font-size:25px;font-weight:800;line-height:1}
@@ -1195,10 +1195,10 @@ body[data-hub-awake=true] #home-view .home-hub:after{animation-play-state:runnin
 #home-view .home-choice-science .home-choice-art img{object-fit:cover;object-position:center 53%}
 #home-view .home-choice strong,#home-view .home-choice small,#home-view .home-choice-cta{margin-left:12px;margin-right:12px}
 #home-view .home-choice strong{font:700 17px/1.16 Georgia,serif;margin-top:4px;color:#263c3a}
-#home-view .home-choice small{font-size:12px;line-height:1.4;color:#485e59}
+#home-view .home-choice small{font-size:12px;line-height:1.4;color:#485e59;opacity:1}
 #home-view .home-choice-cta{font-size:11px;color:#475d44}
 #home-view .home-choice:focus-visible,.home-hub button:focus-visible,.hub-backup :is(button,summary,label):focus-within{outline:3px solid #287cad;outline-offset:3px}
-@media(hover:hover){#home-view .home-choice:hover{border-color:#9a7b42;transform:translateY(-3px);box-shadow:0 7px 16px #3d3b2726}#home-view .home-choice:hover img{transform:scale(1.025)}}
+@media(hover:hover) and (pointer:fine){#home-view .home-choice:hover{border-color:#9a7b42;transform:translateY(-3px);box-shadow:0 7px 16px #3d3b2726}#home-view .home-choice:hover img{transform:scale(1.025)}}
 #home-view .hub-backup{margin-top:20px;border:1px solid #d4c4a5;border-radius:10px;padding:0 14px;background:#faf4e7}
 #home-view .hub-backup summary{min-height:44px;padding:13px 0;font-size:12px;font-weight:700;color:#3d554e;cursor:pointer}
 #home-view .hub-backup p{font-size:12px;line-height:1.6}
