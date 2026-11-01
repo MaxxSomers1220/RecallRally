@@ -25,6 +25,14 @@ const mobileCSS='<style id="mobile-playability-styles">\n'+read('src/mobile-play
 if(html.includes('<style id="mobile-playability-styles">'))html=html.replace(/<style id="mobile-playability-styles">[\s\S]*?<\/style>/,()=>mobileCSS);else html=html.replace('</head>',mobileCSS+'\n</head>');
 const mobileJS='/* MOBILE_PLAYABILITY_START */\n'+read('src/mobile-playability.js')+'\n/* MOBILE_PLAYABILITY_END */';
 if(html.includes('/* MOBILE_PLAYABILITY_START */'))html=html.replace(/\/\* MOBILE_PLAYABILITY_START \*\/[\s\S]*?\/\* MOBILE_PLAYABILITY_END \*\//,()=>mobileJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+mobileJS);
+
+
+
+
+const homeArt={};
+for(const row of JSON.parse(read('assets/home/manifest.json')).assets)homeArt[row.key]='data:image/webp;base64,'+fs.readFileSync(path.join(root,'assets/home',row.file)).toString('base64');
+const homeCSS='<style id="home-hub-styles">\n'+read('src/home-hub.css')+'\n</style>';
+if(html.includes('<style id="home-hub-styles">'))html=html.replace(/<style id="home-hub-styles">[\s\S]*?<\/style>/,()=>homeCSS);else html=html.replace('</head>',homeCSS+'\n</head>');
+const homeJS='/* HOME_HUB_START */\nconst HOME_HUB_ART='+JSON.stringify(homeArt).replace(/</g,'\\u003c')+';\n'+read('src/home-hub.js')+'\n/* HOME_HUB_END */';
+if(html.includes('/* HOME_HUB_START */'))html=html.replace(/\/\* HOME_HUB_START \*\/[\s\S]*?\/\* HOME_HUB_END \*\//,()=>homeJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+homeJS);
 fs.writeFileSync(file,html);
-
-

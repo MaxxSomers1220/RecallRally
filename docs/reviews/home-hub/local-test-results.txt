@@ -1,0 +1,111 @@
+Baseline main395ea3e. Local Chromium automation only; no physical Apple-device or iOS Simulator testing.
+
+/tmp/home-hub-full.log
+PASS chromium laptop: 95 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium tablet-landscape: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium tablet-portrait: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium small-phone: 49 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium modern-phone: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium phone-landscape: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium ipad-split: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium narrow: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS visible storage-denied warning; no invented Continue
+
+/tmp/home-hub-package.log
+PASS actual Amplify command: node scripts/build-standalone.cjs
+PASS actual Amplify command: node tests/character-art.test.cjs
+PASS actual Amplify command: node tests/guardian-motion.test.cjs
+PASS actual Amplify command: node tests/hero-advanced.test.cjs
+PASS actual Amplify command: node tests/mobile-playability.test.cjs
+PASS actual Amplify command: node tests/home-hub.test.cjs
+PASS actual Amplify command: node tests/adventure-illustrations.test.cjs
+PASS actual Amplify command: node tests/librarian-art.test.cjs
+PASS actual Amplify command: node tests/weather-art.test.cjs
+PASS actual Amplify command: node tests/observatory-art.test.cjs
+PASS actual Amplify command: node tests/creature-art.test.cjs
+PASS actual Amplify command: node tests/circuit-art.test.cjs
+PASS actual Amplify command: node tests/potion-art.test.cjs
+PASS actual Amplify command: node tests/answer-recognition.test.cjs
+PASS actual Amplify command: node tests/home-launcher.test.cjs
+PASS actual Amplify command: node tests/science-lab.test.cjs
+PASS actual Amplify command: node tests/adventure-save.test.cjs
+PASS actual Amplify command: node tests/bank-v29.test.cjs
+PASS actual Amplify command: node tests/worlds.test.cjs
+PASS actual Amplify command: node tests/adventure-effects.test.cjs
+PASS actual Amplify command: node tests/librarian-v4-smoke.test.cjs
+PASS actual Amplify command: mkdir -p dist/librarian
+PASS actual Amplify command: cp index.html dist/index.html
+PASS actual Amplify command: cp librarian/librarian.css librarian/librarian.js dist/librarian/
+PASS actual Amplify command: node scripts/inject-librarian.cjs dist/index.html
+PASS chromium tablet-portrait: 47 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium small-phone: 49 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS visible storage-denied warning; no invented Continue
+PASS actual Amplify output: two layouts, live modes, hero/progress, offline and storage failures
+
+/tmp/home-save-regression.log
+PASS close browser after two victories: both seals, location, objective, locks and hero restored
+PASS map reload restores the hero without replaying travel
+PASS interrupted duel resets its temporary state, retaining seals, assistance and learning records
+PASS two stable profile IDs retain independent adventures and hero appearances
+PASS new-run confirmation protects progress; reset retains learning, exposure history and hero
+PASS export/import validates backups and confirms replacement; bad import leaves the quest intact
+PASS normal same-origin deployment/file update retains three seals and Librarian v4
+PASS loaded game and save work with all network requests blocked
+PASS saving failures show a visible warning and recovery saves again
+PASS corrupt save cannot crash startup and is retained until intentional replacement
+PASS startup and a new adventure still work when all browser storage is denied
+PASS version, map, statistics and hero validation; no browser JavaScript errors
+
+/tmp/home-player-regression.log
+PASS laptop: confirmation/edit/scoring, journal, choices, timer/pause/untimed, shared hero/reduced motion, Librarian close
+PASS tablet-landscape: confirmation/edit/scoring, journal, choices, timer/pause/untimed, shared hero/reduced motion, Librarian close
+PASS tablet-portrait: confirmation/edit/scoring, journal, choices, timer/pause/untimed, shared hero/reduced motion, Librarian close
+PASS phone: confirmation/edit/scoring, journal, choices, timer/pause/untimed, shared hero/reduced motion, Librarian close
+
+/tmp/home-launcher-regression.log
+PASS desktop + phone five-choice homepage, Quick/Written/Adventure routing, Science Lab, Librarian, return home, responsive touch
+
+/tmp/home-performance.log
+PASS before/after two-style/two-layout measurements and repeated creator cleanup
+
+/tmp/home-recordings.log
+PASS recorded chromium laptop actual new/returning hero, earned progress, Continue, practice, Lab and Librarian navigation
+PASS recorded chromium phone actual new/returning hero, earned progress, Continue, practice, Lab and Librarian navigation
+
+/tmp/home-legacy-baseline.log
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(game.includes('function buzz()'))
+
+    at Object.<anonymous> (/tmp/home-hub-legacy-baseline/tests/librarian.test.cjs:15:1)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+Final chooser-shortcut verification, same live flows:
+PASS chromium laptop: 96 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium tablet-landscape: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium tablet-portrait: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium small-phone: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium modern-phone: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium phone-landscape: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium ipad-split: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium narrow: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS visible storage-denied warning; no invented Continue
