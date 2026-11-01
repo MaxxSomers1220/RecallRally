@@ -96,3 +96,7 @@ The first hosted guardian-motion check reported a150.4ms frame gap across the un
 Investigation also found redundant work owned by the new hub: five controlled refreshes during Written Practice rewrote35 hidden-home DOM records and woke one extra shared-hero scan. The hub now defers hidden labels until home returns, and only writes changed values. The same probe reports **zero hidden mutations and zero extra scans**. Every Quick/Written setup case includes a regression assertion for this isolation. This demonstrates reduced inactive UI work; it does not establish the cause of the earlier guardian frame gap. Final hosted results are recorded in the PR.
 
 [Before probe](inactive-before.txt) / [after probe](inactive-after.txt). Reproduce from the repository root with `node docs/reviews/home-hub/probe-inactive.cjs`; `HOME_PROBE_HTML` can select an earlier complete HTML build. The first integrated revision is `daf2a1f`.
+
+## Hosted runner budget
+
+The first final-code WebKit job spent roughly twelve minutes installing browser dependencies, then passed seven complete layout scenarios before its25-minute job limit canceled the eighth. No failing assertion was reported. The canceled narrow-layout remainder, recordings and staged checks were not counted as passes. The homepage workflow now allows45 minutes for installation plus the full unchanged scenario/recording/package sequence. This changes CI scheduling only; production JS/CSS/artwork and all existing test assertions remain unchanged from `b1b0b33`. Final hosted outcomes and artifact links are in the PR.
