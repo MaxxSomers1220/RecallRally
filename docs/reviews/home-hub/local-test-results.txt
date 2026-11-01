@@ -153,3 +153,7 @@ PASS visible storage-denied warning; no invented Continue
 PASS actual Amplify output: two layouts, live modes, hero/progress, offline and storage failures
 
 Pillow independently decoded all six WebPs and verified manifest dimensions/byte budgets.
+
+Final narrow-card correction: explicit vertical card layout; added full-width artwork/description assertion.
+PASS static homepage, original home launcher, mobile playability, hero appearance and character-art gates unchanged.
+Complete final browser and staged-output outcomes are preserved in chromium-results.json and amplify/chromium-results.json.

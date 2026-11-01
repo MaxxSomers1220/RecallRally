@@ -12,3 +12,5 @@ Original artwork created for Recall Rally on 2026-11-01 with OpenAI image_gen. N
 The three generation outputs are preserved in `source/`; runtime WebPs are prepared by `python3 scripts/prepare-home-art.py`. `manifest.json` records source/runtime SHA-256 hashes, dimensions and byte budgets. Artwork is embedded in both builds; the game makes no requests to image generation services. Source PNGs are not copied to the Amplify output.
 
 Runtime artwork budget: all six WebPs together under 400 kB, before base64 embedding. Existing art and license/provenance files elsewhere in the repository remain authoritative for the reused illustrations.
+
+Licensing: the repository's existing MIT `LICENSE` remains in place for this contribution. No additional third-party asset license or external font was introduced. Reused project paintings retain their existing provenance.

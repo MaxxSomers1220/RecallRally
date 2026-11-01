@@ -46,7 +46,7 @@ body[data-hub-awake=true] #home-view .home-hub:after{animation-play-state:runnin
 #home-view .home-games-heading h2{font:700 25px/1.2 Georgia,serif;color:#293e3e}
 #home-view .home-games-heading .eyebrow{color:#6c5841;font-size:9px;letter-spacing:1.4px}
 #home-view .home-games-heading .hint{color:#4f625b}
-#home-view .home-choice{padding:0 0 11px;gap:5px;border:1px solid #c9b99a;border-radius:13px;background:linear-gradient(#fffaf0,#f8efdc);overflow:hidden;box-shadow:0 3px 0 #60533e13;color:#203b3c;transition:transform .16s,box-shadow .16s}
+#home-view .home-choice{display:flex;flex-direction:column;align-items:stretch;padding:0 0 11px;gap:5px;border:1px solid #c9b99a;border-radius:13px;background:linear-gradient(#fffaf0,#f8efdc);overflow:hidden;box-shadow:0 3px 0 #60533e13;color:#203b3c;transition:transform .16s,box-shadow .16s}
 #home-view .home-choice-art{display:block;flex:none;width:100%;height:92px;border-bottom:1px solid #9e8553;background:#183b43;overflow:hidden}
 #home-view .home-choice-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 58%;transition:transform .25s}
 #home-view .home-choice-science .home-choice-art{background:radial-gradient(ellipse at center,#517477,#152d3c)}

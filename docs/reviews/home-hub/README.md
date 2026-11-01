@@ -100,3 +100,7 @@ Investigation also found redundant work owned by the new hub: five controlled re
 ## Hosted runner budget
 
 The first final-code WebKit job spent roughly twelve minutes installing browser dependencies, then passed seven complete layout scenarios before its25-minute job limit canceled the eighth. No failing assertion was reported. The canceled narrow-layout remainder, recordings and staged checks were not counted as passes. The homepage workflow now allows45 minutes for installation plus the full unchanged scenario/recording/package sequence. This changes CI scheduling only; production JS/CSS/artwork and all existing test assertions remain unchanged from `b1b0b33`. Final hosted outcomes and artifact links are in the PR.
+
+## Narrow card visual correction
+
+Reviewing actual320px and375px captures exposed an older launcher rule that switched activity cards to a38px icon grid. The painted cards now explicitly retain their vertical flex layout, so both artwork and descriptions occupy the card width. [Before the correction](narrow-before-card-fix.jpg) / [after at320px](chromium-narrow-new.jpg). Every browser case now checks the usable artwork and description width, in addition to page overflow. Existing game/test assertions remain unchanged. The final PR records the results of the complete rerun after this correction.
