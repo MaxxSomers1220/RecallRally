@@ -3498,15 +3498,20 @@ const HOME_HUB_ART={"hall":"data:image/webp;base64,UklGRtZQAgBXRUJQVlA4IMpQAgDQZ
 // Presentation only: reuse existing controls and read the save-owned Continue state.
 const HomeHub=(()=>{
  let refreshes=0,initialized=false;const byId=id=>document.getElementById(id);
+ const data=(el,key,value)=>{value=String(value);if(el.dataset[key]!==value)el.dataset[key]=value};
+ const text=(id,value)=>{const el=byId(id);if(el.textContent!==value)el.textContent=value};
  function refresh(){
   const home=byId('home-view');if(!home)return;refreshes++;
-  const active=!home.hidden&&!home.classList.contains('home-choice-open'),resume=!byId('quest-home-continue').hidden;
-  document.body.dataset.homeHub=String(active);document.body.dataset.hubAwake=String(active&&!document.hidden&&!document.querySelector('dialog[open],#lib-overlay'));
-  const hub=home.querySelector('.home-hub');hub.dataset.resume=String(resume);
-  const total=typeof LANDS==='undefined'?10:LANDS.length,earned=typeof questProgress==='number'?questProgress:0;
-  const progress=byId('hub-seals');progress.hidden=!resume;progress.max=total;progress.value=earned;progress.setAttribute('aria-label',earned+' of '+total+' adventure seals earned');
-  byId('hub-next-step').textContent=resume?(earned===total?'Rigby is home. Revisit a guardian and keep learning.':'Next chapter: '+LANDS[earned].land+'.'):'Ten magical worlds. One friend to bring home.';
-  byId('hub-chapter-label').textContent=resume?(earned===total?'YOUR RESCUE IS COMPLETE':'YOUR ADVENTURE CONTINUES'):'YOUR FIRST CHAPTER';
+  const active=!home.hidden&&!home.classList.contains('home-choice-open');
+  data(document.body,'homeHub',active);data(document.body,'hubAwake',active&&!document.hidden&&!document.querySelector('dialog[open],#lib-overlay'));
+  // Hidden labels can wait until home returns. Avoid waking the shared hero observer.
+  if(!active)return;
+  const resume=!byId('quest-home-continue').hidden,hub=home.querySelector('.home-hub');data(hub,'resume',resume);
+  const total=typeof LANDS==='undefined'?10:LANDS.length,earned=typeof questProgress==='number'?questProgress:0,progress=byId('hub-seals');
+  if(progress.hidden!==!resume)progress.hidden=!resume;if(progress.max!==total)progress.max=total;if(progress.value!==earned)progress.value=earned;
+  const label=earned+' of '+total+' adventure seals earned';if(progress.getAttribute('aria-label')!==label)progress.setAttribute('aria-label',label);
+  text('hub-next-step',resume?(earned===total?'Rigby is home. Revisit a guardian and keep learning.':'Next chapter: '+LANDS[earned].land+'.'):'Ten magical worlds. One friend to bring home.');
+  text('hub-chapter-label',resume?(earned===total?'YOUR RESCUE IS COMPLETE':'YOUR ADVENTURE CONTINUES'):'YOUR FIRST CHAPTER');
  }
  function init(){if(initialized||!byId('home-view'))return;initialized=true;
   const home=byId('home-view'),welcome=home.querySelector('.home-welcome'),hero=byId('hero-name-form'),quest=byId('quest-home-card'),hub=document.createElement('section');hub.className='home-hub';hub.setAttribute('aria-label','Your storybook adventure');hub.style.setProperty('--hub-hall','url("'+HOME_HUB_ART.hall+'")');home.insertBefore(hub,welcome);hub.append(welcome,quest,hero);

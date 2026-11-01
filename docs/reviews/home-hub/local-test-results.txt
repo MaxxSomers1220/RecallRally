@@ -109,3 +109,47 @@ PASS chromium phone-landscape: 48 checks; live modes/grades, saved hero, true pr
 PASS chromium ipad-split: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
 PASS chromium narrow: 48 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
 PASS visible storage-denied warning; no invented Continue
+
+Inactive-home isolation verification: home-hub-isolation
+PASS chromium laptop: 98 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium tablet-landscape: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium tablet-portrait: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium small-phone: 52 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium modern-phone: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium phone-landscape: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium ipad-split: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium narrow: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS visible storage-denied warning; no invented Continue
+
+Inactive-home isolation verification: home-hub-package-isolation
+PASS actual Amplify command: node scripts/build-standalone.cjs
+PASS actual Amplify command: node tests/character-art.test.cjs
+PASS actual Amplify command: node tests/guardian-motion.test.cjs
+PASS actual Amplify command: node tests/hero-advanced.test.cjs
+PASS actual Amplify command: node tests/mobile-playability.test.cjs
+PASS actual Amplify command: node tests/home-hub.test.cjs
+PASS actual Amplify command: node tests/adventure-illustrations.test.cjs
+PASS actual Amplify command: node tests/librarian-art.test.cjs
+PASS actual Amplify command: node tests/weather-art.test.cjs
+PASS actual Amplify command: node tests/observatory-art.test.cjs
+PASS actual Amplify command: node tests/creature-art.test.cjs
+PASS actual Amplify command: node tests/circuit-art.test.cjs
+PASS actual Amplify command: node tests/potion-art.test.cjs
+PASS actual Amplify command: node tests/answer-recognition.test.cjs
+PASS actual Amplify command: node tests/home-launcher.test.cjs
+PASS actual Amplify command: node tests/science-lab.test.cjs
+PASS actual Amplify command: node tests/adventure-save.test.cjs
+PASS actual Amplify command: node tests/bank-v29.test.cjs
+PASS actual Amplify command: node tests/worlds.test.cjs
+PASS actual Amplify command: node tests/adventure-effects.test.cjs
+PASS actual Amplify command: node tests/librarian-v4-smoke.test.cjs
+PASS actual Amplify command: mkdir -p dist/librarian
+PASS actual Amplify command: cp index.html dist/index.html
+PASS actual Amplify command: cp librarian/librarian.css librarian/librarian.js dist/librarian/
+PASS actual Amplify command: node scripts/inject-librarian.cjs dist/index.html
+PASS chromium tablet-portrait: 50 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS chromium small-phone: 52 checks; live modes/grades, saved hero, true progress, focus, profiles, interruptions, offline and reduced motion
+PASS visible storage-denied warning; no invented Continue
+PASS actual Amplify output: two layouts, live modes, hero/progress, offline and storage failures
+
+Pillow independently decoded all six WebPs and verified manifest dimensions/byte budgets.

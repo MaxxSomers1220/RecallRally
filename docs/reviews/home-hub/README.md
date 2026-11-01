@@ -88,3 +88,11 @@ The creator is opened once before the retained-memory sample to exclude its inte
 | phone / panther | 16.9ms | 17.8ms | 13.1% / 19.7% |
 
 These short shared-host samples are observations, not physical-device guarantees or a universal speedup claim. The raw file also includes layout cost and the warmed retained-memory samples.
+
+## Inactive-home work isolation
+
+The first hosted guardian-motion check reported a150.4ms frame gap across the unchanged95ms casting window. Its diagnostics showed anticipation/follow-through but missed the casting sample. No guardian renderer, animation duration, attack timing or assertion was changed in this branch.
+
+Investigation also found redundant work owned by the new hub: five controlled refreshes during Written Practice rewrote35 hidden-home DOM records and woke one extra shared-hero scan. The hub now defers hidden labels until home returns, and only writes changed values. The same probe reports **zero hidden mutations and zero extra scans**. Every Quick/Written setup case includes a regression assertion for this isolation. This demonstrates reduced inactive UI work; it does not establish the cause of the earlier guardian frame gap. Final hosted results are recorded in the PR.
+
+[Before probe](inactive-before.txt) / [after probe](inactive-after.txt). Reproduce from the repository root with `node docs/reviews/home-hub/probe-inactive.cjs`; `HOME_PROBE_HTML` can select an earlier complete HTML build. The first integrated revision is `daf2a1f`.
