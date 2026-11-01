@@ -1,0 +1,54 @@
+name: Illustrated homepage and saved navigation
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'src/home-hub*'
+      - 'assets/home/**'
+      - 'scripts/**'
+      - 'tests/home-hub*'
+      - '.github/workflows/home-hub.yml'
+concurrency:
+  group: home-hub-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node scripts/build-standalone.cjs
+          node tests/home-hub.test.cjs
+          node tests/home-launcher.test.cjs
+          node tests/hero-advanced.test.cjs
+          node tests/mobile-playability.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/home-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/home-browser/node_modules/playwright/cli.js" install --with-deps ${{ matrix.engine }}
+      - name: Play all modes, real saved/completed profiles, and actual Amplify output
+        env:
+          HOME_HUB_ENGINE: ${{ matrix.engine }}
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/home-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export HOME_HUB_REPORT="$RUNNER_TEMP/home-hub-report"
+          node tests/home-hub-browser.test.cjs
+          node scripts/record-home-hub.cjs
+          node tests/home-hub-package.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.engine }}-home-hub-gameplay
+          path: ${{ runner.temp }}/home-hub-report
+          if-no-files-found: ignore
