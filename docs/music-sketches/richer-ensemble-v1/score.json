@@ -1,0 +1,2359 @@
+{
+  "title": "Lantern Hall \u2014 fuller ensemble listening sketch",
+  "bpm": 92,
+  "meter": "4/4",
+  "scale": "D major",
+  "loopBars": 16,
+  "previewOnly": true,
+  "form": [
+    "A: statement",
+    "A prime: answered expansion",
+    "B: rising discovery",
+    "Return: enriched cadence"
+  ],
+  "motif": [
+    74,
+    78,
+    76,
+    81
+  ],
+  "tracks": [
+    {
+      "name": "Piano: voiced chords and answering inner line",
+      "program": 0,
+      "volume": 94,
+      "pan": 48,
+      "role": "Simultaneous 3\u20134-note harmony, syncopated rearticulation and moving upper voice",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 60
+        },
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 60
+        },
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 60
+        },
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 1,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 49
+        },
+        {
+          "bar": 1,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 64,
+          "vel": 49
+        },
+        {
+          "bar": 1,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 49
+        },
+        {
+          "bar": 2,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 60
+        },
+        {
+          "bar": 2,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 61,
+          "vel": 60
+        },
+        {
+          "bar": 2,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 60
+        },
+        {
+          "bar": 2,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 2,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 61,
+          "vel": 49
+        },
+        {
+          "bar": 2,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 64,
+          "vel": 49
+        },
+        {
+          "bar": 2,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 49
+        },
+        {
+          "bar": 2,
+          "beat": 4.25,
+          "dur": 0.28,
+          "note": 67,
+          "vel": 43
+        },
+        {
+          "bar": 2,
+          "beat": 4.58,
+          "dur": 0.32,
+          "note": 66,
+          "vel": 47
+        },
+        {
+          "bar": 3,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 60
+        },
+        {
+          "bar": 3,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 60
+        },
+        {
+          "bar": 3,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 60
+        },
+        {
+          "bar": 3,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 3,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 49
+        },
+        {
+          "bar": 3,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 49
+        },
+        {
+          "bar": 3,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 49
+        },
+        {
+          "bar": 4,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 60
+        },
+        {
+          "bar": 4,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 60
+        },
+        {
+          "bar": 4,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 61,
+          "vel": 60
+        },
+        {
+          "bar": 4,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 63
+        },
+        {
+          "bar": 4,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 57,
+          "vel": 49
+        },
+        {
+          "bar": 4,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 61,
+          "vel": 49
+        },
+        {
+          "bar": 4,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 64,
+          "vel": 49
+        },
+        {
+          "bar": 4,
+          "beat": 4.25,
+          "dur": 0.28,
+          "note": 66,
+          "vel": 43
+        },
+        {
+          "bar": 4,
+          "beat": 4.58,
+          "dur": 0.32,
+          "note": 64,
+          "vel": 47
+        },
+        {
+          "bar": 5,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 64
+        },
+        {
+          "bar": 5,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 5,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 64
+        },
+        {
+          "bar": 5,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 5,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 53
+        },
+        {
+          "bar": 5,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 53
+        },
+        {
+          "bar": 5,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 53
+        },
+        {
+          "bar": 6,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 64
+        },
+        {
+          "bar": 6,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 6,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 64
+        },
+        {
+          "bar": 6,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 6,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 53
+        },
+        {
+          "bar": 6,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 53
+        },
+        {
+          "bar": 6,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 53
+        },
+        {
+          "bar": 6,
+          "beat": 4.25,
+          "dur": 0.28,
+          "note": 67,
+          "vel": 43
+        },
+        {
+          "bar": 6,
+          "beat": 4.58,
+          "dur": 0.32,
+          "note": 66,
+          "vel": 47
+        },
+        {
+          "bar": 7,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 64
+        },
+        {
+          "bar": 7,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 7,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 64
+        },
+        {
+          "bar": 7,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 67
+        },
+        {
+          "bar": 7,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 53
+        },
+        {
+          "bar": 7,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 53
+        },
+        {
+          "bar": 7,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 64,
+          "vel": 53
+        },
+        {
+          "bar": 8,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 64
+        },
+        {
+          "bar": 8,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 64
+        },
+        {
+          "bar": 8,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 61,
+          "vel": 64
+        },
+        {
+          "bar": 8,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 67
+        },
+        {
+          "bar": 8,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 57,
+          "vel": 53
+        },
+        {
+          "bar": 8,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 61,
+          "vel": 53
+        },
+        {
+          "bar": 8,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 64,
+          "vel": 53
+        },
+        {
+          "bar": 9,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 66
+        },
+        {
+          "bar": 9,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 66
+        },
+        {
+          "bar": 9,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 66
+        },
+        {
+          "bar": 9,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 69
+        },
+        {
+          "bar": 9,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 55
+        },
+        {
+          "bar": 9,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 9,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 10,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 66
+        },
+        {
+          "bar": 10,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 66
+        },
+        {
+          "bar": 10,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 66
+        },
+        {
+          "bar": 10,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 69
+        },
+        {
+          "bar": 10,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 55
+        },
+        {
+          "bar": 10,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 10,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 10,
+          "beat": 4.25,
+          "dur": 0.28,
+          "note": 67,
+          "vel": 43
+        },
+        {
+          "bar": 10,
+          "beat": 4.58,
+          "dur": 0.32,
+          "note": 66,
+          "vel": 47
+        },
+        {
+          "bar": 11,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 66
+        },
+        {
+          "bar": 11,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 66
+        },
+        {
+          "bar": 11,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 66
+        },
+        {
+          "bar": 11,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 69
+        },
+        {
+          "bar": 11,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 11,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 64,
+          "vel": 55
+        },
+        {
+          "bar": 11,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 12,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 66
+        },
+        {
+          "bar": 12,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 66
+        },
+        {
+          "bar": 12,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 66
+        },
+        {
+          "bar": 12,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 69
+        },
+        {
+          "bar": 12,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 55
+        },
+        {
+          "bar": 12,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 12,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 12,
+          "beat": 4.25,
+          "dur": 0.28,
+          "note": 67,
+          "vel": 43
+        },
+        {
+          "bar": 12,
+          "beat": 4.58,
+          "dur": 0.32,
+          "note": 66,
+          "vel": 47
+        },
+        {
+          "bar": 13,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 64
+        },
+        {
+          "bar": 13,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 13,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 64
+        },
+        {
+          "bar": 13,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 13,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 59,
+          "vel": 53
+        },
+        {
+          "bar": 13,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 62,
+          "vel": 53
+        },
+        {
+          "bar": 13,
+          "beat": 3.5,
+          "dur": 1.12,
+          "note": 66,
+          "vel": 53
+        },
+        {
+          "bar": 14,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 64
+        },
+        {
+          "bar": 14,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 61,
+          "vel": 64
+        },
+        {
+          "bar": 14,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 64
+        },
+        {
+          "bar": 14,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 14,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 64
+        },
+        {
+          "bar": 14,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 14,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 63,
+          "vel": 64
+        },
+        {
+          "bar": 14,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 15,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 64
+        },
+        {
+          "bar": 15,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 15,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 64
+        },
+        {
+          "bar": 15,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 15,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 55,
+          "vel": 64
+        },
+        {
+          "bar": 15,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 64
+        },
+        {
+          "bar": 15,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 61,
+          "vel": 64
+        },
+        {
+          "bar": 15,
+          "beat": 3,
+          "dur": 1.48,
+          "note": 64,
+          "vel": 67
+        },
+        {
+          "bar": 16,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 57,
+          "vel": 64
+        },
+        {
+          "bar": 16,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 59,
+          "vel": 64
+        },
+        {
+          "bar": 16,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 62,
+          "vel": 64
+        },
+        {
+          "bar": 16,
+          "beat": 1,
+          "dur": 1.48,
+          "note": 66,
+          "vel": 67
+        },
+        {
+          "bar": 16,
+          "beat": 2.65,
+          "dur": 2.25,
+          "note": 50,
+          "vel": 51
+        },
+        {
+          "bar": 16,
+          "beat": 2.65,
+          "dur": 2.25,
+          "note": 57,
+          "vel": 51
+        },
+        {
+          "bar": 16,
+          "beat": 2.65,
+          "dur": 2.25,
+          "note": 62,
+          "vel": 51
+        },
+        {
+          "bar": 16,
+          "beat": 2.65,
+          "dur": 2.25,
+          "note": 66,
+          "vel": 51
+        },
+        {
+          "bar": 16,
+          "beat": 2.65,
+          "dur": 2.25,
+          "note": 69,
+          "vel": 51
+        }
+      ]
+    },
+    {
+      "name": "Flute: connected theme",
+      "program": 73,
+      "volume": 87,
+      "pan": 69,
+      "role": "Statement, answer, rising bridge and resolved return",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.006,
+          "dur": 1.535,
+          "note": 74,
+          "vel": 75
+        },
+        {
+          "bar": 1,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 78,
+          "vel": 71
+        },
+        {
+          "bar": 1,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 76,
+          "vel": 71
+        },
+        {
+          "bar": 1,
+          "beat": 4.006,
+          "dur": 0.92,
+          "note": 81,
+          "vel": 71
+        },
+        {
+          "bar": 2,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 78,
+          "vel": 75
+        },
+        {
+          "bar": 2,
+          "beat": 2.006,
+          "dur": 0.5,
+          "note": 76,
+          "vel": 71
+        },
+        {
+          "bar": 2,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 78,
+          "vel": 71
+        },
+        {
+          "bar": 2,
+          "beat": 3.006,
+          "dur": 1.815,
+          "note": 74,
+          "vel": 71
+        },
+        {
+          "bar": 3,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 71,
+          "vel": 75
+        },
+        {
+          "bar": 3,
+          "beat": 2.006,
+          "dur": 1.035,
+          "note": 74,
+          "vel": 71
+        },
+        {
+          "bar": 3,
+          "beat": 3.006,
+          "dur": 1.535,
+          "note": 76,
+          "vel": 71
+        },
+        {
+          "bar": 3,
+          "beat": 4.506,
+          "dur": 0.44,
+          "note": 74,
+          "vel": 71
+        },
+        {
+          "bar": 4,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 73,
+          "vel": 75
+        },
+        {
+          "bar": 4,
+          "beat": 2.006,
+          "dur": 0.5,
+          "note": 71,
+          "vel": 71
+        },
+        {
+          "bar": 4,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 69,
+          "vel": 71
+        },
+        {
+          "bar": 4,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 76,
+          "vel": 71
+        },
+        {
+          "bar": 4,
+          "beat": 4.006,
+          "dur": 0.5,
+          "note": 73,
+          "vel": 71
+        },
+        {
+          "bar": 4,
+          "beat": 4.506,
+          "dur": 0.44,
+          "note": 76,
+          "vel": 71
+        },
+        {
+          "bar": 5,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 74,
+          "vel": 79
+        },
+        {
+          "bar": 5,
+          "beat": 2.006,
+          "dur": 1.035,
+          "note": 78,
+          "vel": 75
+        },
+        {
+          "bar": 5,
+          "beat": 3.006,
+          "dur": 1.535,
+          "note": 81,
+          "vel": 75
+        },
+        {
+          "bar": 5,
+          "beat": 4.506,
+          "dur": 0.44,
+          "note": 78,
+          "vel": 75
+        },
+        {
+          "bar": 6,
+          "beat": 1.006,
+          "dur": 1.9349999999999998,
+          "note": 76,
+          "vel": 79
+        },
+        {
+          "bar": 6,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 74,
+          "vel": 75
+        },
+        {
+          "bar": 6,
+          "beat": 4.006,
+          "dur": 0.9,
+          "note": 71,
+          "vel": 75
+        },
+        {
+          "bar": 7,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 74,
+          "vel": 79
+        },
+        {
+          "bar": 7,
+          "beat": 2.006,
+          "dur": 0.5,
+          "note": 71,
+          "vel": 75
+        },
+        {
+          "bar": 7,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 69,
+          "vel": 75
+        },
+        {
+          "bar": 7,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 67,
+          "vel": 75
+        },
+        {
+          "bar": 7,
+          "beat": 4.006,
+          "dur": 0.85,
+          "note": 71,
+          "vel": 75
+        },
+        {
+          "bar": 8,
+          "beat": 1.006,
+          "dur": 1.535,
+          "note": 69,
+          "vel": 79
+        },
+        {
+          "bar": 8,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 73,
+          "vel": 75
+        },
+        {
+          "bar": 8,
+          "beat": 3.006,
+          "dur": 0.9,
+          "note": 76,
+          "vel": 75
+        },
+        {
+          "bar": 8,
+          "beat": 4.256,
+          "dur": 0.5,
+          "note": 73,
+          "vel": 75
+        },
+        {
+          "bar": 9,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 71,
+          "vel": 81
+        },
+        {
+          "bar": 9,
+          "beat": 2.006,
+          "dur": 0.5,
+          "note": 74,
+          "vel": 77
+        },
+        {
+          "bar": 9,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 76,
+          "vel": 77
+        },
+        {
+          "bar": 9,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 78,
+          "vel": 77
+        },
+        {
+          "bar": 9,
+          "beat": 4.006,
+          "dur": 0.94,
+          "note": 81,
+          "vel": 77
+        },
+        {
+          "bar": 10,
+          "beat": 1.006,
+          "dur": 1.9349999999999998,
+          "note": 79,
+          "vel": 81
+        },
+        {
+          "bar": 10,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 78,
+          "vel": 77
+        },
+        {
+          "bar": 10,
+          "beat": 4.006,
+          "dur": 0.94,
+          "note": 76,
+          "vel": 77
+        },
+        {
+          "bar": 11,
+          "beat": 1.006,
+          "dur": 1.535,
+          "note": 78,
+          "vel": 81
+        },
+        {
+          "bar": 11,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 76,
+          "vel": 77
+        },
+        {
+          "bar": 11,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 73,
+          "vel": 77
+        },
+        {
+          "bar": 11,
+          "beat": 4.006,
+          "dur": 0.88,
+          "note": 69,
+          "vel": 77
+        },
+        {
+          "bar": 12,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 71,
+          "vel": 81
+        },
+        {
+          "bar": 12,
+          "beat": 2.006,
+          "dur": 1.035,
+          "note": 74,
+          "vel": 77
+        },
+        {
+          "bar": 12,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 76,
+          "vel": 77
+        },
+        {
+          "bar": 12,
+          "beat": 4.006,
+          "dur": 0.94,
+          "note": 78,
+          "vel": 77
+        },
+        {
+          "bar": 13,
+          "beat": 1.006,
+          "dur": 1.535,
+          "note": 79,
+          "vel": 79
+        },
+        {
+          "bar": 13,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 78,
+          "vel": 75
+        },
+        {
+          "bar": 13,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 76,
+          "vel": 75
+        },
+        {
+          "bar": 13,
+          "beat": 4.006,
+          "dur": 0.94,
+          "note": 74,
+          "vel": 75
+        },
+        {
+          "bar": 14,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 73,
+          "vel": 79
+        },
+        {
+          "bar": 14,
+          "beat": 2.006,
+          "dur": 1.035,
+          "note": 76,
+          "vel": 75
+        },
+        {
+          "bar": 14,
+          "beat": 3.006,
+          "dur": 1.835,
+          "note": 78,
+          "vel": 75
+        },
+        {
+          "bar": 15,
+          "beat": 1.006,
+          "dur": 1.035,
+          "note": 76,
+          "vel": 79
+        },
+        {
+          "bar": 15,
+          "beat": 2.006,
+          "dur": 0.5,
+          "note": 74,
+          "vel": 75
+        },
+        {
+          "bar": 15,
+          "beat": 2.506,
+          "dur": 0.5,
+          "note": 73,
+          "vel": 75
+        },
+        {
+          "bar": 15,
+          "beat": 3.006,
+          "dur": 1.035,
+          "note": 71,
+          "vel": 75
+        },
+        {
+          "bar": 15,
+          "beat": 4.006,
+          "dur": 0.88,
+          "note": 73,
+          "vel": 75
+        },
+        {
+          "bar": 16,
+          "beat": 1.006,
+          "dur": 3.685,
+          "note": 74,
+          "vel": 79
+        }
+      ]
+    },
+    {
+      "name": "Violin: independent counter-melody",
+      "program": 40,
+      "volume": 76,
+      "pan": 85,
+      "role": "Legato contrary motion beneath and alongside the lead",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.996,
+          "dur": 1.55,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 1,
+          "beat": 3.496,
+          "dur": 1.45,
+          "note": 69,
+          "vel": 55
+        },
+        {
+          "bar": 1,
+          "beat": 4.996,
+          "dur": 1.95,
+          "note": 69,
+          "vel": 55
+        },
+        {
+          "bar": 2,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 2,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 64,
+          "vel": 55
+        },
+        {
+          "bar": 2,
+          "beat": 4.996,
+          "dur": 1.55,
+          "note": 67,
+          "vel": 55
+        },
+        {
+          "bar": 3,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 3,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 3,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 59,
+          "vel": 55
+        },
+        {
+          "bar": 3,
+          "beat": 4.996,
+          "dur": 1.05,
+          "note": 64,
+          "vel": 55
+        },
+        {
+          "bar": 4,
+          "beat": 1.996,
+          "dur": 1.05,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 4,
+          "beat": 2.996,
+          "dur": 1.95,
+          "note": 61,
+          "vel": 55
+        },
+        {
+          "bar": 4,
+          "beat": 4.996,
+          "dur": 1.05,
+          "note": 62,
+          "vel": 59
+        },
+        {
+          "bar": 5,
+          "beat": 1.996,
+          "dur": 1.05,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 5,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 69,
+          "vel": 59
+        },
+        {
+          "bar": 5,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 5,
+          "beat": 4.996,
+          "dur": 1.55,
+          "note": 67,
+          "vel": 59
+        },
+        {
+          "bar": 6,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 6,
+          "beat": 2.996,
+          "dur": 1.95,
+          "note": 64,
+          "vel": 59
+        },
+        {
+          "bar": 6,
+          "beat": 4.996,
+          "dur": 1.55,
+          "note": 62,
+          "vel": 59
+        },
+        {
+          "bar": 7,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 64,
+          "vel": 59
+        },
+        {
+          "bar": 7,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 67,
+          "vel": 59
+        },
+        {
+          "bar": 7,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 7,
+          "beat": 4.996,
+          "dur": 1.45,
+          "note": 64,
+          "vel": 59
+        },
+        {
+          "bar": 8,
+          "beat": 2.496,
+          "dur": 1.05,
+          "note": 61,
+          "vel": 59
+        },
+        {
+          "bar": 8,
+          "beat": 3.496,
+          "dur": 0.55,
+          "note": 64,
+          "vel": 59
+        },
+        {
+          "bar": 8,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 8,
+          "beat": 4.996,
+          "dur": 1.55,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 9,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 64,
+          "vel": 63
+        },
+        {
+          "bar": 9,
+          "beat": 2.996,
+          "dur": 2.0,
+          "note": 62,
+          "vel": 63
+        },
+        {
+          "bar": 9,
+          "beat": 4.996,
+          "dur": 1.05,
+          "note": 62,
+          "vel": 63
+        },
+        {
+          "bar": 10,
+          "beat": 1.996,
+          "dur": 0.55,
+          "note": 64,
+          "vel": 63
+        },
+        {
+          "bar": 10,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 10,
+          "beat": 2.996,
+          "dur": 1.95,
+          "note": 67,
+          "vel": 63
+        },
+        {
+          "bar": 10,
+          "beat": 4.996,
+          "dur": 1.05,
+          "note": 69,
+          "vel": 63
+        },
+        {
+          "bar": 11,
+          "beat": 1.996,
+          "dur": 1.05,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 11,
+          "beat": 2.996,
+          "dur": 1.95,
+          "note": 64,
+          "vel": 63
+        },
+        {
+          "bar": 11,
+          "beat": 4.996,
+          "dur": 1.05,
+          "note": 67,
+          "vel": 63
+        },
+        {
+          "bar": 12,
+          "beat": 1.996,
+          "dur": 0.55,
+          "note": 66,
+          "vel": 63
+        },
+        {
+          "bar": 12,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 64,
+          "vel": 63
+        },
+        {
+          "bar": 12,
+          "beat": 2.996,
+          "dur": 1.95,
+          "note": 62,
+          "vel": 63
+        },
+        {
+          "bar": 12,
+          "beat": 4.996,
+          "dur": 1.55,
+          "note": 71,
+          "vel": 59
+        },
+        {
+          "bar": 13,
+          "beat": 2.496,
+          "dur": 0.55,
+          "note": 69,
+          "vel": 59
+        },
+        {
+          "bar": 13,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 67,
+          "vel": 59
+        },
+        {
+          "bar": 13,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 13,
+          "beat": 4.996,
+          "dur": 1.95,
+          "note": 64,
+          "vel": 59
+        },
+        {
+          "bar": 14,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 63,
+          "vel": 59
+        },
+        {
+          "bar": 14,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 14,
+          "beat": 4.996,
+          "dur": 1.05,
+          "note": 67,
+          "vel": 59
+        },
+        {
+          "bar": 15,
+          "beat": 1.996,
+          "dur": 0.9500000000000001,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 15,
+          "beat": 2.996,
+          "dur": 1.05,
+          "note": 64,
+          "vel": 59
+        },
+        {
+          "bar": 15,
+          "beat": 3.996,
+          "dur": 1.0,
+          "note": 61,
+          "vel": 59
+        },
+        {
+          "bar": 15,
+          "beat": 4.996,
+          "dur": 3.75,
+          "note": 62,
+          "vel": 59
+        }
+      ]
+    },
+    {
+      "name": "Cello: moving bass foundation",
+      "program": 42,
+      "volume": 91,
+      "pan": 56,
+      "role": "Roots, inversions, fifths and cadential approach tones",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 38,
+          "vel": 73
+        },
+        {
+          "bar": 1,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 45,
+          "vel": 61
+        },
+        {
+          "bar": 2,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 37,
+          "vel": 73
+        },
+        {
+          "bar": 2,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 49,
+          "vel": 61
+        },
+        {
+          "bar": 2,
+          "beat": 4.503,
+          "dur": 0.42,
+          "note": 49,
+          "vel": 57
+        },
+        {
+          "bar": 3,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 47,
+          "vel": 73
+        },
+        {
+          "bar": 3,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 54,
+          "vel": 61
+        },
+        {
+          "bar": 4,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 45,
+          "vel": 73
+        },
+        {
+          "bar": 4,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 57,
+          "vel": 61
+        },
+        {
+          "bar": 4,
+          "beat": 4.503,
+          "dur": 0.42,
+          "note": 46,
+          "vel": 57
+        },
+        {
+          "bar": 5,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 47,
+          "vel": 77
+        },
+        {
+          "bar": 5,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 54,
+          "vel": 65
+        },
+        {
+          "bar": 6,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 40,
+          "vel": 77
+        },
+        {
+          "bar": 6,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 52,
+          "vel": 65
+        },
+        {
+          "bar": 7,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 43,
+          "vel": 77
+        },
+        {
+          "bar": 7,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 50,
+          "vel": 65
+        },
+        {
+          "bar": 8,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 45,
+          "vel": 77
+        },
+        {
+          "bar": 8,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 57,
+          "vel": 65
+        },
+        {
+          "bar": 8,
+          "beat": 4.503,
+          "dur": 0.42,
+          "note": 46,
+          "vel": 57
+        },
+        {
+          "bar": 9,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 47,
+          "vel": 79
+        },
+        {
+          "bar": 9,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 54,
+          "vel": 67
+        },
+        {
+          "bar": 10,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 43,
+          "vel": 79
+        },
+        {
+          "bar": 10,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 55,
+          "vel": 67
+        },
+        {
+          "bar": 11,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 42,
+          "vel": 79
+        },
+        {
+          "bar": 11,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 49,
+          "vel": 67
+        },
+        {
+          "bar": 12,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 40,
+          "vel": 79
+        },
+        {
+          "bar": 12,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 52,
+          "vel": 67
+        },
+        {
+          "bar": 12,
+          "beat": 4.503,
+          "dur": 0.42,
+          "note": 45,
+          "vel": 57
+        },
+        {
+          "bar": 13,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 43,
+          "vel": 77
+        },
+        {
+          "bar": 13,
+          "beat": 3.003,
+          "dur": 1.4,
+          "note": 50,
+          "vel": 65
+        },
+        {
+          "bar": 14,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 42,
+          "vel": 77
+        },
+        {
+          "bar": 14,
+          "beat": 3.003,
+          "dur": 1.78,
+          "note": 47,
+          "vel": 77
+        },
+        {
+          "bar": 15,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 40,
+          "vel": 77
+        },
+        {
+          "bar": 15,
+          "beat": 3.003,
+          "dur": 1.78,
+          "note": 45,
+          "vel": 77
+        },
+        {
+          "bar": 16,
+          "beat": 1.003,
+          "dur": 1.78,
+          "note": 38,
+          "vel": 77
+        }
+      ]
+    },
+    {
+      "name": "Strings: connected inner harmony",
+      "program": 48,
+      "volume": 69,
+      "pan": 60,
+      "role": "Tied common tones and moving sustained three-part voicings",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 4.02,
+          "note": 62,
+          "vel": 44
+        },
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 8.018,
+          "note": 64,
+          "vel": 41
+        },
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 12.018,
+          "note": 66,
+          "vel": 38
+        },
+        {
+          "bar": 1,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 61,
+          "vel": 44
+        },
+        {
+          "bar": 2,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 59,
+          "vel": 44
+        },
+        {
+          "bar": 2,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 62,
+          "vel": 41
+        },
+        {
+          "bar": 3,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 57,
+          "vel": 44
+        },
+        {
+          "bar": 3,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 61,
+          "vel": 41
+        },
+        {
+          "bar": 3,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 64,
+          "vel": 38
+        },
+        {
+          "bar": 4,
+          "beat": 4.998,
+          "dur": 12.02,
+          "note": 59,
+          "vel": 48
+        },
+        {
+          "bar": 4,
+          "beat": 4.998,
+          "dur": 12.02,
+          "note": 62,
+          "vel": 45
+        },
+        {
+          "bar": 4,
+          "beat": 4.998,
+          "dur": 8.02,
+          "note": 66,
+          "vel": 42
+        },
+        {
+          "bar": 6,
+          "beat": 4.998,
+          "dur": 8.02,
+          "note": 64,
+          "vel": 42
+        },
+        {
+          "bar": 7,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 57,
+          "vel": 48
+        },
+        {
+          "bar": 7,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 61,
+          "vel": 45
+        },
+        {
+          "bar": 8,
+          "beat": 4.998,
+          "dur": 8.02,
+          "note": 59,
+          "vel": 50
+        },
+        {
+          "bar": 8,
+          "beat": 4.998,
+          "dur": 20.02,
+          "note": 62,
+          "vel": 47
+        },
+        {
+          "bar": 8,
+          "beat": 4.998,
+          "dur": 26.1,
+          "note": 66,
+          "vel": 44
+        },
+        {
+          "bar": 10,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 64,
+          "vel": 47
+        },
+        {
+          "bar": 11,
+          "beat": 4.998,
+          "dur": 8.02,
+          "note": 59,
+          "vel": 50
+        },
+        {
+          "bar": 13,
+          "beat": 4.998,
+          "dur": 2.1,
+          "note": 61,
+          "vel": 48
+        },
+        {
+          "bar": 13,
+          "beat": 4.998,
+          "dur": 2.1,
+          "note": 64,
+          "vel": 45
+        },
+        {
+          "bar": 14,
+          "beat": 2.998,
+          "dur": 4.1,
+          "note": 59,
+          "vel": 48
+        },
+        {
+          "bar": 14,
+          "beat": 2.998,
+          "dur": 2.1,
+          "note": 63,
+          "vel": 45
+        },
+        {
+          "bar": 14,
+          "beat": 4.998,
+          "dur": 2.1,
+          "note": 62,
+          "vel": 45
+        },
+        {
+          "bar": 15,
+          "beat": 2.998,
+          "dur": 2.1,
+          "note": 57,
+          "vel": 48
+        },
+        {
+          "bar": 15,
+          "beat": 2.998,
+          "dur": 2.1,
+          "note": 61,
+          "vel": 45
+        },
+        {
+          "bar": 15,
+          "beat": 2.998,
+          "dur": 2.1,
+          "note": 64,
+          "vel": 42
+        },
+        {
+          "bar": 15,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 59,
+          "vel": 48
+        },
+        {
+          "bar": 15,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 62,
+          "vel": 45
+        },
+        {
+          "bar": 15,
+          "beat": 4.998,
+          "dur": 4.02,
+          "note": 66,
+          "vel": 42
+        }
+      ]
+    },
+    {
+      "name": "Harp: phrase punctuation",
+      "program": 46,
+      "volume": 67,
+      "pan": 37,
+      "role": "Sparse rolled chord pickups and cadential figures",
+      "notes": [
+        {
+          "bar": 4,
+          "beat": 3.758,
+          "dur": 0.82,
+          "note": 67,
+          "vel": 47
+        },
+        {
+          "bar": 4,
+          "beat": 4.018,
+          "dur": 0.82,
+          "note": 69,
+          "vel": 49
+        },
+        {
+          "bar": 4,
+          "beat": 4.278,
+          "dur": 0.82,
+          "note": 73,
+          "vel": 51
+        },
+        {
+          "bar": 4,
+          "beat": 4.538,
+          "dur": 0.82,
+          "note": 76,
+          "vel": 53
+        },
+        {
+          "bar": 8,
+          "beat": 3.758,
+          "dur": 0.82,
+          "note": 67,
+          "vel": 47
+        },
+        {
+          "bar": 8,
+          "beat": 4.018,
+          "dur": 0.82,
+          "note": 69,
+          "vel": 49
+        },
+        {
+          "bar": 8,
+          "beat": 4.278,
+          "dur": 0.82,
+          "note": 73,
+          "vel": 51
+        },
+        {
+          "bar": 8,
+          "beat": 4.538,
+          "dur": 0.82,
+          "note": 76,
+          "vel": 53
+        },
+        {
+          "bar": 12,
+          "beat": 3.758,
+          "dur": 0.82,
+          "note": 67,
+          "vel": 47
+        },
+        {
+          "bar": 12,
+          "beat": 4.018,
+          "dur": 0.82,
+          "note": 71,
+          "vel": 49
+        },
+        {
+          "bar": 12,
+          "beat": 4.278,
+          "dur": 0.82,
+          "note": 74,
+          "vel": 51
+        },
+        {
+          "bar": 12,
+          "beat": 4.538,
+          "dur": 0.82,
+          "note": 78,
+          "vel": 53
+        },
+        {
+          "bar": 16,
+          "beat": 1.108,
+          "dur": 3.7,
+          "note": 50,
+          "vel": 48
+        },
+        {
+          "bar": 16,
+          "beat": 1.178,
+          "dur": 3.6300000000000003,
+          "note": 57,
+          "vel": 49
+        },
+        {
+          "bar": 16,
+          "beat": 1.248,
+          "dur": 3.56,
+          "note": 62,
+          "vel": 50
+        },
+        {
+          "bar": 16,
+          "beat": 1.318,
+          "dur": 3.49,
+          "note": 66,
+          "vel": 51
+        },
+        {
+          "bar": 16,
+          "beat": 1.388,
+          "dur": 3.42,
+          "note": 69,
+          "vel": 52
+        },
+        {
+          "bar": 16,
+          "beat": 1.458,
+          "dur": 3.35,
+          "note": 74,
+          "vel": 53
+        }
+      ]
+    }
+  ],
+  "sourceType": "Original composition; FluidSynth sample-based TimGM6mb MIDI rendering"
+}

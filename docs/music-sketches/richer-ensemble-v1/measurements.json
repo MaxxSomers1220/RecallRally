@@ -1,0 +1,18 @@
+{
+  "durationSeconds": 43.83913043478261,
+  "sampleRate": 44100,
+  "peak": 0.7599999904632568,
+  "rms": 0.14345775544643402,
+  "noteCounts": {
+    "Piano: voiced chords and answering inner line": 126,
+    "Flute: connected theme": 63,
+    "Violin: independent counter-melody": 53,
+    "Cello: moving bass foundation": 35,
+    "Strings: connected inner harmony": 31,
+    "Harp: phrase punctuation": 18
+  },
+  "simultaneousVoicesMedian": 9.0,
+  "simultaneousVoices10thPercentile": 6.0,
+  "soundfontSha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+  "listeningAssessment": "Not human auditioned. Concurrency, signal and score structure checks do not establish musical quality."
+}
