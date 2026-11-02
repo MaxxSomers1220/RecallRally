@@ -66,3 +66,9 @@ Playwright 1.62.1 and its selected engine must be available; `CHROMIUM_PATH` sel
 ## Cross-browser cleanup correction
 
 The first hosted WebKit run timed out waiting for rendered-source cleanup after Music Volume reached zero. Cleanup now explicitly removes stopped/disconnected buffer sources from the live registry instead of relying only on `onended`. The existing scheduler also bounds rendered-source retirement by a wall-clock deadline, so an inaudible or stalled audio clock cannot retain a retired buffer source indefinitely. Fade envelopes and all original procedural score/rendering functions remain unchanged. The same mute/cleanup assertions remain in place; failures now include a state diagnostic. Final hosted results are recorded in the PR.
+
+## MP3 decoder padding compatibility
+
+Hosted WebKit exposed complete MPEG frames: 4,458,240 samples for home instead of 4,456,421, and 3,529,728 for map instead of 3,528,000 at 44.1 kHz. Chromium already honors the gapless tags. The renderer now records exact encoder skip/discard metadata (1105 leading samples, 714/623 trailing samples), and playback normalizes only the recognized untrimmed layout before caching. Already-trimmed decodes pass through unchanged. Bounds are rescaled to the actual output sample rate; unexpected lengths fail visibly instead of guessing a crop. The original duration/seam assertions were not relaxed.
+
+A separate [untrimmed-decoder simulation at native 48 kHz](simulated-padding-48k-results.json) passes the same state, grading, save and offline checks. This is explicitly a Chromium simulation, not a claim of WebKit testing; final actual WebKit outcomes are linked in the PR. Complete decoded cycles are compared sample by sample, and natural-clock video excerpts independently cover two boundaries per cue.

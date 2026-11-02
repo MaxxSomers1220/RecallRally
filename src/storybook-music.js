@@ -2,6 +2,16 @@
 const StorybookMusic=(()=>{
  const cache=new Map(),live=new Set(),starts={home:0,map:0};let observer=null;
  const supports=kind=>Object.hasOwn(STORYBOOK_AUDIO,kind);
+ function gapless(decoded,meta,context){
+  const rate=decoded.sampleRate,frames=Math.round(meta.loopSeconds*rate);
+  if(Math.abs(decoded.length-frames)<=2)return decoded;
+  // Some WebKit/GStreamer decoders expose complete MPEG frames instead of honoring gapless tags.
+  const encoded=Math.round(meta.mp3.encodedFrames*rate/meta.sampleRate),skip=Math.round(meta.mp3.skipSamples*rate/meta.sampleRate);
+  if(Math.abs(decoded.length-encoded)>2||skip+frames>decoded.length)throw Error('Unrecognized decoded music length');
+  const trimmed=context.createBuffer(decoded.numberOfChannels,frames,rate);
+  for(let channel=0;channel<decoded.numberOfChannels;channel++)trimmed.copyToChannel(decoded.getChannelData(channel).subarray(skip,skip+frames),channel);
+  return trimmed;
+ }
  function buffer(kind,context,ready){
   let entry=cache.get(kind);if(entry)return entry.buffer||null;
   entry={buffer:null,error:null};cache.set(kind,entry);
@@ -9,6 +19,7 @@ const StorybookMusic=(()=>{
    const encoded=atob(STORYBOOK_AUDIO[kind].data),bytes=new Uint8Array(encoded.length);
    for(let i=0;i<encoded.length;i++)bytes[i]=encoded.charCodeAt(i);
    entry.pending=context.decodeAudioData(bytes.buffer).then(decoded=>{
+    decoded=gapless(decoded,STORYBOOK_AUDIO[kind],context);
     if(decoded.duration+.004<STORYBOOK_AUDIO[kind].loopSeconds)throw Error('Incomplete embedded music');
     entry.buffer=decoded;entry.pending=null;ready();
    }).catch(()=>{entry.pending=null;entry.error='Music could not be decoded. Sound effects remain available.';updateMusicControls()});

@@ -22,7 +22,12 @@
       "title": "An Invitation to Adventure",
       "bpm": 76,
       "loopBars": 32,
-      "channels": 2
+      "channels": 2,
+      "mp3": {
+        "encodedFrames": 4458240,
+        "skipSamples": 1105,
+        "discardPadding": 714
+      }
     },
     {
       "sampleRate": 44100,
@@ -39,7 +44,12 @@
       "title": "The Lantern Trail",
       "bpm": 96,
       "loopBars": 32,
-      "channels": 2
+      "channels": 2,
+      "mp3": {
+        "encodedFrames": 3529728,
+        "skipSamples": 1105,
+        "discardPadding": 623
+      }
     }
   ],
   "sketches": [
@@ -58,7 +68,12 @@
       "title": "An Invitation to Adventure",
       "bpm": 76,
       "loopBars": 8,
-      "channels": 2
+      "channels": 2,
+      "mp3": {
+        "encodedFrames": 1116288,
+        "skipSamples": 1105,
+        "discardPadding": 1078
+      }
     },
     {
       "sampleRate": 44100,
@@ -75,7 +90,12 @@
       "title": "The Lantern Trail",
       "bpm": 96,
       "loopBars": 8,
-      "channels": 2
+      "channels": 2,
+      "mp3": {
+        "encodedFrames": 883584,
+        "skipSamples": 1105,
+        "discardPadding": 479
+      }
     }
   ]
 }

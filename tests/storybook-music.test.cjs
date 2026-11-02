@@ -6,6 +6,7 @@ assert.deepEqual(manifest.assets.map(a=>a.id),['home','map']);let bytes=0;
 for(const a of [...manifest.assets,...manifest.sketches]){
  const file=read(a.file);assert.equal(file.length,a.bytes);assert.equal(hash(file),a.sha256);assert(a.peak<=.71&&a.rms>.04);assert(a.boundaryDelta<.0041);
  assert.equal(a.loopSeconds,a.loopFrames/a.sampleRate);assert.equal(a.channels,2);
+ assert.equal(a.mp3.encodedFrames-a.mp3.skipSamples-a.mp3.discardPadding,a.loopFrames,'Declared MPEG gapless region matches source PCM');
  if(!a.id.endsWith('sketch')){bytes+=file.length;assert.equal(a.loopBars,32);for(const build of [html,offline])assert(build.includes(file.toString('base64')),'Embedded '+a.id);}
  const score=JSON.parse(read('assets/music/source/'+a.id+'.json')),midi=read('assets/music/source/'+a.id+'.mid');assert.equal(midi.subarray(0,4).toString(),'MThd');assert.equal(midi.readUInt16BE(10),score.tracks.length+1);
  assert(score.tracks.some(t=>t.notes.some(n=>(n.beat-1)+n.dur>4)),'Held notes cross barlines');assert(score.tracks.every(t=>t.notes.every(n=>n.note>=0&&n.note<128&&n.dur>0&&n.vel>0&&n.vel<128)));

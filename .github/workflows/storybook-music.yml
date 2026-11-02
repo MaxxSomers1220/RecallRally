@@ -56,6 +56,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/music-browser/node_modules"
           export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
           MUSIC_TEST_RATE=48000 MUSIC_VIEWS=phone MUSIC_REPORT="$RUNNER_TEMP/storybook-music/48k" node tests/storybook-music-browser.test.cjs
+          MUSIC_TEST_PADDING=1 MUSIC_TEST_RATE=48000 MUSIC_VIEWS=phone MUSIC_REPORT="$RUNNER_TEMP/storybook-music/padding" node tests/storybook-music-browser.test.cjs
       - name: Real-clock game recordings with browser-bus sound and two natural boundaries per cue
         if: matrix.engine == 'chromium'
         run: |

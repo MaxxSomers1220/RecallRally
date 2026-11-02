@@ -81,7 +81,12 @@ def main():
    wav=Path(temp)/'loop.wav';write_wav(wav,pcm)
    target=(OUT/'source'/f'{name}.mp3')if name.endswith('sketch')else OUT/f'{name}.mp3'
    subprocess.run(['ffmpeg','-y','-v','error','-i',str(wav),'-c:a','libmp3lame','-b:a','128k','-map_metadata','-1',str(target)],check=True)
-  stats.update({'id':name,'file':str(target.relative_to(ROOT)),'bytes':target.stat().st_size,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'title':score['title'],'bpm':score['bpm'],'loopBars':score['loopBars'],'channels':2})
+  packet_info=json.loads(subprocess.run(['ffprobe','-v','quiet','-show_packets','-of','json',str(target)],capture_output=True,text=True,check=True).stdout)['packets']
+  skip=next((s['skip_samples'] for s in packet_info[0].get('side_data_list',[]) if s.get('side_data_type')=='Skip Samples'),0)
+  padding=next((s['discard_padding'] for s in packet_info[-1].get('side_data_list',[]) if s.get('side_data_type')=='Skip Samples'),0)
+  encoded=sum(round(float(p['duration_time'])*RATE) for p in packet_info)
+  assert encoded-skip-padding==stats['loopFrames'],'MP3 gapless region must match the authored PCM'
+  stats.update({'id':name,'file':str(target.relative_to(ROOT)),'bytes':target.stat().st_size,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'title':score['title'],'bpm':score['bpm'],'loopBars':score['loopBars'],'channels':2,'mp3':{'encodedFrames':encoded,'skipSamples':skip,'discardPadding':padding}})
   rows.append(stats);print(name,json.dumps(stats))
  manifest={'source':'Original scores, sample-based FluidSynth rendering','renderer':'FluidSynth via system libfluidsynth.so.3; FFmpeg libmp3lame 128kbps','soundfont':{'name':FONT.name,'sha256':hashlib.sha256(FONT.read_bytes()).hexdigest(),'license':'GPL-2.0-only'},'assets':[r for r in rows if not r['id'].endswith('sketch')],'sketches':[r for r in rows if r['id'].endswith('sketch')]}
  (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
