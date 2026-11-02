@@ -2446,8 +2446,8 @@ function musicNote(ctx,out,event,at,seconds,voices){
   voices.add(osc);osc.onended=()=>{voices.delete(osc);osc.disconnect();gain.disconnect();pan?.disconnect()};osc.start(at);osc.stop(end+.015);
  }
 }
-function destroyMusicSession(s){if(!s)return;for(const v of s.voices){try{v.stop()}catch(e){}try{v.disconnect()}catch(e){}}s.voices.clear();s.bus.disconnect();s.layer?.disconnect()}
-function retireMusicSession(s,fade=.55){if(!s)return;for(const old of musicRetiring)destroyMusicSession(old);musicRetiring=[];musicRamp(s.bus.gain,0,fade);s.retireAt=audioContext.currentTime+fade+.04;musicRetiring.push(s)}
+function destroyMusicSession(s){if(!s)return;for(const v of s.voices){try{v.stop()}catch(e){}try{v.disconnect()}catch(e){}if(s.rendered)StorybookMusic.release(v)}s.voices.clear();s.bus.disconnect();s.layer?.disconnect()}
+function retireMusicSession(s,fade=.55){if(!s)return;for(const old of musicRetiring)destroyMusicSession(old);musicRetiring=[];musicRamp(s.bus.gain,0,fade);s.retireAt=audioContext.currentTime+fade+.04;if(s.rendered)s.retireWallAt=performance.now()+fade*1000+80;musicRetiring.push(s)}
 function clearMusicOutcome(){if(musicSting){destroyMusicSession(musicSting);musicSting=null}}
 function holdSoundtrack(){
  if(musicCurrent){musicBookmark={kind:musicCurrent.kind,position:Math.max(0,audioContext.currentTime-musicCurrent.origin)};retireMusicSession(musicCurrent,.035);musicCurrent=null}
@@ -2491,7 +2491,7 @@ function syncAdventureMusic(){
  updateMusicControls();
 }
 function soundtrackTick(){
- const now=audioContext.currentTime;musicRetiring=musicRetiring.filter(s=>{if(now>=s.retireAt){destroyMusicSession(s);return false}return true});
+ const now=audioContext.currentTime;musicRetiring=musicRetiring.filter(s=>{if(now>=s.retireAt||s.rendered&&performance.now()>=s.retireWallAt){destroyMusicSession(s);return false}return true});
  if(musicSting&&now>musicSting.ends){destroyMusicSession(musicSting);musicSting=null}
  if(!musicMayPlay()){holdSoundtrack();return}
  if(window.speechSynthesis?.speaking)duckMusic(.45,.22);
@@ -3537,7 +3537,7 @@ const StorybookMusic=(()=>{
   observer.observe(document.body,{childList:true});
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
- return{supports,buffer,play,title:kind=>STORYBOOK_AUDIO[kind]?.title,error:kind=>cache.get(kind)?.error||null,pending:kind=>!!cache.get(kind)?.pending,
+ return{supports,buffer,play,release:node=>live.delete(node),title:kind=>STORYBOOK_AUDIO[kind]?.title,error:kind=>cache.get(kind)?.error||null,pending:kind=>!!cache.get(kind)?.pending,
   inspect:()=>({observers:observer?1:0,liveSources:live.size,starts:{...starts},decoded:[...cache].filter(([,v])=>v.buffer).map(([id,v])=>({id,duration:v.buffer.duration,bytes:v.buffer.length*v.buffer.numberOfChannels*4})),pending:[...cache].filter(([,v])=>v.pending).map(([id])=>id),errors:[...cache].filter(([,v])=>v.error).map(([id,v])=>({id,message:v.error}))})};
 })();
 /* STORYBOOK_MUSIC_END */

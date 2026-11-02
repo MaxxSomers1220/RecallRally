@@ -29,6 +29,6 @@ const StorybookMusic=(()=>{
   observer.observe(document.body,{childList:true});
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
- return{supports,buffer,play,title:kind=>STORYBOOK_AUDIO[kind]?.title,error:kind=>cache.get(kind)?.error||null,pending:kind=>!!cache.get(kind)?.pending,
+ return{supports,buffer,play,release:node=>live.delete(node),title:kind=>STORYBOOK_AUDIO[kind]?.title,error:kind=>cache.get(kind)?.error||null,pending:kind=>!!cache.get(kind)?.pending,
   inspect:()=>({observers:observer?1:0,liveSources:live.size,starts:{...starts},decoded:[...cache].filter(([,v])=>v.buffer).map(([id,v])=>({id,duration:v.buffer.duration,bytes:v.buffer.length*v.buffer.numberOfChannels*4})),pending:[...cache].filter(([,v])=>v.pending).map(([id])=>id),errors:[...cache].filter(([,v])=>v.error).map(([id,v])=>({id,message:v.error}))})};
 })();

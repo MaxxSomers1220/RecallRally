@@ -62,3 +62,7 @@ node scripts/record-storybook-music.cjs
 ```
 
 Playwright 1.62.1 and its selected engine must be available; `CHROMIUM_PATH` selects a local executable. `MUSIC_REPORT` selects an evidence directory. Recordings require existing FFmpeg; their raw files stay outside the repository by default.
+
+## Cross-browser cleanup correction
+
+The first hosted WebKit run timed out waiting for rendered-source cleanup after Music Volume reached zero. Cleanup now explicitly removes stopped/disconnected buffer sources from the live registry instead of relying only on `onended`. The existing scheduler also bounds rendered-source retirement by a wall-clock deadline, so an inaudible or stalled audio clock cannot retain a retired buffer source indefinitely. Fade envelopes and all original procedural score/rendering functions remain unchanged. The same mute/cleanup assertions remain in place; failures now include a state diagnostic. Final hosted results are recorded in the PR.
