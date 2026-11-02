@@ -1,0 +1,251 @@
+{
+  "engine": "chromium",
+  "version": "154.0.8037.57",
+  "method": "Desktop browser automation; range events, visibility and context suspension are explicitly simulated. No physical Safari/listening claim.",
+  "results": [
+    {
+      "name": "laptop",
+      "checks": [
+        "no AudioContext or playback before a real user gesture",
+        "real gesture unlocks the rendered home cue",
+        "actual post-mix music bus contains audible PCM",
+        "ordinary audio-settings updates do not restart the cue",
+        "zero music volume preserves effects volume",
+        "independent music and effects buses retain their own gains",
+        "Music Off leaves master audio and effects enabled",
+        "master mute silences both buses",
+        "dialog suspension bookmarks the existing musical position",
+        "dialog close resumes the musical position",
+        "adventure map selects the new rendered exploration cue",
+        "browser-decoded loop lengths and seam amplitude remain bounded",
+        "two complete decoded cycles repeat at the exact loop boundary (offline graph)",
+        "encounter keeps the existing procedural score",
+        "native answer and explanation 1",
+        "native answer and explanation 2",
+        "native answer and explanation 3",
+        "native answer and explanation 4",
+        "native answer and explanation 5",
+        "one real seal earned without changing grading",
+        "customized hero returns home unchanged",
+        "practice quick remains reachable with no competing background cue",
+        "practice written remains reachable with no competing background cue",
+        "repeated navigation retains one source, two cached buffers and one observer",
+        "repeated navigation reuses the original context and scheduler",
+        "explicit AudioContext suspension stops playback",
+        "simulated page hiding suspends the existing context",
+        "reload preserves audio preferences and requires a new gesture",
+        "reload preserves hero and adventure progress",
+        "fresh embedded audio decodes offline after reload",
+        "map audio also decodes offline without a remote asset request"
+      ],
+      "signal": 0.015190335422463569,
+      "loops": [
+        {
+          "kind": "home",
+          "duration": 101.05263038548753,
+          "expected": 101.05263038548753,
+          "boundaryDelta": 0.0014365522074513137,
+          "repeatedCycleDifference": 0,
+          "frames": 4456421
+        },
+        {
+          "kind": "map",
+          "duration": 80,
+          "expected": 80,
+          "boundaryDelta": 0.0012198815238662064,
+          "repeatedCycleDifference": 0,
+          "frames": 3528000
+        }
+      ],
+      "outcome": {
+        "kind": "rescue",
+        "phase": "rescue"
+      },
+      "inspect": {
+        "observers": 1,
+        "liveSources": 1,
+        "starts": {
+          "home": 2,
+          "map": 1
+        },
+        "decoded": [
+          {
+            "id": "home",
+            "duration": 101.05263038548753,
+            "bytes": 35651368
+          },
+          {
+            "id": "map",
+            "duration": 80,
+            "bytes": 28224000
+          }
+        ],
+        "pending": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "phone",
+      "checks": [
+        "no AudioContext or playback before a real user gesture",
+        "real gesture unlocks the rendered home cue",
+        "actual post-mix music bus contains audible PCM",
+        "ordinary audio-settings updates do not restart the cue",
+        "zero music volume preserves effects volume",
+        "independent music and effects buses retain their own gains",
+        "Music Off leaves master audio and effects enabled",
+        "master mute silences both buses",
+        "dialog suspension bookmarks the existing musical position",
+        "dialog close resumes the musical position",
+        "adventure map selects the new rendered exploration cue",
+        "browser-decoded loop lengths and seam amplitude remain bounded",
+        "two complete decoded cycles repeat at the exact loop boundary (offline graph)",
+        "encounter keeps the existing procedural score",
+        "native answer and explanation 1",
+        "native answer and explanation 2",
+        "native answer and explanation 3",
+        "native answer and explanation 4",
+        "native answer and explanation 5",
+        "one real seal earned without changing grading",
+        "customized hero returns home unchanged",
+        "practice quick remains reachable with no competing background cue",
+        "practice written remains reachable with no competing background cue",
+        "repeated navigation retains one source, two cached buffers and one observer",
+        "repeated navigation reuses the original context and scheduler",
+        "explicit AudioContext suspension stops playback",
+        "simulated page hiding suspends the existing context",
+        "reload preserves audio preferences and requires a new gesture",
+        "reload preserves hero and adventure progress",
+        "fresh embedded audio decodes offline after reload",
+        "map audio also decodes offline without a remote asset request"
+      ],
+      "signal": 0.015190335422463569,
+      "loops": [
+        {
+          "kind": "home",
+          "duration": 101.05263038548753,
+          "expected": 101.05263038548753,
+          "boundaryDelta": 0.0014365522074513137,
+          "repeatedCycleDifference": 0,
+          "frames": 4456421
+        },
+        {
+          "kind": "map",
+          "duration": 80,
+          "expected": 80,
+          "boundaryDelta": 0.0012198815238662064,
+          "repeatedCycleDifference": 0,
+          "frames": 3528000
+        }
+      ],
+      "outcome": {
+        "kind": "rescue",
+        "phase": "rescue"
+      },
+      "inspect": {
+        "observers": 1,
+        "liveSources": 2,
+        "starts": {
+          "home": 2,
+          "map": 1
+        },
+        "decoded": [
+          {
+            "id": "home",
+            "duration": 101.05263038548753,
+            "bytes": 35651368
+          },
+          {
+            "id": "map",
+            "duration": 80,
+            "bytes": 28224000
+          }
+        ],
+        "pending": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "tablet",
+      "checks": [
+        "no AudioContext or playback before a real user gesture",
+        "real gesture unlocks the rendered home cue",
+        "actual post-mix music bus contains audible PCM",
+        "ordinary audio-settings updates do not restart the cue",
+        "zero music volume preserves effects volume",
+        "independent music and effects buses retain their own gains",
+        "Music Off leaves master audio and effects enabled",
+        "master mute silences both buses",
+        "dialog suspension bookmarks the existing musical position",
+        "dialog close resumes the musical position",
+        "adventure map selects the new rendered exploration cue",
+        "browser-decoded loop lengths and seam amplitude remain bounded",
+        "two complete decoded cycles repeat at the exact loop boundary (offline graph)",
+        "encounter keeps the existing procedural score",
+        "native answer and explanation 1",
+        "native answer and explanation 2",
+        "native answer and explanation 3",
+        "native answer and explanation 4",
+        "native answer and explanation 5",
+        "one real seal earned without changing grading",
+        "customized hero returns home unchanged",
+        "practice quick remains reachable with no competing background cue",
+        "practice written remains reachable with no competing background cue",
+        "repeated navigation retains one source, two cached buffers and one observer",
+        "repeated navigation reuses the original context and scheduler",
+        "explicit AudioContext suspension stops playback",
+        "simulated page hiding suspends the existing context",
+        "reload preserves audio preferences and requires a new gesture",
+        "reload preserves hero and adventure progress",
+        "fresh embedded audio decodes offline after reload",
+        "map audio also decodes offline without a remote asset request"
+      ],
+      "signal": 0.015490743037533042,
+      "loops": [
+        {
+          "kind": "home",
+          "duration": 101.05263038548753,
+          "expected": 101.05263038548753,
+          "boundaryDelta": 0.0014365522074513137,
+          "repeatedCycleDifference": 0,
+          "frames": 4456421
+        },
+        {
+          "kind": "map",
+          "duration": 80,
+          "expected": 80,
+          "boundaryDelta": 0.0012198815238662064,
+          "repeatedCycleDifference": 0,
+          "frames": 3528000
+        }
+      ],
+      "outcome": {
+        "kind": "rescue",
+        "phase": "rescue"
+      },
+      "inspect": {
+        "observers": 1,
+        "liveSources": 1,
+        "starts": {
+          "home": 2,
+          "map": 1
+        },
+        "decoded": [
+          {
+            "id": "home",
+            "duration": 101.05263038548753,
+            "bytes": 35651368
+          },
+          {
+            "id": "map",
+            "duration": 80,
+            "bytes": 28224000
+          }
+        ],
+        "pending": [],
+        "errors": []
+      }
+    }
+  ],
+  "errors": []
+}

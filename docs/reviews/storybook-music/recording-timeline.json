@@ -1,0 +1,78 @@
+{
+  "method": "Actual desktop Chromium native UI, normal audio/animation clocks. Audio recorded from the existing post-volume/duck music and effects buses; video/audio aligned by capture timestamps. No replacement soundtrack, physical-device or human-listening claim.",
+  "timeline": {
+    "audioOffsetSeconds": 1.298,
+    "home-start": {
+      "videoSeconds": 1.301,
+      "contextSeconds": 0.39183673469387753,
+      "kind": "home",
+      "position": 0.15656462585034012
+    },
+    "home-loop-1": {
+      "videoSeconds": 102.661,
+      "contextSeconds": 101.75274376417234,
+      "kind": "home",
+      "position": 101.5174716553288
+    },
+    "home-loop-2": {
+      "videoSeconds": 203.952,
+      "contextSeconds": 202.82049886621314,
+      "kind": "home",
+      "position": 202.5852267573696
+    },
+    "map-start": {
+      "videoSeconds": 204.97,
+      "contextSeconds": 203.83056689342405,
+      "kind": "map",
+      "position": 0.092709750566911
+    },
+    "map-loop-1": {
+      "videoSeconds": 285.366,
+      "contextSeconds": 284.19773242630384,
+      "kind": "map",
+      "position": 80.4598752834467
+    },
+    "map-loop-2": {
+      "videoSeconds": 365.414,
+      "contextSeconds": 364.2107936507937,
+      "kind": "map",
+      "position": 160.47293650793654
+    },
+    "navigation-start": {
+      "videoSeconds": 365.423,
+      "contextSeconds": 364.2107936507937,
+      "kind": "map",
+      "position": 160.47293650793654
+    },
+    "encounter": {
+      "videoSeconds": 367.253,
+      "contextSeconds": 366.0016326530612,
+      "kind": "duel",
+      "position": 0.5164739229024917
+    },
+    "map-return": {
+      "videoSeconds": 371.823,
+      "contextSeconds": 370.4308390022676,
+      "kind": "map",
+      "position": 0.04336734693879407
+    },
+    "home-return": {
+      "videoSeconds": 373.745,
+      "contextSeconds": 372.4016326530612,
+      "kind": "home",
+      "position": 0.06658730158727622
+    },
+    "muted": {
+      "videoSeconds": 376.976,
+      "contextSeconds": 375.5827664399093,
+      "position": null
+    },
+    "finished": {
+      "videoSeconds": 378.84,
+      "contextSeconds": 377.4403628117914,
+      "kind": "home",
+      "position": 3.7903174603173966
+    }
+  },
+  "errors": []
+}

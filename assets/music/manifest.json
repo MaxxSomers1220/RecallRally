@@ -1,0 +1,81 @@
+{
+  "source": "Original scores, sample-based FluidSynth rendering",
+  "renderer": "FluidSynth via system libfluidsynth.so.3; FFmpeg libmp3lame 128kbps",
+  "soundfont": {
+    "name": "TimGM6mb.sf2",
+    "sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+    "license": "GPL-2.0-only"
+  },
+  "assets": [
+    {
+      "sampleRate": 44100,
+      "loopFrames": 4456421,
+      "loopSeconds": 101.05263038548753,
+      "peak": 0.7000000476837158,
+      "rms": 0.1096595823764801,
+      "rawBoundaryDelta": 0.019905703142285347,
+      "boundaryDelta": 0.0,
+      "id": "home",
+      "file": "assets/music/home.mp3",
+      "bytes": 1617963,
+      "sha256": "54ca1aa42c730734000760726712453abd67d4351c83a9acbd7acab6586c72ec",
+      "title": "An Invitation to Adventure",
+      "bpm": 76,
+      "loopBars": 32,
+      "channels": 2
+    },
+    {
+      "sampleRate": 44100,
+      "loopFrames": 3528000,
+      "loopSeconds": 80.0,
+      "peak": 0.7000000476837158,
+      "rms": 0.10032271593809128,
+      "rawBoundaryDelta": 0.001079940004274249,
+      "boundaryDelta": 0.001079940004274249,
+      "id": "map",
+      "file": "assets/music/map.mp3",
+      "bytes": 1281087,
+      "sha256": "25d72504593b81a46d7bd9411f33a8bb09d2f9121e4181e495645b36e7172b29",
+      "title": "The Lantern Trail",
+      "bpm": 96,
+      "loopBars": 32,
+      "channels": 2
+    }
+  ],
+  "sketches": [
+    {
+      "sampleRate": 44100,
+      "loopFrames": 1114105,
+      "loopSeconds": 25.26315192743764,
+      "peak": 0.699999988079071,
+      "rms": 0.07304834574460983,
+      "rawBoundaryDelta": 0.026957161724567413,
+      "boundaryDelta": 0.0,
+      "id": "home-sketch",
+      "file": "assets/music/source/home-sketch.mp3",
+      "bytes": 405463,
+      "sha256": "97b5a53cdb10b26ab90edb8a97f6848e63b0eef364bd4a1a66604030cf5bbfef",
+      "title": "An Invitation to Adventure",
+      "bpm": 76,
+      "loopBars": 8,
+      "channels": 2
+    },
+    {
+      "sampleRate": 44100,
+      "loopFrames": 882000,
+      "loopSeconds": 20.0,
+      "peak": 0.699999988079071,
+      "rms": 0.0795183777809143,
+      "rawBoundaryDelta": 0.004375305026769638,
+      "boundaryDelta": 0.0,
+      "id": "map-sketch",
+      "file": "assets/music/source/map-sketch.mp3",
+      "bytes": 321035,
+      "sha256": "4b8ad09184c5f7eb66401d2c37bf799bcbd97f9e67d4ba39dfdc10314fbe55bf",
+      "title": "The Lantern Trail",
+      "bpm": 96,
+      "loopBars": 8,
+      "channels": 2
+    }
+  ]
+}

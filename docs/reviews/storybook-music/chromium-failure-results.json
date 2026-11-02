@@ -1,0 +1,15 @@
+{
+  "failureCases": [
+    {
+      "failure": "context-unavailable",
+      "visibleStatus": true,
+      "nativeGrading": true
+    },
+    {
+      "failure": "decode-unavailable",
+      "visibleStatus": true,
+      "nativeGrading": true
+    }
+  ],
+  "errors": []
+}
