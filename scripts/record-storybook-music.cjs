@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),http=require('node:http'),cp=require('node:child_process'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 const root=path.join(__dirname,'..'),report=process.env.MUSIC_REPORT||path.join(os.tmpdir(),'recall-storybook-recording'),raw=path.join(report,'raw');let server,browser;
 (async()=>{try{
+ const encoder=cp.spawnSync('ffmpeg',['-version'],{encoding:'utf8'});assert.equal(encoder.status,0,'Recording requires FFmpeg: '+(encoder.error?.message||encoder.stderr));
  fs.mkdirSync(raw,{recursive:true});server=http.createServer((q,r)=>{r.setHeader('Content-Type','text/html');r.end(fs.readFileSync(path.join(root,'Ellery_Recall_Rally_Librarian_v4.html')))});await new Promise(r=>server.listen(0,'127.0.0.1',r));
  browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});const context=await browser.newContext({viewport:{width:1280,height:800},recordVideo:{dir:raw,size:{width:1280,height:800}}}),videoZero=Date.now(),page=await context.newPage(),timeline={},errors=[];page.on('pageerror',e=>errors.push(e.message));
  const mark=async name=>{const value={videoSeconds:(Date.now()-videoZero)/1000,...await page.evaluate(()=>({contextSeconds:audioContext?.currentTime,kind:musicCurrent?.kind,position:musicCurrent?audioContext.currentTime-musicCurrent.origin:null}))};timeline[name]=value;console.log('RECORDED '+name+' '+JSON.stringify(value));return value};

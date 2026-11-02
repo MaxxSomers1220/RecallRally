@@ -35,6 +35,12 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/music-browser" --no-package-lock --ignore-scripts playwright@1.62.1
           node "$RUNNER_TEMP/music-browser/node_modules/playwright/cli.js" install --with-deps ${{ matrix.engine }}
+      - name: Install and verify video encoder
+        if: matrix.engine == 'chromium'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
       - name: Audio state, decoded loops, native grading, saves and actual Amplify output
         env:
           MUSIC_ENGINE: ${{ matrix.engine }}
