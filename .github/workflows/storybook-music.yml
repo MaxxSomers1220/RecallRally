@@ -9,6 +9,7 @@ on:
       - 'assets/music/**'
       - 'scripts/**'
       - 'tests/storybook-music*'
+      - 'tests/ensemble-music.test.cjs'
       - 'tests/fixtures/storybook-music*'
       - 'amplify.yml'
       - '.github/workflows/storybook-music.yml'
@@ -31,6 +32,7 @@ jobs:
       - run: |
           node scripts/build-standalone.cjs
           node tests/storybook-music.test.cjs
+          node tests/ensemble-music.test.cjs
       - name: Install isolated browser tooling
         run: |
           npm install --prefix "$RUNNER_TEMP/music-browser" --no-package-lock --ignore-scripts playwright@1.62.1

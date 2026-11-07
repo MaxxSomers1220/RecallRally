@@ -1,5 +1,7 @@
 # Homepage and adventure map music
 
+> Historical report for the initial soundtrack. The current user-approved ensemble revision and its measurements are documented in [the ensemble review](../ensemble-music/README.md). Durations, previews and source statistics below describe the original cues.
+
 Based on main `ffbd2ed`, with PRs #22/#23 merged. Two new original scores are integrated into the actual homepage and Rescue Rigby map. The existing audio context, music/effects gains, ducking, saved preferences and single scheduler remain the owners. No gameplay grading, timing, hero or save schema was changed.
 
 ## Listen and inspect

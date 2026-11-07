@@ -1,0 +1,30 @@
+{
+  "method": "Decoded actual gameplay clips: signal and headroom only, not human audition",
+  "clips": [
+    {
+      "file": "home-loop-1.mp4",
+      "audioRms": 0.024264991283416748,
+      "audioPeak": 0.09669873863458633
+    },
+    {
+      "file": "home-loop-2.mp4",
+      "audioRms": 0.023998212069272995,
+      "audioPeak": 0.09794265031814575
+    },
+    {
+      "file": "map-loop-1.mp4",
+      "audioRms": 0.02535170316696167,
+      "audioPeak": 0.11448246240615845
+    },
+    {
+      "file": "map-loop-2.mp4",
+      "audioRms": 0.020912840962409973,
+      "audioPeak": 0.11527736485004425
+    },
+    {
+      "file": "navigation-with-audio.mp4",
+      "audioRms": 0.01762222684919834,
+      "audioPeak": 0.1134021207690239
+    }
+  ]
+}
