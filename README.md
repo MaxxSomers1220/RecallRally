@@ -28,7 +28,7 @@ five playable experiments in an illustrated laboratory:
 | Star Observatory | Solar-system topics | Telescope alignment and a fictional constellation are revealed |
 
 Each experiment uses **five different, existing four-choice science questions**.
-The built-in bank currently has 310 science records. Station selection favors
+The built-in bank currently has 350 science records. Station selection favors
 matching curriculum metadata; if a station has fewer than five eligible matching
 records, the broader science pool fills the deck. Questions recently presented
 in the lab or answered in the active player's journal are deprioritized. Eligible
@@ -172,9 +172,18 @@ assets to regenerate **Ellery_Recall_Rally_Librarian_v4.html**, the complete
 self-contained game suitable for static hosting. The save test checks that this
 file and `index.html` embed the current save implementation.
 
-This package uses the version 29 Ten Worlds game. It includes 1,550 built-in
-questions across 64 curriculum areas: 1,436 eligible for Quick Recall and 114
-written-only questions. Adventure can use all 1,550.
+This package uses the version 29 Ten Worlds game. It includes 1,750 built-in
+questions across 64 curriculum areas: 1,627 eligible for Quick Recall and 123
+written-only questions. Adventure can use all 1,750.
+
+The uploaded-guide expansion adds 200 original practice questions, 40 per subject,
+in `data/study-guide-expansion-2026.json`. Each has four choices, an explanation,
+a stable ID, curriculum and difficulty metadata, and the source PDF filename and
+1-based PDF page numbers. These records join **Study-guide practice** and the
+shared bank used by the adventure, Librarian, learning journal, and Science Lab.
+Quick Recall excludes the nine new math questions in the three written-only
+curriculum areas. The build embeds the JSON into both HTML editions, preserving
+offline play. See [the source and validation notes](docs/question-expansion-2026.md).
 
 ## Upload to GitHub — no terminal required
 
