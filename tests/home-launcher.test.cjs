@@ -25,3 +25,15 @@ assert(!libCss.includes('\n#lib-launch{position:fixed'),'Main-menu Librarian car
 new vm.Script(html.match(/<script>([\s\S]*?)<\/script>/)[1],{filename:'index.html'});
 new vm.Script(libJs,{filename:'librarian.js'});
 console.log('PASS five distinct home choices, functional launch hooks, hidden advanced setup, persistent quest tools, non-floating Librarian, and scripts parse');
+
+// The labeled menu control returns directly to the chooser even mid-practice.
+const menuHandler=html.match(/\$\('home-brand'\)\.onclick=.*$/m)[0];
+for(const phase of ['reading','open','buzzed','checking','result','summary']){
+ const button={},calls=[];
+ vm.runInNewContext(menuHandler,{game:{phase},mode:'quick',$:()=>button,goHome:()=>calls.push('home'),selectMode:()=>calls.push('mode')});
+ button.onclick();assert.deepEqual(calls,['home'],'Main menu returns directly from '+phase);
+}
+const menuButton={},menuCalls=[];
+vm.runInNewContext(menuHandler,{mode:'adventure',$:()=>menuButton,goHome:()=>menuCalls.push('home'),selectMode:m=>menuCalls.push(m)});
+menuButton.onclick();assert.deepEqual(menuCalls,['quick','home'],'Leaving Adventure resets its layout before showing the chooser');
+console.log('PASS direct Main menu navigation from practice and Adventure');

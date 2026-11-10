@@ -954,6 +954,16 @@
 .lib-time-track .rally-time-fill{background:#a3e9fc}
 .lib-time-track.is-low .rally-time-fill{background:#ffc48a}
 @media(prefers-reduced-motion:reduce){.hero-idle,.hero-idle .hero-blink,.hero-idle .panther-magic-accent{animation:none!important;transform:none!important}}
+
+/* Make the brand an explicit, touch-sized route back to the game chooser. */
+#home-brand{min-height:54px;padding:7px 11px;border:1px solid var(--line);border-radius:12px;background:var(--white);gap:9px;flex-shrink:0}
+#home-brand .brandmark{flex-shrink:0}
+#home-brand .brandtext{line-height:1.15}
+#home-brand .brand-destination{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:800;letter-spacing:.1px;line-height:1.25;color:var(--teal)}
+#home-brand:hover,#home-brand:focus-visible{border-color:var(--teal);background:#f3f8f4}
+#home-brand:hover .brand-destination,#home-brand:focus-visible .brand-destination{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){#home-brand{padding:6px 9px}#home-brand .brandtext{font-size:15px}}
+@media(max-width:360px){body>header{flex-wrap:wrap;gap:8px}}
 </style>
 <style id="adventure-illustrations-styles">
 /* Painted scenery and moving instruments. All learning controls remain live HTML. */
@@ -1295,7 +1305,7 @@ body[data-hub-awake=true] #home-view .home-hub:after{animation-play-state:runnin
 </head>
 <body>
 <header>
- <button class="brand" id="home-brand" aria-label="Recall Rally home"><span class="brandmark" aria-hidden="true">ϟ</span><span class="brandtext">Recall Rally<small id="hero-brand">Ellery’s academic team arena</small></span></button>
+ <button class="brand" id="home-brand" aria-label="Recall Rally — Main menu" title="Back to main menu"><span class="brandmark" aria-hidden="true"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7M5 9v11h5v-6h4v6h5V9"/></svg></span><span class="brandtext">Recall Rally<span class="brand-destination"><span aria-hidden="true">←</span> Main menu</span><small id="hero-brand" hidden>Ellery’s academic team arena</small></span></button>
  <nav class="topnav" aria-label="Main"><button class="navbtn" id="open-learning">My learning</button><a class="navbtn" id="open-help" href="#help-panel">How to play</a><span class="grade">Grade 5 · Practice</span></nav>
 </header>
 <main id="play-area">
@@ -4246,7 +4256,7 @@ $('sources-all').onclick=()=>{document.querySelectorAll('[data-question-source]'
 $('sources-clear').onclick=()=>{document.querySelectorAll('[data-question-source]').forEach(x=>x.checked=false);setup()};
 for(const m of ['quick','written','adventure']){$(`mode-${m}`).onclick=()=>selectMode(m);$(`mode-${m}`).onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const tabs=['quick','written','adventure'],i=tabs.indexOf(mode);selectMode(e.key==='Home'?tabs[0]:e.key==='End'?tabs[2]:tabs[(i+(e.key==='ArrowLeft'?2:1))%3]);$(`mode-${mode}`).focus()}}}
 
-$('start').onclick=()=>startRound();$('pause').onclick=togglePause;$('end-round').onclick=finish;$('home-brand').onclick=()=>{if(game&&['reading','open','buzzed','checking','result'].includes(game.phase))finish();else{if(mode==='adventure')selectMode('quick');goHome()}};
+$('start').onclick=()=>startRound();$('pause').onclick=togglePause;$('end-round').onclick=finish;$('home-brand').onclick=()=>{if(mode==='adventure')selectMode('quick');goHome()};
  $('sound-setting').onchange=()=>setSoundPreference($('sound-setting').value==='on');$('sound-setting').value=soundOn?'on':'off';
  $('sound-toggle').onclick=()=>{setSoundPreference(!soundOn);if(soundOn)tone('buzz')};
 $('open-help').onclick=()=>{if(questWalking)cancelQuestTravel();if(duel&&!duel.paused)pauseQuest();if(game&&!game.paused&&!['result','summary'].includes(game.phase))togglePause();$('help-panel').open=true;$('help-title').focus()};$('open-pack').onclick=()=>showDialog('pack-dialog');document.querySelectorAll('[data-close]').forEach(el=>el.onclick=()=>el.closest('dialog').close());

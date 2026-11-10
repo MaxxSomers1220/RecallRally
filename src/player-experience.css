@@ -20,3 +20,13 @@
 .lib-time-track .rally-time-fill{background:#a3e9fc}
 .lib-time-track.is-low .rally-time-fill{background:#ffc48a}
 @media(prefers-reduced-motion:reduce){.hero-idle,.hero-idle .hero-blink,.hero-idle .panther-magic-accent{animation:none!important;transform:none!important}}
+
+/* Make the brand an explicit, touch-sized route back to the game chooser. */
+#home-brand{min-height:54px;padding:7px 11px;border:1px solid var(--line);border-radius:12px;background:var(--white);gap:9px;flex-shrink:0}
+#home-brand .brandmark{flex-shrink:0}
+#home-brand .brandtext{line-height:1.15}
+#home-brand .brand-destination{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:800;letter-spacing:.1px;line-height:1.25;color:var(--teal)}
+#home-brand:hover,#home-brand:focus-visible{border-color:var(--teal);background:#f3f8f4}
+#home-brand:hover .brand-destination,#home-brand:focus-visible .brand-destination{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){#home-brand{padding:6px 9px}#home-brand .brandtext{font-size:15px}}
+@media(max-width:360px){body>header{flex-wrap:wrap;gap:8px}}
