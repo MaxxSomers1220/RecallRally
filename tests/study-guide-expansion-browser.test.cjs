@@ -17,14 +17,14 @@ const root=path.join(__dirname,'..');
    await page.goto('http://127.0.0.1:'+server.address().port+'/'+file,{waitUntil:'load'});
    await context.setOffline(true);
    assert(await page.locator('#runtime-status').isVisible());
-   assert.equal(await page.evaluate(()=>SAMPLES.length),1750);
-   for(const subject of ['math','science','social','language','arts']){
-    const info=await page.evaluate(subject=>{
+   assert.equal(await page.evaluate(()=>SAMPLES.length),1950);
+   for(const batch of ['first','second'])for(const subject of ['math','science','social','language','arts']){
+    const info=await page.evaluate(({subject,batch})=>{
      goHome();mode='written';$('clock').value='0';$('seating').value='solo';$('sound-setting').value='off';
-     const q=STUDY_GUIDE_ADDITIONS.find(q=>q.subject===subject);
+     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:STUDY_GUIDE_ROUND_TWO).find(q=>q.subject===subject);
      const before=RallyLearning.snapshot().attempts.length;startRound([q]);
      return {id:q.id,prompt:q.prompt,source:q.sourceDocument,explanation:q.explanation,before};
-    },subject);
+    },{subject,batch});
     assert((await page.locator('#question-text').innerText()).includes(info.prompt));
     await page.evaluate(()=>choose(game.choices.indexOf(current().answer)));
     assert.equal(await page.evaluate(()=>game.scores[0]),1);
@@ -34,8 +34,8 @@ const root=path.join(__dirname,'..');
     assert.equal(last.questionId,info.id);assert.equal(last.outcome,'correct');
    }
    // Exercise short-answer grading for a new record and wrong-choice rejection.
-   await page.evaluate(()=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ADDITIONS.find(q=>q.id==='guide-additions-2026-science-040')]);buzz(0,'Tester')});
-   await page.locator('#typed-answer').fill('Drew');await page.locator('.answer-form button').click();
+   await page.evaluate(()=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ROUND_TWO.find(q=>q.id==='guide-round-two-2026-science-040')]);buzz(0,'Tester')});
+   await page.locator('#typed-answer').fill('Ochoa');await page.locator('.answer-form button').click();
    assert.equal(await page.evaluate(()=>game.scores[0]),1,'new short-answer alias is accepted');
    await page.evaluate(()=>{goHome();mode='written';startRound([STUDY_GUIDE_ADDITIONS[0]]);choose(game.choices.findIndex(a=>a!==current().answer))});
    assert.equal(await page.evaluate(()=>game.scores[0]),0,'incorrect choice cannot score');
