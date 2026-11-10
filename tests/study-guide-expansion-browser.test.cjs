@@ -17,11 +17,11 @@ const root=path.join(__dirname,'..');
    await page.goto('http://127.0.0.1:'+server.address().port+'/'+file,{waitUntil:'load'});
    await context.setOffline(true);
    assert(await page.locator('#runtime-status').isVisible());
-   assert.equal(await page.evaluate(()=>SAMPLES.length),1950);
-   for(const batch of ['first','second'])for(const subject of ['math','science','social','language','arts']){
+   assert.equal(await page.evaluate(()=>SAMPLES.length),2150);
+   for(const batch of ['first','second','third'])for(const subject of ['math','science','social','language','arts']){
     const info=await page.evaluate(({subject,batch})=>{
      goHome();mode='written';$('clock').value='0';$('seating').value='solo';$('sound-setting').value='off';
-     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:STUDY_GUIDE_ROUND_TWO).find(q=>q.subject===subject);
+     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:STUDY_GUIDE_ROUND_THREE).find(q=>q.subject===subject);
      const before=RallyLearning.snapshot().attempts.length;startRound([q]);
      return {id:q.id,prompt:q.prompt,source:q.sourceDocument,explanation:q.explanation,before};
     },{subject,batch});
@@ -33,6 +33,12 @@ const root=path.join(__dirname,'..');
     const last=await page.evaluate(()=>RallyLearning.snapshot().attempts.at(-1));
     assert.equal(last.questionId,info.id);assert.equal(last.outcome,'correct');
    }
+   // New-batch aliases and a written-only record use the real grading paths.
+   await page.evaluate(()=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ROUND_THREE.find(q=>q.id==='guide-round-three-2026-science-038')]);buzz(0,'Tester')});
+   await page.locator('#typed-answer').fill('Kepler');await page.locator('.answer-form button').click();
+   assert.equal(await page.evaluate(()=>game.scores[0]),1,'round-three short-answer alias is accepted');
+   await page.evaluate(()=>{goHome();mode='written';startRound([STUDY_GUIDE_ROUND_THREE.find(q=>q.curriculumTopicId==='math-07')]);choose(game.choices.indexOf(current().answer))});
+   assert.equal(await page.evaluate(()=>game.scores[0]),1,'round-three written-only coordinate problem grades');
    // Exercise short-answer grading for a new record and wrong-choice rejection.
    await page.evaluate(()=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ROUND_TWO.find(q=>q.id==='guide-round-two-2026-science-040')]);buzz(0,'Tester')});
    await page.locator('#typed-answer').fill('Ochoa');await page.locator('.answer-form button').click();

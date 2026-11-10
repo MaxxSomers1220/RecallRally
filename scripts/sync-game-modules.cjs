@@ -7,7 +7,8 @@ const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
 // Guide additions stay editable as data and are embedded for offline/file:// play.
 const guideAdditions=JSON.parse(read('data/study-guide-expansion-2026.json'));
 const guideRoundTwo=JSON.parse(read('data/study-guide-round-two-2026.json'));
-const guideEmbed='/* STUDY_GUIDE_ADDITIONS_START */\nconst STUDY_GUIDE_ADDITIONS='+JSON.stringify(guideAdditions).replace(/</g,'\\u003c')+';\nGUIDE_QUESTIONS.push(...STUDY_GUIDE_ADDITIONS);\nconst STUDY_GUIDE_ROUND_TWO='+JSON.stringify(guideRoundTwo).replace(/</g,'\\u003c')+';\nGUIDE_QUESTIONS.push(...STUDY_GUIDE_ROUND_TWO);\n/* STUDY_GUIDE_ADDITIONS_END */';
+const guideRoundThree=JSON.parse(read('data/study-guide-round-three-2026.json'));
+const guideEmbed='/* STUDY_GUIDE_ADDITIONS_START */\nconst STUDY_GUIDE_ADDITIONS='+JSON.stringify(guideAdditions).replace(/</g,'\\u003c')+';\nGUIDE_QUESTIONS.push(...STUDY_GUIDE_ADDITIONS);\nconst STUDY_GUIDE_ROUND_TWO='+JSON.stringify(guideRoundTwo).replace(/</g,'\\u003c')+';\nGUIDE_QUESTIONS.push(...STUDY_GUIDE_ROUND_TWO);\nconst STUDY_GUIDE_ROUND_THREE='+JSON.stringify(guideRoundThree).replace(/</g,'\\u003c')+';\nGUIDE_QUESTIONS.push(...STUDY_GUIDE_ROUND_THREE);\n/* STUDY_GUIDE_ADDITIONS_END */';
 if(html.includes('/* STUDY_GUIDE_ADDITIONS_START */'))html=html.replace(/\/\* STUDY_GUIDE_ADDITIONS_START \*\/[\s\S]*?\/\* STUDY_GUIDE_ADDITIONS_END \*\//,()=>guideEmbed);
 else {
  if(!html.includes('/* QUESTION_DATABASE_END */'))throw Error('Question database embed marker not found');
