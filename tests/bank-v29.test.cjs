@@ -3,11 +3,11 @@ const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),
 const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 const bank=script.slice(script.indexOf('const SAMPLE_ROWS='),script.indexOf('// Storage is optional.'));
 vm.runInNewContext(bank+`
-assert.equal(SAMPLES.length,1750);
-assert.equal(new Set(SAMPLES.map(q=>q.id)).size,1750);
+assert.equal(SAMPLES.length,1950);
+assert.equal(new Set(SAMPLES.map(q=>q.id)).size,1950);
 assert.equal(new Set(SAMPLES.map(q=>q.curriculumTopicId)).size,64);
-assert.equal(SAMPLES.filter(q=>q.modes.includes('quick')).length,1627);
-assert.equal(SAMPLES.filter(q=>!q.modes.includes('quick')).length,123);
+assert.equal(SAMPLES.filter(q=>q.modes.includes('quick')).length,1818);
+assert.equal(SAMPLES.filter(q=>!q.modes.includes('quick')).length,132);
 assert.equal(ADVENTURE_V29_QUESTIONS.length,50);
 for(const subject of ['math','science','social','language','arts'])assert.equal(ADVENTURE_V29_QUESTIONS.filter(q=>q.subject===subject).length,10);
 for(const q of ADVENTURE_V29_QUESTIONS){
@@ -17,4 +17,4 @@ for(const q of ADVENTURE_V29_QUESTIONS){
  assert.equal(SAMPLES.filter(x=>x.prompt.trim().toLowerCase()===q.prompt.trim().toLowerCase()).length,1);
 }
 `,{assert});
-console.log('PASS 1,750 stable IDs, 64 areas, 1,627 Quick Recall / 123 written-only, and 50 preserved adventure questions');
+console.log('PASS 1,950 stable IDs, 64 areas, 1,818 Quick Recall / 132 written-only, and 50 preserved adventure questions');

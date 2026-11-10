@@ -1,11 +1,12 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root=path.join(__dirname,'..'),read=name=>fs.readFileSync(path.join(root,name),'utf8');
-const additions=JSON.parse(read('data/study-guide-expansion-2026.json'));
+const batches=['data/study-guide-expansion-2026.json','data/study-guide-round-two-2026.json'].map(file=>JSON.parse(read(file)));
+const additions=batches.flat();
 const sources=new Map(JSON.parse(read('data/study-guide-sources-2026.json')).map(s=>[s.name,s]));
-assert.equal(additions.length,200);
+assert.equal(additions.length,400);
 const subjects=['math','science','social','language','arts'];
-for(const subject of subjects)assert.equal(additions.filter(q=>q.subject===subject).length,40);
+for(const batch of batches){assert.equal(batch.length,200);assert.equal(new Set(batch.map(q=>q.curriculumTopicId)).size,64);for(const subject of subjects)assert.equal(batch.filter(q=>q.subject===subject).length,40)}
 for(const filename of ['index.html','Ellery_Recall_Rally_Librarian_v4.html']){
  const html=read(filename),script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
  const bank=script.slice(script.indexOf('const SAMPLE_ROWS='),script.indexOf('// Storage is optional.'));
@@ -15,14 +16,16 @@ for(const filename of ['index.html','Ellery_Recall_Rally_Librarian_v4.html']){
  const lands=script.slice(script.indexOf('const LANDS=['),script.indexOf('let questProgress='));
  vm.runInContext(`${bank}\n${norm}\n${functions}\n${lands}
  let mode='quick',customPack=[],questQuestionBank='all';
- assert.equal(SAMPLES.length,1750);
- assert.equal(new Set(SAMPLES.map(q=>q.id)).size,1750);
- assert.equal(JSON.stringify(STUDY_GUIDE_ADDITIONS),JSON.stringify(additions),'data and offline embed match');
+ assert.equal(SAMPLES.length,1950);
+ assert.equal(new Set(SAMPLES.map(q=>q.id)).size,1950);
+ const allGuideAdditions=[...STUDY_GUIDE_ADDITIONS,...STUDY_GUIDE_ROUND_TWO];
+ assert.equal(JSON.stringify(allGuideAdditions),JSON.stringify(additions),'data and offline embed match');
  const topics=new Map(CURRICULUM_TOPICS.map(t=>[t.id,t]));
  assert.equal(new Set(STUDY_GUIDE_ADDITIONS.map(q=>q.curriculumTopicId)).size,64);
  const prompts=new Set();
- const oldPrompts=new Set(SAMPLES.filter(q=>!q.id.startsWith('guide-additions-2026-')).map(q=>norm(q.prompt).replace(/[^a-z0-9]/g,'')));
- for(const q of STUDY_GUIDE_ADDITIONS){
+ const additionIds=new Set(allGuideAdditions.map(q=>q.id));
+ const oldPrompts=new Set(SAMPLES.filter(q=>!additionIds.has(q.id)).map(q=>norm(q.prompt).replace(/[^a-z0-9]/g,'')));
+ for(const q of allGuideAdditions){
   const key=norm(q.prompt).replace(/[^a-z0-9]/g,'');
   assert(!oldPrompts.has(key),'new prompt already exists: '+q.id);
   assert(!prompts.has(key),'duplicate expansion prompt: '+q.id);prompts.add(key);
@@ -43,12 +46,12 @@ for(const filename of ['index.html','Ellery_Recall_Rally_Librarian_v4.html']){
   assert(q.sourcePdfPages.length&&q.sourcePdfPages.every(n=>Number.isInteger(n)&&n>=1&&n<=source.pages));
   for(const alias of q.aliases)assert(!q.options.filter(x=>x!==q.answer).some(x=>norm(x)===norm(alias)),'alias accepts wrong option: '+q.id);
  }
- assert.equal(STUDY_GUIDE_ADDITIONS.filter(q=>!supportsMode(q,'quick')).length,9);
+ for(const batch of [STUDY_GUIDE_ADDITIONS,STUDY_GUIDE_ROUND_TWO])assert.equal(batch.filter(q=>!supportsMode(q,'quick')).length,9);
  const RallyLearning={snapshot:()=>({attempts:[]}),activeProfile:()=>({id:'guide-test'})};
  function shuffle(a){return [...a]}
  ${read('src/science-lab.js')}
- const science=STUDY_GUIDE_ADDITIONS.filter(q=>q.subject==='science');
- assert(science.every(q=>ScienceLab.pool().includes(q)),'all 40 new science questions reach the lab');
+ const science=allGuideAdditions.filter(q=>q.subject==='science');
+ assert(science.every(q=>ScienceLab.pool().includes(q)),'all 80 expansion science questions reach the lab');
  `,context,{timeout:10000});
 }
 // Exercise the Librarian's real selection logic with new literature records only.
@@ -62,4 +65,4 @@ const expected=SAMPLES.filter(q=>q.subject==='language'&&BOOK_TOPIC.test(q.topic
 assert(expected.length>=20,'new literature coverage');
 const all=SAMPLES;for(const q of expected){SAMPLES=[q];assert.equal(questionBank()[0]?.id,q.id,'Librarian can select '+q.id)}SAMPLES=all;
 `,libContext,{timeout:5000});
-console.log('PASS 200 guide questions, 40 per subject, all 64 areas, provenance, choices, mode rules, both HTML embeds, ten-world pools, Science Lab and Librarian selection');
+console.log('PASS two 200-question guide batches, 40 per subject per batch, all 64 areas, provenance, choices, mode rules, both HTML embeds, ten-world pools, Science Lab and Librarian selection');
