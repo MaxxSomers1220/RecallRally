@@ -25,3 +25,19 @@ for(const [i,r]of ctx.rigs.entries()){
 assert(!/localStorage|fetch\(|setTimeout\(|setInterval\(|gradeAnswer\(|questProgress\s*=/.test(files.map(read).join('\n')),'Motion layer has no grading, persistence or gameplay timers');
 assert(!/guardian-pose-(in|out)|guardian-pose-dissolve/.test(read('src/character-art.css')),'No whole-figure dissolve');
 console.log('PASS ten native-pixel joint rigs, one approved paint per guardian, wrists/eyes/feet, focus coordinates, offline synchronization and presentation-only code');
+// A delayed paint, countered strike and replay must still show a real release.
+let scheduled,now=1000;
+const node={dataset:{},isConnected:true,querySelectorAll:()=>[]};
+Object.assign(ctx,{performance:{now:()=>now},requestAnimationFrame:fn=>{scheduled=fn;return 1},cancelAnimationFrame:()=>{scheduled=null},document:{hidden:false,addEventListener(){},removeEventListener(){}},window:{matchMedia:()=>({matches:false,addEventListener(){},removeEventListener(){}})},root:{querySelector:()=>node},mode:'adventure'});
+// The focus is optional in this timing-only harness.
+ctx.root.querySelector=s=>s==='.guardian-rig'?node:null;
+vm.runInContext(read(files[2])+';this.motion=GuardianMotion;',ctx);
+for(let land=0;land<10;land++)for(const outcome of ['hit','block','counter','guard']){
+ ctx.duel={land,index:0,phase:'result',correct:outcome==='counter',fxActive:true,tacticOutcome:outcome};
+ ctx.motion.mount(ctx.root,ctx.duel);const states=new Set([ctx.motion.inspect().state]);
+ for(let frame=0;frame<24;frame++){now+=200;scheduled(now);states.add(ctx.motion.inspect().state);}
+ if(outcome==='guard')assert(!states.has('casting'),'A shield turn does not cast');
+ else{assert(states.has('casting')&&states.has('follow-through'),'Every guardian releases even at five frames per second');ctx.motion.mount(ctx.root,ctx.duel);assert.equal(ctx.motion.inspect().state,'anticipation','Active replay restarts the attack');}
+ ctx.motion.stop();assert.equal(ctx.motion.inspect().scheduled,false);
+}
+console.log('PASS all ten guardians: delayed frames, strike/block/counter, defensive turn, active replay and loop cleanup');
