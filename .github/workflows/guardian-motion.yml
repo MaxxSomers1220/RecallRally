@@ -11,6 +11,7 @@ on:
       - 'Ellery_Recall_Rally_Librarian_v4.html'
       - 'scripts/**'
       - 'tests/guardian-motion*'
+      - 'tests/guardian-attacks*'
       - '.github/workflows/guardian-motion.yml'
 jobs:
   verify:
@@ -36,6 +37,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/motion-browser/node_modules"
           export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
           export GUARDIAN_RECORDINGS="$RUNNER_TEMP/guardian-recordings"
+          node tests/guardian-attacks-browser.test.cjs
           node tests/guardian-motion-browser.test.cjs
           node tests/adventure-static.test.cjs
           node tests/character-browser.test.cjs

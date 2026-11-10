@@ -17,15 +17,17 @@ const GuardianMotion=(()=>{
  }
  function pose(c,now){const d=c.duel,r=c.rig,dt=c.last?Math.min(.05,(now-c.last)/1000):0;c.last=now;c.clock+=dt;
   const key=d.phase+':'+d.index+':'+d.correct+':'+Boolean(d.fxActive);
-  if(key!==c.event){c.event=key;c.start=now;c.from={...c.base};}
-  let state='listening',go=target(r,state,c.clock),t=(now-c.start)/1000;
-  if(d.phase==='result'&&!d.correct&&d.fxActive){
-   if(t<.065){state='anticipation';go=target(r,state);go=blend(c.from,go,t/.065)}
-   else if(t<.16){state='casting';go=blend(target(r,'anticipation'),target(r,state),(t-.065)/.095)}
-   else if(t<.36){state='follow-through';go=blend(target(r,'casting'),target(r,state),(t-.16)/.2)}
-   else {state='follow-through';go=blend(target(r,'follow-through'),target(r,'listening'),(t-.36)/.72)}
+  if(key!==c.event){c.event=key;c.start=now;c.elapsed=0;c.from={...c.base};}else c.elapsed+=dt;
+  // Advance by rendered time so a busy frame cannot skip the entire release pose.
+  const attacking=d.phase==='result'&&d.fxActive&&!d.signatureThisAnswer&&(d.tacticOutcome==='hit'||d.tacticOutcome==='block'||d.tacticOutcome==='counter');
+  let state='listening',go=target(r,state,c.clock),t=c.elapsed;
+  if(attacking){
+   if(t<.16){state='anticipation';go=target(r,state);go=blend(c.from,go,t/.16)}
+   else if(t<.46){state='casting';go=blend(target(r,'anticipation'),target(r,state),(t-.16)/.3)}
+   else if(t<.72){state='follow-through';go=blend(target(r,'casting'),target(r,state),(t-.46)/.26)}
+   else {state='follow-through';go=blend(target(r,'follow-through'),target(r,'listening'),(t-.72)/.46)}
   }else{state=d.phase==='won'?'celebrating':d.phase==='lost'||d.phase==='result'?'reaction':'listening';go=blend(c.from,target(r,state),t/.4);}
-  if(t>1.1&&state==='follow-through')state='listening';
+  if(t>1.18&&state==='follow-through')state='listening';
   c.base={...go};
   const period=r.personality.period||8,cycle=(c.clock/period)%1,quiet=cycle<.65?0:Math.sin((cycle-.65)/.35*Math.PI);
   go.head+=(r.personality.head||1.3)*quiet;
@@ -35,7 +37,7 @@ const GuardianMotion=(()=>{
   for(const[i,a]of(r.wings||[]).entries()){go['wing'+i]=(go['wing'+i]||0)+(r.personality.wing||1.1)*Math.sin(c.clock*.8+i);go['wing'+i+'-tip']=(go['wing'+i+'-tip']||0)+Math.sin(c.clock*.8+i-.6)*.8;}
   for(const[i,a]of(r.cloth||[]).entries())go['cloth'+i]=Math.sin(c.clock*1.5-.4)*.7;
   const blinkPhase=(c.clock+1.7+(d.land*.47))%(4.6+d.land*.21),blink=blinkPhase<.16?Math.sin(blinkPhase/.16*Math.PI):0;
-  if(c.reduced){state=d.phase==='result'?(d.correct?'reaction':'casting'):d.phase==='won'?'celebrating':d.phase==='lost'?'reaction':'listening';go=target(r,state);}
+  if(c.reduced){state=d.phase==='result'?(attacking?'casting':'reaction'):d.phase==='won'?'celebrating':d.phase==='lost'?'reaction':'listening';go=target(r,state);}
   c.values=go;c.node.dataset.motionState=state;c.node.dataset.characterPose=state==='casting'||state==='anticipation'||state==='follow-through'?'1':state==='reaction'||state==='celebrating'?'2':'0';
   const rib=c.reduced?0:Math.sin(c.clock*(2*Math.PI/(4.8+d.land*.23)))*.006,pivot=r.hip||r.breath?.[1]||460;for(const e of c.chests)e.setAttribute('transform','translate('+CHARACTER_META[d.land].width/2+' '+pivot+') scale('+(1+rib*.3).toFixed(5)+' '+(1+rib).toFixed(5)+') translate('+(-CHARACTER_META[d.land].width/2)+' '+(-pivot)+')');
   for(const e of c.joints){const name=e.dataset.gJoint,p=e.dataset.pivot.split(',').map(Number);e.setAttribute('transform','rotate('+(go[name]||0).toFixed(3)+' '+p.join(' ')+')');}
@@ -54,7 +56,8 @@ const GuardianMotion=(()=>{
   const prior=current||cache;if(current)cache=current;detach();if(!node){if(!d)cache=null;else if(d.paused&&cache&&!cache.pausedAt)cache.pausedAt=performance.now();return}
   // The game pauses its own timers; preserve the presentation timeline as well.
   if(prior?.duel===d&&prior.pausedAt){prior.start+=performance.now()-prior.pausedAt;prior.pausedAt=0;}
-  const same=prior&&prior.duel===d;current={node,duel:d,rig:GUARDIAN_RIGS[d.land],joints:[...node.querySelectorAll('[data-g-joint]')],eyes:[...node.querySelectorAll('[data-g-eye]')],lids:[...node.querySelectorAll('[data-g-lid]')],gaze:[...node.querySelectorAll('[data-g-gaze]')],focus:root.querySelector('.guardian-motion-focus'),clock:same?prior.clock:0,values:same?{...prior.values}:target(GUARDIAN_RIGS[d.land],'listening'),base:same?{...prior.base}:target(GUARDIAN_RIGS[d.land],'listening'),chests:[...node.querySelectorAll('[data-g-breath]')],event:same?prior.event:'',start:same?prior.start:performance.now(),last:0,from:same?{...prior.from}:{},reduced:false};
+  const same=prior&&prior.duel===d;current={node,duel:d,rig:GUARDIAN_RIGS[d.land],joints:[...node.querySelectorAll('[data-g-joint]')],eyes:[...node.querySelectorAll('[data-g-eye]')],lids:[...node.querySelectorAll('[data-g-lid]')],gaze:[...node.querySelectorAll('[data-g-gaze]')],focus:root.querySelector('.guardian-motion-focus'),clock:same?prior.clock:0,values:same?{...prior.values}:target(GUARDIAN_RIGS[d.land],'listening'),base:same?{...prior.base}:target(GUARDIAN_RIGS[d.land],'listening'),chests:[...node.querySelectorAll('[data-g-breath]')],// A rebuilt result scene restarts its CSS spells; restart its joints too (including Replay).
+  event:same&&!(d.phase==='result'&&d.fxActive)?prior.event:'',elapsed:same?prior.elapsed:0,start:same?prior.start:performance.now(),last:0,from:same?{...prior.from}:{},reduced:false};
   media=window.matchMedia('(prefers-reduced-motion: reduce)');current.reduced=media.matches;media.addEventListener?.('change',mediaChange);document.addEventListener('visibilitychange',visibility);pose(current,performance.now());cache=current;if(!current.reduced)raf=requestAnimationFrame(tick);
  }
  return{mount,stop:()=>{cache=null;detach()},inspect:()=>({active:!!current,scheduled:!!raf,frames,state:current?.node.dataset.motionState,values:current?{...current.values}:null})};
