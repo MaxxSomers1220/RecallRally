@@ -44,6 +44,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/apple-browser/node_modules"
           export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
           export APPLE_REPORT="$RUNNER_TEMP/apple-audit"
+          node tests/apple-landscape-duels-browser.test.cjs
           node tests/apple-playability-browser.test.cjs
           node scripts/record-apple-playability.cjs
           node tests/apple-package.test.cjs
