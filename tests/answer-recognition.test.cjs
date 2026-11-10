@@ -29,4 +29,4 @@ check('wrong answer entirely',question('photosynthesis'),'low');
 // Custom bank changes are reflected immediately; no stale academic vocabulary cache.
 check('horse',question('house'),'intermediate',[]);
 check('horse',question('house'),'low',[question('horse')]);
-console.log('PASS exact answers/aliases for all 1,550 questions; spelling tiers; academic terms, numbers, units, formulas, negation, custom-bank refresh');
+console.log(`PASS exact answers/aliases for all ${ctx.bank.length.toLocaleString('en-US')} questions; spelling tiers; academic terms, numbers, units, formulas, negation, custom-bank refresh`);

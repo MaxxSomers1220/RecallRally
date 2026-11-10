@@ -4,6 +4,14 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
+// Guide additions stay editable as data and are embedded for offline/file:// play.
+const guideAdditions=JSON.parse(read('data/study-guide-expansion-2026.json'));
+const guideEmbed='/* STUDY_GUIDE_ADDITIONS_START */\nconst STUDY_GUIDE_ADDITIONS='+JSON.stringify(guideAdditions).replace(/</g,'\\u003c')+';\nGUIDE_QUESTIONS.push(...STUDY_GUIDE_ADDITIONS);\n/* STUDY_GUIDE_ADDITIONS_END */';
+if(html.includes('/* STUDY_GUIDE_ADDITIONS_START */'))html=html.replace(/\/\* STUDY_GUIDE_ADDITIONS_START \*\/[\s\S]*?\/\* STUDY_GUIDE_ADDITIONS_END \*\//,()=>guideEmbed);
+else {
+ if(!html.includes('/* QUESTION_DATABASE_END */'))throw Error('Question database embed marker not found');
+ html=html.replace('/* QUESTION_DATABASE_END */',()=>guideEmbed+'\n/* QUESTION_DATABASE_END */');
+}
 const answers=read('src/answer-recognition.js');
 if(html.includes('/* ANSWER_RECOGNITION_START */'))html=html.replace(/\/\* ANSWER_RECOGNITION_START \*\/[\s\S]*?\/\* ANSWER_RECOGNITION_END \*\//,answers);
 else html=html.replace('function checkTyped(',answers+'\nfunction checkTyped(');

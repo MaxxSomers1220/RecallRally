@@ -22,6 +22,7 @@ frontend:
         - node tests/science-lab.test.cjs
         - node tests/adventure-save.test.cjs
         - node tests/bank-v29.test.cjs
+        - node tests/study-guide-expansion.test.cjs
         - node tests/worlds.test.cjs
         - node tests/adventure-effects.test.cjs
         - node tests/librarian-v4-smoke.test.cjs
