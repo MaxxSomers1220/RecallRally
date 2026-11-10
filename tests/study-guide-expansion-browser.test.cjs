@@ -17,11 +17,11 @@ const root=path.join(__dirname,'..');
    await page.goto('http://127.0.0.1:'+server.address().port+'/'+file,{waitUntil:'load'});
    await context.setOffline(true);
    assert(await page.locator('#runtime-status').isVisible());
-   assert.equal(await page.evaluate(()=>SAMPLES.length),2150);
-   for(const batch of ['first','second','third'])for(const subject of ['math','science','social','language','arts']){
+   assert.equal(await page.evaluate(()=>SAMPLES.length),2350);
+   for(const batch of ['first','second','third','fourth'])for(const subject of ['math','science','social','language','arts']){
     const info=await page.evaluate(({subject,batch})=>{
      goHome();mode='written';$('clock').value='0';$('seating').value='solo';$('sound-setting').value='off';
-     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:STUDY_GUIDE_ROUND_THREE).find(q=>q.subject===subject);
+     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:batch==='third'?STUDY_GUIDE_ROUND_THREE:STUDY_GUIDE_ROUND_FOUR).find(q=>q.subject===subject);
      const before=RallyLearning.snapshot().attempts.length;startRound([q]);
      return {id:q.id,prompt:q.prompt,source:q.sourceDocument,explanation:q.explanation,before};
     },{subject,batch});
@@ -33,6 +33,13 @@ const root=path.join(__dirname,'..');
     const last=await page.evaluate(()=>RallyLearning.snapshot().attempts.at(-1));
     assert.equal(last.questionId,info.id);assert.equal(last.outcome,'correct');
    }
+   // Fourth-batch text aliases, numeric units, and punctuation-dependent choices.
+   for(const [id,answer] of [['guide-round-four-2026-arts-033','Monet'],['guide-round-four-2026-science-001','7 g/cm3']]){
+    await page.evaluate(id=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ROUND_FOUR.find(q=>q.id===id)]);buzz(0,'Tester')},id);
+    await page.locator('#typed-answer').fill(answer);await page.locator('.answer-form button').click();assert.equal(await page.evaluate(()=>game.scores[0]),1,'fourth-batch typed answer: '+id);
+   }
+   await page.evaluate(()=>{goHome();mode='written';startRound([STUDY_GUIDE_ROUND_FOUR.find(q=>q.id==='guide-round-four-2026-language-031')]);choose(game.choices.indexOf(current().answer))});
+   assert.equal(await page.evaluate(()=>game.scores[0]),1,'fourth-batch punctuation choice grades correctly');
    // New-batch aliases and a written-only record use the real grading paths.
    await page.evaluate(()=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ROUND_THREE.find(q=>q.id==='guide-round-three-2026-science-038')]);buzz(0,'Tester')});
    await page.locator('#typed-answer').fill('Kepler');await page.locator('.answer-form button').click();
