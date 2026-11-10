@@ -191,6 +191,11 @@ and shared-bank integration, with a separate stable ID prefix so all 1,750 earli
 records remain unchanged. Nine round-two math additions are written-only. See
 [the round-two review](docs/question-round-two-2026.md) for coverage and validation.
 
+Optional custom-question tools are under **My learning → Optional study tools →
+Study pack tools**. The home navigation, introductory cards, and storage reminders
+focus on the built-in games. Existing custom questions and their import/export
+controls remain available from the learning journal.
+
 ## Upload to GitHub — no terminal required
 
 1. Extract `Ellery_Recall_Rally_GitHub.zip` on your computer.
