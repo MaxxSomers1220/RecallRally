@@ -17,11 +17,11 @@ const root=path.join(__dirname,'..');
    await page.goto('http://127.0.0.1:'+server.address().port+'/'+file,{waitUntil:'load'});
    await context.setOffline(true);
    assert(await page.locator('#runtime-status').isVisible());
-   assert.equal(await page.evaluate(()=>SAMPLES.length),2350);
-   for(const batch of ['first','second','third','fourth'])for(const subject of ['math','science','social','language','arts']){
+   assert.equal(await page.evaluate(()=>SAMPLES.length),2550);
+   for(const batch of ['first','second','third','fourth','fifth'])for(const subject of ['math','science','social','language','arts']){
     const info=await page.evaluate(({subject,batch})=>{
      goHome();mode='written';$('clock').value='0';$('seating').value='solo';$('sound-setting').value='off';
-     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:batch==='third'?STUDY_GUIDE_ROUND_THREE:STUDY_GUIDE_ROUND_FOUR).find(q=>q.subject===subject);
+     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:batch==='third'?STUDY_GUIDE_ROUND_THREE:batch==='fourth'?STUDY_GUIDE_ROUND_FOUR:STUDY_GUIDE_ROUND_FIVE).find(q=>q.subject===subject);
      const before=RallyLearning.snapshot().attempts.length;startRound([q]);
      return {id:q.id,prompt:q.prompt,source:q.sourceDocument,explanation:q.explanation,before};
     },{subject,batch});
@@ -32,6 +32,16 @@ const root=path.join(__dirname,'..');
     assert(feedback.includes(info.explanation));assert(feedback.includes(info.source));assert(feedback.includes('PDF page'));
     const last=await page.evaluate(()=>RallyLearning.snapshot().attempts.at(-1));
     assert.equal(last.questionId,info.id);assert.equal(last.outcome,'correct');
+   }
+   // Fifth-batch numeric units and a short proper-name alias use real grading.
+   for(const [id,answer] of [['guide-round-five-2026-science-001','9 cm3'],['guide-round-five-2026-science-038','Pasteur']]){
+    await page.evaluate(id=>{goHome();mode='quick';$('clock').value='0';$('reveal').value='full';$('seating').value='solo';startRound([STUDY_GUIDE_ROUND_FIVE.find(q=>q.id===id)]);buzz(0,'Tester')},id);
+    await page.locator('#typed-answer').fill(answer);await page.locator('.answer-form button').click();
+    assert.equal(await page.evaluate(()=>game.scores[0]),1,'fifth-batch typed answer: '+id);
+   }
+   for(const id of ['guide-round-five-2026-language-031','guide-round-five-2026-math-020']){
+    await page.evaluate(id=>{goHome();mode='written';startRound([STUDY_GUIDE_ROUND_FIVE.find(q=>q.id===id)]);choose(game.choices.indexOf(current().answer))},id);
+    assert.equal(await page.evaluate(()=>game.scores[0]),1,'fifth-batch written-only task: '+id);
    }
    // Fourth-batch text aliases, numeric units, and punctuation-dependent choices.
    for(const [id,answer] of [['guide-round-four-2026-arts-033','Monet'],['guide-round-four-2026-science-001','7 g/cm3']]){
