@@ -111,7 +111,7 @@ function choose(i,timeout=false){
  persistAttempt(question,win,i>=0?options[i]:'',responseSeconds,timeout);
  [...$('lib-choices').children].forEach((b,k)=>{b.disabled=true;if(norm(options[k])===norm(question.answer))b.classList.add('lib-correct');if(i===k&&!win)b.classList.add('lib-wrong');});
  if(win){correctCount++;points+=100+Math.max(0,Math.round((16-responseSeconds)*3));screen='review';pose('idle');message('Correct! The Librarian shares her wisdom.');reveal();}
- else {wrongCount++;screen='storm';attackClock=7.8;launchClock=.18;throwIndex=0;hitCount=0;clearInput();message('The shelves wake! Duck beneath HIGH books; jump above LOW books.');show('lib-choices',false);show('lib-learn',false);playTone('warning');}
+ else {wrongCount++;screen='storm';attackClock=20;launchClock=.18;throwIndex=0;hitCount=0;clearInput();message('The shelves wake! Duck beneath HIGH books; jump above LOW books.');show('lib-choices',false);show('lib-learn',false);playTone('warning');}
  updateHud();
 }
 function spawnWarning(){
