@@ -32,12 +32,12 @@ Object.assign(ctx,{performance:{now:()=>now},requestAnimationFrame:fn=>{schedule
 // The focus is optional in this timing-only harness.
 ctx.root.querySelector=s=>s==='.guardian-rig'?node:null;
 vm.runInContext(read(files[2])+';this.motion=GuardianMotion;',ctx);
-for(let land=0;land<10;land++)for(const outcome of ['hit','block','counter','guard']){
- ctx.duel={land,index:0,phase:'result',correct:outcome==='counter',fxActive:true,tacticOutcome:outcome};
+for(let land=0;land<10;land++)for(const outcome of ['hit','block','counter','raise']){
+ ctx.duel={land,index:0,phase:'result',correct:['counter','raise'].includes(outcome),fxActive:true,tacticOutcome:outcome};
  ctx.motion.mount(ctx.root,ctx.duel);const states=new Set([ctx.motion.inspect().state]);
  for(let frame=0;frame<24;frame++){now+=200;scheduled(now);states.add(ctx.motion.inspect().state);}
- if(outcome==='guard')assert(!states.has('casting'),'A shield turn does not cast');
+ if(outcome==='raise')assert(!states.has('casting'),'A correctly answered shield turn stays defensive');
  else{assert(states.has('casting')&&states.has('follow-through'),'Every guardian releases even at five frames per second');ctx.motion.mount(ctx.root,ctx.duel);assert.equal(ctx.motion.inspect().state,'anticipation','Active replay restarts the attack');}
  ctx.motion.stop();assert.equal(ctx.motion.inspect().scheduled,false);
 }
-console.log('PASS all ten guardians: delayed frames, strike/block/counter, defensive turn, active replay and loop cleanup');
+console.log('PASS all ten guardians: delayed frames, strike/block/counter, correctly answered defensive turn, active replay and loop cleanup');
