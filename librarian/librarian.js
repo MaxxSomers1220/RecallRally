@@ -63,6 +63,11 @@ let root=null,stage=null,ctx=null,heroNode=null,guardian=null,frame=0,last=0,ela
 let guardianMood='curious',moodUntil=0;
 let screen='intro',deck=[],question=null,options=[],round=0,correctCount=0,wrongCount=0,points=0,hearts=4;
 let selected=-1,answerLocked=false,remaining=16,responseSeconds=0,attackClock=0,launchClock=0,throwIndex=0,hitCount=0;
+let musicKey='';
+// Read-only soundtrack selection; movement, questions and combat keep their existing state.
+const musicState=()=>root?{kind:screen==='storm'?'library-storm':'library',paused:freeze}:null;
+window.LibrarianAudio=Object.freeze({musicState});
+function notifyMusic(){const state=musicState(),key=state?state.kind+':'+state.paused:'';if(key===musicKey)return;musicKey=key;document.dispatchEvent(new Event('rally-music-state'))}
 let freeze=false,previousFocus=null,jumpBuffer=0,dashTimer=0,dashRecharge=0,shieldTimer=0,shieldReady=true;
 let hero={x:174,y:0,vy:0,facing:1,pose:'idle',poseDuration:0,invulnerable:0},held={left:false,right:false,duck:false},warnings=[],books=[],particles=[];
 /* LIBRARIAN_BOOK_FRAMES_START */
@@ -78,7 +83,7 @@ function guardianReaction(mood,seconds=0){guardianMood=mood;moodUntil=seconds?el
 function pose(p,d=0){if(hero.pose===p)return;hero.pose=p;hero.poseDuration=d;syncHero();}
 function clearInput(){held.left=held.right=held.duck=false;jumpBuffer=0;['lib-left','lib-right','lib-duck'].forEach(id=>{const b=$(id);if(b)b.dataset.held='false';});}
 function resetHero(){hero={x:174,y:0,vy:0,facing:1,pose:'idle',poseDuration:0,invulnerable:0};clearInput();warnings=[];books=[];particles=[];dashTimer=0;dashRecharge=0;shieldTimer=0;shieldReady=true;hitCount=0;}
-function updateHud(){if(!root)return;
+function updateHud(){if(!root)return;notifyMusic();
  $('lib-hearts').textContent=hearts?'♥ '.repeat(hearts):'—';$('lib-score').textContent=points;
  $('lib-progress').textContent=Math.min(round,COUNT)+' / '+COUNT;
  $('lib-timer').textContent=screen==='question'?Math.ceil(Math.max(0,remaining))+'s':'';
@@ -254,14 +259,14 @@ function pointerAction(id,fn){const b=$(id);if(!b)return;b.addEventListener('poi
  // Keyboard activation generates click without pointerdown.
  b.addEventListener('click',e=>{if(e.detail===0)fn();});}
 function loseFocus(){clearInput();last=performance.now();}
-function visibility(){freeze=document.hidden;if(freeze)loseFocus();else last=performance.now();}
-let audioCtx=null;
+function visibility(){freeze=document.hidden;if(freeze)loseFocus();else last=performance.now();notifyMusic();}
 function soundEnabled(){try{if(typeof soundOn!=='undefined')return !!soundOn;}catch(e){}try{return localStorage.getItem('recall-rally-sound-v1')!=='off';}catch(e){return false;}}
-function playTone(name){if(!soundEnabled())return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
- audioCtx=audioCtx||new AC();if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});
+function playTone(name){if(!soundEnabled()||document.hidden)return;try{
+ if(typeof initAudio!=='function')return;initAudio();if(typeof audioContext==='undefined'||!audioContext||audioContext.state!=='running'||!fxBus)return;
  const config={jump:[480,.055],dodge:[680,.085],hit:[170,.11],defeat:[125,.2],learn:[600,.12],warning:[300,.08],shield:[570,.09],dash:[310,.055]};
- const v=config[name]||config.jump,o=audioCtx.createOscillator(),gain=audioCtx.createGain();o.type='sine';o.frequency.value=v[0];gain.gain.setValueAtTime(.0001,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.035,audioCtx.currentTime+.014);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+v[1]);o.connect(gain);gain.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+v[1]+.01);
+ const v=config[name]||config.jump,o=audioContext.createOscillator(),gain=audioContext.createGain(),at=audioContext.currentTime;o.type='sine';o.frequency.value=v[0];gain.gain.setValueAtTime(.0001,at);gain.gain.exponentialRampToValueAtTime(.035,at+.014);gain.gain.exponentialRampToValueAtTime(.0001,at+v[1]);o.connect(gain);gain.connect(fxBus);o.onended=()=>{o.disconnect();gain.disconnect()};o.start();o.stop(at+v[1]+.01);duckMusic(Math.max(.2,v[1]),.34);
  }catch(e){} }
+
 // DOM articulation reuses the saved character's exact SVG geometry. The sources
 // live in defs once; split limb uses never duplicate gradients or change identity.
 function rigHero(svg){
@@ -300,7 +305,7 @@ function open(){if(root)return;guardianMood='curious';moodUntil=0;previousFocus=
  document.addEventListener('keydown',keydown);document.addEventListener('keyup',keyup);document.addEventListener('visibilitychange',visibility);window.addEventListener('blur',loseFocus);
  screen='intro';freeze=false;elapsed=0;resetHero();last=performance.now();updateHud();frame=requestAnimationFrame(animation);$('lib-start').focus();
 }
-function close(){if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',loseFocus);clearInput();root.remove();root=null;ctx=null;heroNode=null;guardian=null;if(previousFocus&&previousFocus.focus)previousFocus.focus();}
+function close(){if(!root)return;cancelAnimationFrame(frame);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',loseFocus);clearInput();root.remove();root=null;notifyMusic();ctx=null;heroNode=null;guardian=null;if(previousFocus&&previousFocus.focus)previousFocus.focus();}
 entry.addEventListener('click',open);
 // Test-only hooks are installed only with __RECALL_RALLY_TEST__; no production controls or physics change.
 if(window.__RECALL_RALLY_TEST__){window.__librarianTest={open,close,start,next,choose,jump,keydown,keyup,update,setFrozen(v){freeze=!!v},render(){paint();syncHero()},get warnings(){return warnings},get mood(){return guardianMood},get state(){return screen},get hero(){return hero},get held(){return held},get question(){return question},get options(){return options},get books(){return books},get hearts(){return hearts},get round(){return round},get points(){return points},get remaining(){return remaining},setHearts(v){hearts=v},spawnBook(kind,x){books.push({kind,x,y:kind==='high'?FLOOR-87:FLOOR-22,speed:280,hit:false,passed:false,color:'#fff',seed:1})},get history(){return history()}};}

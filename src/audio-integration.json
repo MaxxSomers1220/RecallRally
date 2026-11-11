@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "patches": [
+    {
+      "name": "audio settings note",
+      "before": "<details class=\"audio-settings\" id=\"audio-settings\"><summary><span aria-hidden=\"true\">♫</span> Audio settings <span id=\"audio-summary\">Music &amp; sound</span></summary><div class=\"audio-settings-body\"><label class=\"audio-check\"><input type=\"checkbox\" id=\"audio-master\" checked> All game audio</label><label class=\"audio-check\"><input type=\"checkbox\" id=\"music-on\" checked> Music On/Off</label><label class=\"audio-slider\" for=\"music-volume\">Music Volume <output id=\"music-volume-value\" for=\"music-volume\">32%</output><input id=\"music-volume\" aria-label=\"Music Volume\" type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"32\"></label><label class=\"audio-slider\" for=\"effects-volume\">Sound Effects Volume <output id=\"effects-volume-value\" for=\"effects-volume\">80%</output><input id=\"effects-volume\" aria-label=\"Sound Effects Volume\" type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"80\"></label><button class=\"smallbtn\" type=\"button\" id=\"music-play\">Enable audio</button><p class=\"hint\" id=\"music-status\" role=\"status\">Original adventure soundtrack · ready.</p><button class=\"smallbtn\" type=\"button\" id=\"settings-learning\">Learning profile &amp; progress</button><button class=\"smallbtn\" type=\"button\" id=\"settings-hero\">✦ Edit your hero</button><p class=\"audio-note\">A soft original score for the journey. Music follows the map, duels, and Rigby’s rescue. All game audio mutes both music and effects. Preferences save in this browser.</p></div></details>",
+      "after": "<details class=\"audio-settings\" id=\"audio-settings\"><summary><span aria-hidden=\"true\">♫</span> Audio settings <span id=\"audio-summary\">Music &amp; sound</span></summary><div class=\"audio-settings-body\"><label class=\"audio-check\"><input type=\"checkbox\" id=\"audio-master\" checked> All game audio</label><label class=\"audio-check\"><input type=\"checkbox\" id=\"music-on\" checked> Music On/Off</label><label class=\"audio-slider\" for=\"music-volume\">Music Volume <output id=\"music-volume-value\" for=\"music-volume\">32%</output><input id=\"music-volume\" aria-label=\"Music Volume\" type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"32\"></label><label class=\"audio-slider\" for=\"effects-volume\">Sound Effects Volume <output id=\"effects-volume-value\" for=\"effects-volume\">80%</output><input id=\"effects-volume\" aria-label=\"Sound Effects Volume\" type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"80\"></label><button class=\"smallbtn\" type=\"button\" id=\"music-play\">Enable audio</button><p class=\"hint\" id=\"music-status\" role=\"status\">Lantern Afterglow · original fantasy soundtrack.</p><button class=\"smallbtn\" type=\"button\" id=\"settings-learning\">Learning profile &amp; progress</button><button class=\"smallbtn\" type=\"button\" id=\"settings-hero\">✦ Edit your hero</button><p class=\"audio-note\">Warm original music follows the menu, each world, the Science Lab, and your adventure. Music and sound effects have separate volume controls. All game audio mutes both. Your choices save in this browser.</p></div></details>"
+    },
+    {
+      "name": "practice pause audio",
+      "before": "function togglePause(){if(!game||game.phase==='result')return;if(!game.paused){if(game.phase==='open'&&game.seconds)game.remainingMs=Math.max(0,game.deadline-performance.now());stopTimers();game.paused=true}else{game.paused=false;if(game.phase==='reading')startReading();else if(game.phase==='open')startClock()}if(typeof RallyLearning!=='undefined')RallyLearning.syncPause(game);renderControls();updateClock()}",
+      "after": "function togglePause(){if(!game||game.phase==='result')return;if(!game.paused){if(game.phase==='open'&&game.seconds)game.remainingMs=Math.max(0,game.deadline-performance.now());stopTimers();game.paused=true}else{game.paused=false;if(game.phase==='reading')startReading();else if(game.phase==='open')startClock()}if(typeof RallyLearning!=='undefined')RallyLearning.syncPause(game);renderControls();updateClock();syncAdventureMusic()}"
+    },
+    {
+      "name": "visibility audio",
+      "before": "document.addEventListener('keydown',keyHandler);document.addEventListener('keydown',adventureKey);document.addEventListener('visibilitychange',()=>{if(document.hidden&&duel&&!duel.paused)pauseQuest();if(document.hidden&&game&&!game.paused&&['reading','open','buzzed','checking'].includes(game.phase))togglePause();if(document.hidden){stopQuestionCue();holdSoundtrack();audioContext?.suspend().catch(()=>{})}else{initAudio();syncAdventureMusic()}});",
+      "after": "document.addEventListener('keydown',keyHandler);document.addEventListener('keydown',adventureKey);document.addEventListener('visibilitychange',()=>{if(document.hidden&&duel&&!duel.paused)pauseQuest();if(document.hidden&&game&&!game.paused&&['reading','open','buzzed','checking'].includes(game.phase))togglePause();if(document.hidden){stopQuestionCue();holdSoundtrack();suspendGameAudio()}else{initAudio();syncAdventureMusic()}});"
+    },
+    {
+      "name": "page lifecycle audio",
+      "before": "window.addEventListener('pagehide',()=>{holdSoundtrack();audioContext?.suspend().catch(()=>{})});window.addEventListener('pageshow',()=>{initAudio();syncAdventureMusic()});",
+      "after": "window.addEventListener('pagehide',()=>{musicPageHeld=true;holdSoundtrack();suspendGameAudio()});window.addEventListener('pageshow',()=>{musicPageHeld=false;initAudio();syncAdventureMusic()});"
+    },
+    {
+      "name": "gesture audio",
+      "before": "for(const event of ['pointerdown','keydown'])document.addEventListener(event,e=>{if(e.isTrusted&&!e.repeat)unlockGameAudio()},{capture:true});",
+      "after": "for(const event of ['pointerdown','pointerup','keydown'])document.addEventListener(event,e=>{if(e.isTrusted&&!e.repeat)unlockGameAudio()},{capture:true});"
+    },
+    {
+      "name": "Enable audio preserves preferences",
+      "before": "$('music-play').onclick=()=>{setSoundPreference(true);setMusicPreference('on',true);if(!musicPrefs.volume)setMusicPreference('volume',32);unlockGameAudio()};",
+      "after": "$('music-play').onclick=()=>unlockGameAudio();"
+    }
+  ]
+}

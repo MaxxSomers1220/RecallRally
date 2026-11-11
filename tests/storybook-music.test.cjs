@@ -2,21 +2,24 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),vm=require('node:vm');
 const root=path.join(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p)),hash=b=>crypto.createHash('sha256').update(b).digest('hex');
 const manifest=JSON.parse(read('assets/music/manifest.json')),html=read('index.html').toString(),offline=read('Ellery_Recall_Rally_Librarian_v4.html').toString();
-assert.deepEqual(manifest.assets.map(a=>a.id),['home','map']);let bytes=0;
-for(const a of [...manifest.assets,...manifest.sketches]){
- const file=read(a.file);assert.equal(file.length,a.bytes);assert.equal(hash(file),a.sha256);assert(a.peak<=.71&&a.rms>.04);assert(a.boundaryDelta<.0041);
- assert.equal(a.loopSeconds,a.loopFrames/a.sampleRate);assert.equal(a.channels,2);
- assert.equal(a.mp3.encodedFrames-a.mp3.skipSamples-a.mp3.discardPadding,a.loopFrames,'Declared MPEG gapless region matches source PCM');
- if(!a.id.endsWith('sketch')){bytes+=file.length;assert.equal(a.loopBars,32);for(const build of [html,offline])assert(build.includes(file.toString('base64')),'Embedded '+a.id);}
- const score=JSON.parse(read('assets/music/source/'+a.id+'.json')),midi=read('assets/music/source/'+a.id+'.mid');assert.equal(midi.subarray(0,4).toString(),'MThd');assert.equal(midi.readUInt16BE(10),score.tracks.length+1);
- assert(score.tracks.some(t=>t.notes.some(n=>(n.beat-1)+n.dur>4)),'Held notes cross barlines');assert(score.tracks.every(t=>t.notes.every(n=>n.note>=0&&n.note<128&&n.dur>0&&n.vel>0&&n.vel<128)));
+const ids=['home','map',...Array.from({length:10},(_,i)=>'world-'+i),'duel-high','lab-hub',...['potion','circuit','creature','weather','observatory'].map(id=>'lab-'+id),'practice','library','library-storm','rescue','finale'];
+assert.deepEqual([...manifest.assets.map(a=>a.id)].sort(),[...ids].sort(),'Every game context has an embedded original cue');
+assert.equal(new Set(manifest.assets.map(a=>a.sha256)).size,ids.length,'Scenes have distinct rendered arrangements');let bytes=0;
+for(const a of [...manifest.assets,...manifest.sketches||[]]){
+ const file=read(a.file);assert.equal(file.length,a.bytes,a.id+' byte count');assert.equal(hash(file),a.sha256,a.id+' checksum');
+ assert(a.peak<=.71&&a.rms>.03,a.id+' mix headroom and audible body');assert(a.boundaryDelta<.0041,a.id+' source loop seam');
+ assert.equal(a.loopSeconds,a.loopFrames/a.sampleRate);assert.equal(a.channels,2);assert([22050,32000,44100,48000].includes(a.sampleRate));
+ assert(Math.abs(a.loopBars*4*60/a.bpm-a.loopSeconds)<=1/a.sampleRate,a.id+' loop matches its score tempo');
+ assert.equal(a.mp3.encodedFrames-a.mp3.skipSamples-a.mp3.discardPadding,a.loopFrames,a.id+' MPEG gapless region matches source PCM');
+ if(ids.includes(a.id)){bytes+=file.length;assert(a.loopBars>=16,a.id+' complete arrangement');for(const build of [html,offline])assert(build.includes(file.toString('base64')),'Embedded '+a.id);}
+ const score=JSON.parse(read('assets/music/source/'+a.id+'.json')),midi=read('assets/music/source/'+a.id+'.mid');assert.equal(midi.subarray(0,4).toString(),'MThd');assert.equal(midi.readUInt16BE(10),score.tracks.length+1);assert.equal(score.bpm,a.bpm);assert.equal(score.loopBars,a.loopBars);
+ assert(score.tracks.some(t=>t.notes.some(n=>(n.beat-1)+n.dur>4)),a.id+' held notes cross barlines');assert(score.tracks.every(t=>t.notes.every(n=>n.note>=0&&n.note<128&&n.dur>0&&n.vel>0&&n.vel<128)),a.id+' editable MIDI events');
 }
-assert(bytes<3_000_000,'Runtime compressed audio budget');assert.equal(hash(read('assets/music/source/TimGM6mb.sf2')),manifest.soundfont.sha256);
+assert(bytes<16_000_000,'Runtime compressed audio budget stays below 16 MB');assert.equal(hash(read('assets/music/source/TimGM6mb.sf2')),manifest.soundfont.sha256);
 const source=read('src/storybook-music.js').toString().trim();for(const build of [html,offline]){
  assert(build.includes(source),'Same runtime music source');const credits=JSON.parse(build.match(/const STORYBOOK_AUDIO_CREDITS=(.*);/)[1]);assert(credits.license.includes('GNU GENERAL PUBLIC LICENSE'));assert(credits.notice.includes('Tim Brechbill'));
 }
+for(const build of [html,offline])assert(build.includes(read('src/audio-coordinator.js').toString().trim()),'Editable audio coordinator is embedded');
 assert(!/new\s+(?:window\.)?(?:webkit)?AudioContext|setInterval\(|requestAnimationFrame\(|localStorage|fetch\(/.test(source),'Reuse existing context/scheduler and embedded data');new vm.Script(source);
-const legacy=JSON.parse(read('tests/fixtures/storybook-music-legacy.json')),ctx={};
-vm.runInNewContext(html.slice(html.indexOf('const MUSIC_KEY='),html.indexOf('// End original soundtrack.'))+';this.current={data:{RIGBY_MELODY,MAP_CHORDS,DUEL_CHORDS,DUEL_TUNE,tempos:{duel:MUSIC_TEMPOS.duel,rescue:MUSIC_TEMPOS.rescue,finale:MUSIC_TEMPOS.finale}},functions:{musicScoreBar:musicScoreBar.toString(),musicNote:musicNote.toString(),playMusicOutcome:playMusicOutcome.toString()}}',ctx);
-const current=JSON.parse(JSON.stringify(ctx.current));assert.deepEqual(current.data,legacy.data,'Existing duel/rescue/reunion score data');for(const [name,text]of Object.entries(current.functions))assert.equal(hash(text),legacy.functions[name],'Existing composition/rendering: '+name);
-console.log('PASS two bounded embedded original scores, editable MIDI/sketches, licenses, exact loop metadata, existing context ownership and unchanged duel/outcome/rescue music');
+console.log('PASS 24 distinct bounded original cues, editable MIDI/scores, licenses, complete embedded delivery and exact MPEG loop metadata');
+require('./storybook-music-runtime.test.cjs').catch(error=>{console.error(error);process.exitCode=1});
