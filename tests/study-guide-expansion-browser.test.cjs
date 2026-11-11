@@ -17,11 +17,11 @@ const root=path.join(__dirname,'..');
    await page.goto('http://127.0.0.1:'+server.address().port+'/'+file,{waitUntil:'load'});
    await context.setOffline(true);
    assert(await page.locator('#runtime-status').isVisible());
-   assert.equal(await page.evaluate(()=>SAMPLES.length),2550);
-   for(const batch of ['first','second','third','fourth','fifth'])for(const subject of ['math','science','social','language','arts']){
+   assert.equal(await page.evaluate(()=>SAMPLES.length),3050);
+   for(const batch of ['first','second','third','fourth','fifth','sixth'])for(const subject of ['math','science','social','language','arts']){
     const info=await page.evaluate(({subject,batch})=>{
      goHome();mode='written';$('clock').value='0';$('seating').value='solo';$('sound-setting').value='off';
-     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:batch==='third'?STUDY_GUIDE_ROUND_THREE:batch==='fourth'?STUDY_GUIDE_ROUND_FOUR:STUDY_GUIDE_ROUND_FIVE).find(q=>q.subject===subject);
+     const q=(batch==='first'?STUDY_GUIDE_ADDITIONS:batch==='second'?STUDY_GUIDE_ROUND_TWO:batch==='third'?STUDY_GUIDE_ROUND_THREE:batch==='fourth'?STUDY_GUIDE_ROUND_FOUR:batch==='fifth'?STUDY_GUIDE_ROUND_FIVE:STUDY_GUIDE_ROUND_SIX).find(q=>q.subject===subject);
      const before=RallyLearning.snapshot().attempts.length;startRound([q]);
      return {id:q.id,prompt:q.prompt,source:q.sourceDocument,explanation:q.explanation,before};
     },{subject,batch});
