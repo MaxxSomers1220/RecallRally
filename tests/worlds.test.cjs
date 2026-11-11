@@ -1,6 +1,8 @@
 const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),assert=require('node:assert/strict');
 const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8'),source=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 const bank=source.slice(source.indexOf('const SAMPLE_ROWS='),source.indexOf('// Storage is optional.'));
+const characterArt=source.slice(source.indexOf('/* CHARACTER_ART_START */'),source.indexOf('/* CHARACTER_ART_END */'));
+const illustrations=source.slice(source.indexOf('/* ADVENTURE_ILLUSTRATIONS_START */'),source.indexOf('/* ADVENTURE_ILLUSTRATIONS_END */'));
 const lands=source.slice(source.indexOf('const LANDS=['),source.indexOf('let questProgress='));
 const history=source.slice(source.indexOf('function stableQuestionId('),source.indexOf('function recordQuestExposure('));
 const art=source.slice(source.indexOf('function rigbyStage('),source.indexOf('function rigbyCutawayMarkup('));
@@ -14,7 +16,7 @@ function norm(s){return String(s).toLowerCase()}function shuffle(a){return [...a
 const RIGBY_ART={friendly:'data:image/webp;base64,fixture'};
 function journeyPosition(){return {x:55,y:340}}function updateAvatar(){}function beginFreshAdventure(){}function syncDuelLayout(){}function syncAdventureMusic(){}function setSoundPreference(){}function saveQuestPreferences(){}function mapSealAssistance(){return ''}function rigbyMission(){return ''}
 const elements=new Map();function $(id){if(!elements.has(id))elements.set(id,{innerHTML:'',querySelectorAll(){return []}});return elements.get(id)}
-${bank}\n${lands}\n${history}\n${art}\n${arenas}\n${firstMap}\n${mapRender}
+${bank}\n${characterArt}\n${illustrations}\n${lands}\n${history}\n${art}\n${arenas}\n${firstMap}\n${mapRender}
 const WORLD_STOPS=Array.from({length:10},(_,i)=>[{x:145,y:270},{x:310,y:165},{x:485,y:275},{x:650,y:145},{x:815,y:235}][i%5]);
 assert.equal(LANDS.length,10);assert.equal(ARENA_WORLDS.length,10);assert.equal(ARENA_PHASES.length,10);
 assert.equal(new Set(LANDS.map(l=>l.land)).size,10);assert.equal(new Set(LANDS.map(l=>l.name)).size,10);

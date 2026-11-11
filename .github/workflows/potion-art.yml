@@ -1,0 +1,46 @@
+name: Potion Mixer artwork and gameplay
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/science-lab*'
+      - 'assets/science-lab/**'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'scripts/**'
+      - 'tests/potion*'
+      - '.github/workflows/potion-art.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify offline art and academic-state boundaries
+        run: |
+          node scripts/build-standalone.cjs
+          node tests/potion-art.test.cjs
+          node tests/science-lab.test.cjs
+          node tests/answer-recognition.test.cjs
+          node tests/adventure-save.test.cjs
+          node tests/bank-v29.test.cjs
+      - name: Install browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/potion-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/potion-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Play all five steps at desktop, tablet and phone sizes
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/potion-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export POTION_SCREENSHOTS="$RUNNER_TEMP/potion-screenshots"
+          node tests/potion-browser.test.cjs
+      - name: Publish actual gameplay screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: potion-mixer-gameplay
+          path: ${{ runner.temp }}/potion-screenshots
+          if-no-files-found: ignore

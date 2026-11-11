@@ -1,0 +1,109 @@
+[
+  {
+    "command": "node tests/character-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/guardian-motion.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/hero-advanced.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/mobile-playability.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/home-hub.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/storybook-music.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/adventure-illustrations.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/librarian-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/weather-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/observatory-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/creature-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/circuit-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/potion-art.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/answer-recognition.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/home-launcher.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/science-lab.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/adventure-save.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/bank-v29.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/study-guide-expansion.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/worlds.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/adventure-effects.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/librarian-v4-smoke.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/startup.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node --unhandled-rejections=strict tests/storybook-music-runtime.test.cjs",
+    "passed": true
+  },
+  {
+    "command": "node tests/hosted-build.test.cjs --files-only",
+    "passed": true,
+    "scope": "Fixtures and actual artifact file integrity; HTTP explicitly omitted"
+  },
+  {
+    "command": "node tests/home-startup-browser.test.cjs",
+    "passed": false,
+    "status": "environment-blocked",
+    "reason": "listen EPERM: operation not permitted 127.0.0.1"
+  }
+]

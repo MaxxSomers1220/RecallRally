@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "counts": {
+    "imageReferences": 62,
+    "uniqueImages": 62,
+    "audioRecordings": 18,
+    "audioEntries": 24,
+    "audioAliases": 5
+  },
+  "metrics": {
+    "sourceIndex": {
+      "raw": 37633242,
+      "gzip": 26247098
+    },
+    "sourceHosted": {
+      "raw": 38194116,
+      "gzip": 26644069
+    },
+    "hostedHTML": {
+      "sha256": "dbf0190e88e833c7d58a8c61b12bc4e0ad21c71a0d996860266feb3ec859a0d7",
+      "mime": "text/html",
+      "raw": 259039,
+      "gzip": 57846
+    },
+    "coreBootResources": {
+      "raw": 3461347,
+      "gzip": 754081
+    },
+    "completeHosted": {
+      "raw": 27760656,
+      "gzip": 24856102
+    }
+  }
+}

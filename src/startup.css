@@ -1,0 +1,14 @@
+/* No loading overlay without JavaScript; the normal help/fallback stays readable. */
+#startup-loading{display:none}
+html[data-rally-startup] body{background:radial-gradient(ellipse at 50% 0,#fff8e9,#eee6d7 75%)}
+html[data-rally-startup] #play-area{display:none}
+html[data-rally-startup] body>header button{visibility:hidden}
+html[data-rally-startup] #startup-loading{display:block;max-width:1112px;margin:24px auto 44px;padding:36px 28px;min-height:320px;border:1px solid #ab8a50;border-radius:20px;background:#102537;color:#fff3d9}
+#startup-loading h1{font-family:Georgia,serif;font-size:clamp(32px,5vw,52px);letter-spacing:-1.5px;margin:12px 0 24px}
+#startup-loading p{max-width:34em;color:#e3dbc9}
+#startup-loading .startup-recovery{display:none}
+html[data-rally-startup=delayed] #startup-loading .startup-progress{display:none}
+html[data-rally-startup=delayed] #startup-loading .startup-recovery{display:block}
+#startup-loading a{color:#ffe39a;text-underline-offset:4px}
+@media(max-width:1180px){html[data-rally-startup] #startup-loading{margin-left:24px;margin-right:24px}}
+@media(max-width:500px){html[data-rally-startup] #startup-loading{padding:26px 20px;margin-left:16px;margin-right:16px}}

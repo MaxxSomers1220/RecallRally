@@ -1,0 +1,45 @@
+{
+  "method": "Measured rendered audio and actual browser-bus capture, not human listening or physical device performance.",
+  "renderer": {
+    "FluidSynth": "2.4.4",
+    "NumPy": "2.3.5",
+    "ffmpeg": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "cues": [
+    {
+      "id": "home",
+      "ebur128Summary": "Summary:\n\n  Integrated loudness:\n    I:         -16.9 LUFS\n    Threshold: -27.0 LUFS\n\n  Loudness range:\n    LRA:         4.2 LU\n    Threshold: -37.0 LUFS\n    LRA low:   -19.5 LUFS\n    LRA high:  -15.3 LUFS\n\n  True peak:\n    Peak:       -3.6 dBFS\n[out#0/null @ 0x56064a30d240] video:0KiB audio:17408KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:01:41.05 bitrate=N/A speed= 242x    \n"
+    },
+    {
+      "id": "map",
+      "ebur128Summary": "Summary:\n\n  Integrated loudness:\n    I:         -17.9 LUFS\n    Threshold: -27.9 LUFS\n\n  Loudness range:\n    LRA:         3.6 LU\n    Threshold: -37.9 LUFS\n    LRA low:   -19.8 LUFS\n    LRA high:  -16.2 LUFS\n\n  True peak:\n    Peak:       -3.5 dBFS\n[out#0/null @ 0x56241d239240] video:0KiB audio:13781KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:01:20.00 bitrate=N/A speed= 247x    \n"
+    }
+  ],
+  "clips": [
+    {
+      "file": "home-loop-1.mp4",
+      "mean_volume": "-35.5",
+      "max_volume": "-20.4"
+    },
+    {
+      "file": "home-loop-2.mp4",
+      "mean_volume": "-36.1",
+      "max_volume": "-19.9"
+    },
+    {
+      "file": "map-loop-1.mp4",
+      "mean_volume": "-36.4",
+      "max_volume": "-19.9"
+    },
+    {
+      "file": "map-loop-2.mp4",
+      "mean_volume": "-38.2",
+      "max_volume": "-22.1"
+    },
+    {
+      "file": "navigation-with-audio.mp4",
+      "mean_volume": "-38.4",
+      "max_volume": "-22.1"
+    }
+  ]
+}

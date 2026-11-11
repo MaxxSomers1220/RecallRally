@@ -1,0 +1,1 @@
+{ hiddenHubMutations: 0, extraHeroScans: 0 }

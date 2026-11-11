@@ -1,0 +1,73 @@
+/* Painted scenery and moving instruments. All learning controls remain live HTML. */
+.illustrated-world .world-painted-depth{opacity:1}
+.spell-scene .arena-name{fill:#fff3ce;stroke:#13243c;stroke-width:3px;paint-order:stroke;stroke-linejoin:round;font-weight:800;font-size:11px;letter-spacing:.3px}
+.spell-scene .hero-body-art,.illustrated-guardian{filter:drop-shadow(0 2px 1px #0d1f35) drop-shadow(0 0 3px #e4d8c177)}
+.world-restoration{padding:9px 13px 10px;background:#172c40;color:#ecedda;border-top:1px solid #9a845f}
+.restoration-goal{display:block;font-size:11px;letter-spacing:.4px;font-weight:750;margin-bottom:6px;color:#f6dfaa}
+.world-restoration ol{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:0;margin:0;gap:5px;list-style:none}
+.world-restoration li{font-size:10px;line-height:1.3;display:flex;gap:4px;align-items:center;color:#c4d0d8;min-height:26px}
+.world-restoration li>span{display:grid;place-items:center;flex:0 0 18px;width:18px;height:18px;border:1px solid #667c8c;border-radius:50%;font:700 10px system-ui}
+.world-restoration .restored{color:#fff2c9}.world-restoration .restored>span{color:#233e45;background:#f3d58f;border-color:#f3d58f}
+.world-restoration .restoration-next>span{border:2px solid #e2cf97;color:#fff2d4}
+.illustrated-guardian .guardian-head{transform-box:view-box;transform-origin:0 -35px;animation:guardian-attend 7s ease-in-out infinite}
+.illustrated-guardian .guardian-tail{transform-box:view-box;transform-origin:25px 40px;animation:guardian-tail 4.2s ease-in-out infinite alternate}
+.illustrated-guardian .guardian-wings{transform-box:view-box;transform-origin:0 0;animation:guardian-wing 6s ease-in-out infinite alternate}
+.illustrated-guardian .guardian-eyes{animation:guardian-eyes 6s step-end infinite}.illustrated-guardian .guardian-blink{opacity:0;animation:guardian-blink 6s step-end infinite}
+.illustrated-guardian .guardian-oops{display:none}
+.illustrated-guardian[data-mood="impressed"] .guardian-head{transform:rotate(-9deg);animation:none}
+.illustrated-guardian[data-mood="impressed"] .guardian-oops{display:block}.illustrated-guardian[data-mood="impressed"] .guardian-smile{display:none}
+.illustrated-guardian[data-mood="casting"] .guardian-arms{transform:rotate(14deg);transform-origin:0 0;transition:transform .25s}
+.illustrated-guardian[data-mood="guarding"] .guardian-wings{transform:scaleX(.87);animation:none}
+.illustrated-guardian[data-mood="delighted"] .guardian-head{transform:rotate(5deg);animation:none}
+.illustrated-guardian[data-mood="kind"] .guardian-head{transform:rotate(-6deg);animation:none}
+.illustrated-world .awakened .world-gear{transform-box:fill-box;transform-origin:center;animation:world-gear-turn 22s linear infinite}
+.illustrated-world .awakened .world-petals{transform-box:view-box;transform-origin:0 0;animation:world-flower 6s ease-in-out infinite alternate}
+.illustrated-world[data-arena-phase="2"] .world-pendulum{transform-origin:0 0;animation:world-pendulum 3.4s ease-in-out infinite alternate}
+.illustrated-world .world-observatory path{transition:transform .65s ease}
+.illustrated-world[data-arena-phase="2"] .world-shutter-left{transform:translateX(-70px)}
+.illustrated-world[data-arena-phase="2"] .world-shutter-right{transform:translateX(70px)}
+.illustrated-world .env-new{filter:drop-shadow(0 0 4px #f4df9e99)}
+.illustrated-map .rigby-map-castle{filter:drop-shadow(0 3px 3px #142c49)}
+.quest-world:has(.illustrated-map){border-color:#9c845b;box-shadow:inset 0 0 0 3px #f0d8a3,0 10px 28px #243f4a22}
+.quest-world .world-stop{box-shadow:0 3px 8px #102b4d88;border:3px solid #f4dda5;background:#fff3cf;color:#25364d}
+.quest-world .world-stop.sealed{background:#273c55;color:#e7e7cf;border-color:#a7b3bc;opacity:.95}
+.illustrated-rescue{aspect-ratio:12/7;background:#1c2947;isolation:isolate}
+.illustrated-rescue .rigby-illustrated-scene{display:block;width:100%;height:100%}
+.illustrated-rescue:after{opacity:.12;pointer-events:none}
+.illustrated-rescue .rigby-scene-index{top:12px;right:12px;bottom:auto;color:#ffedc5;background:#142b42eb;border:1px solid #d2b477;padding:7px 10px;font-size:9px;letter-spacing:1px;z-index:6}
+.rescue-story-detail{position:absolute;bottom:0;left:0;right:0;color:#fff2d3;background:linear-gradient(transparent,#132338ee);padding:24px 16px 13px;font-size:11px;font-weight:650;z-index:6;text-align:center}
+.illustrated-rescue .rigby-puppet{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 3px 3px #0c183aaa)}
+.rigby-head-joint{transform-origin:290px 315px;animation:rigby-head-listen 8s ease-in-out infinite}
+.rigby-tail-joint{transform-origin:541px 389px;animation:rigby-tail-wag 2.5s ease-in-out infinite alternate}
+[data-rigby-expression="eager"] .rigby-tail-joint{animation-duration:.9s}
+[data-rigby-expression="joyful"] .rigby-tail-joint{animation-duration:.32s}
+[data-rigby-expression="hopeful"] .rigby-head-joint{animation-name:rigby-head-hope}
+.illustrated-rescue.story-live .rescue-dog-position{animation:rigby-rescue-attend .8s ease-out both}
+.illustrated-rescue.rescue-reunion.story-live .rescue-dog-position{animation:rigby-home-arrive 1.5s .15s ease-out both}
+.illustrated-rescue .rescue-custom-hero{filter:drop-shadow(0 2px 2px #19233f)}
+.illustrated-rescue.story-live .rescue-custom-hero{animation:rigby-friend-arrive 1.3s ease-out both}
+.illustrated-rescue .rescue-rune.rune-new{animation:rescue-seal-light .9s ease-out both}
+.illustrated-rescue .rescue-clouds{transition:opacity .8s}
+.rigby-mission-art:has(.illustrated-rescue){min-height:220px}
+.rigby-cutaway-layout .illustrated-rescue{align-self:center;width:100%;height:auto}
+@keyframes guardian-attend{0%,40%,100%{transform:rotate(0)}50%,65%{transform:rotate(-3deg)}}
+@keyframes guardian-tail{from{transform:rotate(-3deg)}to{transform:rotate(5deg)}}
+@keyframes guardian-wing{from{transform:scaleX(1)}to{transform:scaleX(.96)}}
+@keyframes guardian-eyes{0%,44%,47%,100%{opacity:1}45%,46%{opacity:0}}
+@keyframes guardian-blink{0%,44%,47%,100%{opacity:0}45%,46%{opacity:1}}
+@keyframes world-gear-turn{to{transform:rotate(360deg)}}
+@keyframes world-flower{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+@keyframes world-pendulum{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+@keyframes rigby-head-listen{0%,42%,100%{transform:rotate(0)}52%,67%{transform:rotate(-4deg)}}
+@keyframes rigby-head-hope{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
+@keyframes rigby-tail-wag{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+@keyframes rigby-rescue-attend{from{opacity:.55}to{opacity:1}}
+@keyframes rigby-home-arrive{from{transform:translate(320px,165px);opacity:.45}to{transform:translate(402px,195px);opacity:1}}
+@keyframes rigby-friend-arrive{from{transform:translate(180px,365px) scale(2.5);opacity:0}to{transform:translate(240px,365px) scale(2.5);opacity:1}}
+@keyframes rescue-seal-light{0%{filter:brightness(.5)}70%{filter:brightness(1.7)}100%{filter:brightness(1)}}
+@media(max-width:600px){.world-restoration{padding:8px 10px}.world-restoration ol{gap:4px;grid-template-columns:repeat(2,minmax(0,1fr))}.world-restoration li{font-size:10px;align-items:flex-start}.restoration-goal{font-size:10px}.world-restoration li>span{flex-basis:16px;width:16px;height:16px;font-size:9px}.rescue-story-detail{font-size:10px;padding:20px 10px 9px}.illustrated-rescue .rigby-scene-index{font-size:8px;top:8px;right:8px}.rigby-mission-art:has(.illustrated-rescue){min-height:0}.rigby-mission-art .illustrated-rescue{aspect-ratio:12/7;height:auto}}
+@media(prefers-reduced-motion:reduce){.illustrated-guardian *,.illustrated-world *,.illustrated-rescue *{animation:none!important;transition:none!important}.illustrated-guardian .guardian-eyes{opacity:1}.illustrated-guardian .guardian-blink{opacity:0}}
+/* Later home-launcher styles otherwise override the original compact-duel rules. */
+body.adventure-duel-active #home-view>.home-welcome,body.adventure-duel-active #quest-home-card{display:none!important}
+.illustrated-rescue .rescue-sigil{opacity:1}
+.illustrated-rescue .rescue-sigil.rune-new{animation:rescue-seal-light .9s ease-out both}

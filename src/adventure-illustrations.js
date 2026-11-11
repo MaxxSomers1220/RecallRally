@@ -1,0 +1,66 @@
+// Presentation only: every visual milestone derives from the existing duel or rescue state.
+const ADVENTURE_VISUALS=[
+ {key:'mosswood',steps:['Pattern stone','Golden triangle','Living geometry','Acorn beacon'],goal:'Restore the geometric sanctuary',motif:'stone'},
+ {key:'firefly',steps:['First star','Open shutters','Celestial arc','Lantern beacon'],goal:'Align the forest observatory',motif:'star'},
+ {key:'coast',steps:['Coastal lamp','Open gateway','Charted passage','Compass beacon'],goal:'Light the ancient sea route',motif:'lantern'},
+ {key:'peaks',steps:['First volume','Page arch','Story ribbon','Story beacon'],goal:'Awaken the mountain library',motif:'book'},
+ {key:'cloudsong',steps:['First pane','Rose window','Golden harmony','Dawn beacon'],goal:'Bring color to the performance hall',motif:'glass'},
+ {key:'crystal',steps:['First prism','Crystal crown','Spectrum arc','Prism beacon'],goal:'Illuminate the underground lake',motif:'crystal'},
+ {key:'clockwork',steps:['First gear','Pendulum awake','Turning city','Clockwork beacon'],goal:'Restore the city’s mechanism',motif:'gear'},
+ {key:'sunken',steps:['First page','Coral arch','Bubble archive','Pearl beacon'],goal:'Reveal the protected archive',motif:'bubble'},
+ {key:'skygarden',steps:['First blossom','Vine bridge','Petal canopy','Skyblossom beacon'],goal:'Reconnect the floating gardens',motif:'flower'},
+ {key:'moonstone',steps:['First moonstone','Crescent crown','Moonrise aurora','Homeward beacon'],goal:'Illuminate the final moon gate',motif:'moon'}
+];
+function adventureMotif(kind,i,lit){
+ const gold=lit?'#ffe8a7':'#748090',edge=lit?'#fff5d4':'#b9c8cd',ink='#273d59';
+ let art='';
+ if(kind==='stone')art='<path d="M0-24 21-12V13L0 25-21 13V-12Z" fill="'+gold+'"/><path d="M0-17 14 9H-14ZM0-24V25M-21-12 21 13M21-12-21 13" fill="none" stroke="'+ink+'" stroke-width="1.5"/>';
+ if(kind==='star')art='<g class="world-star"><path d="M0-23 6-7 23 0 6 7 0 23-6 7-23 0-6-7Z" fill="'+gold+'"/><circle r="6" fill="#fff9e3"/><circle r="29" fill="none" stroke-dasharray="2 8"/></g>';
+ if(kind==='lantern')art='<path d="M-14-17 0-27 14-17 19-12 14 22H-14L-19-12Z" fill="#805b43"/><path d="M-9-9H9L7 15H-7Z" fill="'+gold+'"/><path d="M-19-12H19M-14 22H14M0-9V15" fill="none"/><path d="M0-28V-40"/>';
+ if(kind==='book'||kind==='bubble')art=(kind==='bubble'?'<circle r="37" fill="#72cfc322"/><path d="M-24-22Q-17-30-8-31" fill="none" stroke="#effff4" stroke-width="3"/>':'')+'<g class="world-pages"><path d="M0-17Q-15-27-30-19V20Q-16 12 0 23Q16 12 30 20V-19Q15-27 0-17Z" fill="'+gold+'"/><path d="M0-17V23M-23-9-7-6M-23-1-7 2M7-6 23-9M7 2 23-1" fill="none" stroke="'+ink+'" stroke-width="1.5"/></g>';
+ if(kind==='glass')art='<path d="M0-29 21-16 26 12 0 30-26 12-21-16Z" fill="'+(lit?['#99d6d2','#d8b3e8','#f6d291','#e9b1bd'][i]:'#4e546e')+'"/><path d="M0-29V30M-21-16 26 12M21-16-26 12" fill="none"/><circle r="9" fill="'+gold+'"/>';
+ if(kind==='crystal')art='<g class="world-prism"><path d="M0-38 20-18 16 23 0 35-16 23-20-18Z" fill="'+(lit?['#b1d7f5','#c4a6ee','#a5e2d4','#eabbdc'][i]:'#535576')+'"/><path d="M0-38V35M-20-18H20M-20-18 16 23M20-18-16 23" fill="none" stroke-width="1.4"/></g>';
+ if(kind==='gear')art='<g class="world-gear">'+Array.from({length:12},(_,k)=>'<path transform="rotate('+k*30+')" d="M-5-31H5V-20H-5Z" fill="'+gold+'"/>').join('')+'<circle r="24" fill="'+gold+'"/><circle r="16" fill="#294e60"/><path d="M0-16V16M-16 0H16M-11-11 11 11M11-11-11 11" stroke="'+gold+'" stroke-width="4"/><circle r="5" fill="#fff0c3"/></g>';
+ if(kind==='flower')art='<path d="M0 13V36M0 28Q-25 13-19 5Q-4 7 0 22M0 20Q23 1 24 10Q21 25 0 29" fill="#95caa4" stroke="#d7e6b8"/><g class="world-petals" fill="'+(lit?['#f4b9d2','#f2d896','#c8b6f1','#f8c5a4'][i]:'#677b8a')+'">'+Array.from({length:5},(_,k)=>'<ellipse transform="rotate('+k*72+')" cy="-14" rx="9" ry="15"/>').join('')+'<circle r="8" fill="'+gold+'"/></g>';
+ if(kind==='moon')art='<path d="M0-29 20 0 0 29-20 0Z" fill="'+(lit?['#a5c1f1','#dec1eb','#b4dfd8','#f5da9e'][i]:'#555777')+'"/><path d="M4-15A15 15 0 1 0 4 15A12 12 0 0 1 4-15" fill="'+gold+'" stroke="none"/>';
+ return '<g fill="none" stroke="'+edge+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+art+'</g>';
+}
+function illustratedArenaEnvironment(d,l){
+ const v=ADVENTURE_VISUALS[d.land],h=Math.min(4,Math.max(0,d.scores[0])),phase=d.guardianPhase===2,c=ARENA_WORLDS[d.land].accent,id='painted-'+d.land;
+ const positions=phase?[[266,112],[326,59],[394,59],[454,112]]:[[260,121],[326,113],[394,113],[460,121]];
+ const progress=positions.map(([x,y],i)=>'<g transform="translate('+x+' '+y+')"><g class="arena-motif env-progress '+(i<h?'awakened ':'')+(i===h-1?'env-new':'')+'" data-env-step="'+(i+1)+'" opacity="'+(i<h?1:.32)+'">'+adventureMotif(v.motif,i,i<h)+'</g></g>').join('');
+ const framework='<g class="world-framework" opacity="'+(phase?.85:.2)+'" fill="none" stroke="'+c+'" stroke-width="1.6"><path d="M248 153Q248 27 360 24Q472 27 472 153"/><path d="M253 145Q360 '+(phase?-35:150)+' 467 145" stroke-dasharray="'+(phase?'none':'4 9')+'"/><circle cx="360" cy="93" r="62" stroke-dasharray="2 12"/></g>';
+ let mechanism='';
+ if(d.land===1)mechanism='<g class="world-observatory" fill="#23344eaa" stroke="#c6ba91" stroke-width="2"><path class="world-shutter-left" d="M360 20H281V123H360Z"/><path class="world-shutter-right" d="M360 20H439V123H360Z"/></g>';
+ if(d.land===6)mechanism='<g transform="translate(360 81)"><g class="world-pendulum" opacity="'+(phase?1:.4)+'"><path d="M0 0V83" stroke="#e9cb8d" stroke-width="4"/><circle cy="83" r="18" fill="#c39b5a" stroke="#fff0bd" stroke-width="3"/></g></g>';
+ if(d.land===8)mechanism='<path class="world-vine-bridge" d="M225 163Q360 110 495 163" fill="none" stroke="#a6d6a3" stroke-width="6" opacity="'+(phase?.9:.18)+'"/>';
+ const victory=h===4?'<g class="env-beacon"><path d="M360 4V166" stroke="'+c+'" stroke-width="6" opacity=".7"/><path d="M350 4V166M370 4V166" stroke="'+c+'" stroke-width="1" opacity=".5"/><text x="360" y="18" text-anchor="middle" fill="#fff3cc" stroke="#13253b" stroke-width="3" paint-order="stroke" font-size="10">SEAL LIGHT TO RIGBY</text></g>':'';
+ return '<g class="arena-environment illustrated-world '+(d.land>=5?'expanded-world ':'')+'world-'+d.land+'" data-world-name="'+esc(l.land)+'" data-arena-progress="'+h+'" data-arena-phase="'+(phase?2:1)+'"><defs><linearGradient id="'+id+'-shade" x2="0" y2="1"><stop stop-color="#0b1a32" stop-opacity=".08"/><stop offset=".55" stop-color="#0b1a32" stop-opacity=".08"/><stop offset="1" stop-color="#0b1a32" stop-opacity=".65"/></linearGradient></defs><image class="world-painted-depth" href="'+ADVENTURE_ART[v.key]+'" width="720" height="300" preserveAspectRatio="xMidYMid slice"/><rect width="720" height="300" fill="url(#'+id+'-shade)"/>'+framework+mechanism+progress+'<path class="env-impact-route" d="M552 193Q440 40 360 80" fill="none" stroke="'+c+'" stroke-width="4"/><circle class="env-signature-wave" cx="360" cy="100" r="48" fill="none" stroke="'+c+'" stroke-width="4"/>'+victory+'</g>';
+}
+function illustratedGuardian(d,l,glyph){return paintedGuardianArt(d,l,glyph)}
+
+function illustratedWorldProgress(d){
+ const v=ADVENTURE_VISUALS[d.land],h=Math.min(4,d.scores[0]);
+ return '<div class="world-restoration" aria-label="'+esc(v.goal)+': '+h+' of 4 changes complete"><span class="restoration-goal">'+esc(v.goal)+'</span><ol>'+v.steps.map((s,i)=>'<li class="'+(i<h?'restored':i===h?'restoration-next':'')+'"><span aria-hidden="true">'+(i<h?'✓':i+1)+'</span>'+esc(s)+'</li>').join('')+'</ol></div>';
+}
+function rigbyPuppet(stage,id){
+ const src=RIGBY_ART.friendly,head='M140 0H445V195L365 344 220 367 136 272Z',tail='M510 345 532 290 545 187H635V348L591 409 544 433Z';
+ const img='<image href="'+src+'" width="720" height="768"/>';
+ return '<svg class="rigby-puppet" data-rigby-expression="'+(stage===10?'joyful':stage>=7?'eager':stage>=3?'hopeful':'watchful')+'" viewBox="0 0 720 768" aria-hidden="true"><defs><clipPath id="'+id+'-head"><path d="'+head+'"/></clipPath><clipPath id="'+id+'-tail"><path d="'+tail+'"/></clipPath><clipPath id="'+id+'-body"><path clip-rule="evenodd" d="M0 0H720V768H0Z '+head+' '+tail+'"/></clipPath></defs><g clip-path="url(#'+id+'-body)">'+img+'</g><g class="rigby-tail-joint"><g clip-path="url(#'+id+'-tail)">'+img+'</g></g><g class="rigby-head-joint"><g clip-path="url(#'+id+'-head)">'+img+'</g></g></svg>';
+}
+function rigbyIllustratedScene(stage,live){
+ const n=rigbyStage(stage),freed=n===10,beat=rigbyBeat(n),id='rescue-'+n+'-'+(live?'live':'still');
+ const seals=Array.from({length:10},(_,i)=>{const a=Math.PI+i*Math.PI/9,x=360+146*Math.cos(a),y=249+146*Math.sin(a);return '<g class="rescue-sigil '+(i<n?'rune-earned ':'')+(live&&i===n-1?'rune-new':'')+'" transform="translate('+x+' '+y+')"><circle r="13" fill="'+(i<n?'#edcb80':'#263d5d')+'" stroke="'+(i<n?'#fff0bd':'#a7a9ca')+'" stroke-width="2"/><path d="'+(i<n?'m-5 0 4 4 7-8':'M0-6 5 0 0 6-5 0Z')+'" fill="none" stroke="'+(i<n?'#57462d':'#c3c4e1')+'" stroke-width="2"/></g>'}).join('');
+ const hero=freed?'<g class="rescue-custom-hero" transform="translate(240 365) scale(2.5)">'+avatarEllery({idPrefix:id+'-hero',pose:'victory'}).replace(/<text[\s\S]*?<\/text>/,'')+'</g>':'';
+ return '<div class="rigby-story-stage illustrated-rescue '+(live?'story-live':'story-static')+' '+(freed?'rescue-reunion':'')+'" data-rescue-stage="'+n+'" style="--rescue-hope:'+n/10+'" role="img" aria-label="'+esc(beat.mapLine)+'"><svg class="rigby-illustrated-scene" viewBox="0 0 720 420" aria-hidden="true"><defs><linearGradient id="'+id+'-night" x2="1" y2="1"><stop stop-color="#101d4b" stop-opacity="'+(.7-n*.06)+'"/><stop offset="1" stop-color="#f5cd87" stop-opacity="'+(.02+n*.022)+'"/></linearGradient></defs><image href="'+ADVENTURE_ART.rescue+'" width="720" height="420" preserveAspectRatio="xMidYMid slice"/><rect width="720" height="420" fill="url(#'+id+'-night)"/><g class="rescue-clouds" fill="#192c4b" opacity="'+(.6-n*.06)+'"><path d="M0 52Q70-20 145 37Q200-18 258 44Q317-7 373 38L400 0H0Z"/><path d="M449 0Q482 48 528 19Q578 56 620 22Q668 44 720 20V0Z"/></g><path class="rescue-path-light" d="M360 253 270 420H510L383 253" fill="#ffdf9144" opacity="'+n/10+'"/>'+seals+'<g class="rescue-ward" fill="#6579bd22" stroke="#c4b2ef" stroke-width="3" opacity="'+(freed?0:.9-n*.075)+'"><path d="M267 300V196Q360 82 453 196V300"/><path d="M297 160V299M329 139V299M360 132V299M391 139V299M423 160V299" stroke-width="2"/></g>'+hero+'<g class="rescue-dog-position" transform="translate('+(freed?'402 195':'294 162')+')"><svg width="'+(freed?155:137)+'" height="'+(freed?166:146)+'" viewBox="0 0 720 768">'+rigbyPuppet(n,id)+'</svg></g></svg><span class="rigby-scene-index">'+(freed?'HOME AT LAST':n+' / 10 SEALS · '+(10-n)+' TO GO')+'</span><span class="rescue-story-detail">'+(freed?'The ward is open. Together at last.':n===0?'Rigby is waiting. Your first seal brings hope.':n<5?'A little more light reaches his doorway.':n<9?'The storm retreats. Rigby hears you coming.':'One final seal opens the gate.')+'</span></div>';
+}
+function illustratedWorldMap(chapter){
+ const names=LANDS.slice(chapter*5,chapter*5+5),route='M55 340Q105 350 145 270T310 165Q375 165 399 236L466 272 485 275Q570 310 600 230T650 145Q720 130 748 202T815 235';
+ const labels=names.map((l,j)=>{const p=WORLD_STOPS[j],y=p.y+(j%2===0?54:-52);return '<g class="painted-map-label"><rect x="'+(p.x-82)+'" y="'+(y-15)+'" width="164" height="26" rx="13" fill="#122b41e8" stroke="#d9bb75" stroke-width=".8"/><text x="'+p.x+'" y="'+(y+2)+'" text-anchor="middle" fill="#fff0c9" font-size="11" font-family="system-ui" font-weight="700">'+esc(l.land.toUpperCase())+'</text></g>'}).join('');
+ return '<svg class="quest-landscape illustrated-map" viewBox="0 0 900 420" aria-hidden="true"><image href="'+ADVENTURE_ART[chapter?'map-mist':'map-sunlit']+'" width="900" height="420" preserveAspectRatio="xMidYMid slice"/><path d="'+route+'" fill="none" stroke="#173547bb" stroke-width="22" stroke-linecap="round"/><path id="quest-route" d="'+route+'" fill="none" stroke="#f1d79b" stroke-width="10" stroke-linecap="round"/><path d="'+route+'" fill="none" stroke="#977544" stroke-width="1.5" stroke-dasharray="2 10"/>'+labels+rigbyCastleMap()+'<g id="ellery-avatar" style="transform:translate('+avatarPoint.x+'px,'+avatarPoint.y+'px)">'+avatarEllery()+'</g></svg>';
+}
+
+function illustratedMapLookout(){
+ const n=rigbyStage(questProgress),id='map-lookout';
+ return '<g class="rigby-map-castle illustrated-lookout" data-rescue-stage="'+n+'"><defs><clipPath id="'+id+'"><rect x="728" y="12" width="158" height="118" rx="16"/></clipPath></defs><g clip-path="url(#'+id+')"><image href="'+ADVENTURE_ART.rescue+'" x="728" y="12" width="158" height="118" preserveAspectRatio="xMidYMid slice"/><image href="'+RIGBY_ART.friendly+'" x="796" y="55" width="29" height="34"/></g><rect x="728" y="12" width="158" height="118" rx="16" fill="none" stroke="#f1d89c" stroke-width="2"/><rect x="737" y="103" width="140" height="19" rx="9" fill="#142a44ee"/><text x="807" y="116" text-anchor="middle" font-size="8" fill="#fff1c6" font-family="system-ui" font-weight="700">'+(n===10?'RIGBY IS HOME':'RIGBY · '+n+' OF 10 SEALS')+'</text></g>';
+}

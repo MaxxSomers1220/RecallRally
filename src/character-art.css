@@ -1,0 +1,39 @@
+/* Character motion uses authored poses and independent anatomy; readable in reduced motion. */
+.hero-idle:has(.storybook-hero){animation:none}
+.storybook-hero .hero-painted-grain{pointer-events:none}
+.storybook-hero .atelier-arm-left{transform-origin:116px 203px}
+.storybook-hero .atelier-arm-right{transform-origin:207px 203px}
+.storybook-hero.panther-pose-cast .atelier-arm-left{transform:rotate(48deg);animation:atelier-open-palm .95s cubic-bezier(.2,.65,.3,1) both}
+.storybook-hero.panther-pose-victory .atelier-arm-left{transform:rotate(58deg)}
+.storybook-hero.panther-pose-hit .atelier-arm-left{transform:rotate(-11deg)}
+.hero-idle .storybook-hero .panther-cape{transform-origin:157px 190px;animation:atelier-cape 7s ease-in-out infinite alternate}
+.spell-from-hero .hero-fighter:has(.storybook-hero){animation:none}
+.spell-from-guardian .guardian-fighter:has(.painted-guardian),.spell-from-hero .guardian-fighter:has(.painted-guardian),.spell-final-strike .guardian-fighter:has(.painted-guardian){animation:none}
+.painted-guardian{filter:drop-shadow(0 2px 1px #0a152b88)}
+.guardian-painted-frame{image-rendering:auto}
+.illustrated-guardian.painted-guardian[data-mood="impressed"]{filter:drop-shadow(0 2px 1px #0a152b88)}
+.spell-scene .hero-body-art:has(.storybook-hero){filter:drop-shadow(0 1px 1px #0b193a66)}
+#hero-creator .hero-full-preview:has(.storybook-hero){background:radial-gradient(ellipse at 50% 65%,#eee6d8,transparent 70%),linear-gradient(145deg,#f4efdf,#dfd9e7)}
+#hero-creator .hero-full-preview svg{overflow:visible}
+@keyframes atelier-open-palm{0%{transform:rotate(0)}42%,78%{transform:rotate(48deg)}100%{transform:rotate(35deg)}}
+@keyframes atelier-cape{from{transform:rotate(-1deg)}to{transform:rotate(1.2deg)}}
+@media(prefers-reduced-motion:reduce){.storybook-hero *,.painted-guardian *{animation:none!important;transition:none!important}}
+/* Keep the Librarian's established articulated movement rig in sole control there. */
+.lib-hero-sprite .atelier-arm-left,.lib-hero-sprite .atelier-arm-right{animation:none!important;transform:none!important}
+.preview-casting .storybook-hero{animation:none!important}
+.preview-casting .storybook-hero .atelier-arm-left{animation:atelier-open-palm .95s cubic-bezier(.2,.65,.3,1) both}
+.storybook-hero{isolation:isolate}
+.storybook-hero .hero-fold-paint{mix-blend-mode:multiply;pointer-events:none}
+/* Native painted pieces are jointed, never crossfaded or scaled as a whole figure. */
+.guardian-rig-art{overflow:visible}
+.guardian-rig [data-g-joint]{transform-box:view-box;animation:none!important;transition:none!important}
+.guardian-rig .guardian-painted-frame{animation:none!important;opacity:1}
+/* Advanced composable hero: the shared presentation rig owns articulation. */
+.hero-motion-rig [data-hj],.hero-motion-rig .hero-blink,.hero-motion-rig .panther-cape,.hero-motion-rig .panther-magic-accent{animation:none!important;transition:none!important}
+.hero-motion-rig .hero-blink{transform:none!important}
+.hero-motion-rig [data-hj]{transform-box:view-box}
+.hero-motion-rig .hero-atelier-paint{pointer-events:none}
+.lib-hero-sprite:has(.hero-motion-rig) .lib-rig-upper,.lib-hero-sprite:has(.hero-motion-rig) .lib-arm-left,.lib-hero-sprite:has(.hero-motion-rig) .lib-arm-right,.lib-hero-sprite:has(.hero-motion-rig) .lib-leg-left,.lib-hero-sprite:has(.hero-motion-rig) .lib-leg-right,.lib-hero-sprite:has(.hero-motion-rig) .panther-cape{animation:none!important;transform:none!important}
+.hero-preset .hero-motion-rig,.hero-thumb-choice .hero-motion-rig{pointer-events:none}
+.spell-from-guardian .hero-fighter:has(.hero-motion-rig),.spell-final-strike .hero-fighter:has(.hero-motion-rig){animation:none!important}
+.lib-hero-sprite:has(.hero-motion-rig) svg{animation:none!important;transform:none!important}

@@ -1,0 +1,112 @@
+[
+  {
+    "command": "node tests/character-art.test.cjs",
+    "passed": true,
+    "output": "PASS unchanged customization schema/presets, saves and Librarian physics; 30 embedded poses, shared hero drawing and offline synchronization\n"
+  },
+  {
+    "command": "node tests/guardian-motion.test.cjs",
+    "passed": true,
+    "output": "PASS ten native-pixel joint rigs, one approved paint per guardian, wrists/eyes/feet, focus coordinates, offline synchronization and presentation-only code\nPASS all ten guardians: delayed frames, strike/block/counter, correctly answered defensive turn, active replay and loop cleanup\n"
+  },
+  {
+    "command": "node tests/hero-advanced.test.cjs",
+    "passed": true,
+    "output": "PASS four original painted material hashes/budgets, shared online/offline rig sources, reviewed guardian motion and 48 appearance inputs; exact read-only Librarian bridge and presentation-only animation\n"
+  },
+  {
+    "command": "node tests/mobile-playability.test.cjs",
+    "passed": true,
+    "output": "PASS bundled mobile viewport/focus/pointer adapter; zoom retained, safe areas and proportional arena; no grading, physics, saves or network added\n"
+  },
+  {
+    "command": "node tests/home-hub.test.cjs",
+    "passed": true,
+    "output": "PASS six bounded/provenanced local paintings in both builds, same homepage source, existing controls, no persistence/academic/animation-loop writes; zoom retained\n"
+  },
+  {
+    "command": "node tests/storybook-music.test.cjs",
+    "passed": true,
+    "output": "PASS 24 distinct bounded original cues, editable MIDI/scores, licenses, complete embedded delivery and exact MPEG loop metadata\nPASS mocked audio: all scene selections, stale/serial decodes, pinned LRU/60 MiB ceiling, crossfade/retirement/suspension/bookmarks, independent buses, failures, and gapless bounds at 22.05/44.1/48 kHz\n"
+  },
+  {
+    "command": "node tests/adventure-illustrations.test.cjs",
+    "passed": true,
+    "output": "PASS 22 original gameplay/hero functions, unchanged save module, all 23 embedded assets, ten visual objectives, one-file offline synchronization\n"
+  },
+  {
+    "command": "node tests/librarian-art.test.cjs",
+    "passed": true,
+    "output": "PASS original academic, scoring, timing, movement and collision functions; six guardian moods; three page poses; asset provenance; exact offline bundles\n"
+  },
+  {
+    "command": "node tests/weather-art.test.cjs",
+    "passed": true,
+    "output": "PASS weather: six states, five distinct repairs, scientific thresholds, final-only celebration, safe SVG references, online/offline embedding\n"
+  },
+  {
+    "command": "node tests/observatory-art.test.cjs",
+    "passed": true,
+    "output": "PASS observatory: six states, five distinct repairs, scientific thresholds, final-only celebration, safe SVG references, online/offline embedding\n"
+  },
+  {
+    "command": "node tests/creature-art.test.cjs",
+    "passed": true,
+    "output": "PASS creature: six habitat states, five independent repairs, pre-reveal movement, expressive Moonwing, bounded confetti, safe SVG references, embedded online/offline\n"
+  },
+  {
+    "command": "node tests/circuit-art.test.cjs",
+    "passed": true,
+    "output": "PASS circuit: six assembly states, five repair targets, closed-loop-only light/current/ammeter, safe SVG references, embedded online/offline\n"
+  },
+  {
+    "command": "node tests/potion-art.test.cjs",
+    "passed": true,
+    "output": "PASS six potion states, five distinct vessels, one ingredient per repair, bubbles/drive/finale thresholds, safe SVG IDs, offline integration\n"
+  },
+  {
+    "command": "node tests/answer-recognition.test.cjs",
+    "passed": true,
+    "output": "PASS exact answers/aliases for all 3,050 questions; spelling tiers; academic terms, numbers, units, formulas, negation, custom-bank refresh\n"
+  },
+  {
+    "command": "node tests/home-launcher.test.cjs",
+    "passed": true,
+    "output": "PASS five distinct home choices, functional launch hooks, hidden advanced setup, persistent quest tools, non-floating Librarian, and scripts parse\nPASS direct Main menu navigation from practice and Adventure\n"
+  },
+  {
+    "command": "node tests/science-lab.test.cjs",
+    "passed": true,
+    "output": "PASS all five station mappings, shared science records, exact choices and explanations, and recent-history selection\nPASS Explore, Review and Stretch rank shared records without changing grades or content\nPASS incomplete topic coverage falls back to science, eligible custom records are optional, quick-only questions stay out\nPASS versioned station saves validate badge consistency, history, grades and corrupted data\nPASS original offline artwork: laboratory.svg 1440\u00d7800\nPASS original offline artwork: professor-fizzwick.svg 220\u00d7300\nPASS original offline artwork: potion-mixer-chassis.svg 1440\u00d71000\nPASS original offline artwork: professor-fizzwick-potion.svg 220\u00d7300\nPASS original offline artwork: circuit-constructor-chassis.svg 1440\u00d71000\nPASS original offline artwork: creature-incubator-chassis.svg 1440\u00d71000\nPASS original offline artwork: star-observatory-chassis.svg 1440\u00d71000\nPASS original offline artwork: weather-machine-chassis.svg 1440\u00d71000\n"
+  },
+  {
+    "command": "node tests/adventure-save.test.cjs",
+    "passed": true,
+    "output": "PASS versioned save round-trip and unfinished encounter checkpoint\nPASS malformed, incompatible, inconsistent, wrong-profile and injected save data rejected\nPASS independent profile keys, quota/read failures and missing stable profile persistence\nPASS corrupt saves survive until explicit reset confirmation\nPASS inline source synchronization and complete HTML syntax\n"
+  },
+  {
+    "command": "node tests/bank-v29.test.cjs",
+    "passed": true,
+    "output": "PASS 3,050 stable IDs, 64 areas, 2,684 Quick Recall / 366 written-only, and 50 preserved adventure questions\n"
+  },
+  {
+    "command": "node tests/study-guide-expansion.test.cjs",
+    "passed": true,
+    "output": "PASS six guide batches, 100 per subject in round six and 40 in earlier batches, 64 total areas, provenance, choices, mode rules, both HTML embeds, ten-world pools, Science Lab and Librarian selection\n"
+  },
+  {
+    "command": "node tests/worlds.test.cjs",
+    "passed": true,
+    "output": "PASS ten worlds, mixed/finale subject coverage, unseen deck rotation, ten individual seals, no premature rescue, both map chapters and completed map\n"
+  },
+  {
+    "command": "node tests/adventure-effects.test.cjs",
+    "passed": true,
+    "output": "PASS guardian 0: charge, miss, phase, signature, victory, reset\nPASS guardian 1: charge, miss, phase, signature, victory, reset\nPASS guardian 2: charge, miss, phase, signature, victory, reset\nPASS guardian 3: charge, miss, phase, signature, victory, reset\nPASS guardian 4: charge, miss, phase, signature, victory, reset\nPASS guardian 5: charge, miss, phase, signature, victory, reset\nPASS guardian 6: charge, miss, phase, signature, victory, reset\nPASS guardian 7: charge, miss, phase, signature, victory, reset\nPASS guardian 8: charge, miss, phase, signature, victory, reset\nPASS guardian 9: charge, miss, phase, signature, victory, reset\nPASS all 120 guardian/stance/wrong-or-timeout/protection combinations\nPASS all 140 intent/spell/result cases, protection expiry/refresh, Starfall, keyboard, timer, victory/defeat\nPASS seal eligibility, all five styles, once-only shield, Ward priority, Starfall/replay, progression, reset, no extra points/questions\nPASS all five evolving arenas: persistent steps, miss recovery, once-only phase/signature, victory, rescue, cleanup, reset, reduced motion\nPASS automatic Starfall, duplicate protection, adjacent question/choices, animation skip, compact layout lifecycle\nPASS compact header, reserved feedback/Next, selected and correct labels, timeout/scorer identity, concise arena and detailed disclosure\nPASS skip, navigation, rematch, reduced-motion automatic release, defeat\nPASS full ten-world journey, final rescue at world 9 only, reset, five new guardians and all arena progress states\n"
+  },
+  {
+    "command": "node tests/librarian-v4-smoke.test.cjs",
+    "passed": true,
+    "output": "PASS v4: syntax, choices, journal, jump, collision, defeat, learning, offline assets and launcher\n"
+  }
+]

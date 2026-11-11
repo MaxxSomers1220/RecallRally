@@ -1,0 +1,20 @@
+{
+  "base": "30bd46a",
+  "functions": {
+    "unique4": "8f0f4d14722e7ec6b9ef8b99d69cd81654f01ce0e9c277555ca4f742ba529624",
+    "questionBank": "8e2e004df079fae468c349051de999176e6c7561544288876d8d69370c8d098e",
+    "persistAttempt": "c86201806a2570b9a94b6e13c51a536af59af83e0f0a63231aa67eefef1e908f",
+    "presentJournal": "2bc9861bb0e47223e6dda8e79e549c6bd81b804cb1b76c7afcb87a36aaf3e905",
+    "choose": "d50e084824ae3a4246ebc02d6a42d057429a46399be4aa3d5cba1696a8205c17",
+    "spawnWarning": "aacc6cbb9db2309cb80c1458cc2deac33d488be5ce7849ae375be7e398461921",
+    "launchBook": "b9cf3280ec3a92aaf36ce280bf50813772fdbb19a56ec16a79f1ca73805301aa",
+    "jump": "b4e905e6f6879b2901936218e2b4e111ca2d5114da3b7bf4d6f87ac24060fa08",
+    "shield": "1d0b1f755dd47177dde6057e8ef5207c385025505cbb46a4c156067a32764d44",
+    "dash": "fbe893e1700ab679c7e9b5d5a0e7ab8287a0497619677dfc1e1360f1cdaeaf3f",
+    "collide": "f6f76418de6c3d50cd5064bc1dbae55e3d981f03e9c2e342fd2a6e71f1cee445",
+    "defeated": "dabf89d9a2e431798ade1a63a8afb7cd930aa487b0eae66bba7b59472ca660b4",
+    "endWave": "2e3d32e629312cb0d840c3b6e26bf9dc7dcffc2eec0cc6b522314cc6a17bd66d",
+    "finish": "9ad782109398953e1055022f84bd5a70bff99d395b4224240fda433df7625f0e",
+    "update": "453da4f099b8665a34043e3ae78e7613437d97116b7ebb54beef16b76c561b2e"
+  }
+}

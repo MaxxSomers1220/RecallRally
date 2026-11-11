@@ -1,0 +1,79 @@
+name: Storybook homepage and map music
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'src/storybook-music.js'
+      - 'assets/music/**'
+      - 'scripts/**'
+      - 'tests/storybook-music*'
+      - 'tests/fixtures/storybook-music*'
+      - 'amplify.yml'
+      - '.github/workflows/storybook-music.yml'
+concurrency:
+  group: storybook-music-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node scripts/build-standalone.cjs
+          node tests/storybook-music.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/music-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/music-browser/node_modules/playwright/cli.js" install --with-deps ${{ matrix.engine }}
+      - name: Install and verify video encoder
+        if: matrix.engine == 'chromium'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+      - name: Audio state, decoded loops, native grading, saves and actual Amplify output
+        env:
+          MUSIC_ENGINE: ${{ matrix.engine }}
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/music-browser/node_modules"
+          export MUSIC_REPORT="$RUNNER_TEMP/storybook-music"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          node tests/storybook-music-browser.test.cjs
+          node tests/storybook-music-package.test.cjs
+      - name: Complete standalone HTML from a local file
+        if: matrix.engine == 'chromium'
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/music-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          STORYBOOK_FILE=1 MUSIC_VIEWS=phone MUSIC_REPORT="$RUNNER_TEMP/storybook-music/file" node tests/storybook-music-browser.test.cjs
+      - name: Native 48 kHz output and quantized loop boundaries
+        if: matrix.engine == 'chromium'
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/music-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          MUSIC_TEST_RATE=48000 MUSIC_VIEWS=phone MUSIC_REPORT="$RUNNER_TEMP/storybook-music/48k" node tests/storybook-music-browser.test.cjs
+          MUSIC_TEST_PADDING=1 MUSIC_TEST_RATE=48000 MUSIC_VIEWS=phone MUSIC_REPORT="$RUNNER_TEMP/storybook-music/padding" node tests/storybook-music-browser.test.cjs
+      - name: Real-clock game recordings with browser-bus sound and two natural boundaries per cue
+        if: matrix.engine == 'chromium'
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/music-browser/node_modules"
+          export MUSIC_REPORT="$RUNNER_TEMP/storybook-music"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          node scripts/record-storybook-music.cjs
+          rm -rf "$RUNNER_TEMP/storybook-music/raw"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.engine }}-storybook-music
+          path: ${{ runner.temp }}/storybook-music
+          if-no-files-found: ignore

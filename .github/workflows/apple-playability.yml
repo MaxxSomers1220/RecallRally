@@ -1,0 +1,56 @@
+name: Apple viewport and WebKit playability
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/mobile-playability*'
+      - 'src/hero-motion.js'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'scripts/**'
+      - 'tests/apple-*'
+      - 'tests/mobile-playability*'
+      - '.github/workflows/apple-playability.yml'
+concurrency:
+  group: apple-audit-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node scripts/build-standalone.cjs
+          node tests/mobile-playability.test.cjs
+          node tests/character-art.test.cjs
+          node tests/adventure-illustrations.test.cjs
+          node tests/librarian-art.test.cjs
+      - name: Install isolated browser tooling and actual engine
+        run: |
+          npm install --prefix "$RUNNER_TEMP/apple-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/apple-browser/node_modules/playwright/cli.js" install --with-deps ${{ matrix.engine }}
+      - name: Automated desktop engine with Apple-sized viewports and touch
+        env:
+          APPLE_ENGINE: ${{ matrix.engine }}
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/apple-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export APPLE_REPORT="$RUNNER_TEMP/apple-audit"
+          node tests/apple-landscape-duels-browser.test.cjs
+          node tests/apple-playability-browser.test.cjs
+          node scripts/record-apple-playability.cjs
+          node tests/apple-package.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.engine }}-apple-viewport-audit
+          path: ${{ runner.temp }}/apple-audit
+          if-no-files-found: ignore

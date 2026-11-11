@@ -86,7 +86,7 @@ function checkSave(s,level){assert.equal(s.progress.level,level);assert.deepEqua
   assert.match(await page.locator('#quest-import-notice').innerText(),/unsupported version/);checkSave(await saved(),3);
   console.log('PASS export/import validates backups and confirms replacement; bad import leaves the quest intact');
   // Loading the other shipped HTML at the SAME origin simulates a deployment update.
-  await page.goto(url+'Ellery_Recall_Rally_Librarian_v4.html',{waitUntil:'domcontentloaded'});await page.locator('#quest-home-continue').click();assert.equal((await state()).level,3);assert(await page.locator('#lib-launch').isVisible());
+  await page.goto(url+'Ellery_Recall_Rally_Librarian_v4.html',{waitUntil:'domcontentloaded'});assert(await page.locator('#lib-launch').isVisible(),'The Librarian is a visible home-screen choice');await page.locator('#quest-home-continue').click();assert.equal((await state()).level,3);assert(await page.locator('#lib-launch').isHidden(),'The launcher stays off the active adventure map');
   console.log('PASS normal same-origin deployment/file update retains three seals and Librarian v4');
   await page.route('**/*',route=>route.abort());
   await page.evaluate(()=>{beginFreshAdventure()});await page.locator('#quest-confirm-keep').click();assert.equal((await state()).level,3);

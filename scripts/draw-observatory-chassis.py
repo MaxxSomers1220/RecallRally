@@ -1,0 +1,41 @@
+"""Original layered illustration authored for Recall Rally; no external assets."""
+from pathlib import Path
+
+SVG = '''<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 720 500" class="sl-equipment sl-machine-observatory so-machine" role="img" aria-label="Star Observatory">
+<defs>
+<linearGradient id="__SO__-brass" x2=".8" y2="1"><stop stop-color="#fff1b7"/><stop offset=".22" stop-color="#d7ab60"/><stop offset=".44" stop-color="#805433"/><stop offset=".64" stop-color="#edcf8d"/><stop offset="1" stop-color="#6e4b37"/></linearGradient>
+<linearGradient id="__SO__-copper" x2="1" y2=".7"><stop stop-color="#efc5a1"/><stop offset=".3" stop-color="#b37653"/><stop offset=".55" stop-color="#69473d"/><stop offset=".8" stop-color="#dba575"/><stop offset="1" stop-color="#81553e"/></linearGradient>
+<linearGradient id="__SO__-wood" x2=".1" y2="1"><stop stop-color="#79523b"/><stop offset=".5" stop-color="#433932"/><stop offset="1" stop-color="#202633"/></linearGradient>
+<linearGradient id="__SO__-enamel" x2="1" y2=".7"><stop stop-color="#426c70"/><stop offset=".5" stop-color="#183341"/><stop offset="1" stop-color="#345864"/></linearGradient>
+<linearGradient id="__SO__-glass" x2="1" y2=".1"><stop stop-color="#c9f7f0" stop-opacity=".4"/><stop offset=".18" stop-color="#d4f5ea" stop-opacity=".04"/><stop offset=".68" stop-color="#e8f9ec" stop-opacity=".06"/><stop offset=".92" stop-color="#f6f7d4" stop-opacity=".48"/><stop offset="1" stop-color="#a5ced9" stop-opacity=".18"/></linearGradient>
+<linearGradient id="__SO__-sky" x2=".2" y2="1"><stop stop-color="#101d38"/><stop offset="1" stop-color="#334367"/></linearGradient>
+<linearGradient id="__SO__-cloud" x2=".1" y2="1"><stop stop-color="#fff4d9"/><stop offset=".5" stop-color="#e3e9d9"/><stop offset="1" stop-color="#88b4c0"/></linearGradient>
+<linearGradient id="__SO__-water" x2=".8" y2="1"><stop stop-color="#aee8e5"/><stop offset=".5" stop-color="#5babbc"/><stop offset="1" stop-color="#2c6d91"/></linearGradient>
+<radialGradient id="__SO__-halo"><stop stop-color="#f5e6a8" stop-opacity=".65"/><stop offset="1" stop-color="#e8c97e" stop-opacity="0"/></radialGradient>
+<filter id="__SO__-blur" x="-.5" y="-.5" width="2" height="2"><feGaussianBlur stdDeviation="5"/></filter>
+<clipPath id="__SO__-sky-clip"><path d="M144 278V219Q144 83 360 69Q576 83 576 219V278Z"/></clipPath>
+</defs>
+<g class="so-chassis" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="360" cy="469" rx="293" ry="15" fill="#0b1d2c" opacity=".55"/>
+<!-- Architectural celestial dome and nested meridian engravings. -->
+<path d="M118 297V221Q118 58 360 42Q602 58 602 221V297Z" fill="url(#__SO__-wood)" stroke="#a28869" stroke-width="5"/>
+<path d="M130 289V220Q130 69 360 55Q590 69 590 220V289Z" fill="url(#__SO__-brass)" stroke="#624a38" stroke-width="2"/>
+<path d="M143 278V219Q143 82 360 68Q577 82 577 219V278Z" fill="url(#__SO__-sky)" stroke="#7b6a5b" stroke-width="2"/>
+<g fill="none" stroke="#b6b4a2" stroke-opacity=".2" stroke-width="1"><path d="M151 224Q360 108 569 224M166 166Q360 69 554 166M211 112Q360 55 509 112M360 72V278M360 72Q238 135 226 278M360 72Q482 135 494 278"/></g>
+<path d="M340 52 348 32 360 18 372 32 380 52 360 44Z" fill="url(#__SO__-brass)" stroke="#725137" stroke-width="2"/>
+<path d="M360 24V42M351 35 360 43 369 35" fill="none" stroke="#fff0b7"/>
+<path d="M122 288H598L611 306H109Z" fill="url(#__SO__-copper)" stroke="#e7c08b" stroke-width="2"/>
+<!-- Mechanically plausible equatorial stand, tripod and adjustment screws. -->
+<path d="M344 344H376V385H344Z" fill="url(#__SO__-enamel)" stroke="#d3b680" stroke-width="3"/>
+<path d="M350 376 277 445M370 376 443 445M360 379V447" stroke="#624633" stroke-width="14"/>
+<path d="M350 376 277 445M370 376 443 445M360 379V447" stroke="url(#__SO__-brass)" stroke-width="9"/>
+<path d="M269 441H287L294 453H262ZM433 441H453L461 453H426ZM350 441H370V453H350Z" fill="url(#__SO__-copper)" stroke="#5d4535" stroke-width="2"/>
+<path d="M123 419Q360 394 597 419L617 442Q360 478 103 442Z" fill="url(#__SO__-wood)" stroke="#ad865b" stroke-width="4"/>
+<path d="M113 433Q360 466 607 433V443Q360 477 113 443Z" fill="url(#__SO__-copper)" stroke="#e0bf84" stroke-width="2"/>
+<path d="M165 450 151 476H207L221 456M499 456 513 476H569L555 450" fill="url(#__SO__-brass)" stroke="#694d36" stroke-width="3"/>
+<text x="360" y="457" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#edcf95" letter-spacing="3">F · W</text>
+</g>
+<!-- OBSERVATORY_LAYERS -->
+</svg>
+'''
+(Path(__file__).resolve().parents[1]/"assets/science-lab/star-observatory-chassis.svg").write_text(SVG)

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "source": "Original OpenAI image_gen grayscale four-material atlas",
+  "source_path": "/workspace/generated_images/exec-625937be-c385-4795-bccd-89de5b49b900.png",
+  "source_sha256": "d5383524c4cc0b8827f00ba4e4a656c4570ce56d6f958664ba2abe0293920233",
+  "preparation": "Equal quadrant crop, 256px resample, WebP quality83; no character identity baked into material",
+  "assets": [
+    {
+      "key": "velvet",
+      "file": "velvet.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 12538,
+      "max_bytes": 45000,
+      "sha256": "77a22a7485c390c28a7089a661b56cba397b081c46e882b69d726f8dcb60cd19",
+      "role": "tintable painted velvet relief"
+    },
+    {
+      "key": "silk",
+      "file": "silk.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 6104,
+      "max_bytes": 45000,
+      "sha256": "7a653faaabc726fbf04ee1600a891dae39a7199819a7e5da1b94e28e0df47cd3",
+      "role": "tintable painted silk relief"
+    },
+    {
+      "key": "leather",
+      "file": "leather.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 21400,
+      "max_bytes": 45000,
+      "sha256": "33d088db4c65087bdebbe53e610e386d83a16bf333cd209c980b918bf3fc1db5",
+      "role": "tintable painted leather relief"
+    },
+    {
+      "key": "metal",
+      "file": "metal.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 13834,
+      "max_bytes": 45000,
+      "sha256": "551b7d5da429ae0f25069af6ae33d80b3823de5a71cfcc95c4164dfc367f5136",
+      "role": "tintable painted metal relief"
+    }
+  ]
+}

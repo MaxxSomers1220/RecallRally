@@ -1,0 +1,132 @@
+/* Apple-sized layouts: live controls and original art, with no global zoom lock. */
+:root{--rally-safe-top:env(safe-area-inset-top,0px);--rally-safe-right:env(safe-area-inset-right,0px);--rally-safe-bottom:env(safe-area-inset-bottom,0px);--rally-safe-left:env(safe-area-inset-left,0px)}
+body{padding-top:var(--rally-safe-top);padding-bottom:var(--rally-safe-bottom);padding-left:var(--rally-safe-left);padding-right:var(--rally-safe-right)}
+#lib-overlay{top:var(--rally-vtop,0px);bottom:auto;height:var(--rally-vh,100dvh);padding:var(--rally-safe-top) var(--rally-safe-right) var(--rally-safe-bottom) var(--rally-safe-left);box-sizing:border-box}
+#lib-overlay .lib-top{margin:0;width:100%;max-width:none;position:sticky;top:0;z-index:20;background:#11162ef5}
+#lib-overlay .lib-close{min-height:44px}
+@media(max-width:1000px){
+ body :is(input,textarea,select){font-size:max(16px,1em)!important}
+ :is(#hero-creator,#science-lab,#learning-dialog)[open]{position:fixed;top:calc(var(--rally-vtop,0px) + var(--rally-safe-top));left:var(--rally-safe-left);right:var(--rally-safe-right);bottom:auto;margin:7px auto;max-height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom));max-width:calc(100vw - 14px - var(--rally-safe-left) - var(--rally-safe-right))}
+ #hero-creator[open],#science-lab[open]{height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom))}
+ #hero-creator .hero-builder-heading button{min-height:44px;min-width:44px}
+ #science-lab .sl-header-actions .sl-quiet{min-height:44px!important}
+ #learning-dialog .learning-body{max-height:calc(var(--rally-vh,100dvh) - 100px - var(--rally-safe-top) - var(--rally-safe-bottom))}
+}
+@media(max-width:850px){
+ #hero-creator .hero-builder-body{grid-template-rows:160px minmax(0,1fr)}
+ #hero-creator .hero-customization{display:block;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ #hero-creator .hero-options-scroll{overflow:visible;max-height:none}
+ #hero-creator .hero-category-tabs{position:sticky;top:0;z-index:3}
+ #hero-creator .hero-category-tabs button{min-height:44px}
+ #hero-creator .hero-preview-tools button{min-height:44px}
+}
+html[data-rally-short] #hero-creator[open]{height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom));max-height:calc(var(--rally-vh,100dvh) - 14px - var(--rally-safe-top) - var(--rally-safe-bottom));top:calc(var(--rally-vtop,0px) + var(--rally-safe-top));left:var(--rally-safe-left);right:var(--rally-safe-right);bottom:auto;margin:7px auto}
+html[data-rally-short] #hero-creator .hero-builder-body{grid-template-columns:minmax(155px,.75fr) minmax(0,1.25fr);grid-template-rows:minmax(0,1fr)}
+html[data-rally-short] #hero-creator .hero-preview-panel{display:flex;min-height:0;overflow-y:auto;padding:8px}
+html[data-rally-short] #hero-creator .hero-preview-header{width:100%;text-align:center;padding:0}
+html[data-rally-short] #hero-creator .hero-preview-header h3{font-size:18px;margin:3px 0}
+html[data-rally-short] #hero-creator .hero-full-preview{position:relative;inset:auto;flex:none;width:100%;height:115px}
+html[data-rally-short] #hero-creator .creator-name-field{position:static;width:100%;margin:4px 0}
+html[data-rally-short] #hero-creator .hero-preview-tools{position:static;max-width:100%;margin-top:4px}
+html[data-rally-short] #hero-creator .hero-customization{display:block;overflow-y:auto;min-height:0}
+html[data-rally-short] #hero-creator .hero-options-scroll{overflow:visible;max-height:none}
+html[data-rally-short] #hero-creator .hero-builder-footer .primary{flex-basis:auto;order:0}
+html[data-rally-short] #hero-creator .hero-builder-footer button{min-height:44px}
+/* During storms reserve the whole visual viewport for the arena and touch deck. */
+#lib-overlay[data-scene=storm] .lib-frame{height:100%;width:100%;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;min-height:0}
+#lib-overlay[data-scene=storm] .lib-top{flex:none}
+#lib-overlay[data-scene=storm] .lib-card{min-height:0}
+@media(orientation:landscape) and (max-height:600px){
+ #lib-overlay[data-scene=storm]{overflow:hidden}
+ #lib-overlay[data-scene=storm] .lib-card{display:grid;grid-template-columns:minmax(0,2fr) minmax(145px,1fr);grid-template-rows:auto minmax(0,1fr) auto;flex:1}
+ #lib-overlay[data-scene=storm] .lib-hud{grid-column:1/-1;padding:4px 7px;gap:5px}
+ #lib-overlay[data-scene=storm] .lib-hud .lib-stat{font-size:10px}
+ #lib-overlay[data-scene=storm] .lib-canvas-wrap{grid-column:1;grid-row:2;align-self:center;justify-self:center;width:min(100%,calc((var(--rally-vh,100dvh) - var(--rally-safe-top) - var(--rally-safe-bottom) - 150px)*2.08695652));aspect-ratio:960/460}
+ #lib-overlay[data-scene=storm] .lib-dialogue{grid-column:2;grid-row:2;min-height:0;overflow:auto;padding:7px}
+ #lib-overlay[data-scene=storm] .lib-prompt{font-size:14px;line-height:1.3}
+ #lib-overlay[data-scene=storm] .lib-feedback{font-size:11px}
+ #lib-overlay[data-scene=storm] .lib-controls{grid-column:1/-1;grid-row:3}
+ #lib-overlay[data-scene=storm] .lib-instructions,#lib-overlay[data-scene=storm] .lib-kicker{display:none}
+ #lib-overlay[data-scene=storm] .lib-top{padding:3px 7px}
+ #lib-overlay[data-scene=storm] .lib-title{font-size:20px}
+}
+@media(pointer:coarse){body :is(input,textarea,select){font-size:max(16px,1em)!important}}
+html[data-rally-short] #hero-creator .hero-category-tabs{position:static}
+@media(max-width:450px){html[data-rally-short] #hero-creator .hero-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Very short visual viewports, including keyboard-height contraction. */
+html[data-rally-tiny] #hero-creator .hero-builder-heading{padding:4px 12px}
+html[data-rally-tiny] #hero-creator .hero-builder-heading .eyebrow{display:none}
+html[data-rally-tiny] #hero-creator .hero-builder-heading h2{font-size:20px}
+html[data-rally-tiny] #hero-creator .hero-builder-footer{padding:4px 10px;gap:5px}
+html[data-rally-tiny] #hero-creator .hero-creator-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+html[data-rally-tiny] #hero-creator .hero-preview-panel{padding:4px}
+html[data-rally-tiny] #hero-creator .hero-builder-footer{display:grid;grid-template-columns:1fr 1fr 1.4fr}
+html[data-rally-tiny] #hero-creator .hero-builder-footer button{min-width:0;white-space:normal;padding:4px;font-size:11px}
+html[data-rally-tiny] #hero-creator .hero-builder-footer .primary{margin-left:0}
+
+/* Keep the encounter beside its question on a rotated phone. Long copy scrolls
+   inside the question panel while the live battle stays in view. */
+@media(orientation:landscape) and (min-width:560px) and (max-width:1000px) and (max-height:520px){
+ body.duel-playing main{padding:4px}
+ body.duel-playing .duel-board{height:calc(var(--rally-vh,100dvh) - var(--rally-safe-top) - var(--rally-safe-bottom) - 8px);padding:6px;display:flex;flex-direction:column;border-radius:12px;min-height:0}
+ body.duel-playing .duel-header{flex:none;flex-wrap:nowrap;gap:8px;min-height:44px;padding:0 0 4px;margin:0 0 5px}
+ body.duel-playing .duel-location{flex:1;flex-basis:auto;gap:5px}
+ body.duel-playing .duel-location-icon{font-size:19px}
+ body.duel-playing .duel-location h2{font-size:13px}
+ body.duel-playing .duel-header-meta{font-size:10px;margin:0}
+ body.duel-playing .duel-reward{display:none}
+ body.duel-playing .duel-header-nav{width:auto;gap:5px}
+ body.duel-playing .duel-header .smallbtn{min-height:44px;padding:5px 8px;font-size:11px}
+ body.duel-playing .duel-workspace{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:8px;align-items:stretch}
+ body.duel-playing .duel-question-panel{height:100%;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;padding:8px;gap:8px;scroll-padding:8px}
+ body.duel-playing .duel-question-panel>*{flex-shrink:0}
+ body.duel-playing .duel-question-panel .duel-tactics{flex-wrap:wrap}
+ body.duel-playing .duel-question-panel .intent-row{min-width:80px}
+ body.duel-playing .duel-question-panel .spell-choice-group{flex:1}
+ body.duel-playing .duel-question-panel .spell-choice-group button{flex:1}
+ body.duel-playing .duel-question-panel .quest-prompt{font-size:16px;line-height:1.35}
+ body.duel-playing .duel-question-panel .choice{font-size:14px;min-height:44px;padding:7px;gap:5px}
+ body.duel-playing .duel-question-panel .choice-key{width:20px;height:20px;font-size:11px}
+ body.duel-playing .duel-question-panel .smallbtn,body.duel-playing .duel-question-panel .spell-choice{min-height:44px}
+ body.duel-playing .duel-question-panel .spell-choice{min-width:61px;padding:5px}
+ body.duel-playing .duel-question-panel .spell-choice strong{font-size:11px}
+ body.duel-playing .duel-question-panel .intent-icon{width:22px;height:22px;font-size:14px}
+ body.duel-playing .duel-question-panel .intent-row{padding:0;gap:4px}
+ body.duel-playing .duel-question-panel .intent-row strong{font-size:11px}
+ body.duel-playing .duel-question-panel .intent-row small{font-size:9px}
+ body.duel-playing .duel-answer-footer{grid-template-rows:auto 44px;gap:7px}
+ body.duel-playing .duel-feedback-wait{padding:7px;font-size:11px}
+ body.duel-playing .duel-battle-details summary{min-height:44px;display:flex;align-items:center}
+ body.duel-playing .duel-arena-panel{min-height:0}
+ body.duel-playing .duel-arena-panel .spell-scene{height:100%;min-height:0}
+ body.duel-playing .duel-arena-panel .arena-power-grid{flex:none;padding:4px 7px;gap:8px}
+ body.duel-playing .duel-arena-panel .power-label{font-size:10px;gap:4px;min-height:14px}
+ body.duel-playing .duel-arena-panel .power-label strong{font-size:10px}
+ body.duel-playing .duel-arena-panel .power-label>span{font-size:11px}
+ body.duel-playing .duel-arena-panel .power-track{height:5px;margin-top:3px}
+ body.duel-playing .duel-arena-panel .spell-scene-heading{flex:none;min-height:19px;padding:3px 7px;font-size:9px}
+ body.duel-playing .duel-arena-panel .spell-scene-heading span:last-child{font-size:8px}
+ body.duel-playing .duel-arena-panel .spell-stage{flex:1;min-height:0;height:0;max-height:none;aspect-ratio:auto}
+ body.duel-playing .world-restoration{flex:none;padding:4px 7px}
+ body.duel-playing .restoration-goal{font-size:9px;line-height:1.2;margin-bottom:3px;letter-spacing:0}
+ body.duel-playing .world-restoration ol{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.duel-playing .world-restoration li{font-size:0;min-height:16px;justify-content:center}
+ body.duel-playing .world-restoration li>span{width:16px;height:16px;flex-basis:16px;font-size:9px}
+ body.duel-playing .arena-bottom-bar{flex:none;min-height:32px;padding:3px 6px;gap:4px}
+ body.duel-playing .duel-arena-panel .casting-circle{width:24px;height:24px}
+ body.duel-playing .duel-arena-panel .signature-meter{gap:4px}
+ body.duel-playing .duel-arena-panel .signature-meter strong{font-size:10px}
+ body.duel-playing .duel-arena-panel .signature-meter span{font-size:9px}
+ body.duel-playing .arena-effect-chip{font-size:9px;padding:2px 4px}
+ body.duel-playing .arena-event-line{flex:none;min-height:20px;font-size:9px;line-height:1.3;padding:4px 6px}
+ body.duel-playing .audio-settings{top:6px;max-height:calc(var(--rally-vh,100dvh) - 12px);overflow-y:auto}
+}
+@media(orientation:landscape) and (min-width:560px) and (max-width:1000px) and (max-height:520px){
+ body.duel-playing #home-view .setup-card{margin:0}
+ body.duel-playing .duel-arena-panel .power-label{margin-bottom:2px}
+}
+@media(orientation:landscape) and (min-width:560px) and (max-width:1000px) and (max-height:360px){
+ body.duel-playing .duel-arena-panel .spell-scene-heading{display:none}
+ body.duel-playing .restoration-goal{display:none}
+}

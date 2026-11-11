@@ -1,0 +1,24 @@
+PASS Amplify command: node scripts/build-standalone.cjs
+PASS Amplify command: node tests/character-art.test.cjs
+PASS Amplify command: node tests/guardian-motion.test.cjs
+PASS Amplify command: node tests/hero-advanced.test.cjs
+PASS Amplify command: node tests/adventure-illustrations.test.cjs
+PASS Amplify command: node tests/librarian-art.test.cjs
+PASS Amplify command: node tests/weather-art.test.cjs
+PASS Amplify command: node tests/observatory-art.test.cjs
+PASS Amplify command: node tests/creature-art.test.cjs
+PASS Amplify command: node tests/circuit-art.test.cjs
+PASS Amplify command: node tests/potion-art.test.cjs
+PASS Amplify command: node tests/answer-recognition.test.cjs
+PASS Amplify command: node tests/home-launcher.test.cjs
+PASS Amplify command: node tests/science-lab.test.cjs
+PASS Amplify command: node tests/adventure-save.test.cjs
+PASS Amplify command: node tests/bank-v29.test.cjs
+PASS Amplify command: node tests/worlds.test.cjs
+PASS Amplify command: node tests/adventure-effects.test.cjs
+PASS Amplify command: node tests/librarian-v4-smoke.test.cjs
+PASS Amplify command: mkdir -p dist/librarian
+PASS Amplify command: cp index.html dist/index.html
+PASS Amplify command: cp librarian/librarian.css librarian/librarian.js dist/librarian/
+PASS Amplify command: node scripts/inject-librarian.cjs dist/index.html
+PASS staged static site: Librarian, Circuit model/badge, illustrated Potion/Creature stages 0–5, creature mistake/repair, Weather and Observatory mistakes/repairs and finales, twenty-five journal answers, unchanged Rigby progress, illustrated Librarian real book storm/review and one honest journal answer

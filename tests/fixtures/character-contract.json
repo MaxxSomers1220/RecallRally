@@ -1,0 +1,7 @@
+{
+  "base": "65d0953",
+  "appearance_schema_sha256": "e7e6b0fa0fb5b5302a7374143eb0895fac7c6d15c0b2875402cab9380caa495a",
+  "librarian_js_sha256": "bfd6da59a21c985ae2e94b8fd08896ac19c0dc74f5a1963e0259971ec85a8681",
+  "librarian_gameplay_sha256": "8d4c826edee0d8561ccdbbfefb72a12ec1eaefd598268da7ea13419f40190dfe",
+  "save_js_sha256": "5b7330130ad4ba0b17ac4097bb133502478e6875f66cdef1cf25c5e57188d122"
+}

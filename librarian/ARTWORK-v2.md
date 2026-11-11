@@ -1,3 +1,5 @@
+> Historical v2 design notes. See [README.md](README.md) for the current multiple-choice illustrated encounter and verified delivery workflow.
+
 # The Librarian — illustrated arcade v2
 
 ## Purpose

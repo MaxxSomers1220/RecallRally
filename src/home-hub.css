@@ -1,0 +1,85 @@
+/* A painted study hall around the original live controls. */
+body[data-home-hub=true]{background:radial-gradient(ellipse at 50% 0,#fff8e9,#eee6d7 75%);color:#263b3c}
+body[data-home-hub=true]>header{padding:13px 28px;border-bottom:1px solid #d7c9b1;max-width:1240px}
+body[data-home-hub=true] .brandmark{background:#20383f;color:#ebcc81;box-shadow:inset 0 0 0 2px #b19558}
+body[data-home-hub=true] #runtime-status{font-size:10px;margin:3px 0!important;padding-top:3px!important;color:#526563}
+body[data-home-hub=true] #audio-settings{margin:0 0 10px;border-color:#d7c9b1;background:#fffaf0}
+body[data-home-hub=true] #audio-settings>summary{padding:8px 12px;min-height:36px}
+body[data-home-hub=true] .navbtn{min-height:44px;padding:10px 4px}
+#home-view .home-hub{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(270px,.85fr);grid-template-rows:auto 1fr;column-gap:22px;padding:22px 30px 20px;border:1px solid #ab8a50;border-radius:20px;overflow:hidden;background:linear-gradient(90deg,#09182aeb 0%,#111c2cc2 44%,#1c243d22 76%),var(--hub-hall) center 48%/cover;box-shadow:0 8px 25px #28251c20,inset 0 0 0 5px #d1ad6120;color:#fff3d9}
+#home-view .home-hub:after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 82% 28%,#efba5628,transparent 39%);animation:hub-lantern 11s ease-in-out infinite;animation-play-state:paused}
+body[data-hub-awake=true] #home-view .home-hub:after{animation-play-state:running}
+@keyframes hub-lantern{0%,55%,100%{opacity:.65}78%{opacity:1}}
+#home-view .home-hub .home-welcome{grid-column:1;grid-row:1;display:block;margin:0;padding:0;background:none;border:0;min-width:0}
+#home-view .home-hub .home-welcome .eyebrow{color:#efce8c;font-size:10px;letter-spacing:1.8px;font-weight:800}
+#home-view .home-hub h1{font-family:Georgia,serif;font-size:clamp(29px,3vw,43px);line-height:1.06;letter-spacing:-1px;margin:9px 0 11px;color:#fff4dc;text-wrap:balance}
+#home-view .home-hub .intro{font-size:13px;line-height:1.6;max-width:43ch;color:#e5decd;margin:0}
+#home-view .home-hub #hero-name-form{grid-column:2;grid-row:1/3;display:grid!important;grid-template-columns:1fr!important;gap:4px!important;align-content:end;justify-items:center;padding:0!important;margin:0;background:none!important;border:0!important;box-shadow:none!important;color:#fff4df;min-width:0}
+#home-view .home-hub #avatar-preview{width:205px;height:188px;max-width:100%;border:0;border-radius:0;background:radial-gradient(ellipse at 50% 89%,#e3c88b38,transparent 58%);box-shadow:none;overflow:visible}
+#home-view .home-hub #avatar-preview svg{display:block;width:100%;height:100%;max-height:none;filter:drop-shadow(0 6px 9px #0d122b99)}
+#home-view .home-hub #hero-name-form>.field{display:grid;grid-template-columns:auto minmax(0,150px);gap:3px 9px;align-items:center;width:100%;max-width:280px;margin:0}
+#home-view .home-hub #hero-name-form label{font-size:11px;font-weight:750;color:#fff0ca}
+#home-view .home-hub #hero-name{height:44px;min-height:44px;font-size:16px!important;background:#fff8e9;color:#233d40;border:1px solid #bda46d;padding:6px 10px}
+#home-view .home-hub #hero-name-hint{display:none}
+#home-view .home-hub #hero-look-summary{grid-column:1/-1;max-width:100%;font-size:10px;line-height:1.4;color:#e0d9cc;text-align:center;overflow-wrap:anywhere}
+#home-view .home-hub .hero-home-actions{grid-column:auto;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:3px 0 0}
+#home-view .home-hub .hero-home-actions button{min-height:44px;font-size:11px;padding:8px 11px;white-space:normal}
+#home-view .home-hub .hero-home-actions .textbtn{color:#fff2ce;text-decoration:underline}
+#home-view .home-hub .hero-home-actions .secondary{background:#fff6df;color:#243c40;border:1px solid #dcc085;box-shadow:0 2px 0 #10182c}
+#home-view .home-hub #hero-status{grid-column:auto;color:#fff1d1;font-size:11px;margin:0;text-align:center;max-width:30ch}
+#home-view .home-hub #hero-status:empty{display:none}
+#home-view .home-hub #quest-home-card{grid-column:1;grid-row:2;display:block;align-self:end;padding:14px 0 0;margin:15px 0 0;border:0;border-top:1px solid #cda76455;border-radius:0;background:none;box-shadow:none;min-width:0}
+#home-view .home-hub .hub-chapter-label{display:block;font-size:9px;letter-spacing:1.6px;color:#e9c98b;font-weight:800;margin:0 0 5px}
+#home-view .home-hub #quest-home-title{font:700 20px/1.2 Georgia,serif;color:#fff2d5;margin:0 0 5px}
+#home-view .home-hub #quest-home-summary{font-size:12px;color:#ede3cd;line-height:1.45;margin:0}
+#home-view .home-hub #hub-next-step{font-size:12px;color:#fff2cf;line-height:1.45;margin:5px 0 9px}
+#home-view .home-hub #hub-seals{display:block;width:min(100%,300px);height:6px;margin:9px 0 7px;accent-color:#edc96f;border:0;border-radius:9px;background:#31414c}
+#home-view .home-hub #hub-seals[hidden]{display:none}
+#hub-seals::-webkit-progress-bar{background:#31414c;border-radius:9px}#hub-seals::-webkit-progress-value{background:#edc96f;border-radius:9px}
+#home-view .home-hub .quest-save-actions{display:flex;justify-content:start;gap:8px;flex-wrap:wrap;margin:0}
+#home-view .home-hub .quest-save-actions button{min-height:44px;font-size:12px;line-height:1.3;padding:9px 14px;white-space:normal}
+#home-view .home-hub #quest-home-continue,#home-view .home-hub[data-resume=false] #quest-home-new{background:#efca72;border:1px solid #f5dda2;color:#263b40;box-shadow:0 3px 0 #070e1c}
+#home-view .home-hub[data-resume=true] #quest-home-new{color:#fff2cf;background:#162a3a;border-color:#b6a37c;box-shadow:none}
+#home-view .home-hub #quest-home-status{font-size:10px;color:#dfd9c8;line-height:1.4;margin:9px 0 0}
+#home-view .home-hub .save-warning{font-size:12px!important;background:#fff2d6!important;color:#622e22!important;padding:8px;border-radius:7px}
+#home-view .home-activities{margin-top:21px}
+#home-view .home-games-heading h2{font:700 25px/1.2 Georgia,serif;color:#293e3e}
+#home-view .home-games-heading .eyebrow{color:#6c5841;font-size:9px;letter-spacing:1.4px}
+#home-view .home-games-heading .hint{color:#4f625b}
+#home-view .home-choice{display:flex;flex-direction:column;align-items:stretch;padding:0 0 11px;gap:5px;border:1px solid #c9b99a;border-radius:13px;background:linear-gradient(#fffaf0,#f8efdc);overflow:hidden;box-shadow:0 3px 0 #60533e13;color:#203b3c;transition:transform .16s,box-shadow .16s}
+#home-view .home-choice-art{display:block;flex:none;width:100%;height:92px;border-bottom:1px solid #9e8553;background:#183b43;overflow:hidden}
+#home-view .home-choice-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 58%;transition:transform .25s}
+#home-view .home-choice-science .home-choice-art{background:radial-gradient(ellipse at center,#517477,#152d3c)}
+#home-view .home-choice-science .home-choice-art img{object-fit:cover;object-position:center 53%}
+#home-view .home-choice strong,#home-view .home-choice small,#home-view .home-choice-cta{margin-left:12px;margin-right:12px}
+#home-view .home-choice strong{font:700 17px/1.16 Georgia,serif;margin-top:4px;color:#263c3a}
+#home-view .home-choice small{font-size:12px;line-height:1.4;color:#485e59;opacity:1}
+#home-view .home-choice-cta{font-size:11px;color:#475d44}
+#home-view .home-choice:focus-visible,.home-hub button:focus-visible,.hub-backup :is(button,summary,label):focus-within{outline:3px solid #287cad;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){#home-view .home-choice:hover{border-color:#9a7b42;transform:translateY(-3px);box-shadow:0 7px 16px #3d3b2726}#home-view .home-choice:hover img{transform:scale(1.025)}}
+#home-view .hub-backup{margin-top:20px;border:1px solid #d4c4a5;border-radius:10px;padding:0 14px;background:#faf4e7}
+#home-view .hub-backup summary{min-height:44px;padding:13px 0;font-size:12px;font-weight:700;color:#3d554e;cursor:pointer}
+#home-view .hub-backup p{font-size:12px;line-height:1.6}
+#home-view .hub-backup .quest-save-actions{margin-bottom:14px}
+#home-view .hub-backup button,#home-view .hub-backup .quest-import-label{min-height:44px}
+#home-view .hub-backup #quest-import-notice:empty{display:none}
+#home-view.home-choice-open .home-hub,#home-view.home-choice-open .hub-backup{display:none!important}
+#home-view.home-choice-open .home-activities{margin-top:16px}
+#home-view.home-choice-open .home-choice{padding:10px;min-height:69px}
+#home-view.home-choice-open .home-choice-art,#home-view.home-choice-open .home-choice small{display:none}
+#home-view.home-choice-open .home-choice strong,#home-view.home-choice-open .home-choice-cta{margin:0}
+@media(max-width:1000px){#home-view .home-hub{grid-template-columns:minmax(0,1.2fr) minmax(245px,.8fr);padding:24px;gap:15px}#home-view .home-hub h1{font-size:35px}#home-view .home-hub #avatar-preview{height:190px}#home-view .home-choice strong{font-size:16px}#home-view .home-choice-art{height:104px}}
+@media(max-width:700px){body[data-home-hub=true]>header{padding:12px 16px;flex-wrap:wrap;gap:5px}body[data-home-hub=true] .topnav{width:100%;gap:12px;justify-content:space-between}body[data-home-hub=true] .topnav .grade{display:none}body[data-home-hub=true] .navbtn{font-size:12px}#home-view .home-hub{grid-template-columns:minmax(0,1fr) 125px;gap:10px;padding:20px 16px;background-position:center,65% center;border-radius:15px}#home-view .home-hub .home-welcome{grid-column:1;grid-row:1}#home-view .home-hub h1{font-size:28px;letter-spacing:-.7px;margin:8px 0}#home-view .home-hub .intro{font-size:12px;line-height:1.5}#home-view .home-hub #hero-name-form{grid-column:2;grid-row:1;align-self:center;align-content:center}#home-view .home-hub #avatar-preview{width:125px;height:170px}#home-view .home-hub #hero-name-form>.field,#home-view .home-hub .hero-home-actions .textbtn{display:none}#home-view .home-hub .hero-home-actions{margin:0;gap:0}#home-view .home-hub .hero-home-actions .secondary{padding:6px 8px;font-size:10px}#home-view .home-hub #quest-home-card{grid-column:1/-1;grid-row:2;margin-top:4px;padding-top:13px}#home-view .home-hub #quest-home-title{font-size:19px}#home-view .home-hub #quest-home-status{font-size:11px}#home-view .home-activity-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#home-view .home-choice-art{height:100px}#home-view .home-games-heading h2{font-size:23px}#home-view .home-games-heading>.hint{display:none}#home-view .home-choice small{font-size:12px}#home-view .home-choice-cta{min-height:24px}#home-view .home-activity-grid .home-choice:last-child{grid-column:1/-1;display:grid;grid-template-columns:42% 1fr;grid-template-rows:auto auto 1fr;padding:0;gap:5px 0;min-height:132px}#home-view .home-activity-grid .home-choice:last-child .home-choice-art{grid-column:1;grid-row:1/4;height:100%;border:0;border-right:1px solid #b39b6f}#home-view .home-activity-grid .home-choice:last-child strong{grid-column:2;align-self:end;margin-top:12px}#home-view .home-activity-grid .home-choice:last-child small,#home-view .home-activity-grid .home-choice:last-child .home-choice-cta{grid-column:2}#home-view .home-activity-grid .home-choice:last-child .home-choice-cta{margin-bottom:10px}#home-view.home-choice-open .home-choice:last-child{display:flex;min-height:69px;grid-column:auto;padding:10px}#home-view.home-choice-open .home-choice:last-child strong{margin:0}#home-view .hub-backup{margin-top:14px}#home-view .home-hub #hero-status{font-size:10px}}
+@media(max-width:360px){#home-view .home-hub{grid-template-columns:minmax(0,1fr) 103px;padding:15px 12px}#home-view .home-hub #avatar-preview{width:103px;height:150px}#home-view .home-hub h1{font-size:25px}#home-view .home-hub .quest-save-actions button{flex:1 1 100%}#home-view .home-choice strong{font-size:15px}#home-view .home-choice strong,#home-view .home-choice small,#home-view .home-choice-cta{margin-left:10px;margin-right:10px}}
+@media(prefers-reduced-motion:reduce){#home-view .home-hub:after{animation:none!important}#home-view .home-choice,#home-view .home-choice img{transition:none!important;transform:none!important}}
+
+@media(max-width:700px){#home-view .home-hub .hero-home-actions{width:100%}#home-view .home-hub .hero-home-actions .secondary{width:100%;font-size:11px}}
+
+#home-view .home-hub .hub-backup{margin-top:9px;padding:0 10px;border-color:#a387574f;background:#102236aa;color:#f4e4c7}
+#home-view .home-hub .hub-backup summary{color:#f4e4c7;padding:10px 0;min-height:44px;font-size:11px}
+#home-view .home-hub .hub-backup p{color:#f0e6d2}
+#home-view .home-hub #quest-import-notice{font-size:12px;color:#f9e3a8}
+#home-view .home-hub #quest-import-notice:empty{display:none}
+
+#home-view .home-hub .hub-games-link{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:7px 8px;font-size:12px;font-weight:750;color:#f5dfa9;text-decoration:underline;text-underline-offset:3px}
+#home-view .home-hub .hub-games-link:focus-visible{outline:3px solid #78c7ee;outline-offset:2px;border-radius:5px}

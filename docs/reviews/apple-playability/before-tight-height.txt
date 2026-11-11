@@ -1,0 +1,42 @@
+{
+  '#creator-hero-name': {
+    x: 16,
+    y: 77,
+    width: 228.125,
+    height: 42,
+    top: 77,
+    right: 244.125,
+    bottom: 119,
+    left: 16
+  },
+  '.hero-preview-panel': {
+    x: 8,
+    y: 77,
+    width: 244.125,
+    height: 32.8125,
+    top: 77,
+    right: 252.125,
+    bottom: 109.8125,
+    left: 8
+  },
+  '.hero-builder-body': {
+    x: 8,
+    y: 77,
+    width: 651,
+    height: 32.8125,
+    top: 77,
+    right: 659,
+    bottom: 109.8125,
+    left: 8
+  },
+  '#hero-done': {
+    x: 251.203125,
+    y: 119.8125,
+    width: 397.796875,
+    height: 44,
+    top: 119.8125,
+    right: 649,
+    bottom: 163.8125,
+    left: 251.203125
+  }
+}

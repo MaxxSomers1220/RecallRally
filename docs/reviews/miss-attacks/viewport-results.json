@@ -1,0 +1,100 @@
+[
+  {
+    "device": "desktop",
+    "land": 0,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 1,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 2,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 3,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 4,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 5,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 6,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 7,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 8,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "desktop",
+    "land": 9,
+    "top": 258.09375,
+    "bottom": 574.328125,
+    "height": 768
+  },
+  {
+    "device": "tablet-landscape",
+    "land": 5,
+    "top": 257.5,
+    "bottom": 491.453125,
+    "height": 768
+  },
+  {
+    "device": "tablet-portrait",
+    "land": 7,
+    "top": 799.640625,
+    "bottom": 1179.765625,
+    "height": 1180
+  },
+  {
+    "device": "phone",
+    "land": 9,
+    "top": 672.8125,
+    "bottom": 843.921875,
+    "height": 844
+  },
+  {
+    "device": "phone-landscape",
+    "land": 9,
+    "top": 156.140625,
+    "bottom": 324.40625,
+    "height": 390
+  }
+]

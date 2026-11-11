@@ -1,0 +1,477 @@
+{
+  "id": "home",
+  "title": "An Invitation to Adventure",
+  "bpm": 76,
+  "meter": "4/4",
+  "scale": "D major",
+  "loopBars": 8,
+  "motif": [
+    74,
+    78,
+    76,
+    81,
+    78,
+    76
+  ],
+  "form": [
+    "A",
+    "A prime",
+    "B",
+    "A return"
+  ],
+  "sourceType": "Original composition; sampled General MIDI rendering",
+  "tracks": [
+    {
+      "name": "Nylon guitar - rolled harmony",
+      "program": 0,
+      "volume": 62,
+      "pan": 42,
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1,
+          "dur": 1.8,
+          "note": 54,
+          "vel": 54
+        },
+        {
+          "bar": 1,
+          "beat": 1.05476,
+          "dur": 1.8,
+          "note": 57,
+          "vel": 58
+        },
+        {
+          "bar": 1,
+          "beat": 1.11978,
+          "dur": 1.8,
+          "note": 64,
+          "vel": 55
+        },
+        {
+          "bar": 2,
+          "beat": 1.00388,
+          "dur": 1.8,
+          "note": 57,
+          "vel": 56
+        },
+        {
+          "bar": 2,
+          "beat": 1.05882,
+          "dur": 1.8,
+          "note": 62,
+          "vel": 57
+        },
+        {
+          "bar": 2,
+          "beat": 1.10985,
+          "dur": 1.8,
+          "note": 66,
+          "vel": 60
+        },
+        {
+          "bar": 2,
+          "beat": 3.24234,
+          "dur": 1.4,
+          "note": 57,
+          "vel": 41
+        },
+        {
+          "bar": 2,
+          "beat": 3.31814,
+          "dur": 1.4,
+          "note": 62,
+          "vel": 41
+        },
+        {
+          "bar": 3,
+          "beat": 1.00888,
+          "dur": 1.8,
+          "note": 55,
+          "vel": 60
+        },
+        {
+          "bar": 3,
+          "beat": 1.06865,
+          "dur": 1.8,
+          "note": 59,
+          "vel": 59
+        },
+        {
+          "bar": 3,
+          "beat": 1.1221,
+          "dur": 1.8,
+          "note": 66,
+          "vel": 58
+        },
+        {
+          "bar": 4,
+          "beat": 1.01276,
+          "dur": 1.8,
+          "note": 57,
+          "vel": 54
+        },
+        {
+          "bar": 4,
+          "beat": 1.05139,
+          "dur": 1.8,
+          "note": 59,
+          "vel": 55
+        },
+        {
+          "bar": 4,
+          "beat": 1.12486,
+          "dur": 1.8,
+          "note": 61,
+          "vel": 60
+        },
+        {
+          "bar": 4,
+          "beat": 4.99564,
+          "dur": 1.8,
+          "note": 54,
+          "vel": 54
+        },
+        {
+          "bar": 5,
+          "beat": 1.04733,
+          "dur": 1.8,
+          "note": 57,
+          "vel": 58
+        },
+        {
+          "bar": 5,
+          "beat": 1.11824,
+          "dur": 1.8,
+          "note": 66,
+          "vel": 55
+        },
+        {
+          "bar": 5,
+          "beat": 3.26389,
+          "dur": 1.4,
+          "note": 57,
+          "vel": 44
+        },
+        {
+          "bar": 5,
+          "beat": 3.30988,
+          "dur": 1.4,
+          "note": 62,
+          "vel": 41
+        },
+        {
+          "bar": 5,
+          "beat": 4.99221,
+          "dur": 1.8,
+          "note": 59,
+          "vel": 59
+        },
+        {
+          "bar": 6,
+          "beat": 1.04661,
+          "dur": 1.8,
+          "note": 62,
+          "vel": 55
+        },
+        {
+          "bar": 6,
+          "beat": 1.10494,
+          "dur": 1.8,
+          "note": 64,
+          "vel": 60
+        },
+        {
+          "bar": 7,
+          "beat": 1.0149,
+          "dur": 1.8,
+          "note": 55,
+          "vel": 55
+        },
+        {
+          "bar": 7,
+          "beat": 1.04143,
+          "dur": 1.8,
+          "note": 59,
+          "vel": 56
+        },
+        {
+          "bar": 7,
+          "beat": 1.10562,
+          "dur": 1.8,
+          "note": 66,
+          "vel": 59
+        },
+        {
+          "bar": 7,
+          "beat": 3.23657,
+          "dur": 1.4,
+          "note": 59,
+          "vel": 44
+        },
+        {
+          "bar": 7,
+          "beat": 3.31969,
+          "dur": 1.4,
+          "note": 62,
+          "vel": 45
+        },
+        {
+          "bar": 8,
+          "beat": 1.00676,
+          "dur": 1.8,
+          "note": 57,
+          "vel": 55
+        },
+        {
+          "bar": 8,
+          "beat": 1.0588,
+          "dur": 1.8,
+          "note": 59,
+          "vel": 60
+        },
+        {
+          "bar": 8,
+          "beat": 1.10936,
+          "dur": 1.8,
+          "note": 61,
+          "vel": 54
+        }
+      ]
+    },
+    {
+      "name": "Flute - motif statements",
+      "program": 0,
+      "volume": 77,
+      "pan": 70,
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.00163,
+          "dur": 1.15,
+          "note": 74,
+          "vel": 68
+        },
+        {
+          "bar": 1,
+          "beat": 2.50617,
+          "dur": 0.55,
+          "note": 78,
+          "vel": 63
+        },
+        {
+          "bar": 1,
+          "beat": 3.23586,
+          "dur": 1.35,
+          "note": 76,
+          "vel": 65
+        },
+        {
+          "bar": 2,
+          "beat": 1.2361,
+          "dur": 1.4,
+          "note": 81,
+          "vel": 64
+        },
+        {
+          "bar": 2,
+          "beat": 3.0059,
+          "dur": 0.75,
+          "note": 78,
+          "vel": 68
+        },
+        {
+          "bar": 2,
+          "beat": 3.99725,
+          "dur": 0.75,
+          "note": 76,
+          "vel": 66
+        },
+        {
+          "bar": 2,
+          "beat": 4.99374,
+          "dur": 2.6,
+          "note": 74,
+          "vel": 65
+        },
+        {
+          "bar": 3,
+          "beat": 3.98936,
+          "dur": 0.65,
+          "note": 71,
+          "vel": 64
+        },
+        {
+          "bar": 4,
+          "beat": 1.51396,
+          "dur": 1.4,
+          "note": 73,
+          "vel": 68
+        },
+        {
+          "bar": 4,
+          "beat": 3.51336,
+          "dur": 1.25,
+          "note": 69,
+          "vel": 68
+        },
+        {
+          "bar": 4,
+          "beat": 4.99381,
+          "dur": 0.9,
+          "note": 71,
+          "vel": 66
+        },
+        {
+          "bar": 5,
+          "beat": 2.23546,
+          "dur": 0.9,
+          "note": 74,
+          "vel": 63
+        },
+        {
+          "bar": 5,
+          "beat": 3.75609,
+          "dur": 1.8,
+          "note": 78,
+          "vel": 66
+        },
+        {
+          "bar": 6,
+          "beat": 1.99727,
+          "dur": 1.4,
+          "note": 76,
+          "vel": 68
+        },
+        {
+          "bar": 6,
+          "beat": 3.74655,
+          "dur": 0.9,
+          "note": 74,
+          "vel": 69
+        },
+        {
+          "bar": 8,
+          "beat": 1.49127,
+          "dur": 1.1,
+          "note": 71,
+          "vel": 65
+        },
+        {
+          "bar": 8,
+          "beat": 3.01026,
+          "dur": 0.75,
+          "note": 73,
+          "vel": 68
+        },
+        {
+          "bar": 8,
+          "beat": 4.24395,
+          "dur": 0.6,
+          "note": 76,
+          "vel": 64
+        }
+      ]
+    },
+    {
+      "name": "Clarinet - phrase answers",
+      "program": 0,
+      "volume": 70,
+      "pan": 55,
+      "notes": [
+        {
+          "bar": 8,
+          "beat": 4.99634,
+          "dur": 1.15,
+          "note": 74,
+          "vel": 65
+        }
+      ]
+    },
+    {
+      "name": "Acoustic bass - roots and passing steps",
+      "program": 32,
+      "volume": 72,
+      "pan": 64,
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.01048,
+          "dur": 2.7,
+          "note": 38,
+          "vel": 64
+        },
+        {
+          "bar": 1,
+          "beat": 4.99308,
+          "dur": 2.7,
+          "note": 42,
+          "vel": 68
+        },
+        {
+          "bar": 2,
+          "beat": 4.9967,
+          "dur": 2.7,
+          "note": 43,
+          "vel": 68
+        },
+        {
+          "bar": 4,
+          "beat": 1.00971,
+          "dur": 2.7,
+          "note": 45,
+          "vel": 67
+        },
+        {
+          "bar": 4,
+          "beat": 4.237,
+          "dur": 0.6,
+          "note": 52,
+          "vel": 45
+        },
+        {
+          "bar": 4,
+          "beat": 4.99565,
+          "dur": 2.7,
+          "note": 47,
+          "vel": 62
+        },
+        {
+          "bar": 5,
+          "beat": 4.99956,
+          "dur": 2.7,
+          "note": 40,
+          "vel": 67
+        },
+        {
+          "bar": 7,
+          "beat": 1.00578,
+          "dur": 2.7,
+          "note": 43,
+          "vel": 68
+        },
+        {
+          "bar": 8,
+          "beat": 1.00892,
+          "dur": 2.7,
+          "note": 45,
+          "vel": 66
+        },
+        {
+          "bar": 8,
+          "beat": 4.25281,
+          "dur": 0.6,
+          "note": 52,
+          "vel": 44
+        },
+        {
+          "bar": 8,
+          "beat": 4.98833,
+          "dur": 2.7,
+          "note": 38,
+          "vel": 64
+        }
+      ]
+    }
+  ]
+}

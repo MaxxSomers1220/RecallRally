@@ -1,0 +1,8 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),crypto=require('node:crypto'),vm=require('node:vm'),hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const html=fs.readFileSync('index.html','utf8'),offline=fs.readFileSync('Ellery_Recall_Rally_Librarian_v4.html','utf8'),manifest=JSON.parse(fs.readFileSync('assets/home/manifest.json'));let total=0;
+assert.equal(manifest.assets.length,6);for(const a of manifest.assets){const bytes=fs.readFileSync('assets/home/'+a.file);assert.equal(bytes.length,a.bytes);assert(bytes.length<=a.max_bytes);assert.equal(hash(bytes),a.sha256);assert.equal(hash(fs.readFileSync(a.source)),a.source_sha256);assert(html.includes(bytes.toString('base64'))&&offline.includes(bytes.toString('base64')));total+=bytes.length}assert(total<400000,'Home paint budget <400kB');
+for(const file of ['src/home-hub.js','src/home-hub.css']){const text=fs.readFileSync(file,'utf8').trim();assert(html.includes(text)&&offline.includes(text),'Shared home source: '+file)}
+const js=fs.readFileSync('src/home-hub.js','utf8');new vm.Script(js);assert(!/localStorage|fetch\(|setTimeout\(|setInterval\(|requestAnimationFrame|questProgress\s*=(?!=)|duel\.[\w]+\s*=(?!=)/.test(js),'No persistence/academic/timer/frame-loop writes in hub');assert(!/user-scalable=no|maximum-scale=1/.test(html));
+assert(html.includes('id="quest-home-card"'));assert(js.includes("quest.querySelector('details').classList.add"),'Keep original backup ancestry');
+console.log('PASS six bounded/provenanced local paintings in both builds, same homepage source, existing controls, no persistence/academic/animation-loop writes; zoom retained');

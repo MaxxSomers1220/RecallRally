@@ -1,0 +1,55 @@
+name: Hero and guardian character artwork
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/characters/**'
+      - 'src/character-art*'
+      - 'src/hero-renderer.js'
+      - 'src/adventure-illustrations.js'
+      - 'index.html'
+      - 'Ellery_Recall_Rally_Librarian_v4.html'
+      - 'scripts/**'
+      - 'tests/character*'
+      - 'tests/fixtures/*hero*'
+      - 'tests/fixtures/character*'
+      - 'amplify.yml'
+      - '.github/workflows/character-art.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install Pillow==11.3.0
+          node scripts/build-standalone.cjs
+          python scripts/check-character-assets.py
+          node tests/character-art.test.cjs
+          node tests/adventure-effects.test.cjs
+          node tests/worlds.test.cjs
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/character-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/character-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Current playable game, all hero choices, ten guardians and offline build
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/character-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export CHARACTER_SCREENSHOTS="$RUNNER_TEMP/character-screenshots"
+          node tests/character-browser.test.cjs
+          node tests/adventure-static.test.cjs
+          node tests/librarian-illustrated-browser.test.cjs
+          node tests/adventure-save-browser.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hero-and-guardian-gameplay
+          path: ${{ runner.temp }}/character-screenshots
+          if-no-files-found: ignore

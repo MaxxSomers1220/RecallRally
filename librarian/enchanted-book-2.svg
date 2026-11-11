@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="168" viewBox="0 0 120 84"><defs><linearGradient id="book-leather" x2="1" y2=".7"><stop stop-color="#bc867e"/><stop offset=".38" stop-color="#694465"/><stop offset="1" stop-color="#2b294b"/></linearGradient><linearGradient id="book-paper" x2=".2" y2="1"><stop stop-color="#fff4d5"/><stop offset="1" stop-color="#cfb18d"/></linearGradient></defs><g stroke-linecap="round" stroke-linejoin="round">
+<path d="M13 18Q37 8 59 21Q83 8 107 18L104 66Q82 57 60 69Q37 57 16 66Z" fill="url(#book-leather)" stroke="#edcd91" stroke-width="3"/>
+<path d="M18 21Q38 15 58 25V62Q39 52 21 60ZM62 25Q82 15 102 21L100 60Q82 52 62 62Z" fill="url(#book-paper)" stroke="#b6a17e" stroke-width="1.3"/>
+<path d="M24 28Q39 19 56 29V57Q38 48 25 53ZM64 29Q82 27 96 28L95 53Q82 48 64 57Z" fill="#fbefd1" stroke="#d2b68f" stroke-width="1.2"/>
+<path d="M28 33Q42 29 53 35M28 39Q42 35 53 41M29 45Q42 41 53 47M67 35Q81 29 93 33M67 41Q81 35 92 39M67 47Q81 41 92 45" fill="none" stroke="#aa8d8b" stroke-width="1.1"/>
+<path d="M59 22V65M16 23 24 19M98 19 105 23M19 59l7 2M97 61l7-2" fill="none" stroke="#edcc8e" stroke-width="2"/>
+<path d="M37 37 41 30 45 37 41 44ZM79 36l5-6 5 6-5 6Z" fill="#c5aa83" stroke="#a38f85" stroke-width=".8"/>
+<path d="M57 64 54 77 60 73 65 77 63 64Z" fill="#b1728d" stroke="#e2c497" stroke-width="1.2"/>
+</g></svg>

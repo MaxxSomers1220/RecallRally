@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "license": "Original project artwork. No third-party stock or commercial game assets.",
+  "generated": "2026-11-01; OpenAI image_gen",
+  "assets": [
+    {
+      "key": "hall",
+      "file": "hall.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 151774,
+      "max_bytes": 220000,
+      "sha256": "4a33af1bdbd9e488b93925b22e7aebaaf3fd5befcafe6fc57a0674adeb0376fa",
+      "source": "assets/home/source/study-hall.png",
+      "source_sha256": "a0dfdb5bd43b322bede563077ad4034a8c76cdd0d72353a2449e32f07da99476",
+      "role": "quiet painted hero background; decorative"
+    },
+    {
+      "key": "quick",
+      "file": "quick.webp",
+      "width": 480,
+      "height": 480,
+      "bytes": 45808,
+      "max_bytes": 70000,
+      "sha256": "989adb771f157dd96d051d49232a7816790cad7772e4cf91cbc246c28692973d",
+      "source": "assets/home/source/practice-tools.png",
+      "source_sha256": "a8c1c4cd07c92f372808e1b91e075d29703ab830bc97beec37d16bdbbe6f11b7",
+      "role": "brass recall bell and study book; decorative"
+    },
+    {
+      "key": "written",
+      "file": "written.webp",
+      "width": 480,
+      "height": 480,
+      "bytes": 41250,
+      "max_bytes": 70000,
+      "sha256": "511465812efb8897a73c5d96d39d6d356a9f35b4590e66458f5d13bbf979ef5c",
+      "source": "assets/home/source/practice-tools.png",
+      "source_sha256": "a8c1c4cd07c92f372808e1b91e075d29703ab830bc97beec37d16bdbbe6f11b7",
+      "role": "feather quill and journal; decorative"
+    },
+    {
+      "key": "science",
+      "file": "science.webp",
+      "width": 480,
+      "height": 260,
+      "bytes": 34278,
+      "max_bytes": 65000,
+      "sha256": "7dba77ba49beeccb1345d9d9037dd2f59a310f136869416affce603614c782f2",
+      "source": "assets/home/source/science-workbench.png",
+      "source_sha256": "381c07da34a8356a40ca3f6bbebe7388bf75eaa5dc99a5a8917372fb88ef116b",
+      "role": "original fantasy science-workbench symbol; decorative"
+    },
+    {
+      "key": "library",
+      "file": "library.webp",
+      "width": 480,
+      "height": 260,
+      "bytes": 30328,
+      "max_bytes": 65000,
+      "sha256": "93c1282a1d6ee37fda238ffccc17ebd5a85e88faf2c4bcc2fe6cb10559d108f7",
+      "source": "librarian/library-painted.webp",
+      "source_sha256": "b8de292443fff08e63214c58a4994e9ae6fb2ed5310127a6d19e7f6bef6cde03",
+      "role": "approved library panorama thumbnail; decorative"
+    },
+    {
+      "key": "adventure",
+      "file": "adventure.webp",
+      "width": 480,
+      "height": 200,
+      "bytes": 29338,
+      "max_bytes": 55000,
+      "sha256": "2813ceaa1f11f665d7ed62406eb2a825cb0fecc5861724ef123179036537c340",
+      "source": "assets/adventure/mosswood.webp",
+      "source_sha256": "b278032dd4e5ae228e1965665292d540dc322b7ab323e4e570e9d323fee8587d",
+      "role": "approved Mosswood world thumbnail; decorative"
+    }
+  ]
+}

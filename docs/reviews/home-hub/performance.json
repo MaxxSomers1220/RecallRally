@@ -1,0 +1,186 @@
+{
+  "environment": "Shared Linux headless Chromium, DPR1, same explicitly configured detailed hero, 2.4s samples after warm-up. Frame callback gaps and CDP main-thread/layout/JS heap observations; no physical-device, GPU/process-memory, input-latency or battery claim. The editor is warmed once, then explicit GC brackets twelve creator cycles. This is a short retained-scene observation, not a long-session leak proof.",
+  "browser": "154.0.8037.57",
+  "rows": [
+    {
+      "layout": "laptop",
+      "style": "fairy",
+      "version": "before",
+      "durationMs": 2408,
+      "frames": 145,
+      "p50Ms": 16.69999998807907,
+      "p95Ms": 16.900000005960464,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 554,
+      "taskCpuPercent": 14.512749169435216,
+      "layoutMs": 51.537,
+      "heapBytes": 11384484
+    },
+    {
+      "layout": "laptop",
+      "style": "fairy",
+      "version": "after",
+      "durationMs": 2400.7000000029802,
+      "frames": 145,
+      "p50Ms": 16.69999998807907,
+      "p95Ms": 17,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 554,
+      "taskCpuPercent": 15.411463323178268,
+      "layoutMs": 39.482000000000006,
+      "heapBytes": 11769640
+    },
+    {
+      "layout": "laptop",
+      "style": "panther",
+      "version": "before",
+      "durationMs": 2410.1000000089407,
+      "frames": 145,
+      "p50Ms": 16.69999998807907,
+      "p95Ms": 17,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 507,
+      "taskCpuPercent": 15.600016596763837,
+      "layoutMs": 52.602999999999994,
+      "heapBytes": 11263928
+    },
+    {
+      "layout": "laptop",
+      "style": "panther",
+      "version": "after",
+      "durationMs": 2406.7000000029802,
+      "frames": 144,
+      "p50Ms": 16.69999998807907,
+      "p95Ms": 17.099999994039536,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 507,
+      "taskCpuPercent": 17.765737316635665,
+      "layoutMs": 44.213,
+      "heapBytes": 11688484
+    },
+    {
+      "layout": "phone",
+      "style": "fairy",
+      "version": "before",
+      "durationMs": 2400.8999999910593,
+      "frames": 145,
+      "p50Ms": 16.700000002980232,
+      "p95Ms": 17,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 554,
+      "taskCpuPercent": 14.326627514735346,
+      "layoutMs": 48.417,
+      "heapBytes": 11347348
+    },
+    {
+      "layout": "phone",
+      "style": "fairy",
+      "version": "after",
+      "durationMs": 2410.5,
+      "frames": 145,
+      "p50Ms": 16.700000002980232,
+      "p95Ms": 17,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 554,
+      "taskCpuPercent": 17.44314457581415,
+      "layoutMs": 54.012,
+      "heapBytes": 11778492
+    },
+    {
+      "layout": "phone",
+      "style": "panther",
+      "version": "before",
+      "durationMs": 2414.7000000029802,
+      "frames": 145,
+      "p50Ms": 16.69999998807907,
+      "p95Ms": 16.900000005960464,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 507,
+      "taskCpuPercent": 13.061995278900515,
+      "layoutMs": 47.656,
+      "heapBytes": 11319888
+    },
+    {
+      "layout": "phone",
+      "style": "panther",
+      "version": "before",
+      "scenario": "twelve-creator-open-close",
+      "initial": {
+        "heap": 11235792,
+        "nodes": 13782,
+        "listeners": 156
+      },
+      "final": {
+        "heap": 11312856,
+        "nodes": 13782,
+        "listeners": 156
+      },
+      "hub": null,
+      "hero": {
+        "scheduled": true,
+        "rigs": [
+          "home-panther"
+        ]
+      }
+    },
+    {
+      "layout": "phone",
+      "style": "panther",
+      "version": "after",
+      "durationMs": 2407,
+      "frames": 145,
+      "p50Ms": 16.700000002980232,
+      "p95Ms": 17.799999997019768,
+      "heroRigs": [
+        "home-panther"
+      ],
+      "svgNodes": 507,
+      "taskCpuPercent": 19.692521811383465,
+      "layoutMs": 61.333,
+      "heapBytes": 11774528
+    },
+    {
+      "layout": "phone",
+      "style": "panther",
+      "version": "after",
+      "scenario": "twelve-creator-open-close",
+      "initial": {
+        "heap": 11451436,
+        "nodes": 13800,
+        "listeners": 160
+      },
+      "final": {
+        "heap": 11529568,
+        "nodes": 13800,
+        "listeners": 160
+      },
+      "hub": {
+        "initialized": true,
+        "refreshes": 40,
+        "active": true,
+        "awake": true,
+        "observers": 1
+      },
+      "hero": {
+        "scheduled": true,
+        "rigs": [
+          "home-panther"
+        ]
+      }
+    }
+  ]
+}

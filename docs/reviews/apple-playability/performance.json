@@ -1,0 +1,504 @@
+{
+  "environment": "Shared Linux headless Chromium; identical 393x852 viewport, mage/crystal wings/long cape/lantern; 2.4s warm samples. Desktop observations, no device guarantees. CDP JS heap excludes GPU/process memory; forced-GC reopen samples are not a leak proof.",
+  "browser": "154.0.8037.57",
+  "rows": [
+    {
+      "version": "before",
+      "scenario": "creator-fairy",
+      "durationMs": 2420.7000000029802,
+      "frames": 83,
+      "p50Ms": 28.099999994039536,
+      "p95Ms": 39.5,
+      "hero": {
+        "scheduled": true,
+        "frames": 125,
+        "scans": 6,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "hero-live",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 4.3212993268272655,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": -0.12611440363705054,
+              "shift": 0,
+              "left-hip": 4.702082367475589,
+              "left-knee": -8.77475596072276,
+              "left-ankle": 4.072673593247171,
+              "right-hip": -1.3597032602310126,
+              "right-knee": 2.6484071864211254,
+              "right-ankle": -1.288703926190113,
+              "cape": 1.5802367468635865,
+              "hair": -0.1990031879594709,
+              "hair-back": -0.9819370309901951,
+              "skirt": 0.5990798835343109,
+              "wing-left": 0.6879690320389833,
+              "wing-right": 1.0651707585207504,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": false,
+      "svgNodes": 9215,
+      "taskCpuPercent": 69.50328417391367,
+      "layoutMs": 26.838,
+      "heapBytes": 20428664,
+      "nodes": 29760,
+      "listeners": 205
+    },
+    {
+      "version": "before",
+      "scenario": "creator-panther",
+      "durationMs": 2409.9000000059605,
+      "frames": 59,
+      "p50Ms": 37.5,
+      "p95Ms": 72.79999999701977,
+      "hero": {
+        "scheduled": true,
+        "frames": 205,
+        "scans": 8,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "hero-live",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 3.5500089556978307,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": 0.25485854682948894,
+              "shift": 0,
+              "left-hip": 8.8517187279717,
+              "left-knee": -16.23492142115483,
+              "left-ankle": 7.383202693183129,
+              "right-hip": -4.859416393703992,
+              "right-knee": 9.071729551659246,
+              "right-ankle": -4.212313157955255,
+              "cape": -0.29472721794453904,
+              "hair": 0.535135639633433,
+              "hair-back": -1.060284044144368,
+              "skirt": -0.06027024955224035,
+              "wing-left": -1.1618648237827296,
+              "wing-right": -1.3038610546063591,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": false,
+      "svgNodes": 8188,
+      "taskCpuPercent": 66.96962529548979,
+      "layoutMs": 15.516000000000002,
+      "heapBytes": 13158180,
+      "nodes": 15197,
+      "listeners": 160
+    },
+    {
+      "version": "before",
+      "scenario": "guardian-listening",
+      "durationMs": 2406.2000000029802,
+      "frames": 143,
+      "p50Ms": 16.600000008940697,
+      "p95Ms": 21.5,
+      "hero": {
+        "scheduled": true,
+        "frames": 423,
+        "scans": 30,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "battle-panther",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 4.189717867595278,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": -0.3744347505184837,
+              "shift": 0,
+              "left-hip": 4.132136425492413,
+              "left-knee": -7.858319098691124,
+              "left-ankle": 3.726182673198712,
+              "right-hip": -1.2858964836483657,
+              "right-knee": 2.6447617744965246,
+              "right-ankle": -1.3588652908481587,
+              "cape": 1.1043656939871502,
+              "hair": -0.45828297399316587,
+              "hair-back": -1.191545982749768,
+              "skirt": 0.30412096590061394,
+              "wing-left": -0.0069003976090416565,
+              "wing-right": 0.6020907356234638,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": true,
+      "svgNodes": 8203,
+      "taskCpuPercent": 62.13560801255711,
+      "layoutMs": 63.819999999999986,
+      "heapBytes": 18876548,
+      "nodes": 20219,
+      "listeners": 209
+    },
+    {
+      "version": "before",
+      "scenario": "book-storm",
+      "durationMs": 2411.5999999940395,
+      "frames": 87,
+      "p50Ms": 25.099999994039536,
+      "p95Ms": 50.20000000298023,
+      "hero": {
+        "scheduled": true,
+        "frames": 581,
+        "scans": 169,
+        "count": 2,
+        "rigs": [
+          {
+            "id": "home-panther",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 3.949916670633831,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": -0.5496430645710431,
+              "shift": 0,
+              "left-hip": 4.078379402705247,
+              "left-knee": -7.855976706717023,
+              "left-ankle": 3.777597304011776,
+              "right-hip": -1.234033333029245,
+              "right-knee": 2.6422080210554544,
+              "right-ankle": -1.4081746880262092,
+              "cape": 0.21951351888388393,
+              "hair": -0.5052667464816298,
+              "hair-back": -1.447767921924156,
+              "skirt": -0.1578442598087222,
+              "wing-left": -1.0408561517200017,
+              "wing-right": -0.29251695562871477,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          },
+          {
+            "id": "librarian-v4-hero",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 4.163416855299038,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": -0.4092604327569611,
+              "shift": 0,
+              "left-hip": 4.12143723116267,
+              "left-knee": -7.85785247697598,
+              "left-ankle": 3.7364152458133097,
+              "right-hip": -1.2755737890435808,
+              "right-knee": 2.644252968124124,
+              "right-ankle": -1.3686791790805428,
+              "cape": 0.9694845187607632,
+              "hair": -0.4981044862462243,
+              "hair-back": -1.241009836162719,
+              "skirt": 0.2270893288785026,
+              "wing-left": -0.18096802698091322,
+              "wing-right": 0.46959280068107656,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": false,
+      "svgNodes": 8631,
+      "taskCpuPercent": 83.48747719377073,
+      "layoutMs": 128.11100000000002,
+      "heapBytes": 14351788,
+      "nodes": 16559,
+      "listeners": 197
+    },
+    {
+      "version": "before",
+      "scenario": "twelve-open-close",
+      "initial": {
+        "heap": 11910560,
+        "nodes": 16301,
+        "listeners": 193
+      },
+      "final": {
+        "heap": 11983260,
+        "nodes": 16275,
+        "listeners": 189
+      },
+      "mobile": null
+    },
+    {
+      "version": "after",
+      "scenario": "creator-fairy",
+      "durationMs": 2436.0999999940395,
+      "frames": 52,
+      "p50Ms": 47.3999999910593,
+      "p95Ms": 76.70000000298023,
+      "hero": {
+        "scheduled": true,
+        "frames": 90,
+        "scans": 8,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "hero-live",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 4.389998012850563,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": 0.0727887877207548,
+              "shift": 0,
+              "left-hip": 7.404552768290725,
+              "left-knee": -13.66211290888782,
+              "left-ankle": 6.257560140597095,
+              "right-hip": -2.8489174354793647,
+              "right-knee": 5.362347703433524,
+              "right-ankle": -2.513430267954159,
+              "cape": 1.800342942154003,
+              "hair": 0.033567296043339634,
+              "hair-back": -0.8517949666092479,
+              "skirt": 0.7585872859189947,
+              "wing-left": 1.1080171582374616,
+              "wing-right": 1.2811931206615559,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": false,
+      "svgNodes": 9215,
+      "taskCpuPercent": 76.01843109907357,
+      "layoutMs": 19.652999999999977,
+      "heapBytes": 19591216,
+      "nodes": 30241,
+      "listeners": 216
+    },
+    {
+      "version": "after",
+      "scenario": "creator-panther",
+      "durationMs": 2446.7999999970198,
+      "frames": 60,
+      "p50Ms": 40.19999998807907,
+      "p95Ms": 61.1000000089407,
+      "hero": {
+        "scheduled": true,
+        "frames": 165,
+        "scans": 10,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "hero-live",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 3.575698754967545,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": 0.0014930792173330945,
+              "shift": 0,
+              "left-hip": 6.68434494888179,
+              "left-knee": -12.370294073043944,
+              "left-ankle": 5.6859491241621525,
+              "right-hip": -1.3977696160578033,
+              "right-knee": 2.6502924698369545,
+              "right-ankle": -1.2525228537791513,
+              "cape": -0.5424183194970621,
+              "hair": 0.38678014409811134,
+              "hair-back": -1.2533774021835105,
+              "skirt": -0.2814317478622614,
+              "wing-left": -1.545308961436125,
+              "wing-right": -1.39556789470367,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": false,
+      "svgNodes": 8188,
+      "taskCpuPercent": 70.77930358027258,
+      "layoutMs": 19.266999999999978,
+      "heapBytes": 12908692,
+      "nodes": 14513,
+      "listeners": 171
+    },
+    {
+      "version": "after",
+      "scenario": "guardian-listening",
+      "durationMs": 2404.0999999940395,
+      "frames": 145,
+      "p50Ms": 16.600000008940697,
+      "p95Ms": 18.099999994039536,
+      "hero": {
+        "scheduled": true,
+        "frames": 380,
+        "scans": 30,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "battle-panther",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 4.211162890095906,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": -0.3425376764419214,
+              "shift": 0,
+              "left-hip": 4.1419420184500835,
+              "left-knee": -7.858746930725866,
+              "left-ankle": 3.716804912275783,
+              "right-hip": -1.2953572123968007,
+              "right-knee": 2.645228319379901,
+              "right-ankle": -1.3498711069831004,
+              "cape": 1.1845760260600078,
+              "hair": -0.42855009755052326,
+              "hair-back": -1.160319041154281,
+              "skirt": 0.3511043244486412,
+              "wing-left": 0.1002814047978404,
+              "wing-right": 0.6805068646128598,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": true,
+      "svgNodes": 8203,
+      "taskCpuPercent": 51.20893473661878,
+      "layoutMs": 54.87900000000001,
+      "heapBytes": 18158484,
+      "nodes": 19544,
+      "listeners": 220
+    },
+    {
+      "version": "after",
+      "scenario": "book-storm",
+      "durationMs": 2403.7000000029802,
+      "frames": 144,
+      "p50Ms": 16.599999994039536,
+      "p95Ms": 21.299999997019768,
+      "hero": {
+        "scheduled": true,
+        "frames": 594,
+        "scans": 226,
+        "count": 1,
+        "rigs": [
+          {
+            "id": "librarian-v4-hero",
+            "state": "listening",
+            "values": {
+              "head": -2,
+              "torso": 0,
+              "left-shoulder": -12,
+              "left-elbow": -24,
+              "left-wrist": 4.209125324801577,
+              "right-shoulder": 8,
+              "right-elbow": -12,
+              "right-wrist": 0,
+              "drop": -0.34530208754098873,
+              "shift": 0,
+              "left-hip": 4.14109196892999,
+              "left-knee": -7.8587098349280495,
+              "left-ankle": 3.7176178659980597,
+              "right-hip": -1.2945370520502197,
+              "right-knee": 2.6451878656043197,
+              "right-ankle": -1.3506508135541,
+              "cape": 1.144556712121378,
+              "hair": -0.4439710993418034,
+              "hair-back": -1.1760734162451816,
+              "skirt": 0.3275493034193632,
+              "wing-left": 0.04643658261092212,
+              "wing-right": 0.6414138976911082,
+              "ear-left": 0.28,
+              "ear-right": -0.2,
+              "torso-back": 0
+            }
+          }
+        ]
+      },
+      "guardian": false,
+      "svgNodes": 8631,
+      "taskCpuPercent": 79.49615176592883,
+      "layoutMs": 82.513,
+      "heapBytes": 14055012,
+      "nodes": 16682,
+      "listeners": 208
+    },
+    {
+      "version": "after",
+      "scenario": "twelve-open-close",
+      "initial": {
+        "heap": 11928152,
+        "nodes": 16304,
+        "listeners": 204
+      },
+      "final": {
+        "heap": 12013476,
+        "nodes": 16278,
+        "listeners": 200
+      },
+      "mobile": {
+        "active": false,
+        "pointers": 0,
+        "mounts": 13,
+        "cleanups": 13
+      }
+    }
+  ]
+}

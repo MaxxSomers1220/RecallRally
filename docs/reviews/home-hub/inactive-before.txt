@@ -1,0 +1,1 @@
+{ hiddenHubMutations: 35, extraHeroScans: 1 }

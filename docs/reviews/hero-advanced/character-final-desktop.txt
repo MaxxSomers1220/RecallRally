@@ -1,0 +1,12 @@
+PASS all appearance options: 266 independent variants and 48 outfit/pose combinations, valid unique SVG references and no state mutation
+PASS desktop guardian 0: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 1: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 2: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 3: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 4: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 5: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 6: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 7: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 8: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop guardian 9: curious/casting/reaction paintings, actual miss, four correct answers and seal
+PASS desktop: hero creator/customization, ten real encounters, 50 honest journal attempts, reunion, reload, offline/reduced-motion poses

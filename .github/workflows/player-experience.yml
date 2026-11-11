@@ -1,0 +1,39 @@
+name: Player experience
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify matching and existing modes
+        run: |
+          node scripts/build-standalone.cjs
+          node tests/answer-recognition.test.cjs
+          node tests/home-launcher.test.cjs
+          node tests/adventure-save.test.cjs
+          node tests/bank-v29.test.cjs
+          node tests/worlds.test.cjs
+          node tests/adventure-effects.test.cjs
+          node tests/science-lab.test.cjs
+          node tests/librarian-v4-smoke.test.cjs
+      - name: Install browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/recall-browser" --no-package-lock --ignore-scripts playwright@1.62.1
+          node "$RUNNER_TEMP/recall-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Laptop, tablet and phone interaction checks
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/recall-browser/node_modules"
+          export CHROMIUM_PATH="$(node -p "require('playwright').chromium.executablePath()")"
+          export RECALL_SCREENSHOTS="$RUNNER_TEMP/recall-screenshots"
+          node tests/player-experience-browser.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: player-experience-layouts
+          path: ${{ runner.temp }}/recall-screenshots
+          if-no-files-found: ignore

@@ -1,0 +1,36 @@
+{
+  "base": "1e543ea",
+  "functions": {
+    "startDuel": "4db31d0445637f99c01825161385bdadaa79d5c4482733b2b6a4d366f3493ead",
+    "selectDuelSpell": "25422d9cf55ac0e263167bb478afd4c6f3a55a3e5ae55994ace844442a2b7f99",
+    "chooseQuest": "874ad2d3f5fdaafa5ad7c92e3958d41baa2f90ff3de246c9fc53cf782ca528ef",
+    "settleDuel": "3a2a127a4368494e11a264302465e7d92f050c4a06a9de2d8e6bc367cb5e95d2",
+    "advanceDuel": "c6fa9735d0d9ecebf58d883b64bc3361fd8e71c610e6d2a72a76a4d7df5ff565",
+    "castStarfall": "37cf152d5859164af60b4aa6386b9ed18dcf1fb8d2f0bec809ed37883554b008",
+    "openQuestQuestion": "fc47f3563473c5a9876318b87d8d964469bf8d070f2adbe1af82aa0909453008",
+    "pauseQuest": "0cfcce26e6ac8ebbabf5060d6155ffcab0a8c3bb1c5d7e013e0f39c91e813e31",
+    "finishDuelEffects": "9b8fd330ed31197d17d7fb47ce8646fb0fa585292ba9b25d12391c57d525a480",
+    "runDuelEffects": "d8aaf9e23a923c90141ad5612c5557f70e5c1addd44043789409c9bb231eb4d9",
+    "finishRigbyCutaway": "5e2276631a84f57e36138934e80b14569a407c7284ab81b0568f6a81e1b20ac6",
+    "leaveDuel": "469a29214480af1b26ee16d2cc199a1b92bdeb9deb9018f5f3173cfbdd18005f",
+    "resetQuestRun": "e8aedf5d36d3454fac7132cd0c6e1bb1b816323ade323593cc133771a0b1e85e",
+    "selectAdventureDeck": "4ac80ae1a3ca3817e05cce8c82269f8c76dfc5f0559ac2eb38d820a9ec0b0b4a",
+    "recordQuestExposure": "e4e936ac1fa1644fab52dfa16889e63623e6a52f15b38a6dcf0a04f4d029199a",
+    "activateSealAssistance": "d4504cf30725ea51b031ec41b56150af39b3c7d416933bc619df69f45bc9c296",
+    "latestEarnedSeal": "31c7706f656ea570bb3bc7f99f424e12261cab4d1a803452a46100a0cdbbf2b9",
+    "travelToLand": "3adf59df3bd70d996c2edfcfa533666fa4e8578eeb376770a656fb17d07eb4b5",
+    "journeyPosition": "900096d51ec45e7cf26ebf01d6261e2358bcf74df742ae9f67d33136a96e3f73",
+    "avatarEllery": "1e80024fdba766c6d85b067ec65548516065fbc9860d4766eb573250d257ad3f",
+    "renderGameHero": "0d696d4ecff093c50a55c52ab4c6d3a23e52bb669b294fb94310830fbafc3d98",
+    "dogRigby": "878933dc4804607ece0a0b55b7193b3f9d8d32d9f027ab919776b7c7d85b4c41"
+  },
+  "save_source_sha256": "5b7330130ad4ba0b17ac4097bb133502478e6875f66cdef1cf25c5e57188d122",
+  "hero_fixture_sha256": "0cca09ca5610fe78f82666600d78b50236c7888a959606255b638f5228078b6a",
+  "reviewed_changes": {
+    "guardian-miss-attacks": [
+      "selectDuelSpell: explain attack on every miss or timeout",
+      "advanceDuel: wait for missed-answer attack before Next",
+      "finishDuelEffects: re-enable Next after attack"
+    ]
+  }
+}

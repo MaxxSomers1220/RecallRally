@@ -1,0 +1,115 @@
+{
+  "engine": "chromium",
+  "version": "154.0.8037.57",
+  "method": "Desktop browser with stated viewport/touch configuration. No physical-device claim.",
+  "results": [
+    {
+      "name": "laptop",
+      "engine": "chromium",
+      "contrasts": [
+        {
+          "id": "mode-quick",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "mode-written",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "mode-adventure",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "lib-launch",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "open-science-lab",
+          "ratio": 6.08146030663036
+        }
+      ],
+      "mouseHover": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "name": "tablet-portrait",
+      "engine": "chromium",
+      "contrasts": [
+        {
+          "id": "mode-quick",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "mode-written",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "mode-adventure",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "lib-launch",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "open-science-lab",
+          "ratio": 6.08146030663036
+        }
+      ],
+      "taps": [
+        {
+          "mode": "mode-quick",
+          "transform": "none",
+          "pressed": "true",
+          "shadow": "rgb(36, 116, 105) 0px 0px 0px 2px"
+        },
+        {
+          "mode": "mode-written",
+          "transform": "none",
+          "pressed": "true",
+          "shadow": "rgb(59, 110, 150) 0px 0px 0px 2px"
+        }
+      ]
+    },
+    {
+      "name": "small-phone",
+      "engine": "chromium",
+      "contrasts": [
+        {
+          "id": "mode-quick",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "mode-written",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "mode-adventure",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "lib-launch",
+          "ratio": 6.08146030663036
+        },
+        {
+          "id": "open-science-lab",
+          "ratio": 6.08146030663036
+        }
+      ],
+      "taps": [
+        {
+          "mode": "mode-quick",
+          "transform": "none",
+          "pressed": "true",
+          "shadow": "rgb(36, 116, 105) 0px 0px 0px 2px"
+        },
+        {
+          "mode": "mode-written",
+          "transform": "none",
+          "pressed": "true",
+          "shadow": "rgb(59, 110, 150) 0px 0px 0px 2px"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
