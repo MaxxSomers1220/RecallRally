@@ -127,6 +127,11 @@ async function run(){
   h.request('map');h.requests.find(r=>r.id==='map').reject(Error('codec unavailable'));await flush();assert.match(h.music.error('map'),/could not be decoded/);
   h.request('practice');await h.resolve('practice');assert(h.music.buffer('practice',h.context,()=>{}),'One failed scene does not block the decoder queue');
  }
+ {
+  const h=coordinated();h.catalog['lab-hub'].uploaded=true;h.catalog['world-3'].uploaded=true;
+  h.scope.labScene={kind:'lab-potion',paused:false};assert.equal(h.eval('musicScene().kind'),'lab-hub');
+  h.scope.labScene=null;h.scope.homeChoice=true;h.scope.mode='adventure';h.scope.duel={land:3,phase:'open',guardianPhase:2,paused:false};assert.equal(h.eval('musicScene().kind'),'world-3','Uploaded guardian recording continues in phase two');
+ }
  console.log('PASS mocked audio: all scene selections, stale/serial decodes, pinned LRU/60 MiB ceiling, crossfade/retirement/suspension/bookmarks, independent buses, failures, and gapless bounds at 22.05/44.1/48 kHz');
 }
 const result=run();if(require.main===module)result.catch(error=>{console.error(error);process.exitCode=1});module.exports=result;
