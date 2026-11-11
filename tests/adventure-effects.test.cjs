@@ -18,7 +18,7 @@ function esc(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;')}
 ${characterArt}\n${illustrations}\n${lands}\n${lifecycle}\n${functions}
 function adventureSubjectLabel(l){return l.subjects?"Mixed subjects":subjectName(l.subject)}function adventureQuestionPool(){return Array.from({length:310})}
 function check(x,message){assert.ok(x,message)}
-function hit(){chooseQuest(0)}function miss(){chooseQuest(1)}function next(){advanceDuel()}
+function hit(){chooseQuest(0)}function miss(){chooseQuest(1)}function next(){if(duel&&!duel.correct&&duel.fxActive)finishDuelEffects();advanceDuel()}
 for(let land=0;land<10;land++){
  resetQuestRun();questProgress=land;questKeys=Array.from({length:land},(_,i)=>i);questCompleted=[...questKeys];startDuel(land);openQuestQuestion();
  check(duel.charge===0&&duel.guardianPhase===1,'fresh duel');hit();hit();check(duel.scores[0]===1&&duel.charge===1,'double answer ignored');next();miss();check(duel.charge===1&&duel.scores[1]===1,'miss keeps charge');next();hit();check(duel.guardianPhase===2&&duel.phaseJustShifted,'phase threshold');
@@ -45,14 +45,39 @@ for(let land=0;land<10;land++){
    const question=duel.deck[duel.index],timer=questTimer;selectDuelSpell(spell);selectDuelSpell(spell);check(duel.deck[duel.index]===question&&questTimer===timer&&duel.scores.join()==='0,0','selecting never redeals/scores/restarts clock');
    if(correct)hit();else miss();const points=duel.scores.join(),stars=duel.tacticalStars;chooseQuest(0);selectDuelSpell(spell==='ward'?'strike':'ward');check(duel.scores.join()===points&&duel.tacticalStars===stars&&duel.actionUsed===spell,'duplicate answer or late spell cannot change resolution');
    check(duel.scores[correct?0:1]===1&&questRunStats.correct===(correct?1:0),'full academic credit');
-   const expected=correct?(spell==='ward'?(intent==='strike'?'counter':'raise'):(intent==='shield'?'break':'strike')):(intent==='strike'?'hit':'guard');
+   const expected=correct?(spell==='ward'?(intent==='strike'?'counter':'raise'):(intent==='shield'?'break':'strike')):'hit';
    check(duel.tacticOutcome===expected,'intent/action behavior '+expected);
    check(duel.tacticalStars===(correct&&((spell==='ward'&&intent==='strike')||(spell==='strike'&&intent==='shield'))?1:0),'matching tactical bonus');
    check(duel.wardThrough===(correct&&spell==='ward'?index+1:-1),'Ward duration / incorrect Ward gives no protection');
-   const scene=spellDuelScene(duel,LANDS[land]);if(!correct&&intent==='shield')check(!scene.includes('spell-from-guardian')&&scene.includes('guardian-defending'),'shield turn never launches a spell');
+   const scene=spellDuelScene(duel,LANDS[land]);if(!correct)check(scene.includes('spell-from-guardian')&&!scene.includes('guardian-defending'),'every miss launches a guardian spell, including shield stance');
   }
  }
 }
+// Every missed answer and timeout attacks in either stance, including protection.
+for(let land=0;land<10;land++)for(const intent of ['strike','shield'])for(const reason of ['choice','rival'])for(const protection of ['none','ward','seal']){
+ resetQuestRun();questProgress=land;startDuel(land);duel.index=GUARDIAN_PATTERNS[land].indexOf(intent);duel.assistanceSeal=0;duel.speed=reason==='rival'?20000:0;openQuestQuestion();
+ if(protection==='ward')duel.wardThrough=duel.index;
+ if(protection==='seal'){duel.assistUsed=true;duel.assistWard=true;}
+ const currentIndex=duel.index;
+ if(reason==='rival'){const timeout=timers.get(questTimer);check(timeout,'timeout was scheduled');timeout.fn();}else miss();
+ const expected=protection==='none'?'hit':'block',context=land+'/'+intent+'/'+reason+'/'+protection;
+ check(duel.tacticOutcome===expected,'miss outcome '+context);
+ check(duel.scores.join()==='0,1'&&questRunStats.answered===1&&questRunStats.correct===0,'one academic miss '+context);
+ check(duel.intent===intent&&duel.index===currentIndex&&duel.phase==='result','stance and question retained '+context);
+ check(duel.fxActive&&spellDuelScene(duel,LANDS[land]).includes('spell-from-guardian'),'guardian visibly attacks '+context);
+ if(protection==='ward')check(duel.wardThrough===-1&&!duel.assistBlocked,'Ward consumed '+context);
+ if(protection==='seal')check(!duel.assistWard&&duel.assistBlocked,'seal consumed '+context);
+ const points=duel.scores.join(),stars=duel.tacticalStars;settleDuel(false,'rival');miss();check(duel.scores.join()===points&&duel.tacticalStars===stars,'duplicate miss cannot attack-score twice '+context);
+}
+console.log('PASS all 120 guardian/stance/wrong-or-timeout/protection combinations');
+
+// Fast Next/Enter cannot swallow a missed-answer attack or move to another question.
+resetQuestRun();startDuel(0);openQuestQuestion();miss();const attackIndex=duel.index,attackScores=duel.scores.join();
+advanceDuel();adventureKey({key:'Enter',target:{tagName:'DIV'},preventDefault(){}});
+check(duel.index===attackIndex&&duel.phase==='result'&&duel.fxActive&&duel.scores.join()===attackScores,'miss attack survives premature Next and Enter');
+check($('adventure-panel').innerHTML.includes('id="quest-next" disabled'),'Next is visibly disabled during miss attack');
+finishDuelEffects();advanceDuel();check(duel.index===attackIndex+1&&duel.phase==='open'&&duel.scores.join()===attackScores,'Next advances once after the attack');
+
 // Fern opens with Shield, then two Strikes: store a Ward, block once, expire.
 resetQuestRun();questProgress=1;startDuel(1);openQuestQuestion();selectDuelSpell('ward');hit();check(duel.tacticOutcome==='raise'&&duel.wardThrough===1,'store one Ward');next();miss();check(duel.tacticOutcome==='block'&&duel.wardThrough===-1&&duel.scores.join()==='1,1'&&duel.tacticalStars===1,'stored Ward blocks but preserves miss credit');next();miss();check(duel.tacticOutcome==='hit'&&duel.scores.join()==='1,2','protection spent after one question');
 resetQuestRun();startDuel(0);openQuestQuestion();selectDuelSpell('ward');hit();next();hit();check(duel.wardThrough===-1,'unused protection expires at next resolution');next();miss();check(duel.tacticOutcome==='hit','expired Ward cannot block');
@@ -76,12 +101,12 @@ for(let seal=0;seal<5;seal++){
  check(!sealAssistArt(duel,LANDS[seal],'<g/>').includes('Rigby'),'no captive Rigby participation');replaySpell();check(!duel.assistThisAnswer&&duel.assistWard&&duel.scores.join()===before,'replay does not reactivate seal');next();hit();check(!duel.assistThisAnswer&&duel.assistWard&&duel.charge===2,'second success does not recharge aid');
  const history=questHistory;resetQuestRun();startDuel(0);openQuestQuestion();check(duel.assistanceSeal===null&&!duel.assistUsed&&!duel.assistWard&&questHistory===history,'new adventure clears eligibility, preserves history');
 }
-// A seal shield catches only one missed Strike, and correct answers remain required.
+// A seal shield catches one missed answer attack, and correct answers remain required.
 resetQuestRun();questProgress=1;questKeys=[0];questCompleted=[0];startDuel(1);openQuestQuestion();miss();activateSealAssistance(duel,true);check(!duel.assistUsed&&!duel.assistWard,'wrong answer cannot activate available assistance');next();hit();check(duel.assistUsed&&duel.assistWard,'first correct after a miss activates');next();const starsBeforeBlock=duel.tacticalStars;miss();
 check(duel.assistBlocked&&!duel.assistWard&&duel.tacticOutcome==='block'&&duel.scores.join()==='1,2'&&duel.tacticalStars===starsBeforeBlock+1,'seal blocks once but miss still scores for guardian');
 const blockedScore=duel.scores.join(),blockedStars=duel.tacticalStars;chooseQuest(1);activateSealAssistance(duel,true);check(duel.scores.join()===blockedScore&&duel.tacticalStars===blockedStars&&!duel.assistWard,'duplicate block cannot refund shield or score');next();hit();check(!duel.assistWard&&!duel.assistThisAnswer,'later correct answer cannot rearm consumed seal');next();hit();check(duel.signatureUsed&&!duel.signaturePending&&duel.scores[0]===3&&!duel.assistWard,'third success automatically casts signature');castStarfall();castStarfall();check(!duel.assistWard&&duel.scores[0]===3,'signature does not rearm aid or duplicate points');next();hit();next();check(duel.phase==='rescue'&&duel.rescueStage===2&&duel.index===5&&questRunStats.answered===6,'victory still requires four actual correct answers');
 // Regular Ward is consumed first; seal protection remains a single separate backstop.
-resetQuestRun();questProgress=1;questKeys=[0];questCompleted=[0];startDuel(0);openQuestQuestion();selectDuelSpell('ward');hit();next();selectDuelSpell('ward');hit();next();miss();check(duel.tacticOutcome==='block'&&!duel.assistBlocked&&duel.assistWard,'regular Ward preserves seal shield');next();miss();check(duel.assistWard,'a Shield intention cannot consume seal protection');next();miss();check(duel.assistBlocked&&!duel.assistWard,'next unwarded Strike consumes seal');next();hit();next();miss();next();check(duel.phase==='lost'&&duel.index===6&&duel.deck.length===7&&duel.scores.join()==='3,4'&&questProgress===1,'assistance cannot skip questions, extend deck, or prevent academic defeat');
+resetQuestRun();questProgress=1;questKeys=[0];questCompleted=[0];startDuel(0);openQuestQuestion();selectDuelSpell('ward');hit();next();selectDuelSpell('ward');hit();next();miss();check(duel.tacticOutcome==='block'&&!duel.assistBlocked&&duel.assistWard,'regular Ward preserves seal shield');next();miss();check(duel.assistBlocked&&!duel.assistWard&&duel.tacticOutcome==='block','a Shield-stance miss attacks and consumes seal protection');next();miss();check(!duel.assistBlocked&&!duel.assistWard&&duel.tacticOutcome==='hit','next unprotected miss attacks without a second seal block');next();hit();next();miss();next();check(duel.phase==='lost'&&duel.index===6&&duel.deck.length===7&&duel.scores.join()==='3,4'&&questProgress===1,'assistance cannot skip questions, extend deck, or prevent academic defeat');
 // A newly earned seal changes only the following duel's assistance snapshot.
 resetQuestRun();startDuel(0);openQuestQuestion();for(let i=0;i<4;i++){hit();if(duel.signaturePending)castStarfall();next()}
 check(duel.phase==='rescue'&&duel.assistanceSeal===null&&questKeys.join()==='0','first victory does not grant retroactive aid');finishRigbyCutaway();leaveDuel();startDuel(1);openQuestQuestion();check(duel.assistanceSeal===0,'first earned seal aids next duel');for(let i=0;i<4;i++){hit();next()}

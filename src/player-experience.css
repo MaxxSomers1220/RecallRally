@@ -30,3 +30,6 @@
 #home-brand:hover .brand-destination,#home-brand:focus-visible .brand-destination{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:600px){#home-brand{padding:6px 9px}#home-brand .brandtext{font-size:15px}}
 @media(max-width:360px){body>header{flex-wrap:wrap;gap:8px}}
+
+/* A guardian lowers its defensive ring to cast; only the hero catches misses. */
+.spell-from-guardian .guardian-ward{opacity:0!important;transition:none}

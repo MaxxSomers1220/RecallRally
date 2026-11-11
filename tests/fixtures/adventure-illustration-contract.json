@@ -2,14 +2,14 @@
   "base": "1e543ea",
   "functions": {
     "startDuel": "4db31d0445637f99c01825161385bdadaa79d5c4482733b2b6a4d366f3493ead",
-    "selectDuelSpell": "4c0a24fb3203052327faa27d43b8b488256ad8b2631d706fac0a6bbe4087edff",
+    "selectDuelSpell": "25422d9cf55ac0e263167bb478afd4c6f3a55a3e5ae55994ace844442a2b7f99",
     "chooseQuest": "874ad2d3f5fdaafa5ad7c92e3958d41baa2f90ff3de246c9fc53cf782ca528ef",
     "settleDuel": "3a2a127a4368494e11a264302465e7d92f050c4a06a9de2d8e6bc367cb5e95d2",
-    "advanceDuel": "dd7984ddef9f3bfc6512aa6c6aedf74926d3a96697edff2e4324b12108a40f26",
+    "advanceDuel": "c6fa9735d0d9ecebf58d883b64bc3361fd8e71c610e6d2a72a76a4d7df5ff565",
     "castStarfall": "37cf152d5859164af60b4aa6386b9ed18dcf1fb8d2f0bec809ed37883554b008",
     "openQuestQuestion": "fc47f3563473c5a9876318b87d8d964469bf8d070f2adbe1af82aa0909453008",
     "pauseQuest": "0cfcce26e6ac8ebbabf5060d6155ffcab0a8c3bb1c5d7e013e0f39c91e813e31",
-    "finishDuelEffects": "86a6ca8b740a6bb19c85a27421c4cc1148ba76f7e10a65f82e93899897d29a43",
+    "finishDuelEffects": "9b8fd330ed31197d17d7fb47ce8646fb0fa585292ba9b25d12391c57d525a480",
     "runDuelEffects": "d8aaf9e23a923c90141ad5612c5557f70e5c1addd44043789409c9bb231eb4d9",
     "finishRigbyCutaway": "5e2276631a84f57e36138934e80b14569a407c7284ab81b0568f6a81e1b20ac6",
     "leaveDuel": "469a29214480af1b26ee16d2cc199a1b92bdeb9deb9018f5f3173cfbdd18005f",
@@ -25,5 +25,12 @@
     "dogRigby": "878933dc4804607ece0a0b55b7193b3f9d8d32d9f027ab919776b7c7d85b4c41"
   },
   "save_source_sha256": "5b7330130ad4ba0b17ac4097bb133502478e6875f66cdef1cf25c5e57188d122",
-  "hero_fixture_sha256": "0cca09ca5610fe78f82666600d78b50236c7888a959606255b638f5228078b6a"
+  "hero_fixture_sha256": "0cca09ca5610fe78f82666600d78b50236c7888a959606255b638f5228078b6a",
+  "reviewed_changes": {
+    "guardian-miss-attacks": [
+      "selectDuelSpell: explain attack on every miss or timeout",
+      "advanceDuel: wait for missed-answer attack before Next",
+      "finishDuelEffects: re-enable Next after attack"
+    ]
+  }
 }
