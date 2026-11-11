@@ -1,6 +1,6 @@
 # Storybook soundtrack provenance and licenses
 
-Both melodies, harmonies, arrangements and note-level JSON/MIDI scores are original contributions for Recall Rally. No external song, soundtrack, melody transcription or reference recording was used. The shared six-note motif and development are described in `docs/reviews/storybook-music/DESIGN.md`.
+Both melodies, harmonies, arrangements and note-level JSON/MIDI scores are original contributions for Recall Rally. No external song, soundtrack, melody transcription or reference recording was used. The current cues develop the user-approved polyphonic sketch in `docs/music-sketches/richer-ensemble-v1/`. The shared D–F#–E–A cell, harmony, counterlines and distinct home/map arrangements are described in `docs/reviews/ensemble-music/DESIGN.md`. The earlier sparse cues and their historical report remain in Git history.
 
 | Material | Source / license |
 | --- | --- |

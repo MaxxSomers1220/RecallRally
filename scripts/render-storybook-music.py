@@ -38,7 +38,9 @@ class Synth:
  def close(self):self.delete(self.synth);self.delete_settings(self.settings)
 
 def render(score):
- frames=round(score['loopBars']*4*60/score['bpm']*RATE);events=[];fpb=RATE*60/score['bpm']
+ nominal=score['loopBars']*4*60/score['bpm']
+ # 1/300 s is an integer frame grid at both 44.1 and 48 kHz.
+ frames=round(nominal*300)*(RATE//300);events=[];fpb=RATE*60/score['bpm']
  for cycle in range(3):
   for ch,t in enumerate(score['tracks']):
    for n in t['notes']:
@@ -62,11 +64,11 @@ def render(score):
  peak=float(np.max(np.abs(pcm)));rms=float(np.sqrt(np.mean(pcm**2)))
  pcm*=min(.70/max(peak,1e-8),.13/max(rms,1e-8))
  raw_seam=float(np.max(np.abs(pcm[0]-pcm[-1])))
- # One millisecond of endpoint interpolation, only if measured discontinuity exceeds .004.
- if raw_seam>.004:
-  n=44;w=np.linspace(0,1,n,dtype=np.float32)[:,None]
-  pcm[-n:]=pcm[-n:]*(1-w)+pcm[0]*w
- return pcm,{'sampleRate':RATE,'loopFrames':frames,'loopSeconds':frames/RATE,'peak':float(np.max(np.abs(pcm))),'rms':float(np.sqrt(np.mean(pcm**2))),'rawBoundaryDelta':raw_seam,'boundaryDelta':float(np.max(np.abs(pcm[0]-pcm[-1])))}
+ # Short symmetric edge ramps keep lossy decoder/resampler edge padding from
+ # creating a click. Musical note data, envelopes and the ensemble mix are unchanged.
+ n=round(.008*RATE);w=np.sin(np.linspace(0,np.pi/2,n,dtype=np.float32))[:,None]**2
+ pcm[:n]*=w;pcm[-n:]*=w[::-1]
+ return pcm,{'sampleRate':RATE,'loopGridHz':300,'nominalLoopSeconds':nominal,'loopFrames':frames,'loopSeconds':frames/RATE,'peak':float(np.max(np.abs(pcm))),'rms':float(np.sqrt(np.mean(pcm**2))),'rawBoundaryDelta':raw_seam,'boundaryDelta':float(np.max(np.abs(pcm[0]-pcm[-1])))}
 
 def write_wav(file,pcm):
  with wave.open(str(file),'wb')as w:w.setnchannels(2);w.setsampwidth(2);w.setframerate(RATE);w.writeframes(np.round(pcm*32767).astype('<i2').tobytes())

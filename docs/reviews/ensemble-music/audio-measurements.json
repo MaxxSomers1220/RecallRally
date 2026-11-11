@@ -1,0 +1,28 @@
+{
+  "method": "FFmpeg MP3 decode and PCM measurements; not a listening assessment",
+  "runtimeBytes": 2519125,
+  "cachedPcmBytes44100": 55503672,
+  "loopGridHz": 300,
+  "assets": [
+    {
+      "id": "home",
+      "sourceFrames": 3681321,
+      "decodedFrames": 3681321,
+      "seconds": 83.47666666666667,
+      "decodedPeak": 0.5647359490394592,
+      "decodedRms": 0.1235058456659317,
+      "decodedBoundaryDelta": 0.00128351675812155,
+      "mp3Bytes": 1336676
+    },
+    {
+      "id": "map",
+      "sourceFrames": 3256638,
+      "decodedFrames": 3256638,
+      "seconds": 73.84666666666666,
+      "decodedPeak": 0.6392554640769958,
+      "decodedRms": 0.12350631505250931,
+      "decodedBoundaryDelta": 0.0003644178796093911,
+      "mp3Bytes": 1182449
+    }
+  ]
+}
