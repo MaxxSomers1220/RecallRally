@@ -1,9 +1,15 @@
 // Original sampled scores share the game's AudioContext and music/effects buses.
+// Hosted cues load on demand; the standalone edition retains embedded audio.
 const StorybookMusic=(()=>{
  const CACHE_LIMIT=3,CACHE_BYTES=60*1024*1024,cache=new Map(),live=new Map(),pins=new Map(),starts={};
  let observer=null,queue=[],decoding=null,requested,serial=0;
  const supports=kind=>Object.hasOwn(STORYBOOK_AUDIO,kind);
  const metadata=kind=>STORYBOOK_AUDIO[kind]||null;
+ function cue(kind){
+  const seen=new Set();
+  while(metadata(kind)?.dataRef&&supports(metadata(kind).dataRef)&&!seen.has(kind)){seen.add(kind);kind=metadata(kind).dataRef}
+  return kind;
+ }
  function gapless(decoded,meta,context){
   const rate=decoded.sampleRate,frames=Math.round((meta.loopFrames||meta.loopSeconds*meta.sampleRate)*rate/meta.sampleRate);
   if(Math.abs(decoded.length-frames)<=2)return decoded;
@@ -40,44 +46,61 @@ const StorybookMusic=(()=>{
  async function pump(){
   if(decoding)return;
   const entry=queue.shift();if(!entry)return;
-  decoding=entry;entry.queued=false;
+  decoding=entry;entry.queued=false;let phase='load';
   try{
-   const encoded=atob(metadata(entry.kind).data),bytes=new Uint8Array(encoded.length);
-   for(let i=0;i<encoded.length;i++)bytes[i]=encoded.charCodeAt(i);
-   let decoded=await entry.context.decodeAudioData(bytes.buffer);
+   const meta=metadata(entry.kind);let bytes;
+   if(meta.url){
+    const url=new URL(meta.url,document.baseURI||location.href);
+    if(!['http:','https:'].includes(url.protocol)||url.origin!==location.origin)throw Error('Music URL must use the page origin');
+    entry.controller=new AbortController();
+    const response=await fetch(url.href,{signal:entry.controller.signal,mode:'same-origin',credentials:'same-origin'});
+    if(!response.ok){entry.httpStatus=response.status;throw Error('Music HTTP request failed')}
+    bytes=await response.arrayBuffer();
+   }else{
+    const encoded=atob(meta.data),data=new Uint8Array(encoded.length);
+    for(let i=0;i<encoded.length;i++)data[i]=encoded.charCodeAt(i);
+    bytes=data.buffer;
+   }
+   if(entry.cancelled)return;
+   phase='decode';let decoded=await entry.context.decodeAudioData(bytes);
    if(!entry.cancelled){
-    decoded=softenLoopEdge(gapless(decoded,metadata(entry.kind),entry.context),metadata(entry.kind));
-    if(decoded.duration+.004<metadata(entry.kind).loopSeconds)throw Error('Incomplete embedded music');
+    decoded=softenLoopEdge(gapless(decoded,meta,entry.context),meta);
+    if(decoded.duration+.004<meta.loopSeconds)throw Error('Incomplete music');
     entry.buffer=decoded;entry.used=++serial;trim(entry);
    }
-  }catch(e){if(!entry.cancelled)entry.error='Music could not be decoded. Sound effects remain available.'}
-  entry.pending=false;decoding=null;
-  if(entry.cancelled&&!entry.buffer)cache.delete(entry.kind);
-  finish(entry);pump();
+  }catch(e){if(!entry.cancelled)entry.error=(phase==='decode'?'Music could not be decoded.':'Music could not be loaded'+(entry.httpStatus?' (HTTP '+entry.httpStatus+')':'')+'.')+' Sound effects remain available. Leave this scene and return to retry.'}
+  finally{
+   entry.pending=false;entry.controller=null;decoding=null;
+   if(entry.cancelled&&cache.get(entry.kind)===entry)cache.delete(entry.kind);
+   finish(entry);pump();
+  }
  }
  function request(kind){
-  requested=kind;
-  for(const entry of cache.values())if(entry.pending&&entry.kind!==kind){entry.cancelled=true;entry.ready.clear()}
-  queue=queue.filter(entry=>{if(!entry.cancelled)return true;entry.pending=false;cache.delete(entry.kind);return false});
+  const changed=requested!==kind,key=cue(kind);requested=kind;
+  for(const entry of cache.values())if(entry.pending&&entry.kind!==key){entry.cancelled=true;entry.ready.clear();entry.controller?.abort();cache.delete(entry.kind)}
+  queue=queue.filter(entry=>{if(!entry.cancelled)return true;entry.pending=false;return false});
+  // A failed cue retries only after the user leaves and reenters it. Repeated
+  // control updates and the completion callback must not form a retry loop.
+  if(changed&&cache.get(key)?.error)cache.delete(key);
  }
  function buffer(kind,context,ready){
   if(!supports(kind))return null;
-  let entry=cache.get(kind);
+  const key=cue(kind);let entry=cache.get(key);
   if(entry?.buffer){entry.used=++serial;return entry.buffer}
   if(entry?.error)return null;
-  if(requested!==undefined&&requested!==kind)return null;
-  if(!entry){entry={kind,context,buffer:null,error:null,pending:true,queued:true,cancelled:false,ready:new Set(),used:++serial};cache.set(kind,entry);queue.push(entry)}
-  entry.cancelled=false;if(typeof ready==='function')entry.ready.add(ready);pump();return null;
+  if(requested!==undefined&&cue(requested)!==key)return null;
+  if(!entry){entry={kind:key,context,buffer:null,error:null,pending:true,queued:true,cancelled:false,ready:new Set(),used:++serial};cache.set(key,entry);queue.push(entry)}
+  if(typeof ready==='function')entry.ready.add(ready);pump();return null;
  }
  function release(node){
   const kind=live.get(node);if(kind===undefined)return;
   live.delete(node);const count=(pins.get(kind)||1)-1;if(count)pins.set(kind,count);else pins.delete(kind);trim();
  }
  function play(kind,context,bus,voices,at,offset){
-  const entry=cache.get(kind),decoded=entry?.buffer;if(!decoded||live.size>=2)return null;
+  const key=cue(kind),entry=cache.get(key),decoded=entry?.buffer;if(!decoded||live.size>=2||context.state!=='running'||requested!==undefined&&cue(requested)!==key)return null;
   entry.used=++serial;const node=context.createBufferSource();node.buffer=decoded;node.loop=true;node.loopStart=0;
   node.loopEnd=Math.min(Math.round(metadata(kind).loopSeconds*decoded.sampleRate),decoded.length)/decoded.sampleRate;
-  node.connect(bus);live.set(node,kind);pins.set(kind,(pins.get(kind)||0)+1);voices.add(node);
+  node.connect(bus);live.set(node,key);pins.set(key,(pins.get(key)||0)+1);voices.add(node);
   node.onended=()=>{release(node);voices.delete(node);node.disconnect()};
   const position=Number.isFinite(offset)?((offset%node.loopEnd)+node.loopEnd)%node.loopEnd:0;
   try{node.start(at,position);starts[kind]=(starts[kind]||0)+1}catch(e){release(node);voices.delete(node);node.disconnect();return null}
@@ -91,6 +114,6 @@ const StorybookMusic=(()=>{
   document.addEventListener('rally-music-state',()=>syncAdventureMusic());
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
- return{supports,metadata,request,buffer,play,release,title:kind=>metadata(kind)?.title,error:kind=>cache.get(kind)?.error||null,pending:kind=>!!cache.get(kind)?.pending,
+ return{supports,metadata,request,buffer,play,release,title:kind=>metadata(kind)?.title,error:kind=>cache.get(cue(kind))?.error||null,pending:kind=>!!cache.get(cue(kind))?.pending,
   inspect:()=>({observers:observer?1:0,cacheLimit:CACHE_LIMIT,cacheByteLimit:CACHE_BYTES,decodedBytes:[...cache.values()].reduce((sum,e)=>sum+size(e),0),liveSources:live.size,starts:{...starts},requested:requested??null,decoderBusy:!!decoding,queued:queue.map(e=>e.kind),decoded:[...cache.values()].filter(e=>e.buffer).map(e=>({id:e.kind,duration:e.buffer.duration,bytes:size(e),pinned:!!pins.get(e.kind)})),pending:[...cache.values()].filter(e=>e.pending).map(e=>e.kind),errors:[...cache.values()].filter(e=>e.error).map(e=>({id:e.kind,message:e.error}))})};
 })();

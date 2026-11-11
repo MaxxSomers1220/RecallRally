@@ -9,6 +9,7 @@ frontend:
         - node tests/hero-advanced.test.cjs
         - node tests/mobile-playability.test.cjs
         - node tests/home-hub.test.cjs
+        - node tests/startup.test.cjs
         - node tests/storybook-music.test.cjs
         - node tests/adventure-illustrations.test.cjs
         - node tests/librarian-art.test.cjs
@@ -26,10 +27,8 @@ frontend:
         - node tests/worlds.test.cjs
         - node tests/adventure-effects.test.cjs
         - node tests/librarian-v4-smoke.test.cjs
-        - mkdir -p dist/librarian
-        - cp index.html dist/index.html
-        - cp librarian/librarian.css librarian/librarian.js dist/librarian/
-        - node scripts/inject-librarian.cjs dist/index.html
+        - node scripts/build-hosted.cjs
+        - node tests/hosted-build.test.cjs
   artifacts:
     baseDirectory: dist
     files:

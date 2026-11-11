@@ -21,7 +21,7 @@ const source=read('src/storybook-music.js').toString().trim();for(const build of
  assert(build.includes(source),'Same runtime music source');const credits=JSON.parse(build.match(/const STORYBOOK_AUDIO_CREDITS=(.*);/)[1]);assert(credits.license.includes('GNU GENERAL PUBLIC LICENSE'));assert(credits.notice.includes('Tim Brechbill'));
 }
 for(const build of [html,offline])assert(build.includes(read('src/audio-coordinator.js').toString().trim()),'Editable audio coordinator is embedded');
-assert(!/new\s+(?:window\.)?(?:webkit)?AudioContext|setInterval\(|requestAnimationFrame\(|localStorage|fetch\(/.test(source),'Reuse existing context/scheduler and embedded data');new vm.Script(source);
+assert(!/new\s+(?:window\.)?(?:webkit)?AudioContext|setInterval\(|requestAnimationFrame\(|localStorage/.test(source),'Reuse existing context/scheduler and preferences');new vm.Script(source);
 console.log('PASS original fallback catalog, licensed sources, effective embedded delivery and MPEG metadata');
 require('./storybook-music-runtime.test.cjs').catch(error=>{console.error(error);process.exitCode=1});
 

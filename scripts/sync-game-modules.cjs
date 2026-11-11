@@ -4,6 +4,15 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
+// Keep the uninitialized name/avatar and viewer warning out of normal startup.
+const startupHead='<style id="rally-startup-styles">\n'+read('src/startup.css')+'\n</style>\n<script id="rally-startup-script">\n'+read('src/startup.js')+'\n</script>';
+if(html.includes('<style id="rally-startup-styles">'))html=html.replace(/<style id="rally-startup-styles">[^]*?<\/script>/,()=>startupHead);
+else html=html.replace('</head>',()=>startupHead+'\n</head>');
+const startupShell='<section id="startup-loading" role="status" aria-live="polite"><span class="eyebrow">WELCOME TO RECALL RALLY</span><h1>A little practice.<br>A bigger adventure.</h1><p class="startup-progress">Opening your adventure…</p><div class="startup-recovery"><p>This is taking longer than usual. Check your connection, then try again.</p><a href="">Reload Recall Rally</a></div></section>';
+if(html.includes('<section id="startup-loading"'))html=html.replace(/<section id="startup-loading"[^]*?<\/section>/,()=>startupShell);
+else html=html.replace('<main id="play-area">',()=>startupShell+'\n<main id="play-area">');
+html=html.replace(/<div class="callout" id="startup-warning"[^]*?<\/div>/,'<div class="callout" id="startup-warning" role="status" style="margin-top:24px"><strong>The interactive game needs JavaScript.</strong><br>Open Recall Rally in your browser with JavaScript enabled. A chat attachment or file preview may show the page without running the game. Instructions are below under How to play.</div>');
+if(!html.includes('window.RallyStartup?.coreReady();'))html=html.replace("$('runtime-status').hidden=false;","$('runtime-status').hidden=false;\nwindow.RallyStartup?.coreReady();");
 // Audio stays editable as modules; builds regenerate both large distribution files.
 const audioBlock=/^function initAudio\([^]*?\/\/ End original soundtrack\./m;
 if(!audioBlock.test(html))throw Error('Audio coordinator embed location not found');
