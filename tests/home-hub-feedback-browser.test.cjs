@@ -14,7 +14,7 @@ const contrasts=elements=>elements.map(card=>{
 });
 let browser,server;
 (async()=>{try{
- fs.mkdirSync(report,{recursive:true});server=http.createServer((q,r)=>{const file=q.url==='/'?html:path.join(path.dirname(html),q.url.split('?')[0]);if(!fs.existsSync(file)){r.writeHead(404).end();return}r.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');r.end(fs.readFileSync(file))});await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ fs.mkdirSync(report,{recursive:true});server=http.createServer((q,r)=>{const file=q.url==='/'?html:path.join(path.dirname(html),q.url.split('?')[0]);if(!fs.existsSync(file)){r.writeHead(404).end();return}r.setHeader('Content-Type',({'.js':'text/javascript','.css':'text/css','.html':'text/html','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp3':'audio/mpeg','.json':'application/json'})[path.extname(file)]||'application/octet-stream');r.end(fs.readFileSync(file))});await new Promise(r=>server.listen(0,'127.0.0.1',r));
  browser=await pw[engine].launch(engine==='chromium'?{executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']}:{});
  const results=[],errors=[];
  for(const [name,width,height]of views){
