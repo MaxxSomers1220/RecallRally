@@ -1,7 +1,7 @@
 function initAudio(gesture=false){
  if(!soundOn||!audioUnlocked||document.hidden||musicPageHeld||audioSuspendPending&&!gesture)return;
  try{
-  if(!audioContext){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;try{audioContext=new AC({sampleRate:32000})}catch(e){audioContext=new AC()}}
+  if(!audioContext){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;try{audioContext=new AC({sampleRate:24000})}catch(e){audioContext=new AC()}}
   ensureAudioGraph();
   if((audioContext.state==='suspended'||audioContext.state==='interrupted'||gesture&&audioSuspendPending)&&(!audioResumePending||gesture)){const attempt=audioContext.resume();audioResumePending=attempt;Promise.resolve(attempt).then(()=>{if(audioResumePending===attempt)audioResumePending=null;syncAdventureMusic()},()=>{if(audioResumePending===attempt)audioResumePending=null;updateMusicControls()})}
  }catch(e){updateMusicControls()}
@@ -35,7 +35,7 @@ function saveMusicPreferences(){try{localStorage.setItem(MUSIC_KEY,JSON.stringif
 function setMusicPreference(key,value){if(key==='on')musicPrefs.on=Boolean(value);else if(['volume','effects'].includes(key)){const n=Number(value);if(!Number.isFinite(n))return;musicPrefs[key]=Math.max(0,Math.min(100,n))}else return;saveMusicPreferences();initAudio();applyAudioLevels();syncAdventureMusic();updateMusicControls()}
 function musicScene(){
  if(document.querySelector('dialog[open]:not(#science-lab)'))return{kind:null,paused:true};
- const lab=typeof ScienceLab!=='undefined'&&ScienceLab.musicState?.();if(lab)return lab;
+ const lab=typeof ScienceLab!=='undefined'&&ScienceLab.musicState?.();if(lab)return STORYBOOK_AUDIO['lab-hub']?.uploaded?{...lab,kind:'lab-hub'}:lab;
  const library=window.LibrarianAudio?.musicState?.();if(library)return library;
  const home=$('home-view');
  if(!home?.hidden&&!home?.classList.contains('home-choice-open'))return{kind:'home',paused:false};
@@ -44,7 +44,8 @@ function musicScene(){
  if(!duel)return{kind:'map',paused:false};
  if(duel.phase==='rescue'||duel.phase==='won'&&duel.newSeal)return{kind:duel.rescueStage===LANDS.length?'finale':'rescue',paused:!!duel.paused};
  if(['won','lost'].includes(duel.phase))return{kind:'map',paused:!!duel.paused};
- return{kind:duel.guardianPhase===2?'duel-high':'world-'+Math.max(0,Math.min(LANDS.length-1,duel.land)),paused:!!duel.paused};
+ const world='world-'+Math.max(0,Math.min(LANDS.length-1,duel.land));
+ return{kind:STORYBOOK_AUDIO[world]?.uploaded?world:duel.guardianPhase===2?'duel-high':world,paused:!!duel.paused};
 }
 function adventureMusicState(){return musicScene().kind}
 function musicMayPlay(scene=musicScene()){return !!(scene.kind&&!scene.paused&&audioUnlocked&&audioContext?.state==='running'&&soundOn&&musicPrefs.on&&musicPrefs.volume>0&&!document.hidden&&!musicPageHeld)}
@@ -80,7 +81,7 @@ function beginMusicSession(kind){
  for(const old of musicRetiring)destroyMusicSession(old);musicRetiring=[];
  const t=audioContext.currentTime,offset=musicBookmarks.get(kind)||0,bus=audioContext.createGain(),voices=new Set();bus.gain.value=0;bus.connect(musicBus);
  const node=StorybookMusic.play(kind,audioContext,bus,voices,t+.025,offset);if(!node){bus.disconnect();return false}
- const previous=musicCurrent;musicCurrent={kind,bus,voices,rendered:true,origin:t+.025-offset,beat:60/StorybookMusic.metadata(kind).bpm};
+ const previous=musicCurrent;musicCurrent={kind,bus,voices,rendered:true,origin:t+.025-offset,beat:60/(StorybookMusic.metadata(kind).bpm||80)};
  if(previous){rememberMusicSession(previous);retireMusicSession(previous)}
  musicBookmark=null;musicRamp(bus.gain,1,.82);return true;
 }
