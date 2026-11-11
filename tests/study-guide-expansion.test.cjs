@@ -1,37 +1,41 @@
 'use strict';
 const crypto=require('node:crypto'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root=path.join(__dirname,'..'),read=name=>fs.readFileSync(path.join(root,name),'utf8');
-const batches=['data/study-guide-expansion-2026.json','data/study-guide-round-two-2026.json','data/study-guide-round-three-2026.json','data/study-guide-round-four-2026.json','data/study-guide-round-five-2026.json'].map(file=>JSON.parse(read(file)));
+const batches=['data/study-guide-expansion-2026.json','data/study-guide-round-two-2026.json','data/study-guide-round-three-2026.json','data/study-guide-round-four-2026.json','data/study-guide-round-five-2026.json','data/study-guide-round-six-2026.json'].map(file=>JSON.parse(read(file)));
 const additions=batches.flat();
 const baseline=JSON.parse(read('tests/fixtures/question-bank-before-round-three.json'));
 const baselineFour=JSON.parse(read('tests/fixtures/question-bank-before-round-four.json'));
 const baselineFive=JSON.parse(read('tests/fixtures/question-bank-before-round-five.json'));
+const baselineSix=JSON.parse(read('tests/fixtures/question-bank-before-round-six.json'));
 const hash=value=>crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const sources=new Map(JSON.parse(read('data/study-guide-sources-2026.json')).map(s=>[s.name,s]));
-assert.equal(additions.length,1000);
+assert.equal(additions.length,1500);
 const subjects=['math','science','social','language','arts'];
-for(const batch of batches){assert.equal(batch.length,200);assert.equal(new Set(batch.map(q=>q.curriculumTopicId)).size,64);for(const subject of subjects)assert.equal(batch.filter(q=>q.subject===subject).length,40)}
+for(const [i,batch] of batches.entries()){assert.equal(batch.length,i===5?500:200);assert.equal(new Set(batch.map(q=>q.curriculumTopicId)).size,i===5?37:64);for(const subject of subjects)assert.equal(batch.filter(q=>q.subject===subject).length,i===5?100:40)}
 for(const filename of ['index.html','Ellery_Recall_Rally_Librarian_v4.html']){
  const html=read(filename),script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
  const bank=script.slice(script.indexOf('const SAMPLE_ROWS='),script.indexOf('// Storage is optional.'));
- const context=vm.createContext({assert,console,additions,sources,hash,baseline,baselineFour,baselineFive});
+ const context=vm.createContext({assert,console,additions,sources,hash,baseline,baselineFour,baselineFive,baselineSix});
  const functions=['supportsMode','sourceQuestions','stableQuestionId','adventureQuestionPool'].map(name=>script.match(new RegExp('^function '+name+'\\(.*$','m'))[0]).join('\n');
  const norm=script.match(/^const norm=v=>.*$/m)[0];
  const lands=script.slice(script.indexOf('const LANDS=['),script.indexOf('let questProgress='));
  vm.runInContext(`${bank}\n${norm}\n${functions}\n${lands}
  let mode='quick',customPack=[],questQuestionBank='all';
- assert.equal(SAMPLES.length,2550);
- const preserved=SAMPLES.filter(q=>!q.id.startsWith('guide-round-three-2026-')&&!q.id.startsWith('guide-round-four-2026-')&&!q.id.startsWith('guide-round-five-2026-'));
+ assert.equal(SAMPLES.length,3050);
+ const preserved=SAMPLES.filter(q=>!q.id.startsWith('guide-round-three-2026-')&&!q.id.startsWith('guide-round-four-2026-')&&!q.id.startsWith('guide-round-five-2026-')&&!q.id.startsWith('guide-round-six-2026-'));
  assert.equal(preserved.length,baseline.count);
  assert.equal(hash(preserved),baseline.sha256,'All pre-round-three question records remain identical');
- const preservedFour=SAMPLES.filter(q=>!q.id.startsWith('guide-round-four-2026-')&&!q.id.startsWith('guide-round-five-2026-'));
+ const preservedFour=SAMPLES.filter(q=>!q.id.startsWith('guide-round-four-2026-')&&!q.id.startsWith('guide-round-five-2026-')&&!q.id.startsWith('guide-round-six-2026-'));
  assert.equal(preservedFour.length,baselineFour.count);
  assert.equal(hash(preservedFour),baselineFour.sha256,'All 2,150 pre-round-four question records remain identical');
- const preservedFive=SAMPLES.filter(q=>!q.id.startsWith('guide-round-five-2026-'));
+ const preservedFive=SAMPLES.filter(q=>!q.id.startsWith('guide-round-five-2026-')&&!q.id.startsWith('guide-round-six-2026-'));
  assert.equal(preservedFive.length,baselineFive.count);
  assert.equal(hash(preservedFive),baselineFive.sha256,'All 2,350 pre-round-five records remain identical');
- assert.equal(new Set(SAMPLES.map(q=>q.id)).size,2550);
- const allGuideAdditions=[...STUDY_GUIDE_ADDITIONS,...STUDY_GUIDE_ROUND_TWO,...STUDY_GUIDE_ROUND_THREE,...STUDY_GUIDE_ROUND_FOUR,...STUDY_GUIDE_ROUND_FIVE];
+ const preservedSix=SAMPLES.filter(q=>!q.id.startsWith('guide-round-six-2026-'));
+ assert.equal(preservedSix.length,baselineSix.count);
+ assert.equal(hash(preservedSix),baselineSix.sha256,'All 2550 previous records remain identical');
+ assert.equal(new Set(SAMPLES.map(q=>q.id)).size,3050);
+ const allGuideAdditions=[...STUDY_GUIDE_ADDITIONS,...STUDY_GUIDE_ROUND_TWO,...STUDY_GUIDE_ROUND_THREE,...STUDY_GUIDE_ROUND_FOUR,...STUDY_GUIDE_ROUND_FIVE,...STUDY_GUIDE_ROUND_SIX];
  assert.equal(JSON.stringify(allGuideAdditions),JSON.stringify(additions),'data and offline embed match');
  const topics=new Map(CURRICULUM_TOPICS.map(t=>[t.id,t]));
  assert.equal(new Set(STUDY_GUIDE_ADDITIONS.map(q=>q.curriculumTopicId)).size,64);
@@ -55,7 +59,7 @@ for(const filename of ['index.html','Ellery_Recall_Rally_Librarian_v4.html']){
   assert.equal(q.difficultyStatus,'editorial_estimate');assert.equal(q.contentVersion,1);
   const topic=topics.get(q.curriculumTopicId);assert(topic&&topic.subjectId===q.subject);
   assert(!supportsMode(q,'quick')||topic.quickEligible,'written-only curriculum stays out of Quick Recall: '+q.id);
-  if(topic.quickEligible&&!supportsMode(q,'quick')){assert(/^guide-round-(three|four|five)-2026-/.test(q.id));assert(q.modeRationale?.startsWith('Written-only:'),'explain choice-dependent wording: '+q.id);}
+  if(topic.quickEligible&&!supportsMode(q,'quick')){assert(/^guide-round-(three|four|five|six)-2026-/.test(q.id));assert(q.modeRationale?.startsWith('Written-only:'),'explain choice-dependent wording: '+q.id);}
   assert(supportsMode(q,'written'));
   assert(guideSet.has(q),'guide selection includes '+q.id);
   assert(!starterSet.has(q),'keep guide origin distinct');
@@ -73,12 +77,14 @@ for(const filename of ['index.html','Ellery_Recall_Rally_Librarian_v4.html']){
  assert.equal(STUDY_GUIDE_ROUND_FOUR.filter(q=>q.modeRationale).length,25);
  assert.equal(STUDY_GUIDE_ROUND_FIVE.filter(q=>!supportsMode(q,'quick')).length,51);
  assert.equal(STUDY_GUIDE_ROUND_FIVE.filter(q=>q.modeRationale).length,42);
+ assert.equal(STUDY_GUIDE_ROUND_SIX.filter(q=>supportsMode(q,'quick')).length,380);
+ assert.equal(STUDY_GUIDE_ROUND_SIX.filter(q=>!supportsMode(q,'quick')).length,120);
  for(const q of [...STUDY_GUIDE_ROUND_FOUR,...STUDY_GUIDE_ROUND_FIVE].filter(q=>q.verificationSource)){assert(q.verificationSource.title);assert(q.verificationSource.url.startsWith('https://'));}
  const RallyLearning={snapshot:()=>({attempts:[]}),activeProfile:()=>({id:'guide-test'})};
  function shuffle(a){return [...a]}
  ${read('src/science-lab.js')}
  const science=allGuideAdditions.filter(q=>q.subject==='science');
- assert(science.every(q=>ScienceLab.pool().includes(q)),'all 200 expansion science questions reach the lab');
+ assert(science.every(q=>ScienceLab.pool().includes(q)),'all 300 expansion science questions reach the lab');
  `,context,{timeout:10000});
 }
 // Exercise the Librarian's real selection logic with new literature records only.
@@ -92,4 +98,4 @@ const expected=SAMPLES.filter(q=>q.subject==='language'&&BOOK_TOPIC.test(q.topic
 assert(expected.length>=20,'new literature coverage');
 const all=SAMPLES;for(const q of expected){SAMPLES=[q];assert.equal(questionBank()[0]?.id,q.id,'Librarian can select '+q.id)}SAMPLES=all;
 `,libContext,{timeout:5000});
-console.log('PASS five 200-question guide batches, 40 per subject per batch, all 64 areas, provenance, choices, mode rules, both HTML embeds, ten-world pools, Science Lab and Librarian selection');
+console.log('PASS six guide batches, 100 per subject in round six and 40 in earlier batches, 64 total areas, provenance, choices, mode rules, both HTML embeds, ten-world pools, Science Lab and Librarian selection');
