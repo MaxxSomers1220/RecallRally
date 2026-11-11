@@ -1,0 +1,9 @@
+{
+  "artifactAssembly": "passed",
+  "embeddedCues": 24,
+  "sourceSoundFontExcluded": true,
+  "browserExecution": "blocked before launch",
+  "listeningByEar": "unsupported",
+  "freshTemplateRebuildByteIdentical": true,
+  "reviewedStandaloneSha256": "b7f6bfb5794eb259f953f821a253ca8a93742ef58082af8ca38c683552743ede"
+}

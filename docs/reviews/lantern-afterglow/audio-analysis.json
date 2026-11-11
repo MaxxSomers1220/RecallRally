@@ -1,0 +1,270 @@
+{
+  "method": "FFmpeg decoding of final MP3 to 32 kHz stereo float PCM. Signal measurements only; no listening claim.",
+  "assets": [
+    {
+      "id": "home",
+      "frames": 3321081,
+      "expectedFrames": 3321081,
+      "peak": 0.6098247170448303,
+      "rms": 0.09644047915935516,
+      "rmsDb": -20.31481281040704,
+      "seamDelta": 0.004625932313501835,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 3.708001486302237e-06
+    },
+    {
+      "id": "map",
+      "frames": 3072000,
+      "expectedFrames": 3072000,
+      "peak": 0.6180534362792969,
+      "rms": 0.09590413421392441,
+      "rmsDb": -20.363253419132185,
+      "seamDelta": 0.0022347774356603622,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 6.122653758211527e-06
+    },
+    {
+      "id": "world-0",
+      "frames": 1575385,
+      "expectedFrames": 1575385,
+      "peak": 0.6024045944213867,
+      "rms": 0.09602516144514084,
+      "rmsDb": -20.352299079834772,
+      "seamDelta": 0.0005770828574895859,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 6.642432708758861e-06
+    },
+    {
+      "id": "world-1",
+      "frames": 1660541,
+      "expectedFrames": 1660541,
+      "peak": 0.6426800489425659,
+      "rms": 0.0954866036772728,
+      "rmsDb": -20.401151072437035,
+      "seamDelta": 0.0025512296706438065,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 1.1143912161060143e-05
+    },
+    {
+      "id": "world-2",
+      "frames": 1536000,
+      "expectedFrames": 1536000,
+      "peak": 0.5615471601486206,
+      "rms": 0.09701624512672424,
+      "rmsDb": -20.263110762473858,
+      "seamDelta": 0.003350716084241867,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 9.05838987819152e-06
+    },
+    {
+      "id": "world-3",
+      "frames": 1706667,
+      "expectedFrames": 1706667,
+      "peak": 0.5864963531494141,
+      "rms": 0.09680747985839844,
+      "rmsDb": -20.281821710086678,
+      "seamDelta": 0.001904249656945467,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 2.3693544335401384e-06
+    },
+    {
+      "id": "world-4",
+      "frames": 1498537,
+      "expectedFrames": 1498537,
+      "peak": 0.5902904272079468,
+      "rms": 0.09566058218479156,
+      "rmsDb": -20.385339607296345,
+      "seamDelta": 0.0004850625991821289,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 1.1404315955587663e-05
+    },
+    {
+      "id": "world-5",
+      "frames": 1616842,
+      "expectedFrames": 1616842,
+      "peak": 0.6119915246963501,
+      "rms": 0.09528888761997223,
+      "rmsDb": -20.41915485747845,
+      "seamDelta": 0.003188870847225189,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 4.586476643453352e-05
+    },
+    {
+      "id": "world-6",
+      "frames": 1462857,
+      "expectedFrames": 1462857,
+      "peak": 0.6027975082397461,
+      "rms": 0.09526565670967102,
+      "rmsDb": -20.421272688095165,
+      "seamDelta": 0.0014019906520843506,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 1.0627436495269649e-05
+    },
+    {
+      "id": "world-7",
+      "frames": 1706667,
+      "expectedFrames": 1706667,
+      "peak": 0.6575181484222412,
+      "rms": 0.09568052738904953,
+      "rmsDb": -20.3835287905408,
+      "seamDelta": 0.0020640455186367035,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 7.924816600279883e-06
+    },
+    {
+      "id": "world-8",
+      "frames": 1616842,
+      "expectedFrames": 1616842,
+      "peak": 0.5772271752357483,
+      "rms": 0.09681359678506851,
+      "rmsDb": -20.281272896383964,
+      "seamDelta": 0.0001886356621980667,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 8.877745131030679e-06
+    },
+    {
+      "id": "world-9",
+      "frames": 1575385,
+      "expectedFrames": 1575385,
+      "peak": 0.5887436270713806,
+      "rms": 0.0953059196472168,
+      "rmsDb": -20.41760247195994,
+      "seamDelta": 0.0016666930168867111,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 4.2895924707408994e-05
+    },
+    {
+      "id": "duel-high",
+      "frames": 1335652,
+      "expectedFrames": 1335652,
+      "peak": 0.6030701398849487,
+      "rms": 0.09584663063287735,
+      "rmsDb": -20.36846299182036,
+      "seamDelta": 0.0036085285246372223,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 1.3782696441921871e-05
+    },
+    {
+      "id": "lab-hub",
+      "frames": 1575385,
+      "expectedFrames": 1575385,
+      "peak": 0.6106454133987427,
+      "rms": 0.09635049104690552,
+      "rmsDb": -20.32292135272521,
+      "seamDelta": 0.004011858254671097,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 4.081911356479395e-06
+    },
+    {
+      "id": "lab-potion",
+      "frames": 1536000,
+      "expectedFrames": 1536000,
+      "peak": 0.6555836200714111,
+      "rms": 0.09570611268281937,
+      "rmsDb": -20.381206465019197,
+      "seamDelta": 0.002795424312353134,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 1.0809357263497077e-05
+    },
+    {
+      "id": "lab-circuit",
+      "frames": 1498537,
+      "expectedFrames": 1498537,
+      "peak": 0.6065203547477722,
+      "rms": 0.09550566971302032,
+      "rmsDb": -20.399416913458257,
+      "seamDelta": 0.0036838101223111153,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 8.676860488776583e-06
+    },
+    {
+      "id": "lab-creature",
+      "frames": 1660541,
+      "expectedFrames": 1660541,
+      "peak": 0.5666050910949707,
+      "rms": 0.09683690965175629,
+      "rmsDb": -20.279181572256793,
+      "seamDelta": 0.002091187983751297,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 8.053366400417872e-06
+    },
+    {
+      "id": "lab-weather",
+      "frames": 1616842,
+      "expectedFrames": 1616842,
+      "peak": 0.6405421495437622,
+      "rms": 0.0954548567533493,
+      "rmsDb": -20.404039395166595,
+      "seamDelta": 0.001988619565963745,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 8.146485924953595e-06
+    },
+    {
+      "id": "lab-observatory",
+      "frames": 1706667,
+      "expectedFrames": 1706667,
+      "peak": 0.6094680428504944,
+      "rms": 0.09510322660207748,
+      "rmsDb": -20.4360949668866,
+      "seamDelta": 0.009591356851160526,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 6.103538180468604e-05
+    },
+    {
+      "id": "practice",
+      "frames": 1575385,
+      "expectedFrames": 1575385,
+      "peak": 0.5655922889709473,
+      "rms": 0.09684327989816666,
+      "rmsDb": -20.278610205020563,
+      "seamDelta": 0.0026768408715724945,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 3.048789722015499e-06
+    },
+    {
+      "id": "library",
+      "frames": 1706667,
+      "expectedFrames": 1706667,
+      "peak": 0.6085597276687622,
+      "rms": 0.09680110961198807,
+      "rmsDb": -20.282393288625205,
+      "seamDelta": 0.004133804701268673,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 2.00327258426114e-06
+    },
+    {
+      "id": "library-storm",
+      "frames": 1335652,
+      "expectedFrames": 1335652,
+      "peak": 0.5860961079597473,
+      "rms": 0.09595366567373276,
+      "rmsDb": -20.358768589187115,
+      "seamDelta": 0.003503868356347084,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 9.185299859382212e-06
+    },
+    {
+      "id": "rescue",
+      "frames": 1616842,
+      "expectedFrames": 1616842,
+      "peak": 0.5612684488296509,
+      "rms": 0.09690917283296585,
+      "rmsDb": -20.272702266580644,
+      "seamDelta": 0.00047294795513153076,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 8.329658157890663e-06
+    },
+    {
+      "id": "finale",
+      "frames": 1536000,
+      "expectedFrames": 1536000,
+      "peak": 0.6127228736877441,
+      "rms": 0.09598385542631149,
+      "rmsDb": -20.3560361910634,
+      "seamDelta": 0.0027247946709394455,
+      "clippedSamples": 0,
+      "energyAbove6kHz": 7.940229806990828e-06
+    }
+  ],
+  "totalBytes": 12850176
+}

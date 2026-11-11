@@ -1,6 +1,7 @@
 {
   "base": "65d0953",
   "appearance_schema_sha256": "e7e6b0fa0fb5b5302a7374143eb0895fac7c6d15c0b2875402cab9380caa495a",
-  "librarian_js_sha256": "e7d3f6ced3b6d6cfa4a62e1c06042a61e7a7b1f9cc61e0ce9378a5c9fae7906b",
+  "librarian_js_sha256": "60e0baf994314bc70e3f8609fb886a45d046dc2a78d9c1c6a7b1cc9ac984a4ff",
+  "librarian_gameplay_sha256": "9982802958129aaddb9a6136f7f2304291f0999d68dc44e76851cf2a77fd7056",
   "save_js_sha256": "5b7330130ad4ba0b17ac4097bb133502478e6875f66cdef1cf25c5e57188d122"
 }

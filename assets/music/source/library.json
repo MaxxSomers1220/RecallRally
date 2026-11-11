@@ -1,0 +1,1821 @@
+{
+  "id": "library",
+  "title": "The Librarian\u2019s Unsent Letter",
+  "bpm": 72,
+  "meter": "4/4",
+  "scale": "D major / B minor",
+  "loopBars": 16,
+  "motif": [
+    74,
+    78,
+    81,
+    76,
+    74,
+    71
+  ],
+  "form": [
+    "invitation",
+    "answer",
+    "space",
+    "return"
+  ],
+  "harmony": [
+    "Bm9",
+    "Em9",
+    "Gmaj9",
+    "Fsm7",
+    "Bm9",
+    "G69",
+    "Em9",
+    "Asus9"
+  ],
+  "inspiration": "Original downtempo fantasy with warm 1990s Tokyo lo-fi colors; no artist/song imitation",
+  "sourceType": "Original composition; sampled licensed instruments and original synthesized percussion",
+  "tracks": [
+    {
+      "name": "Felt Rhodes \u00b7 extended harmony",
+      "program": 4,
+      "volume": 66,
+      "pan": 52,
+      "channel": 0,
+      "role": "keys",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.00635,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 1,
+          "beat": 1.01958,
+          "note": 57,
+          "dur": 2.5,
+          "vel": 28
+        },
+        {
+          "bar": 1,
+          "beat": 1.05032,
+          "note": 61,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 1,
+          "beat": 1.07679,
+          "note": 64,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 2,
+          "beat": 1.15026,
+          "note": 54,
+          "dur": 3.3,
+          "vel": 28
+        },
+        {
+          "bar": 2,
+          "beat": 1.17284,
+          "note": 55,
+          "dur": 3.3,
+          "vel": 33
+        },
+        {
+          "bar": 2,
+          "beat": 1.20018,
+          "note": 59,
+          "dur": 3.3,
+          "vel": 29
+        },
+        {
+          "bar": 2,
+          "beat": 1.23524,
+          "note": 62,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 2,
+          "beat": 3.57009,
+          "note": 55,
+          "dur": 1.0,
+          "vel": 17
+        },
+        {
+          "bar": 2,
+          "beat": 3.58123,
+          "note": 59,
+          "dur": 1.0,
+          "vel": 16
+        },
+        {
+          "bar": 2,
+          "beat": 3.54434,
+          "note": 62,
+          "dur": 1.0,
+          "vel": 17
+        },
+        {
+          "bar": 2,
+          "beat": 4.99535,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 3,
+          "beat": 1.03575,
+          "note": 57,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 3,
+          "beat": 1.06273,
+          "note": 59,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 3,
+          "beat": 1.0861,
+          "note": 62,
+          "dur": 2.5,
+          "vel": 33
+        },
+        {
+          "bar": 4,
+          "beat": 1.1493,
+          "note": 52,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 4,
+          "beat": 1.17814,
+          "note": 57,
+          "dur": 3.3,
+          "vel": 30
+        },
+        {
+          "bar": 4,
+          "beat": 1.2125,
+          "note": 61,
+          "dur": 3.3,
+          "vel": 33
+        },
+        {
+          "bar": 4,
+          "beat": 1.23803,
+          "note": 64,
+          "dur": 3.3,
+          "vel": 31
+        },
+        {
+          "bar": 4,
+          "beat": 4.99223,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 5,
+          "beat": 1.02102,
+          "note": 57,
+          "dur": 2.5,
+          "vel": 29
+        },
+        {
+          "bar": 5,
+          "beat": 1.05022,
+          "note": 61,
+          "dur": 2.5,
+          "vel": 28
+        },
+        {
+          "bar": 5,
+          "beat": 1.08912,
+          "note": 64,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 5,
+          "beat": 3.56238,
+          "note": 57,
+          "dur": 1.0,
+          "vel": 19
+        },
+        {
+          "bar": 5,
+          "beat": 3.59167,
+          "note": 61,
+          "dur": 1.0,
+          "vel": 15
+        },
+        {
+          "bar": 5,
+          "beat": 3.5338,
+          "note": 64,
+          "dur": 1.0,
+          "vel": 15
+        },
+        {
+          "bar": 6,
+          "beat": 1.14326,
+          "note": 52,
+          "dur": 3.3,
+          "vel": 28
+        },
+        {
+          "bar": 6,
+          "beat": 1.17514,
+          "note": 57,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 6,
+          "beat": 1.21295,
+          "note": 59,
+          "dur": 3.3,
+          "vel": 30
+        },
+        {
+          "bar": 6,
+          "beat": 1.23599,
+          "note": 62,
+          "dur": 3.3,
+          "vel": 29
+        },
+        {
+          "bar": 6,
+          "beat": 4.99655,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 31
+        },
+        {
+          "bar": 7,
+          "beat": 1.01993,
+          "note": 55,
+          "dur": 2.5,
+          "vel": 28
+        },
+        {
+          "bar": 7,
+          "beat": 1.05949,
+          "note": 59,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 7,
+          "beat": 1.07228,
+          "note": 62,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 7,
+          "beat": 3.55657,
+          "note": 55,
+          "dur": 1.0,
+          "vel": 19
+        },
+        {
+          "bar": 7,
+          "beat": 3.59051,
+          "note": 59,
+          "dur": 1.0,
+          "vel": 19
+        },
+        {
+          "bar": 7,
+          "beat": 3.52855,
+          "note": 62,
+          "dur": 1.0,
+          "vel": 18
+        },
+        {
+          "bar": 8,
+          "beat": 1.14561,
+          "note": 55,
+          "dur": 3.3,
+          "vel": 33
+        },
+        {
+          "bar": 8,
+          "beat": 1.17326,
+          "note": 59,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 8,
+          "beat": 1.20108,
+          "note": 62,
+          "dur": 3.3,
+          "vel": 31
+        },
+        {
+          "bar": 8,
+          "beat": 1.22201,
+          "note": 64,
+          "dur": 3.3,
+          "vel": 32
+        },
+        {
+          "bar": 9,
+          "beat": 1.00513,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 28
+        },
+        {
+          "bar": 9,
+          "beat": 1.03281,
+          "note": 57,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 9,
+          "beat": 1.05876,
+          "note": 61,
+          "dur": 2.5,
+          "vel": 31
+        },
+        {
+          "bar": 9,
+          "beat": 1.07778,
+          "note": 64,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 10,
+          "beat": 1.15666,
+          "note": 54,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 10,
+          "beat": 1.18229,
+          "note": 55,
+          "dur": 3.3,
+          "vel": 29
+        },
+        {
+          "bar": 10,
+          "beat": 1.20853,
+          "note": 59,
+          "dur": 3.3,
+          "vel": 32
+        },
+        {
+          "bar": 10,
+          "beat": 1.23402,
+          "note": 62,
+          "dur": 3.3,
+          "vel": 31
+        },
+        {
+          "bar": 10,
+          "beat": 3.56239,
+          "note": 55,
+          "dur": 1.0,
+          "vel": 14
+        },
+        {
+          "bar": 10,
+          "beat": 3.57493,
+          "note": 59,
+          "dur": 1.0,
+          "vel": 18
+        },
+        {
+          "bar": 10,
+          "beat": 3.54457,
+          "note": 62,
+          "dur": 1.0,
+          "vel": 14
+        },
+        {
+          "bar": 10,
+          "beat": 4.99878,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 11,
+          "beat": 1.02893,
+          "note": 57,
+          "dur": 2.5,
+          "vel": 32
+        },
+        {
+          "bar": 11,
+          "beat": 1.06229,
+          "note": 59,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 11,
+          "beat": 1.07523,
+          "note": 62,
+          "dur": 2.5,
+          "vel": 29
+        },
+        {
+          "bar": 12,
+          "beat": 1.14132,
+          "note": 52,
+          "dur": 3.3,
+          "vel": 31
+        },
+        {
+          "bar": 12,
+          "beat": 1.17856,
+          "note": 57,
+          "dur": 3.3,
+          "vel": 30
+        },
+        {
+          "bar": 12,
+          "beat": 1.20677,
+          "note": 61,
+          "dur": 3.3,
+          "vel": 29
+        },
+        {
+          "bar": 12,
+          "beat": 1.22472,
+          "note": 64,
+          "dur": 3.3,
+          "vel": 30
+        },
+        {
+          "bar": 12,
+          "beat": 4.99184,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 13,
+          "beat": 1.01937,
+          "note": 57,
+          "dur": 2.5,
+          "vel": 33
+        },
+        {
+          "bar": 13,
+          "beat": 1.0573,
+          "note": 61,
+          "dur": 2.5,
+          "vel": 31
+        },
+        {
+          "bar": 13,
+          "beat": 1.0783,
+          "note": 64,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 13,
+          "beat": 3.56989,
+          "note": 57,
+          "dur": 1.0,
+          "vel": 15
+        },
+        {
+          "bar": 13,
+          "beat": 3.59028,
+          "note": 61,
+          "dur": 1.0,
+          "vel": 16
+        },
+        {
+          "bar": 13,
+          "beat": 3.53497,
+          "note": 64,
+          "dur": 1.0,
+          "vel": 20
+        },
+        {
+          "bar": 14,
+          "beat": 1.14987,
+          "note": 52,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 14,
+          "beat": 1.18562,
+          "note": 57,
+          "dur": 3.3,
+          "vel": 31
+        },
+        {
+          "bar": 14,
+          "beat": 1.21048,
+          "note": 59,
+          "dur": 3.3,
+          "vel": 33
+        },
+        {
+          "bar": 14,
+          "beat": 1.22645,
+          "note": 62,
+          "dur": 3.3,
+          "vel": 30
+        },
+        {
+          "bar": 15,
+          "beat": 1.00272,
+          "note": 54,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 15,
+          "beat": 1.02035,
+          "note": 55,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 15,
+          "beat": 1.0541,
+          "note": 59,
+          "dur": 2.5,
+          "vel": 30
+        },
+        {
+          "bar": 15,
+          "beat": 1.0776,
+          "note": 62,
+          "dur": 2.5,
+          "vel": 27
+        },
+        {
+          "bar": 15,
+          "beat": 3.56916,
+          "note": 55,
+          "dur": 1.0,
+          "vel": 19
+        },
+        {
+          "bar": 15,
+          "beat": 3.57973,
+          "note": 59,
+          "dur": 1.0,
+          "vel": 20
+        },
+        {
+          "bar": 15,
+          "beat": 3.52754,
+          "note": 62,
+          "dur": 1.0,
+          "vel": 15
+        },
+        {
+          "bar": 16,
+          "beat": 1.15068,
+          "note": 55,
+          "dur": 3.3,
+          "vel": 32
+        },
+        {
+          "bar": 16,
+          "beat": 1.18154,
+          "note": 59,
+          "dur": 3.3,
+          "vel": 27
+        },
+        {
+          "bar": 16,
+          "beat": 1.19566,
+          "note": 62,
+          "dur": 3.3,
+          "vel": 33
+        },
+        {
+          "bar": 16,
+          "beat": 1.23931,
+          "note": 64,
+          "dur": 3.3,
+          "vel": 32
+        }
+      ]
+    },
+    {
+      "name": "Lantern motif \u00b7 71",
+      "program": 71,
+      "volume": 67,
+      "pan": 69,
+      "channel": 1,
+      "role": "lead",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.00135,
+          "note": 62,
+          "dur": 1.1,
+          "vel": 37
+        },
+        {
+          "bar": 1,
+          "beat": 2.57252,
+          "note": 66,
+          "dur": 0.6,
+          "vel": 34
+        },
+        {
+          "bar": 1,
+          "beat": 3.55865,
+          "note": 69,
+          "dur": 0.85,
+          "vel": 37
+        },
+        {
+          "bar": 2,
+          "beat": 1.56549,
+          "note": 64,
+          "dur": 1.15,
+          "vel": 39
+        },
+        {
+          "bar": 2,
+          "beat": 3.00258,
+          "note": 62,
+          "dur": 0.8,
+          "vel": 36
+        },
+        {
+          "bar": 2,
+          "beat": 4.24672,
+          "note": 59,
+          "dur": 0.6,
+          "vel": 35
+        },
+        {
+          "bar": 3,
+          "beat": 1.56199,
+          "note": 62,
+          "dur": 1.8,
+          "vel": 37
+        },
+        {
+          "bar": 3,
+          "beat": 4.00061,
+          "note": 66,
+          "dur": 0.65,
+          "vel": 34
+        },
+        {
+          "bar": 5,
+          "beat": 1.00314,
+          "note": 64,
+          "dur": 1.1,
+          "vel": 34
+        },
+        {
+          "bar": 5,
+          "beat": 2.75041,
+          "note": 67,
+          "dur": 0.65,
+          "vel": 35
+        },
+        {
+          "bar": 5,
+          "beat": 3.75429,
+          "note": 66,
+          "dur": 1.1,
+          "vel": 38
+        },
+        {
+          "bar": 6,
+          "beat": 1.74608,
+          "note": 62,
+          "dur": 1.45,
+          "vel": 38
+        },
+        {
+          "bar": 6,
+          "beat": 3.74633,
+          "note": 59,
+          "dur": 1.15,
+          "vel": 37
+        },
+        {
+          "bar": 7,
+          "beat": 1.99769,
+          "note": 61,
+          "dur": 1.2,
+          "vel": 35
+        },
+        {
+          "bar": 7,
+          "beat": 3.74429,
+          "note": 64,
+          "dur": 0.8,
+          "vel": 37
+        },
+        {
+          "bar": 8,
+          "beat": 1.5584,
+          "note": 62,
+          "dur": 2.65,
+          "vel": 34
+        },
+        {
+          "bar": 9,
+          "beat": 1.00163,
+          "note": 62,
+          "dur": 1.1,
+          "vel": 38
+        },
+        {
+          "bar": 9,
+          "beat": 2.57301,
+          "note": 66,
+          "dur": 0.6,
+          "vel": 37
+        },
+        {
+          "bar": 9,
+          "beat": 3.57282,
+          "note": 69,
+          "dur": 0.85,
+          "vel": 35
+        },
+        {
+          "bar": 10,
+          "beat": 1.57076,
+          "note": 64,
+          "dur": 1.15,
+          "vel": 35
+        },
+        {
+          "bar": 10,
+          "beat": 3.00097,
+          "note": 62,
+          "dur": 0.8,
+          "vel": 37
+        },
+        {
+          "bar": 10,
+          "beat": 4.24668,
+          "note": 59,
+          "dur": 0.6,
+          "vel": 38
+        },
+        {
+          "bar": 11,
+          "beat": 1.564,
+          "note": 62,
+          "dur": 1.8,
+          "vel": 36
+        },
+        {
+          "bar": 11,
+          "beat": 4.00439,
+          "note": 66,
+          "dur": 0.65,
+          "vel": 33
+        },
+        {
+          "bar": 12,
+          "beat": 4.99187,
+          "note": 69,
+          "dur": 1.1,
+          "vel": 34
+        },
+        {
+          "bar": 13,
+          "beat": 2.7475,
+          "note": 69,
+          "dur": 0.65,
+          "vel": 36
+        },
+        {
+          "bar": 13,
+          "beat": 3.74183,
+          "note": 69,
+          "dur": 1.1,
+          "vel": 34
+        },
+        {
+          "bar": 14,
+          "beat": 1.74205,
+          "note": 66,
+          "dur": 1.45,
+          "vel": 37
+        },
+        {
+          "bar": 14,
+          "beat": 3.75114,
+          "note": 66,
+          "dur": 1.15,
+          "vel": 39
+        },
+        {
+          "bar": 15,
+          "beat": 1.99141,
+          "note": 61,
+          "dur": 1.2,
+          "vel": 35
+        },
+        {
+          "bar": 15,
+          "beat": 3.74809,
+          "note": 64,
+          "dur": 0.8,
+          "vel": 33
+        },
+        {
+          "bar": 16,
+          "beat": 1.57028,
+          "note": 62,
+          "dur": 2.65,
+          "vel": 34
+        }
+      ]
+    },
+    {
+      "name": "Nylon guitar \u00b7 quiet replies",
+      "program": 24,
+      "volume": 44,
+      "pan": 78,
+      "channel": 2,
+      "role": "guitar",
+      "notes": [
+        {
+          "bar": 3,
+          "beat": 1.56592,
+          "note": 57,
+          "dur": 1.1,
+          "vel": 19
+        },
+        {
+          "bar": 3,
+          "beat": 2.24135,
+          "note": 62,
+          "dur": 1.1,
+          "vel": 23
+        },
+        {
+          "bar": 3,
+          "beat": 3.00066,
+          "note": 59,
+          "dur": 1.1,
+          "vel": 21
+        },
+        {
+          "bar": 4,
+          "beat": 1.55946,
+          "note": 57,
+          "dur": 1.1,
+          "vel": 20
+        },
+        {
+          "bar": 4,
+          "beat": 2.2448,
+          "note": 64,
+          "dur": 1.1,
+          "vel": 23
+        },
+        {
+          "bar": 4,
+          "beat": 3.00557,
+          "note": 61,
+          "dur": 1.1,
+          "vel": 24
+        },
+        {
+          "bar": 7,
+          "beat": 1.57167,
+          "note": 55,
+          "dur": 1.1,
+          "vel": 22
+        },
+        {
+          "bar": 7,
+          "beat": 2.25641,
+          "note": 62,
+          "dur": 1.1,
+          "vel": 21
+        },
+        {
+          "bar": 7,
+          "beat": 3.00619,
+          "note": 59,
+          "dur": 1.1,
+          "vel": 20
+        },
+        {
+          "bar": 11,
+          "beat": 1.56128,
+          "note": 57,
+          "dur": 1.1,
+          "vel": 20
+        },
+        {
+          "bar": 11,
+          "beat": 2.24373,
+          "note": 62,
+          "dur": 1.1,
+          "vel": 19
+        },
+        {
+          "bar": 11,
+          "beat": 3.00718,
+          "note": 59,
+          "dur": 1.1,
+          "vel": 18
+        },
+        {
+          "bar": 12,
+          "beat": 1.55866,
+          "note": 57,
+          "dur": 1.1,
+          "vel": 18
+        },
+        {
+          "bar": 12,
+          "beat": 2.25652,
+          "note": 64,
+          "dur": 1.1,
+          "vel": 24
+        },
+        {
+          "bar": 12,
+          "beat": 3.00399,
+          "note": 61,
+          "dur": 1.1,
+          "vel": 18
+        },
+        {
+          "bar": 15,
+          "beat": 1.56581,
+          "note": 55,
+          "dur": 1.1,
+          "vel": 24
+        },
+        {
+          "bar": 15,
+          "beat": 2.24563,
+          "note": 62,
+          "dur": 1.1,
+          "vel": 22
+        },
+        {
+          "bar": 15,
+          "beat": 2.99819,
+          "note": 59,
+          "dur": 1.1,
+          "vel": 18
+        }
+      ]
+    },
+    {
+      "name": "Upright bass \u00b7 rounded foundations",
+      "program": 32,
+      "volume": 79,
+      "pan": 64,
+      "channel": 3,
+      "role": "bass",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1,
+          "note": 35,
+          "dur": 2.8,
+          "vel": 38
+        },
+        {
+          "bar": 2,
+          "beat": 1.0081,
+          "note": 40,
+          "dur": 2.8,
+          "vel": 40
+        },
+        {
+          "bar": 3,
+          "beat": 1.00653,
+          "note": 43,
+          "dur": 2.8,
+          "vel": 35
+        },
+        {
+          "bar": 3,
+          "beat": 4.99419,
+          "note": 42,
+          "dur": 2.8,
+          "vel": 35
+        },
+        {
+          "bar": 5,
+          "beat": 1.0024,
+          "note": 35,
+          "dur": 2.8,
+          "vel": 40
+        },
+        {
+          "bar": 5,
+          "beat": 4.99633,
+          "note": 43,
+          "dur": 2.8,
+          "vel": 36
+        },
+        {
+          "bar": 6,
+          "beat": 4.99129,
+          "note": 40,
+          "dur": 2.8,
+          "vel": 41
+        },
+        {
+          "bar": 8,
+          "beat": 1.00084,
+          "note": 33,
+          "dur": 2.8,
+          "vel": 35
+        },
+        {
+          "bar": 9,
+          "beat": 1.00477,
+          "note": 35,
+          "dur": 2.8,
+          "vel": 36
+        },
+        {
+          "bar": 10,
+          "beat": 1.00322,
+          "note": 40,
+          "dur": 2.8,
+          "vel": 39
+        },
+        {
+          "bar": 11,
+          "beat": 1.00822,
+          "note": 43,
+          "dur": 2.8,
+          "vel": 40
+        },
+        {
+          "bar": 11,
+          "beat": 4.99195,
+          "note": 42,
+          "dur": 2.8,
+          "vel": 38
+        },
+        {
+          "bar": 13,
+          "beat": 1.00785,
+          "note": 35,
+          "dur": 2.8,
+          "vel": 37
+        },
+        {
+          "bar": 14,
+          "beat": 1.00539,
+          "note": 43,
+          "dur": 2.8,
+          "vel": 36
+        },
+        {
+          "bar": 15,
+          "beat": 1.00448,
+          "note": 40,
+          "dur": 2.8,
+          "vel": 41
+        },
+        {
+          "bar": 15,
+          "beat": 4.99755,
+          "note": 33,
+          "dur": 2.8,
+          "vel": 41
+        }
+      ]
+    },
+    {
+      "name": "Warm strings \u00b7 common-tone air",
+      "program": 48,
+      "volume": 29,
+      "pan": 55,
+      "channel": 4,
+      "role": "air",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1.70002,
+          "note": 54,
+          "dur": 5.9,
+          "vel": 22
+        },
+        {
+          "bar": 1,
+          "beat": 2.10896,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 11
+        },
+        {
+          "bar": 3,
+          "beat": 1.7031,
+          "note": 57,
+          "dur": 5.9,
+          "vel": 17
+        },
+        {
+          "bar": 3,
+          "beat": 2.09475,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 10
+        },
+        {
+          "bar": 5,
+          "beat": 1.70205,
+          "note": 57,
+          "dur": 5.9,
+          "vel": 22
+        },
+        {
+          "bar": 5,
+          "beat": 2.09829,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 16
+        },
+        {
+          "bar": 7,
+          "beat": 1.70454,
+          "note": 62,
+          "dur": 5.9,
+          "vel": 17
+        },
+        {
+          "bar": 7,
+          "beat": 2.10014,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 12
+        },
+        {
+          "bar": 9,
+          "beat": 1.70149,
+          "note": 54,
+          "dur": 5.9,
+          "vel": 19
+        },
+        {
+          "bar": 9,
+          "beat": 2.10548,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 16
+        },
+        {
+          "bar": 11,
+          "beat": 1.69733,
+          "note": 57,
+          "dur": 5.9,
+          "vel": 23
+        },
+        {
+          "bar": 11,
+          "beat": 2.09618,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 10
+        },
+        {
+          "bar": 13,
+          "beat": 1.70761,
+          "note": 57,
+          "dur": 5.9,
+          "vel": 20
+        },
+        {
+          "bar": 13,
+          "beat": 2.1044,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 11
+        },
+        {
+          "bar": 15,
+          "beat": 1.70536,
+          "note": 62,
+          "dur": 5.9,
+          "vel": 23
+        },
+        {
+          "bar": 15,
+          "beat": 2.09886,
+          "note": 54,
+          "dur": 2.9,
+          "vel": 13
+        }
+      ]
+    },
+    {
+      "name": "Vibraphone \u00b7 scattered lights",
+      "program": 11,
+      "volume": 30,
+      "pan": 84,
+      "channel": 5,
+      "role": "accent",
+      "notes": [
+        {
+          "bar": 16,
+          "beat": 3.74441,
+          "note": 74,
+          "dur": 1.4,
+          "vel": 22
+        }
+      ]
+    },
+    {
+      "name": "Original brushed kit \u00b7 soft swing",
+      "program": 0,
+      "volume": 64,
+      "pan": 64,
+      "channel": 9,
+      "role": "kit",
+      "notes": [
+        {
+          "bar": 1,
+          "beat": 1,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 6
+        },
+        {
+          "bar": 1,
+          "beat": 1.99415,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 1
+        },
+        {
+          "bar": 1,
+          "beat": 4.00614,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 2
+        },
+        {
+          "bar": 1,
+          "beat": 2.55909,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        },
+        {
+          "bar": 1,
+          "beat": 4.56588,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 2,
+          "beat": 1.00874,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 10
+        },
+        {
+          "bar": 2,
+          "beat": 2.00242,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 5
+        },
+        {
+          "bar": 2,
+          "beat": 3.99345,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 2,
+          "beat": 2.55847,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        },
+        {
+          "bar": 2,
+          "beat": 4.55958,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 3,
+          "beat": 1.00815,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 4
+        },
+        {
+          "bar": 3,
+          "beat": 1.99712,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 1
+        },
+        {
+          "bar": 3,
+          "beat": 3.99502,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 2
+        },
+        {
+          "bar": 3,
+          "beat": 2.56253,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 3,
+          "beat": 4.56935,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 4,
+          "beat": 1.00595,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 5
+        },
+        {
+          "bar": 4,
+          "beat": 2.00201,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 5
+        },
+        {
+          "bar": 4,
+          "beat": 3.9939,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 5
+        },
+        {
+          "bar": 4,
+          "beat": 2.57392,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 5
+        },
+        {
+          "bar": 4,
+          "beat": 4.55715,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        },
+        {
+          "bar": 5,
+          "beat": 1.00172,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 8
+        },
+        {
+          "bar": 5,
+          "beat": 1.9953,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 5,
+          "beat": 4.00814,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 3
+        },
+        {
+          "bar": 5,
+          "beat": 2.57154,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 5,
+          "beat": 4.56813,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 6,
+          "beat": 1.00321,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 7
+        },
+        {
+          "bar": 6,
+          "beat": 2.00512,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 3
+        },
+        {
+          "bar": 6,
+          "beat": 3.99412,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 6,
+          "beat": 2.57399,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 5
+        },
+        {
+          "bar": 6,
+          "beat": 4.56155,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 7,
+          "beat": 1.00631,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 10
+        },
+        {
+          "bar": 7,
+          "beat": 2.00414,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 3
+        },
+        {
+          "bar": 7,
+          "beat": 4.00338,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 7,
+          "beat": 2.57213,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 2
+        },
+        {
+          "bar": 7,
+          "beat": 4.57372,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 8,
+          "beat": 1.00652,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 6
+        },
+        {
+          "bar": 8,
+          "beat": 1.99333,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 5
+        },
+        {
+          "bar": 8,
+          "beat": 4.00849,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 2
+        },
+        {
+          "bar": 8,
+          "beat": 2.56155,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 8,
+          "beat": 4.56243,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 5
+        },
+        {
+          "bar": 8,
+          "beat": 4.99922,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 4
+        },
+        {
+          "bar": 9,
+          "beat": 2.00026,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 4
+        },
+        {
+          "bar": 9,
+          "beat": 4.00068,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 6
+        },
+        {
+          "bar": 9,
+          "beat": 2.56438,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 6
+        },
+        {
+          "bar": 9,
+          "beat": 4.5573,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 2
+        },
+        {
+          "bar": 9,
+          "beat": 4.99549,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 5
+        },
+        {
+          "bar": 10,
+          "beat": 1.99933,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 2
+        },
+        {
+          "bar": 10,
+          "beat": 3.99848,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 2
+        },
+        {
+          "bar": 10,
+          "beat": 2.56123,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 2
+        },
+        {
+          "bar": 10,
+          "beat": 4.57269,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 10,
+          "beat": 4.99196,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 5
+        },
+        {
+          "bar": 11,
+          "beat": 1.99616,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 11,
+          "beat": 3.99955,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 1
+        },
+        {
+          "bar": 11,
+          "beat": 2.56284,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 5
+        },
+        {
+          "bar": 11,
+          "beat": 4.57266,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 11,
+          "beat": 4.99547,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 7
+        },
+        {
+          "bar": 12,
+          "beat": 1.99552,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 4
+        },
+        {
+          "bar": 12,
+          "beat": 4.00024,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 3
+        },
+        {
+          "bar": 12,
+          "beat": 2.55928,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 12,
+          "beat": 4.56913,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 5
+        },
+        {
+          "bar": 13,
+          "beat": 1.00869,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 4
+        },
+        {
+          "bar": 13,
+          "beat": 2.00745,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 3
+        },
+        {
+          "bar": 13,
+          "beat": 3.99891,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 1
+        },
+        {
+          "bar": 13,
+          "beat": 2.55778,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        },
+        {
+          "bar": 13,
+          "beat": 4.56551,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 13,
+          "beat": 4.99725,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 6
+        },
+        {
+          "bar": 14,
+          "beat": 1.99762,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 6
+        },
+        {
+          "bar": 14,
+          "beat": 4.00204,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 1
+        },
+        {
+          "bar": 14,
+          "beat": 2.55726,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 14,
+          "beat": 4.56312,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        },
+        {
+          "bar": 15,
+          "beat": 1.00811,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 9
+        },
+        {
+          "bar": 15,
+          "beat": 1.99128,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 6
+        },
+        {
+          "bar": 15,
+          "beat": 3.99535,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 15,
+          "beat": 2.55751,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 1
+        },
+        {
+          "bar": 15,
+          "beat": 4.56363,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 4
+        },
+        {
+          "bar": 15,
+          "beat": 4.99904,
+          "note": 36,
+          "dur": 0.3,
+          "vel": 9
+        },
+        {
+          "bar": 16,
+          "beat": 2.00006,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 6
+        },
+        {
+          "bar": 16,
+          "beat": 3.9967,
+          "note": 38,
+          "dur": 0.14,
+          "vel": 7
+        },
+        {
+          "bar": 16,
+          "beat": 2.56303,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        },
+        {
+          "bar": 16,
+          "beat": 4.56697,
+          "note": 42,
+          "dur": 0.075,
+          "vel": 3
+        }
+      ]
+    }
+  ]
+}

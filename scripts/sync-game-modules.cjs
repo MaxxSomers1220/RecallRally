@@ -4,6 +4,14 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
+// Audio stays editable as modules; builds regenerate both large distribution files.
+const audioBlock=/^function initAudio\([^]*?\/\/ End original soundtrack\./m;
+if(!audioBlock.test(html))throw Error('Audio coordinator embed location not found');
+html=html.replace(audioBlock,()=>read('src/audio-coordinator.js'));
+for(const patch of JSON.parse(read('src/audio-integration.json')).patches){
+ if(html.includes(patch.before))html=html.replace(patch.before,()=>patch.after);
+ else if(!html.includes(patch.after))throw Error('Audio integration location changed: '+patch.name);
+}
 // Guide additions stay editable as data and are embedded for offline/file:// play.
 const guideAdditions=JSON.parse(read('data/study-guide-expansion-2026.json'));
 const guideRoundTwo=JSON.parse(read('data/study-guide-round-two-2026.json'));
@@ -49,8 +57,8 @@ if(html.includes('<style id="home-hub-styles">'))html=html.replace(/<style id="h
 const homeJS='/* HOME_HUB_START */\nconst HOME_HUB_ART='+JSON.stringify(homeArt).replace(/</g,'\\u003c')+';\n'+read('src/home-hub.js')+'\n/* HOME_HUB_END */';
 if(html.includes('/* HOME_HUB_START */'))html=html.replace(/\/\* HOME_HUB_START \*\/[\s\S]*?\/\* HOME_HUB_END \*\//,()=>homeJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+homeJS);
 const scoreData={};
-for(const cue of JSON.parse(read('assets/music/manifest.json')).assets)scoreData[cue.id]={title:cue.title,loopSeconds:cue.loopSeconds,sampleRate:cue.sampleRate,mp3:cue.mp3,bpm:cue.bpm,data:fs.readFileSync(path.join(root,cue.file)).toString('base64')};
-const credits={notice:'Original Recall Rally compositions, rendered with TimGM6mb by Tim Brechbill (2004) and David Bolton (2010). Rendered MP3 and SoundFont assets: GPL-2.0-only; editable original scores and application code: repository MIT license.',source:'https://github.com/MaxxSomers1220/RecallRally — assets/music/source and scripts/render-storybook-music.py',license:read('assets/music/LICENSE-GPL-2.txt')};
+for(const cue of JSON.parse(read('assets/music/manifest.json')).assets)scoreData[cue.id]={title:cue.title,loopSeconds:cue.loopSeconds,loopFrames:cue.loopFrames,loopBars:cue.loopBars,channels:cue.channels,sampleRate:cue.sampleRate,mp3:cue.mp3,bpm:cue.bpm,data:fs.readFileSync(path.join(root,cue.file)).toString('base64')};
+const credits={notice:'Lantern Afterglow: 24 original Recall Rally compositions and original brushed percussion, rendered with TimGM6mb by Tim Brechbill (2004) and David Bolton (2010). Rendered MP3 and SoundFont assets: GPL-2.0-only; editable original scores and application code: repository MIT license.',source:'https://github.com/MaxxSomers1220/RecallRally — assets/music/source and scripts/render-storybook-music.py',license:read('assets/music/LICENSE-GPL-2.txt')};
 const musicJS='/* STORYBOOK_MUSIC_START */\nconst STORYBOOK_AUDIO='+JSON.stringify(scoreData)+';\nconst STORYBOOK_AUDIO_CREDITS='+JSON.stringify(credits).replace(/</g,'\\u003c')+';\n'+read('src/storybook-music.js')+'\n/* STORYBOOK_MUSIC_END */';
 if(html.includes('/* STORYBOOK_MUSIC_START */'))html=html.replace(/\/\* STORYBOOK_MUSIC_START \*\/[\s\S]*?\/\* STORYBOOK_MUSIC_END \*\//,()=>musicJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+musicJS);
 fs.writeFileSync(file,html);
