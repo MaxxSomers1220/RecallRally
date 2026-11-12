@@ -36,7 +36,7 @@ function setMusicPreference(key,value){if(key==='on')musicPrefs.on=Boolean(value
 function musicScene(){
  if(document.querySelector('dialog[open]:not(#science-lab)'))return{kind:null,paused:true};
  const lab=typeof ScienceLab!=='undefined'&&ScienceLab.musicState?.();if(lab)return STORYBOOK_AUDIO['lab-hub']?.uploaded?{...lab,kind:'lab-hub'}:lab;
- const library=window.LibrarianAudio?.musicState?.();if(library)return library;
+ const library=window.LibrarianAudio?.musicState?.();if(library)return STORYBOOK_AUDIO.library?.uploaded?{...library,kind:'library'}:library;
  const home=$('home-view');
  if(!home?.hidden&&!home?.classList.contains('home-choice-open'))return{kind:'home',paused:false};
  if(mode!=='adventure')return{kind:'practice',paused:!!game?.paused};

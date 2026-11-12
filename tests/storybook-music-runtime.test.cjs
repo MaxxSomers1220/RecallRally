@@ -199,6 +199,28 @@ async function run(){
   h.scope.labScene={kind:'lab-potion',paused:false};assert.equal(h.eval('musicScene().kind'),'lab-hub');
   h.scope.labScene=null;h.scope.homeChoice=true;h.scope.mode='adventure';h.scope.duel={land:3,phase:'open',guardianPhase:2,paused:false};assert.equal(h.eval('musicScene().kind'),'world-3','Uploaded guardian recording continues in phase two');
  }
+ for(const hosted of [false,true]){
+  const h=coordinated({hosted}),s=h.scope;h.catalog.library.uploaded=true;
+  s.libraryScene={kind:'library',paused:false};h.eval('syncAdventureMusic()');if(hosted)await h.respond('library');await h.resolve('library');
+  const session=h.eval('musicCurrent'),source=h.sources.at(-1);assert.equal(h.music.inspect().starts.library,1);
+  h.advance(3);s.libraryScene={kind:'library-storm',paused:false};
+  for(let i=0;i<3;i++)h.eval('syncAdventureMusic()');
+  assert.equal(h.eval('musicScene().kind'),'library','Uploaded Library theme also selects the storm');assert.equal(h.eval('musicScene().paused'),false);
+  assert.equal(h.eval('musicCurrent'),session,'Storm entry preserves the playing Library session');assert.equal(h.sources.at(-1),source,'Storm entry preserves the playing source');
+  assert.equal(h.music.inspect().starts.library,1,'Storm updates never restart the uploaded theme');assert.equal(h.music.inspect().starts['library-storm']||0,0);
+  assert.equal(h.requests.length,1,'Storm entry needs no second decode');assert.equal(h.fetches.length,hosted?1:0,'Storm entry needs no second fetch');
+  const position=h.context.currentTime-h.eval('musicCurrent.origin');s.libraryScene={kind:'library-storm',paused:true};
+  assert.equal(h.eval('musicScene().kind'),'library');assert.equal(h.eval('musicScene().paused'),true,'Uploaded Library selection preserves its pause flag');assert.equal(h.eval('musicMayPlay()'),false);
+  h.eval('syncAdventureMusic()');h.advance(.2);assert.equal(h.eval('musicCurrent'),null);assert.equal(h.music.inspect().liveSources,0,'Pausing a storm retires its theme');
+  for(let i=0;i<3;i++)h.eval('syncAdventureMusic()');assert.equal(h.music.inspect().starts.library,1,'Paused updates never create a duplicate source');
+  s.libraryScene={kind:'library-storm',paused:false};h.eval('syncAdventureMusic()');
+  assert.equal(h.eval('musicScene().paused'),false);assert.equal(h.eval('musicCurrent.kind'),'library');assert.equal(h.music.inspect().starts.library,2,'Resuming starts exactly one Library source');
+  assert(Math.abs(h.context.currentTime-h.eval('musicCurrent.origin')-position)<.03,'Storm resume preserves the Library bookmark');assert.equal(h.music.inspect().liveSources,1);
+  const resumed=h.eval('musicCurrent');s.libraryScene={kind:'library',paused:false};h.eval('syncAdventureMusic()');
+  assert.equal(h.eval('musicCurrent'),resumed,'Leaving the storm preserves the resumed Library session');assert.equal(h.music.inspect().starts.library,2);
+  s.libraryScene=null;h.eval('syncAdventureMusic()');if(hosted)await h.respond('home');await h.resolve('home');h.advance(1);
+  assert.equal(h.eval('musicCurrent.kind'),'home','Closing Library returns to the Home theme');assert.equal(h.music.inspect().starts.home,1);assert.equal(h.music.inspect().starts.library,2);assert.equal(h.music.inspect().liveSources,1);
+ }
  console.log('PASS mocked audio: lazy hosted fetch/cached replay, HTTP/network failure and reentry retry, abort/navigation races, alias deduplication, embedded network independence, all scene selections, serial decodes, pinned LRU/60 MiB ceiling, crossfade/retirement/suspension/bookmarks, and gapless bounds at 22.05/44.1/48 kHz');
 }
 const result=run();if(require.main===module)result.catch(error=>{console.error(error);process.exitCode=1});module.exports=result;

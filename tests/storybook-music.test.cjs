@@ -4,7 +4,7 @@ const root=path.join(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p)),
 const manifest=JSON.parse(read('assets/music/manifest.json')),html=read('index.html').toString(),offline=read('Ellery_Recall_Rally_Librarian_v4.html').toString();
 const ids=['home','map',...Array.from({length:10},(_,i)=>'world-'+i),'duel-high','lab-hub',...['potion','circuit','creature','weather','observatory'].map(id=>'lab-'+id),'practice','library','library-storm','rescue','finale'];
 assert.deepEqual([...manifest.assets.map(a=>a.id)].sort(),[...ids].sort(),'Every game context has an embedded original cue');
-const replacement=JSON.parse(read('assets/music/user/manifest.json')),replaced=new Set([...Object.keys(replacement.mapping),'lab-potion','lab-circuit','lab-creature','lab-weather','lab-observatory']);
+const replacement=JSON.parse(read('assets/music/user/manifest.json')),replaced=new Set([...Object.keys(replacement.mapping),'lab-potion','lab-circuit','lab-creature','lab-weather','lab-observatory',...(replacement.mapping.library?['library-storm']:[])]);
 assert.equal(new Set(manifest.assets.map(a=>a.sha256)).size,ids.length,'Scenes have distinct rendered arrangements');let bytes=0;
 for(const a of [...manifest.assets,...manifest.sketches||[]]){
  const file=read(a.file);assert.equal(file.length,a.bytes,a.id+' byte count');assert.equal(hash(file),a.sha256,a.id+' checksum');
@@ -25,14 +25,17 @@ assert(!/new\s+(?:window\.)?(?:webkit)?AudioContext|setInterval\(|requestAnimati
 console.log('PASS original fallback catalog, licensed sources, effective embedded delivery and MPEG metadata');
 require('./storybook-music-runtime.test.cjs').catch(error=>{console.error(error);process.exitCode=1});
 
-assert.equal(replacement.assets.length,13);
+assert.equal(replacement.assets.length,14);
 assert.equal(replacement.mapping.home,'homepage');assert.equal(replacement.mapping.map,'adventuremap');assert.equal(replacement.mapping['lab-hub'],'science');
+assert.equal(replacement.mapping.library,'blue-hour');
 for(let i=0;i<10;i++)assert.equal(replacement.mapping['world-'+i],'guard'+(i+1));
 for(const a of replacement.assets){const data=read(a.file);assert.equal(hash(data),a.sha256);assert.equal(data.length,a.bytes);assert.equal(a.loopSeconds,a.loopFrames/a.sampleRate);assert.equal(a.mp3.encodedFrames-a.mp3.skipSamples-a.mp3.discardPadding,a.loopFrames);assert(a.peak<=.71);assert(a.sourceSha256);}
 for(const build of [html,offline]){
  const catalog=JSON.parse(build.match(/const STORYBOOK_AUDIO=(.*);/)[1]);
- for(const [kind,name] of Object.entries(replacement.mapping)){assert.equal(catalog[kind].sourceFilename,name+'.mp3');assert(catalog[kind].uploaded);assert.equal(hash(Buffer.from(catalog[kind].data,'base64')),replacement.assets.find(a=>a.id===name).sha256);}
+ for(const [kind,name] of Object.entries(replacement.mapping)){const asset=replacement.assets.find(a=>a.id===name);assert.equal(catalog[kind].sourceFilename,asset.sourceFilename);assert(catalog[kind].uploaded);assert.equal(hash(Buffer.from(catalog[kind].data,'base64')),asset.sha256);}
  const science=Buffer.from(catalog['lab-hub'].data,'base64');assert.equal(hash(science),replacement.assets.find(a=>a.id==='science').sha256);
  for(const k of ['potion','circuit','creature','weather','observatory']){assert.equal(catalog['lab-'+k].dataRef,'lab-hub');assert(!catalog['lab-'+k].data);}
+ assert.equal(catalog['library-storm'].dataRef,'library');assert(!catalog['library-storm'].data,'Library storm does not duplicate the recording');
+ const library=replacement.assets.find(a=>a.id==='blue-hour');assert.equal(catalog.library.sourceFilename,'punch-deck-blue-hour.mp3');assert.equal(catalog.library.title,'Blue Hour — Punch Deck');assert.equal(catalog.library.bytes,library.bytes);assert(catalog.library.loopSeconds>165&&catalog.library.loopSeconds<166,'Full supplied song duration is retained');
 }
-console.log('PASS 13 uploaded tracks, exact destination mapping, full-length gapless metadata and shared Science Lab payload');
+console.log('PASS 14 uploaded tracks, exact destination mapping, full-length gapless metadata and shared Science Lab/Library payloads');

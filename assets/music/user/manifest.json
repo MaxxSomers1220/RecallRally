@@ -14,7 +14,8 @@
     "world-6": "guard7",
     "world-7": "guard8",
     "world-8": "guard9",
-    "world-9": "guard10"
+    "world-9": "guard10",
+    "library": "blue-hour"
   },
   "assets": [
     {
@@ -341,6 +342,48 @@
       },
       "bpm": null,
       "loopBars": null
+    },
+    {
+      "id": "blue-hour",
+      "title": "Blue Hour — Punch Deck",
+      "file": "assets/music/user/punch-deck-blue-hour.mp3",
+      "uploaded": true,
+      "sourceFilename": "punch-deck-blue-hour.mp3",
+      "sourceSha256": "2cca124f91137c6db88db56358a0820586e05a707f2957f2d920ab57d96bfced",
+      "sourceBytes": 3973596,
+      "sha256": "af64b68eca1c193b98be1269bbf71c22980e9448900a9d98c35ff9993b08f474",
+      "bytes": 1988108,
+      "sampleRate": 32000,
+      "channels": 2,
+      "loopFrames": 5298095,
+      "loopSeconds": 165.56546875,
+      "peak": 0.4009472131729126,
+      "rms": 0.09999958425760269,
+      "boundaryDelta": 0.0,
+      "mp3": {
+        "encodedFrames": 5300352,
+        "skipSamples": 1105,
+        "discardPadding": 1152
+      },
+      "bpm": null,
+      "loopBars": null,
+      "processing": {
+        "gain": 0.39198251066039924,
+        "targetRms": 0.1,
+        "peakCeiling": 0.69,
+        "endpointFadeSeconds": 0.5,
+        "sampleRate": 32000,
+        "bitrateKbps": 96,
+        "originalDecodedFrames": 5298051,
+        "encoderPadFrames": 44,
+        "durationPolicy": "Full decoded recording retained with minimal encoder-alignment silence; no trimming or time stretching."
+      },
+      "verification": {
+        "decodedFrames": 5298095,
+        "decodedPeak": 0.41625723242759705,
+        "decodedRms": 0.09510021656751633,
+        "decodedBoundaryDelta": 2.4814100774150916e-10
+      }
     }
   ]
 }
