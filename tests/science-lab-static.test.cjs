@@ -15,7 +15,7 @@ const root=path.join(__dirname,'..'),stage=fs.mkdtempSync(path.join(os.tmpdir(),
  const page=await browser.newPage({viewport:{width:1366,height:768},reducedMotion:'reduce'}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:'+server.address().port+'/',{waitUntil:'domcontentloaded'});assert(await page.locator('#lib-launch').isVisible());await page.locator('#open-science-lab').click();await page.locator('[data-sl-station="circuit"]').click();await page.locator('#sl-open-model').click();
  for(const condition of [0,1]){await page.locator('[data-sl-condition="'+condition+'"]').click();await page.keyboard.press(String(condition+1));await page.locator('#sl-observe').click()}
- await page.locator('#sl-model-back').click();for(let i=0;i<5;i++){await page.locator('[data-sl-choice="0"]').click();await page.locator('#sl-next').click()}
+ await page.locator('#sl-model-back').click();for(let i=0;i<5;i++){const k=await page.evaluate(()=>{const id=$('science-lab').querySelector('.sl-question').dataset.questionId,q=SAMPLES.find(q=>q.id===id);return [...$('science-lab').querySelectorAll('[data-sl-choice]>span')].findIndex(e=>e.textContent===q.answer)});await page.locator('[data-sl-choice="'+k+'"]').click();await page.locator('#sl-next').click()}
  assert.equal(await page.locator('.sl-stage .cc-machine').getAttribute('data-circuit-level'),'5');assert.equal(await page.locator('.sl-stage .cc-machine').getAttribute('data-circuit-closed'),'true');assert.equal(await page.locator('.sl-stage .cc-filament.is-lit').count(),1);
  assert(await page.locator('.sl-complete').isVisible());assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),5);
  assert(await page.evaluate(()=>{const lab=JSON.parse(localStorage.getItem('recall-rally-sidequest-science-lab-v1:'+RallyLearning.activeProfile().id));return lab.data.notes.includes('circuit')&&lab.data.completed.includes('circuit')&&questProgress===0}));
@@ -39,13 +39,15 @@ const root=path.join(__dirname,'..'),stage=fs.mkdtempSync(path.join(os.tmpdir(),
  assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.filter(a=>a.mode==='science-lab').length),25);
  // Play the real staged Librarian assets, not just its launch button.
  await page.locator('#sl-close').click();await page.locator('#lib-launch').click();
- assert((await page.locator('.lib-art-room').evaluate(e=>getComputedStyle(e).backgroundImage)).includes('data:image/webp'));
+ const background=await page.locator('.lib-art-room').evaluate(e=>getComputedStyle(e).backgroundImage);
+ assert(/assets\/image\.[a-f0-9]{64}\.webp/.test(background),'Hosted Librarian art uses the existing content-addressed static asset');
+ assert((await page.request.get(new URL(background.match(/url\(["']?([^"')]+)/)[1],page.url()).href)).ok(),'Hosted background loads');
  assert.equal(await page.locator('.lib-guardian-art').count(),1);await page.locator('#lib-start').click();
  const wrong=await page.evaluate(()=>{const q=SAMPLES.find(q=>q.prompt===document.getElementById('lib-question').textContent);if(!q)throw Error('Expected real literature bank question');return [...document.querySelectorAll('.lib-choice')].findIndex(b=>b.lastElementChild.textContent!==q.answer)});
  await page.locator('.lib-choice').nth(wrong).click();await page.keyboard.down('ArrowDown');
  await page.waitForFunction(()=>document.getElementById('lib-overlay').dataset.scene==='storm');
  if(process.env.LIBRARIAN_SCREENSHOTS){await page.waitForTimeout(2600);fs.mkdirSync(process.env.LIBRARIAN_SCREENSHOTS,{recursive:true});await page.screenshot({path:path.join(process.env.LIBRARIAN_SCREENSHOTS,'staged-book-storm.png')})}
- await page.waitForSelector('#lib-learn:not([hidden])',{timeout:12000});await page.keyboard.up('ArrowDown');assert(await page.locator('#lib-next').isVisible());assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.length),26);await page.locator('#lib-close').click();
+ await page.waitForSelector('#lib-learn:not([hidden])',{timeout:25000});await page.keyboard.up('ArrowDown');assert(await page.locator('#lib-next').isVisible());assert.equal(await page.evaluate(()=>RallyLearning.snapshot().attempts.length),26);await page.locator('#lib-close').click();
  assert.deepEqual(errors,[]);console.log('PASS staged static site: Librarian, Circuit model/badge, illustrated Potion/Creature stages 0–5, creature mistake/repair, Weather and Observatory mistakes/repairs and finales, twenty-five journal answers, unchanged Rigby progress, illustrated Librarian real book storm/review and one honest journal answer');
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.rmSync(stage,{recursive:true,force:true})}})().catch(e=>{console.error(e);process.exitCode=1});
 

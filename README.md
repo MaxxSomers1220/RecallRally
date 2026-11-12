@@ -5,12 +5,15 @@ the Rescue Rigby adventure, customizable heroes, and a local learning journal.
 
 ## The Alchemist's Science Lab
 
+See [the three-out-of-five outcome review](docs/science-lab-outcomes/REVIEW.md)
+for the current result rule, animation checks and validation details.
+
 The **discovery workshop** adds optional predict-and-observe models, three
 question trails (Explore, Review, Stretch), a collectible field notebook, clearer
 repair steps, and a player-triggered Prism celebration. Each model changes one
 condition and cites an existing Science-bank explanation. Model guesses are not
 graded and cannot skip questions. Comparing both conditions keeps a field note;
-five reviewed quiz questions still earn each discovery badge. Old lab saves and
+three correct answers out of five earn each discovery badge. Old lab saves and
 backups remain supported; the optional `notes` and `prismLit` fields default safely.
 See [the four-pass review and validation report](docs/science-lab-review/REVIEW.md)
 for exact checks, screenshots, limitations and fifth-grade playtesting questions.
@@ -40,8 +43,10 @@ Click, tap, or press **1–4** to answer. Correct answers activate the equipment
 A mistake produces a harmless, station-specific magical mishap and shows the
 original answer and explanation. **Apply the explanation & continue** repairs
 that step; it never changes an incorrect journal entry into a correct one.
-Completing all five reviewed questions earns the station's discovery badge.
-Completing all five stations earns **The Alchemist's Prism**, displayed on the
+After the fifth explanation, **3–5 correct** makes the experiment shimmer and
+earns its discovery badge; **0–2 correct** triggers a harmless fantasy mix-up
+and a chance to try again. Failed replays keep earlier badges and the Prism.
+Succeeding at all five stations earns **The Alchemist's Prism**, displayed on the
 adventure map as a cosmetic artifact. It does not answer or skip questions, alter
 guardian scoring, or remove earned seals. The imaginary equipment effects and
 creatures are explicitly distinguished from the real question-bank science.

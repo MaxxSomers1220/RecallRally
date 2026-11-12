@@ -44,5 +44,6 @@ jobs:
           node tests/home-launcher-browser.test.cjs
           node tests/science-lab-browser.test.cjs
           node tests/science-lab-review.test.cjs
+          node tests/science-lab-outcomes-browser.test.cjs
           node tests/science-lab-static.test.cjs
           node tests/adventure-save-browser.test.cjs

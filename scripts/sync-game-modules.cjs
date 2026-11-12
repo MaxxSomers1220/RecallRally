@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
+const originalHTML=html;
 const read=name=>fs.readFileSync(path.join(root,name),'utf8').trim();
 // Keep the uninitialized name/avatar and viewer warning out of normal startup.
 const startupHead='<style id="rally-startup-styles">\n'+read('src/startup.css')+'\n</style>\n<script id="rally-startup-script">\n'+read('src/startup.js')+'\n</script>';
@@ -45,10 +46,10 @@ const a=html.indexOf('/* QUEST_SAVES_START'),b=html.indexOf('/* QUEST_SAVES_END 
 if(a<0||b<a)throw Error('Adventure save embed markers not found');
 html=html.slice(0,a)+quest+html.slice(b);
 const art={weather:read('assets/science-lab/weather-machine-chassis.svg'),observatory:read('assets/science-lab/star-observatory-chassis.svg'),creature:read('assets/science-lab/creature-incubator-chassis.svg'),circuit:read('assets/science-lab/circuit-constructor-chassis.svg'),room:'data:image/svg+xml;base64,'+Buffer.from(read('assets/science-lab/laboratory.svg')).toString('base64'),professor:read('assets/science-lab/professor-fizzwick.svg'),potion:read('assets/science-lab/potion-mixer-chassis.svg'),potionProfessor:read('assets/science-lab/professor-fizzwick-potion.svg')};
-const script='/* SCIENCE_LAB_START */\nconst SCIENCE_LAB_ART='+JSON.stringify(art).replace(/</g,'\\u003c')+';\n'+read('src/science-lab-models.js')+'\n'+read('src/science-lab-potion.js')+'\n'+read('src/science-lab-circuit.js')+'\n'+read('src/science-lab-creature.js')+'\n'+read('src/science-lab-weather.js')+'\n'+read('src/science-lab-observatory.js')+'\n'+read('src/science-lab.js')+'\n/* SCIENCE_LAB_END */';
+const script='/* SCIENCE_LAB_START */\nconst SCIENCE_LAB_ART='+JSON.stringify(art).replace(/</g,'\\u003c')+';\n'+read('src/science-lab-models.js')+'\n'+read('src/science-lab-potion.js')+'\n'+read('src/science-lab-circuit.js')+'\n'+read('src/science-lab-creature.js')+'\n'+read('src/science-lab-weather.js')+'\n'+read('src/science-lab-observatory.js')+'\n'+read('src/science-lab-outcomes.js')+'\n'+read('src/science-lab.js')+'\n/* SCIENCE_LAB_END */';
 if(html.includes('/* SCIENCE_LAB_START */'))html=html.replace(/\/\* SCIENCE_LAB_START \*\/[\s\S]*?\/\* SCIENCE_LAB_END \*\//,script);
 else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n\n'+script);
-const css='<style id="science-lab-styles">\n'+read('src/science-lab.css')+'\n</style>';
+const css='<style id="science-lab-styles">\n'+read('src/science-lab.css')+'\n'+read('src/science-lab-outcomes.css')+'\n</style>';
 if(html.includes('<style id="science-lab-styles">'))html=html.replace(/<style id="science-lab-styles">[\s\S]*?<\/style>/,css);
 else html=html.replace('</head>',css+'\n</head>');
 const mobileCSS='<style id="mobile-playability-styles">\n'+read('src/mobile-playability.css')+'\n</style>';
@@ -79,4 +80,10 @@ if(scoreData.library.uploaded)scoreData['library-storm']={...scoreData.library,i
 const credits={notice:'User-supplied recordings replace Home, the map, guardians, Science Lab and the Library; their rights remain with their respective owners and no license is inferred. Remaining original Lantern Afterglow arrangements use TimGM6mb by Tim Brechbill (2004) and David Bolton (2010). Those legacy rendered MP3s and SoundFont assets: GPL-2.0-only; editable original scores and application code: repository MIT license.',source:'https://github.com/MaxxSomers1220/RecallRally — assets/music/source and scripts/render-storybook-music.py',license:read('assets/music/LICENSE-GPL-2.txt')};
 const musicJS='/* STORYBOOK_MUSIC_START */\nconst STORYBOOK_AUDIO='+JSON.stringify(scoreData)+';\nconst STORYBOOK_AUDIO_CREDITS='+JSON.stringify(credits).replace(/</g,'\\u003c')+';\nfor(const a of Object.values(STORYBOOK_AUDIO))if(a.dataRef)a.data=STORYBOOK_AUDIO[a.dataRef].data;\n'+read('src/storybook-music.js')+'\n/* STORYBOOK_MUSIC_END */';
 if(html.includes('/* STORYBOOK_MUSIC_START */'))html=html.replace(/\/\* STORYBOOK_MUSIC_START \*\/[\s\S]*?\/\* STORYBOOK_MUSIC_END \*\//,()=>musicJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+musicJS);
+// A lab-only rebuild preserves reviewed inline changes in unrelated game modes.
+if(process.argv.includes('--science-lab-only')){
+ const lab=html.match(/\/\* SCIENCE_LAB_START \*\/[\s\S]*?\/\* SCIENCE_LAB_END \*\//)[0];
+ const styles=html.match(/<style id="science-lab-styles">[\s\S]*?<\/style>/)[0];
+ html=originalHTML.replace(/\/\* SCIENCE_LAB_START \*\/[\s\S]*?\/\* SCIENCE_LAB_END \*\//,()=>lab).replace(/<style id="science-lab-styles">[\s\S]*?<\/style>/,()=>styles);
+}
 fs.writeFileSync(file,html);

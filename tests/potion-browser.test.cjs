@@ -29,14 +29,14 @@ let browser,server;
    if(name==='phone')await page.locator('[data-sl-choice="'+index+'"]').tap();else await page.keyboard.press(String(index+1));
    await page.evaluate(index=>ScienceLab.choose(index),index);assert.equal((await records()).length,count+1,'duplicate input never grades twice');
    assert.equal((await records()).at(-1).outcome,wrong?'incorrect':'correct');assert.equal(await page.locator('.sl-explanation').innerText(),q.explanation);
-   assert.equal(await art.getAttribute('data-potion-level'),String(wrong?i:i+1));
-   assert.equal(await art.getAttribute('data-potion-cue'),wrong?'mishap':i===4?'finale':'activate');
+   assert.equal(await art.getAttribute('data-potion-level'),String(Math.min(wrong?i:i+1,4)));
+   assert.equal(await art.getAttribute('data-potion-cue'),wrong?'mishap':'activate');
    assert.equal(await page.locator('.sl-professor .pm-fizzwick').evaluate(e=>e.classList.contains('is-surprised')),wrong);
    if(wrong){assert(await page.locator('.sl-step-track .needs-repair').count());await page.waitForTimeout(350);await capture('mistake');}
    else if(i===0){assert.equal(await art.locator('[data-flow="1"]').count(),1);assert.equal(await art.locator('.pm-transfer').evaluate(e=>getComputedStyle(e).animationName),'pm-transfer');await page.waitForTimeout(650);await capture('first-ingredient');}
    else if(i===1){await page.waitForTimeout(1250);await capture('two-ingredients');}
    else if(i===3){assert.equal(await art.locator('.pm-drive.is-running').count(),1);assert(await art.locator('.pm-bubble').count());const cog=art.locator('.pm-cog').first(),a=await cog.evaluate(e=>getComputedStyle(e).transform);await page.waitForTimeout(220);assert.notEqual(await cog.evaluate(e=>getComputedStyle(e).transform),a,'mixing drive actually moves');await capture('machinery');}
-   else if(i===4){assert(await art.locator('.pm-finale').count());assert(await page.locator('.sl-professor .is-celebrate').count());await page.waitForTimeout(700);await capture('fifth-answer');}
+   else if(i===4){assert.equal(await art.locator('.pm-finale').count(),0,'final outcome waits for the fifth explanation');assert.equal(await page.locator('.sl-professor .is-celebrate').count(),0);await capture('fifth-answer');}
    if(name==='phone'&&(wrong||i===4)){await page.locator('#sl-next').scrollIntoViewIfNeeded();if(screens)await page.screenshot({path:path.join(screens,'phone-'+(wrong?'mistake':'final')+'-controls.png')});const box=await page.locator('#sl-next').boundingBox();assert(box.height>=44&&box.y>=0&&box.y+box.height<=height,'Phone explanation/Next remains reachable');}
    if(width>=1000){
     const boxes=await page.locator('#sl-prompt,[data-sl-choice],#sl-next,.sl-feedback,.sl-stage').evaluateAll(es=>es.map(e=>{const b=e.getBoundingClientRect();return {top:b.top,bottom:b.bottom,left:b.left,right:b.right}}));
@@ -46,7 +46,7 @@ let browser,server;
    if(wrong){assert.equal(await art.getAttribute('data-potion-level'),'3');assert.equal(await art.getAttribute('data-potion-cue'),'repair');assert.equal((await records()).length,count+1,'repair creates no new academic attempt');assert(await art.locator('.pm-swirl').count());await page.waitForTimeout(850);await capture('repair');}
   }
   assert.equal(new Set(ids).size,5);assert.equal((await records()).length,5);assert.equal((await records()).filter(a=>a.outcome==='correct').length,4);
-  assert(await page.locator('.sl-complete').isVisible());assert.equal(await art.getAttribute('data-potion-level'),'5');assert.match(await page.locator('.sl-complete').innerText(),/4 \/ 5 correct/);await capture('complete');
+  assert(await page.locator('.sl-complete[data-sl-outcome="success"]').isVisible());assert(await art.locator('.pm-finale').count());assert(await page.locator('.sl-professor .is-celebrate').count());assert.equal(await art.getAttribute('data-potion-level'),'5');assert.match(await page.locator('.sl-complete').innerText(),/4 \/ 5 correct/);await capture('complete');
   assert(await page.locator('.sl-stage .sl-hero-art').getAttribute('data-hero-outfit').then(v=>v==='scholar'));
   assert.equal(await page.locator('#science-lab .sl-body').evaluate(e=>e.scrollWidth<=e.clientWidth+1),true,'no horizontal overflow');
   await page.emulateMedia({reducedMotion:'reduce'});

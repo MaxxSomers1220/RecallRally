@@ -1,0 +1,51 @@
+/* Final fantasy outcomes sit over the existing storybook equipment. All new
+   motion ends within three seconds; reduced motion retains the final picture. */
+.sl-stage>.sl-outcome-effects{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.sl-outcome-effects>svg{height:100%;width:100%;display:block;overflow:visible}
+.sl-outcome-effects .slo-poof,.sl-outcome-effects .slo-done{position:absolute;top:12%;left:21%;width:58%;text-align:center;font:800 clamp(17px,2vw,25px)/1.2 Georgia,serif;color:#fff0c8;text-shadow:0 2px 4px #24314b,0 0 8px #24314b;letter-spacing:1px}
+.sl-outcome-effects .slo-done{top:8%;font-size:18px;color:#f9edb7}
+.sl-outcome-failure .sl-stage{border:2px solid #e8c8a4}
+.sl-outcome-success .sl-stage{border:2px solid #c9e3bd;box-shadow:inset 0 0 40px #c0ded018,0 0 15px #b9dbc52b}
+.sl-outcome-failure .slo-burst{transform-origin:360px 250px;animation:slo-poof-in .7s ease-out both}
+.sl-outcome-failure .slo-poof{animation:slo-word 1.5s ease-out both}
+.sl-outcome-failure .sl-professor{animation:slo-scramble 2.6s ease-in-out both;transform-origin:50% 100%}
+.sl-outcome-failure .sl-professor .fizz-hand{animation:sl-wave .4s ease-in-out 5;transform-origin:180px 180px}
+.sl-outcome-failure .slo-foam{animation:slo-settle 1.5s ease-out both}
+.sl-outcome-failure .slo-bubbles{animation:slo-bubbles 2.2s ease-out both}
+.sl-outcome-failure .slo-smoke{animation:slo-drift 2.1s ease-out both;transform-origin:360px 160px}
+.sl-outcome-failure .slo-flying-papers{animation:slo-papers 2.2s ease-out both;transform-origin:360px 270px}
+.sl-outcome-failure .slo-flying-hat{animation:slo-hat 2.3s ease-out both;transform-box:fill-box;transform-origin:center}
+.sl-outcome-failure .slo-scrambled-stars{animation:slo-stars 2s ease-out both;transform-origin:360px 150px}
+.sl-outcome-failure .so-telescope{animation:slo-telescope 2.2s ease-out both!important;transform-origin:0 0}
+.sl-outcome-failure .ci-moonwing{visibility:hidden}
+.sl-outcome-failure .ci-cocoon{visibility:hidden}
+/* The end picture stays still. Existing ambient loops stop on both outcomes. */
+.sl-outcome-failure .sl-equipment *,.sl-outcome-success .sl-equipment *{animation-iteration-count:1!important;animation-duration:2.5s!important;animation-delay:0s!important}
+.sl-outcome-failure .so-trace,.sl-outcome-failure .so-reveal-ring{visibility:hidden}
+.sl-outcome-success .slo-shimmer{animation:slo-shimmer 2.4s ease-out both;transform-origin:360px 250px}
+.sl-outcome-success .slo-sparkles{animation:slo-sparkles 2.5s ease-out both;transform-origin:360px 230px}
+.sl-outcome-success .sl-professor{animation:slo-celebrate 1.8s ease-out both;transform-origin:50% 100%}
+.sl-outcome-success .sl-professor .fizz-hand{animation:sl-wave .55s ease-in-out 3;transform-origin:180px 180px}
+.sl-outcome-success .sl-fizzwick-line,.sl-outcome-failure .sl-fizzwick-line{font-size:12px;line-height:1.5}
+.sl-complete[data-sl-outcome] .sl-outcome-label{font-weight:800;font-size:13px;letter-spacing:.8px;color:#f9dfaa}
+@keyframes slo-poof-in{from{transform:scale(.18);opacity:.25}65%{transform:scale(1.08);opacity:1}to{transform:scale(1);opacity:1}}
+@keyframes slo-word{from{transform:scale(.6);opacity:0}30%{transform:scale(1.05);opacity:1}to{transform:scale(1);opacity:1}}
+@keyframes slo-scramble{0%,100%{transform:translateX(0) rotate(0)}15%{transform:translateX(-115%) rotate(-7deg)}34%{transform:translateX(-40%) rotate(6deg)}54%{transform:translateX(-150%) rotate(-6deg)}76%{transform:translateX(-65%) rotate(5deg)}}
+@keyframes slo-settle{from{transform:translateY(-55px) scale(.8);opacity:.3}to{transform:none;opacity:1}}
+@keyframes slo-bubbles{from{transform:translateY(80px);opacity:.1}to{transform:translateY(-8px);opacity:.8}}
+@keyframes slo-drift{from{transform:translateY(35px) scale(.75);opacity:.3}to{transform:translateY(-8px) scale(1);opacity:.9}}
+@keyframes slo-papers{from{transform:translateX(-55px) rotate(-18deg)}50%{transform:translateX(26px) rotate(12deg)}to{transform:translateX(12px) rotate(5deg)}}
+@keyframes slo-hat{from{translate:-80px 90px;rotate:-40deg}55%{translate:0 -12px;rotate:18deg}to{translate:0 0;rotate:9deg}}
+@keyframes slo-stars{from{transform:rotate(-16deg) scale(.7)}60%{transform:rotate(8deg) scale(1.05)}to{transform:rotate(0) scale(1)}}
+@keyframes slo-telescope{from{transform:rotate(var(--so-angle))}45%{transform:rotate(275deg)}to{transform:rotate(346deg)}}
+@keyframes slo-shimmer{from{opacity:0;transform:scale(.85)}40%{opacity:.8}to{opacity:.25;transform:scale(1)}}
+@keyframes slo-sparkles{from{opacity:.2;transform:scale(.7)}55%{opacity:1;transform:scale(1.06)}to{opacity:.9;transform:scale(1)}}
+@keyframes slo-celebrate{0%,100%{transform:none}25%,65%{transform:translateY(-7px) rotate(-4deg)}45%,85%{transform:rotate(4deg)}}
+@media(max-width:720px){.sl-outcome-effects .slo-done{font-size:15px}.sl-complete[data-sl-outcome]>.sl-experiment{min-height:0;order:-1;flex-shrink:0}.sl-outcome-success .sl-fizzwick-line,.sl-outcome-failure .sl-fizzwick-line{font-size:11px}}
+@media(prefers-reduced-motion:reduce){#science-lab .sl-outcome-effects *,#science-lab .sl-outcome-success *,#science-lab .sl-outcome-failure *{animation:none!important;transition:none!important}.sl-outcome-effects .slo-poof,.sl-outcome-effects .slo-done{opacity:1}}
+
+/* Keep the reaction in view before the result text on narrow screens. */
+.sl-step-track .answer-correct{background:#b4dabd;color:#244c49;border-color:#e0cea0}
+.sl-step-track .answer-reviewed{background:#f2dfbd;color:#69432f;border:2px dashed #ffe8c0}
+.sl-oops-token{display:grid;place-items:center;width:86px;height:75px;border-radius:48%;background:#d4c5e4;color:#34465c;font:800 19px Georgia,serif}
+@media(max-width:720px){.sl-complete[data-sl-outcome]>.sl-experiment{order:-1}.sl-complete[data-sl-outcome] .sl-award{display:none}.sl-complete[data-sl-outcome]>.sl-experiment .sl-stage{min-height:170px;height:170px}.sl-complete[data-sl-outcome]>section{gap:7px}.sl-complete[data-sl-outcome] h3{font-size:23px}.sl-complete[data-sl-outcome] p{font-size:12px;line-height:1.45}}

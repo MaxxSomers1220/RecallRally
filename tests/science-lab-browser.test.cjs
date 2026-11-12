@@ -32,7 +32,7 @@ async function runStation(id,miss=false){
  for(let n=0;n<5;n++){
   const isCorrect=!(miss&&n===0),q=await answerLab(isCorrect);ids.push(q.id);
   assert.equal(await page.locator('.sl-stage').getAttribute('data-sl-machine'),id);
-  assert.equal(Number(await page.locator('.sl-stage').getAttribute('data-sl-progress')),isCorrect?n+1:n);
+  assert.equal(Number(await page.locator('.sl-stage').getAttribute('data-sl-progress')),Math.min(isCorrect?n+1:n,4));
   if(!isCorrect){assert(await page.locator('.sl-mishap').count());assert(await page.locator('.sl-fizzwick.is-surprised').count());assert(await page.locator('.sl-stage .sl-mishap-'+id).isVisible());assert.match(await page.locator('#sl-next').textContent(),/Apply the explanation/)}
   const latest=(await attempts()).at(-1);assert.equal(latest.questionId,q.id);assert.equal(latest.outcome,isCorrect?'correct':'incorrect');assert.equal(latest.topicId,q.curriculumTopicId||null);assert.equal(latest.evaluationMethod,'choice');
   await page.locator('#sl-next').click();
@@ -124,7 +124,7 @@ async function switchPlayer(id){await page.locator('#open-learning').click();awa
   const touch=await context.browser().newContext({viewport:{width:1024,height:768},hasTouch:true,isMobile:true,reducedMotion:'reduce'}),touchPage=await touch.newPage();touchPage.on('pageerror',e=>errors.push(e.message));
   await touchPage.goto(url,{waitUntil:'domcontentloaded'});await touchPage.locator('#open-science-lab').tap();assert((await touchPage.locator('#sl-approach').boundingBox()).height>=44);await touchPage.locator('[data-sl-station="circuit"]').tap();await touchPage.locator('[data-sl-choice="0"]').tap();assert(await touchPage.locator('.sl-feedback').isVisible());
   for(const el of await touchPage.locator('[data-sl-choice],#sl-close,#sl-sound,#sl-hub,#sl-open-model').all()){const box=await el.boundingBox();assert(box.height>=44&&box.width>=44,'44px touch targets')}
-  await touchPage.locator('#sl-next').tap();assert.match(await touchPage.locator('.sl-question-meta').innerText(),/2 \/ 5/);await touch.close();
+  await touchPage.locator('#sl-next').tap();assert.match(await touchPage.locator('.sl-question-meta').innerText(),/Question 2 of 5/);await touch.close();
   console.log('PASS reduced-motion rendering, active equipment animation, shared sound preference and tablet touch input');
   // Corrupt only the lab record on a fresh document, after pagehide has saved.
   await page.addInitScript(()=>{const p=JSON.parse(localStorage.getItem('recall-rally-learning-v1'));localStorage.setItem('recall-rally-sidequest-science-lab-v1:'+p.activeProfileId,'{broken')});
