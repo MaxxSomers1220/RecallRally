@@ -86,4 +86,9 @@ if(process.argv.includes('--science-lab-only')){
  const styles=html.match(/<style id="science-lab-styles">[\s\S]*?<\/style>/)[0];
  html=originalHTML.replace(/\/\* SCIENCE_LAB_START \*\/[\s\S]*?\/\* SCIENCE_LAB_END \*\//,()=>lab).replace(/<style id="science-lab-styles">[\s\S]*?<\/style>/,()=>styles);
 }
+if(process.argv.includes('--mobile-only')){
+ const mobile=html.match(/\/\* MOBILE_PLAYABILITY_START \*\/[\s\S]*?\/\* MOBILE_PLAYABILITY_END \*\//)[0];
+ const styles=html.match(/<style id="mobile-playability-styles">[\s\S]*?<\/style>/)[0];
+ html=originalHTML.replace(/\/\* MOBILE_PLAYABILITY_START \*\/[\s\S]*?\/\* MOBILE_PLAYABILITY_END \*\//,()=>mobile).replace(/<style id="mobile-playability-styles">[\s\S]*?<\/style>/,()=>styles);
+}
 fs.writeFileSync(file,html);

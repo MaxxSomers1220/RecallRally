@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict'),pw=require('playwright');
 const root=path.join(__dirname,'..'),engine=process.env.APPLE_ENGINE||'chromium',folder=process.env.APPLE_REPORT;
-const views=[['iphone-se',568,320],['iphone-small',667,375],['iphone-modern',852,393],['iphone-large',932,430],['safari-bars',852,300]];
+const views=[['iphone-se',568,320],['iphone-small',667,375],['iphone-modern',852,393],['iphone-large',932,430],['safari-bars',852,300],['wide-app',1024,420],['wide-in-app-browser',1114,424],['wide-webview',1280,424]];
 (async()=>{let server,browser;try{
  const html=process.env.APPLE_TEST_HTML||path.join(root,'Ellery_Recall_Rally_Librarian_v4.html');
  server=http.createServer((q,r)=>r.end(fs.readFileSync(html)));await new Promise(r=>server.listen(0,'127.0.0.1',r));
@@ -16,9 +16,20 @@ const views=[['iphone-se',568,320],['iphone-small',667,375],['iphone-modern',852
   await page.setViewportSize({width,height});await page.waitForFunction(h=>Math.abs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rally-vh'))-h)<2,height);
   // Simulate a landscape iPhone notch/home-indicator safe area.
   await page.evaluate(()=>{const s=document.documentElement.style;s.setProperty('--rally-safe-left','32px');s.setProperty('--rally-safe-right','32px');s.setProperty('--rally-safe-bottom','10px')});
-  const check=async()=>{const b=await bounds();assert(b.question.right<=b.arena.x+1,name+': side by side');assert(Math.abs(b.question.y-b.arena.y)<2,name+': aligned tops');assert(b.arena.bottom<=b.h+1&&b.stage.y>=0&&b.stage.bottom<=b.h+1,name+': whole battle in viewport');assert(b.stage.height>70,name+': visible full illustration '+JSON.stringify(b));assert(b.scroll<=b.win+1,name+': no horizontal page overflow');const fits=await page.locator('.duel-question-panel').evaluate(e=>e.scrollWidth<=e.clientWidth+1);assert(fits,name+': no horizontal question overflow');return b;};
+  const check=async()=>{const b=await bounds();assert(b.question.right<=b.arena.x+1,name+': side by side');assert(Math.abs(b.question.y-b.arena.y)<2,name+': aligned tops');assert(b.arena.bottom<=b.h+1&&b.stage.y>=0&&b.stage.bottom<=b.h+1,name+': whole battle in viewport');assert(Math.abs(b.board.bottom-(b.h-14))<2,name+': fills visible height including bottom safe area '+JSON.stringify(b));assert(Math.abs(b.arena.bottom-(b.board.bottom-7))<2,name+': battle fills the board');assert(b.stage.height>70,name+': visible full illustration '+JSON.stringify(b));assert(b.scroll<=b.win+1,name+': no horizontal page overflow');const fits=await page.locator('.duel-question-panel').evaluate(e=>e.scrollWidth<=e.clientWidth+1);assert(fits,name+': no horizontal question overflow');return b;};
   if(folder)await page.screenshot({path:path.join(folder,engine+'-'+name+'-layout.jpg'),type:'jpeg',quality:85});
   b=await check();
+  // A stale JS height after browser chrome changes must not shrink the duel.
+  // Modern Safari/WebViews use live dvh; older engines keep the JS fallback.
+  if(await page.evaluate(()=>CSS.supports('height','100dvh'))){
+   await page.evaluate(()=>document.documentElement.style.setProperty('--rally-vh','180px'));
+   await check();
+   await page.evaluate(()=>window.dispatchEvent(new Event('resize')));
+   await page.waitForFunction(h=>Math.abs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rally-vh'))-h)<2,height);
+  }
+  if(name==='iphone-modern'){
+   for(const liveHeight of [300,430,393]){await page.setViewportSize({width,height:liveHeight});await page.waitForFunction(h=>Math.abs(visualViewport.height-h)<2,liveHeight);await check();}
+  }
   const touch=await page.locator('[data-quest-choice]').evaluateAll(es=>es.every(e=>e.getBoundingClientRect().height>=44));assert(touch,'Answer targets remain at least 44px');
   if(folder)await page.screenshot({path:path.join(folder,engine+'-'+name+'-question.jpg'),type:'jpeg',quality:85});
   // Native touch scrolls the question to its answer; it must not move the battle away.
