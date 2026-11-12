@@ -67,7 +67,7 @@ const homeJS='/* HOME_HUB_START */\nconst HOME_HUB_ART='+JSON.stringify(homeArt)
 if(html.includes('/* HOME_HUB_START */'))html=html.replace(/\/\* HOME_HUB_START \*\/[\s\S]*?\/\* HOME_HUB_END \*\//,()=>homeJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+homeJS);
 const scoreData={};
 for(const cue of JSON.parse(read('assets/music/manifest.json')).assets)scoreData[cue.id]={title:cue.title,loopSeconds:cue.loopSeconds,loopFrames:cue.loopFrames,loopBars:cue.loopBars,channels:cue.channels,sampleRate:cue.sampleRate,mp3:cue.mp3,bpm:cue.bpm,data:fs.readFileSync(path.join(root,cue.file)).toString('base64')};
-// Uploaded replacements are embedded once; all Science Lab scenes share one recording.
+// Uploaded replacements are embedded once; Science Lab and Library aliases share recordings.
 const uploads=JSON.parse(read('assets/music/user/manifest.json'));
 const supplied=new Map(uploads.assets.map(a=>[a.id,a]));
 for(const [kind,name] of Object.entries(uploads.mapping)){
@@ -75,7 +75,8 @@ for(const [kind,name] of Object.entries(uploads.mapping)){
  scoreData[kind]={...scoreData[kind],...a,id:kind,data:fs.readFileSync(path.join(root,a.file)).toString('base64')};
 }
 for(const kind of ['lab-potion','lab-circuit','lab-creature','lab-weather','lab-observatory'])scoreData[kind]={...scoreData['lab-hub'],id:kind,dataRef:'lab-hub',data:undefined};
-const credits={notice:'User-supplied recordings replace Home, the map, guardians and Science Lab; their rights remain with their respective owners and no license is inferred. Remaining original Lantern Afterglow arrangements use TimGM6mb by Tim Brechbill (2004) and David Bolton (2010). Those legacy rendered MP3s and SoundFont assets: GPL-2.0-only; editable original scores and application code: repository MIT license.',source:'https://github.com/MaxxSomers1220/RecallRally — assets/music/source and scripts/render-storybook-music.py',license:read('assets/music/LICENSE-GPL-2.txt')};
+if(scoreData.library.uploaded)scoreData['library-storm']={...scoreData.library,id:'library-storm',dataRef:'library',data:undefined};
+const credits={notice:'User-supplied recordings replace Home, the map, guardians, Science Lab and the Library; their rights remain with their respective owners and no license is inferred. Remaining original Lantern Afterglow arrangements use TimGM6mb by Tim Brechbill (2004) and David Bolton (2010). Those legacy rendered MP3s and SoundFont assets: GPL-2.0-only; editable original scores and application code: repository MIT license.',source:'https://github.com/MaxxSomers1220/RecallRally — assets/music/source and scripts/render-storybook-music.py',license:read('assets/music/LICENSE-GPL-2.txt')};
 const musicJS='/* STORYBOOK_MUSIC_START */\nconst STORYBOOK_AUDIO='+JSON.stringify(scoreData)+';\nconst STORYBOOK_AUDIO_CREDITS='+JSON.stringify(credits).replace(/</g,'\\u003c')+';\nfor(const a of Object.values(STORYBOOK_AUDIO))if(a.dataRef)a.data=STORYBOOK_AUDIO[a.dataRef].data;\n'+read('src/storybook-music.js')+'\n/* STORYBOOK_MUSIC_END */';
 if(html.includes('/* STORYBOOK_MUSIC_START */'))html=html.replace(/\/\* STORYBOOK_MUSIC_START \*\/[\s\S]*?\/\* STORYBOOK_MUSIC_END \*\//,()=>musicJS);else html=html.replace('/* QUEST_SAVES_END */','/* QUEST_SAVES_END */\n'+musicJS);
 fs.writeFileSync(file,html);
